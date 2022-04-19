@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["concordium_rust_sdk"] = [{"text":"impl <a class=\"trait\" href=\"https://docs.rs/prost/0.8.0/prost/message/trait.Message.html\" title=\"trait prost::message::Message\">Message</a> for <a class=\"struct\" href=\"concordium_rust_sdk/types/struct.PeerStatsResponse.html\" title=\"struct concordium_rust_sdk::types::PeerStatsResponse\">PeerStatsResponse</a>","synthetic":false,"types":["concordium_rust_sdk::generated_types::PeerStatsResponse"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

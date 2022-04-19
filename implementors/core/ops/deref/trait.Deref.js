@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["concordium_rust_sdk"] = [{"text":"impl&lt;Purpose&gt; <a class=\"trait\" href=\"https://doc.rust-lang.org/nightly/core/ops/deref/trait.Deref.html\" title=\"trait core::ops::deref::Deref\">Deref</a> for <a class=\"struct\" href=\"concordium_rust_sdk/types/hashes/struct.HashBytes.html\" title=\"struct concordium_rust_sdk::types::hashes::HashBytes\">HashBytes</a>&lt;Purpose&gt;","synthetic":false,"types":["concordium_rust_sdk::types::hashes::HashBytes"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
