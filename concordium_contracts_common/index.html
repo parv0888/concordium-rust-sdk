@@ -1,0 +1,173 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This library provides the core API that can be used to write smart contracts for the Concordium blockchain in the Rust programming language. It aims to provide safe wrappers around the core primitives exposed by the chain and accessible to smart contracts."><meta name="keywords" content="rust, rustlang, rust-lang, concordium_contracts_common"><title>concordium_contracts_common - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings"></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../concordium_contracts_common/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><p class="location">Crate concordium_contracts_common</p><div class="block version"><p>Version 2.0.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all concordium_contracts_common's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class="location"></p><div id="sidebar-vars" data-name="concordium_contracts_common" data-ty="mod" data-relpath="../"></div><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../settings.html"><img src="../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="">concordium_contracts_common</a><button id="copy-path" onclick="copy_path(this)">⎘</button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/concordium_contracts_common/lib.rs.html#1-95" title="goto source code">[src]</a></span></h1><div class="docblock"><p>This library provides the core API that can be used to write smart contracts
+for the Concordium blockchain in the Rust programming language. It aims to
+provide safe wrappers around the core primitives exposed by the chain and
+accessible to smart contracts.</p>
+<p>By default the library will be linked with the
+<a href="https://doc.rust-lang.org/std/">std</a> crate, the rust standard library,
+however to minimize code size this library supports toggling compilation
+with the <code>#![no_std]</code> attribute via the feature <code>std</code> which is enabled by
+default.</p>
+<p>To use this library without the <code>std</code> feature you have to disable it, which
+can be done, for example, as follows.</p>
+<pre><code class="language-toml">[dependencies.concordium-contracts-common]
+default-features = false
+</code></pre>
+<p>In your project’s <code>Cargo.toml</code> file.</p>
+<h2 id="wasm32" class="section-header"><a href="#wasm32">Wasm32</a></h2>
+<p>This crate supports both compilation to x86 native code, as well as
+to the wasm32-unknown-unknown target. When there is a conflict, the
+preference should always be to make the wasm32-unknown-unknown the more
+efficient one.</p>
+<h2 id="concordium-std" class="section-header"><a href="#concordium-std"><code>concordium-std</code></a></h2>
+<p>The functionality in this library is re-exported via the <a href="https://crates.io/crates/concordium-std">concordium-std</a>
+crate, which is intended as the entry-point for development of smart
+contracts in Rust. <code>concordium-std</code> adds a number of helper macros and
+traits on top of the basic functionality available here.</p>
+<h2 id="features" class="section-header"><a href="#features">Features</a></h2>
+<p>This library supports two features, <code>std</code> and <code>derive-serde</code>. The former one
+is enabled by default, but the latter is disabled.</p>
+<p>The <code>derive-serde</code> feature is intended to be used by off-chain tools to make
+it easier to test smart contracts, as well as to inter-operate with them
+once they are deployed. It can also be used in unit tests, since enabling
+this feature exposes additional trait implementations on the defined types.</p>
+<p>The reason these trait implementations are not enabled by default is that
+they have non-trivial dependencies, which tends to increase compilation
+times, as well as code size, if used accidentally.</p>
+<h1 id="traits" class="section-header"><a href="#traits">Traits</a></h1>
+<p>The main traits defined in this crate deal with binary serialization.
+The general principles behind serialization is to consistently use
+little-endian encoding. The native endianess of Wasm32 (when, e.g.,
+reading from linear memory) is little endian, thus having serialization in
+little endian means as little overhead as possible.</p>
+<p>The two core traits are <a href="./trait.Serial.html">Serial</a> and
+<a href="./trait.Deserial.html">Deserial</a>. The rest are helper traits there for
+convenience.</p>
+<p>In particular, the <a href="./trait.Get.html">Get</a> is noteworthy. It makes it
+possible to omit writing the type explicitly, if it is already clear from
+the context, allowing us to write, e.g.,</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+   <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;</pre></div>
+<p>instead of</p>
+
+<div class="example-wrap"><pre class="rust rust-example-rendered">
+   <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">u8::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;</pre></div>
+<p>The <a href="./trait.Get.html">Get</a> trait has a generic implementation in terms of
+<a href="./trait.Deserial.html">Deserial</a>, so only the latter should be implemented
+for new types.</p>
+</div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<table><tr class="module-item"><td><a class="mod" href="attributes/index.html" title="concordium_contracts_common::attributes mod">attributes</a></td><td class="docblock-short"><p>Currently defined attributes possible in a policy.</p>
+</td></tr><tr class="module-item"><td><a class="mod" href="constants/index.html" title="concordium_contracts_common::constants mod">constants</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="mod" href="schema/index.html" title="concordium_contracts_common::schema mod">schema</a></td><td class="docblock-short"><p>Types related to contract schemas.
+These are optional annotations in modules that allow
+the users of smart contracts to interact with them in
+a way that is better than constructing raw bytes as parameters.</p>
+</td></tr></table><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.AccountAddress.html" title="concordium_contracts_common::AccountAddress struct">AccountAddress</a></td><td class="docblock-short"><p>Address of an account, as raw bytes.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Amount.html" title="concordium_contracts_common::Amount struct">Amount</a></td><td class="docblock-short"><p>The type of amounts on the chain</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AttributeTag.html" title="concordium_contracts_common::AttributeTag struct">AttributeTag</a></td><td class="docblock-short"><p>Tag of an attribute. See the module <a href="./attributes/index.html">attributes</a>
+for the currently supported attributes.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ChainMetadata.html" title="concordium_contracts_common::ChainMetadata struct">ChainMetadata</a></td><td class="docblock-short"><p>Chain metadata accessible to both receive and init methods.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ContractAddress.html" title="concordium_contracts_common::ContractAddress struct">ContractAddress</a></td><td class="docblock-short"><p>Address of a contract.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ContractName.html" title="concordium_contracts_common::ContractName struct">ContractName</a></td><td class="docblock-short"><p>A contract name. Expected format: “init_&lt;contract_name&gt;”.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Cursor.html" title="concordium_contracts_common::Cursor struct">Cursor</a></td><td class="docblock-short"><p>Add offset tracking inside a data structure.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Duration.html" title="concordium_contracts_common::Duration struct">Duration</a></td><td class="docblock-short"><p>Duration of time in milliseconds.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.EntrypointName.html" title="concordium_contracts_common::EntrypointName struct">EntrypointName</a></td><td class="docblock-short"><p>An entrypoint name (borrowed version). Expected format:
+“&lt;func_name&gt;” where</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.OwnedContractName.html" title="concordium_contracts_common::OwnedContractName struct">OwnedContractName</a></td><td class="docblock-short"><p>A contract name (owned version). Expected format: “init_&lt;contract_name&gt;”.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.OwnedEntrypointName.html" title="concordium_contracts_common::OwnedEntrypointName struct">OwnedEntrypointName</a></td><td class="docblock-short"><p>An entrypoint name (owned version). Expected format:
+“&lt;func_name&gt;” where</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.OwnedParameter.html" title="concordium_contracts_common::OwnedParameter struct">OwnedParameter</a></td><td class="docblock-short"><p>Parameter to the init function or entrypoint. Owned version.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.OwnedReceiveName.html" title="concordium_contracts_common::OwnedReceiveName struct">OwnedReceiveName</a></td><td class="docblock-short"><p>A receive name (owned version). Expected format:
+“&lt;contract_name&gt;.&lt;func_name&gt;”.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Parameter.html" title="concordium_contracts_common::Parameter struct">Parameter</a></td><td class="docblock-short"><p>Parameter to the init function or entrypoint.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ParseError.html" title="concordium_contracts_common::ParseError struct">ParseError</a></td><td class="docblock-short"><p>Zero-sized type to represent an error when reading bytes and deserializing.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Policy.html" title="concordium_contracts_common::Policy struct">Policy</a></td><td class="docblock-short"><p>Policy on the credential of the account.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ReceiveName.html" title="concordium_contracts_common::ReceiveName struct">ReceiveName</a></td><td class="docblock-short"><p>A receive name. Expected format: “&lt;contract_name&gt;.&lt;func_name&gt;”.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Timestamp.html" title="concordium_contracts_common::Timestamp struct">Timestamp</a></td><td class="docblock-short"><p>Timestamp represented as milliseconds since unix epoch.</p>
+</td></tr></table><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<table><tr class="module-item"><td><a class="enum" href="enum.Address.html" title="concordium_contracts_common::Address enum">Address</a></td><td class="docblock-short"><p>Either an address of an account, or contract.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.AmountParseError.html" title="concordium_contracts_common::AmountParseError enum">AmountParseError</a></td><td class="docblock-short"><p>An error indicating why parsing of an amount failed.
+Since amount parsing is typically a user-facing activity
+this is fairly precise, so we can notify the user why we failed, and what
+they can do to fix it.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.NewContractNameError.html" title="concordium_contracts_common::NewContractNameError enum">NewContractNameError</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="enum" href="enum.NewReceiveNameError.html" title="concordium_contracts_common::NewReceiveNameError enum">NewReceiveNameError</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="enum" href="enum.ParseDurationError.html" title="concordium_contracts_common::ParseDurationError enum">ParseDurationError</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="enum" href="enum.ParseTimestampError.html" title="concordium_contracts_common::ParseTimestampError enum">ParseTimestampError</a></td><td class="docblock-short"></td></tr><tr class="module-item"><td><a class="enum" href="enum.SeekFrom.html" title="concordium_contracts_common::SeekFrom enum">SeekFrom</a></td><td class="docblock-short"><p>This is the equivalent to the
+<a href="https://doc.rust-lang.org/std/io/enum.SeekFrom.html">SeekFrom</a> type from
+the rust standard library, but reproduced here to avoid dependency on
+<code>std::io</code>.</p>
+</td></tr></table><h2 id="constants" class="section-header"><a href="#constants">Constants</a></h2>
+<table><tr class="module-item"><td><a class="constant" href="constant.ACCOUNT_ADDRESS_SIZE.html" title="concordium_contracts_common::ACCOUNT_ADDRESS_SIZE constant">ACCOUNT_ADDRESS_SIZE</a></td><td class="docblock-short"><p>Size of an account address when serialized in binary.
+NB: This is different from the Base58 representation.</p>
+</td></tr></table><h2 id="traits-1" class="section-header"><a href="#traits-1">Traits</a></h2>
+<table><tr class="module-item"><td><a class="trait" href="trait.Deserial.html" title="concordium_contracts_common::Deserial trait">Deserial</a></td><td class="docblock-short"><p>The <code>Deserial</code> trait provides a means of reading structures from
+byte-sources (<code>Read</code>).</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Get.html" title="concordium_contracts_common::Get trait">Get</a></td><td class="docblock-short"><p>A more convenient wrapper around <code>Deserial</code> that makes it easier to write
+deserialization code. It has a blanked implementation for any read and
+serialize pair. The key idea is that the type to deserialize is inferred
+from the context, enabling one to write, for example,</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Read.html" title="concordium_contracts_common::Read trait">Read</a></td><td class="docblock-short"><p>The <code>Read</code> trait provides a means of reading from byte streams.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Seek.html" title="concordium_contracts_common::Seek trait">Seek</a></td><td class="docblock-short"><p>The <code>Seek</code> trait provides a cursor which can be moved within a stream of
+bytes. This is essentially a copy of
+<a href="https://doc.rust-lang.org/std/io/trait.Seek.html">std::io::Seek</a>, but
+avoiding its dependency on <code>std::io::Error</code>, and the associated code size
+increase.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Serial.html" title="concordium_contracts_common::Serial trait">Serial</a></td><td class="docblock-short"><p>The <code>Serial</code> trait provides a means of writing structures into byte-sinks
+(<code>Write</code>).</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Serialize.html" title="concordium_contracts_common::Serialize trait">Serialize</a></td><td class="docblock-short"><p>The <code>Serialize</code> trait provides a means of writing structures into byte-sinks
+(<code>Write</code>) or reading structures from byte sources (<code>Read</code>).</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.Write.html" title="concordium_contracts_common::Write trait">Write</a></td><td class="docblock-short"><p>The <code>Write</code> trait provides functionality for writing to byte streams.</p>
+</td></tr></table><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<table><tr class="module-item"><td><a class="fn" href="fn.deserial_hashmap_no_length.html" title="concordium_contracts_common::deserial_hashmap_no_length fn">deserial_hashmap_no_length</a></td><td class="docblock-short"><p>Read a <a href="https://doc.rust-lang.org/std/collections/struct.HashMap.html">HashMap</a> as a list of key-value pairs given some length.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.deserial_hashset_no_length.html" title="concordium_contracts_common::deserial_hashset_no_length fn">deserial_hashset_no_length</a></td><td class="docblock-short"><p>Read a <a href="https://doc.rust-lang.org/std/collections/struct.HashSet.html">HashSet</a> as a list of keys, given some length.
+NB: This ensures there are no duplicates.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.deserial_map_no_length.html" title="concordium_contracts_common::deserial_map_no_length fn">deserial_map_no_length</a></td><td class="docblock-short"><p>Read a <a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html">BTreeMap</a> as a list of key-value pairs given some length.
+NB: This ensures there are no duplicates, hence the specialized type.
+Moreover this will only succeed if keys are listed in order.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.deserial_map_no_length_no_order_check.html" title="concordium_contracts_common::deserial_map_no_length_no_order_check fn">deserial_map_no_length_no_order_check</a></td><td class="docblock-short"><p>Read a <a href="https://doc.rust-lang.org/std/collections/struct.BTreeMap.html">BTreeMap</a> as a list of key-value pairs given some length.
+Slightly faster version of <code>deserial_map_no_length</code> as it is skipping the
+order checking</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.deserial_set_no_length.html" title="concordium_contracts_common::deserial_set_no_length fn">deserial_set_no_length</a></td><td class="docblock-short"><p>Read a <a href="https://doc.rust-lang.org/std/collections/struct.BTreeSet.html">BTreeSet</a> as a list of keys, given some length.
+NB: This ensures there are no duplicates, hence the specialized type.
+Moreover this will only succeed if keys are listed in order.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.deserial_set_no_length_no_order_check.html" title="concordium_contracts_common::deserial_set_no_length_no_order_check fn">deserial_set_no_length_no_order_check</a></td><td class="docblock-short"><p>Read a <a href="https://doc.rust-lang.org/std/collections/struct.BTreeSet.html">BTreeSet</a> as an list of key-value pairs given some length.
+Slightly faster version of <code>deserial_set_no_length</code> as it is skipping the
+order checking. The only check that is made to the set is that there are no
+duplicates.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.deserial_vector_no_length.html" title="concordium_contracts_common::deserial_vector_no_length fn">deserial_vector_no_length</a></td><td class="docblock-short"><p>Read a vector given a length.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.from_bytes.html" title="concordium_contracts_common::from_bytes fn">from_bytes</a></td><td class="docblock-short"><p>Dual to <code>to_bytes</code>.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.is_valid_entrypoint_name.html" title="concordium_contracts_common::is_valid_entrypoint_name fn">is_valid_entrypoint_name</a></td><td class="docblock-short"><p>Check whether the given string is a valid contract entrypoint name.
+This is the case if and only if</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.serial_hashmap_no_length.html" title="concordium_contracts_common::serial_hashmap_no_length fn">serial_hashmap_no_length</a></td><td class="docblock-short"><p>Write a HashMap as a list of key-value pairs in to particular order, without
+the length information.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.serial_hashset_no_length.html" title="concordium_contracts_common::serial_hashset_no_length fn">serial_hashset_no_length</a></td><td class="docblock-short"><p>Write a <a href="https://doc.rust-lang.org/std/collections/struct.HashSet.html">HashSet</a> as a list of keys in no particular order, without the length information.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.serial_map_no_length.html" title="concordium_contracts_common::serial_map_no_length fn">serial_map_no_length</a></td><td class="docblock-short"><p>Write a Map as a list of key-value pairs ordered by the key, without the
+length information.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.serial_set_no_length.html" title="concordium_contracts_common::serial_set_no_length fn">serial_set_no_length</a></td><td class="docblock-short"><p>Write a <a href="https://doc.rust-lang.org/std/collections/struct.BTreeSet.html">BTreeSet</a> as an ascending list of keys, without the length information.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.serial_vector_no_length.html" title="concordium_contracts_common::serial_vector_no_length fn">serial_vector_no_length</a></td><td class="docblock-short"><p>Write a slice of elements, without including length information.
+This is intended to be used either when the length is statically known,
+or when the length is serialized independently as part of a bigger
+structure.</p>
+</td></tr><tr class="module-item"><td><a class="fn" href="fn.to_bytes.html" title="concordium_contracts_common::to_bytes fn">to_bytes</a></td><td class="docblock-short"><p>Serialize the given value to a freshly allocated vector of bytes using
+the provided <code>Serial</code> instance.</p>
+</td></tr></table><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<table><tr class="module-item"><td><a class="type" href="type.AttributeValue.html" title="concordium_contracts_common::AttributeValue type">AttributeValue</a></td><td class="docblock-short"><p>A borrowed attribute value. The slice will have at most 31 bytes.
+The meaning of the bytes is dependent on the type of the attribute.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.HashMap.html" title="concordium_contracts_common::HashMap type">HashMap</a></td><td class="docblock-short"><p>Reexport of the <code>HashMap</code> from <code>hashbrown</code> with the default hasher set to
+the <code>fnv</code> hash function.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.HashSet.html" title="concordium_contracts_common::HashSet type">HashSet</a></td><td class="docblock-short"><p>Reexport of the <code>HashSet</code> from <code>hashbrown</code> with the default hasher set to
+the <code>fnv</code> hash function.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.IdentityProvider.html" title="concordium_contracts_common::IdentityProvider type">IdentityProvider</a></td><td class="docblock-short"><p>Index of the identity provider on the chain.
+An identity provider with the given index will not be replaced,
+so this is a stable identifier.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.OwnedAttributeValue.html" title="concordium_contracts_common::OwnedAttributeValue type">OwnedAttributeValue</a></td><td class="docblock-short"><p>An owned counterpart of <code>AttributeValue</code>, more convenient for testing.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.OwnedPolicy.html" title="concordium_contracts_common::OwnedPolicy type">OwnedPolicy</a></td><td class="docblock-short"><p>A policy with a vector of attributes, fully allocated and owned.
+This is in contrast to a policy which is lazily read from a read source.
+The latter is useful for efficiency, this type is more useful for testing
+since the values are easier to construct.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.ParseResult.html" title="concordium_contracts_common::ParseResult type">ParseResult</a></td><td class="docblock-short"><p>A type alias used to indicate that the value is a result
+of parsing from binary via the <code>Serial</code> instance.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.SlotTime.html" title="concordium_contracts_common::SlotTime type">SlotTime</a></td><td class="docblock-short"><p>Time at the beginning of the current slot, in miliseconds since unix epoch.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="concordium_contracts_common" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+    <script src="../main.js"></script></body></html>

@@ -375,7 +375,7 @@
     <span class="kw">pub</span> <span class="ident">genesis_index</span>:                  <span class="ident">GenesisIndex</span>,
     <span class="doccomment">/// Block hash of the genesis block of current era, i.e., since the last</span>
     <span class="doccomment">/// protocol update. Initially this is equal to</span>
-    <span class="doccomment">/// [ConsensusInfo::genesis_hash]&#39;.</span>
+    <span class="doccomment">/// [`genesis_block`](Self::genesis_block)&#39;.</span>
     <span class="kw">pub</span> <span class="ident">current_era_genesis_block</span>:      <span class="ident">BlockHash</span>,
     <span class="doccomment">/// Time when the current era started.</span>
     <span class="kw">pub</span> <span class="ident">current_era_genesis_time</span>:       <span class="ident">chrono::DateTime</span><span class="op">&lt;</span><span class="ident">chrono::Utc</span><span class="op">&gt;</span>,

@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["pairing"] = [{"text":"impl <a class=\"trait\" href=\"ff/trait.ScalarEngine.html\" title=\"trait ff::ScalarEngine\">ScalarEngine</a> for <a class=\"struct\" href=\"pairing/bls12_381/struct.Bls12.html\" title=\"struct pairing::bls12_381::Bls12\">Bls12</a>","synthetic":false,"types":["pairing::bls12_381::Bls12"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

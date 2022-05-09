@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["COUNTRY_OF_RESIDENCE",""],["DOB",""],["FIRST_NAME",""],["ID_DOC_EXPIRES_AT",""],["ID_DOC_ISSUED_AT",""],["ID_DOC_ISSUER",""],["ID_DOC_NUMBER",""],["ID_DOC_TYPE",""],["LAST_NAME",""],["NATIONALITY",""],["NATIONAL_ID_NO",""],["SEX",""],["TAX_ID_NO",""]]});

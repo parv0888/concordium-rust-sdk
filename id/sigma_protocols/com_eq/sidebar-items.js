@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ComEq",""],["ComEqSecret",""],["CommittedPoints",""],["Witness",""]]});

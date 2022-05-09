@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["prove_attribute_in_range","Function for proving that an attribute inside a commitment is in a range of the form [a,b). The parameters are"],["prove_ownership_of_account","Function for proving ownership of an account. The parameters are"]]});

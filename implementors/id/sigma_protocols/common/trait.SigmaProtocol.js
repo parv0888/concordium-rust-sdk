@@ -1,0 +1,4 @@
+(function() {var implementors = {};
+implementors["encrypted_transfers"] = [{"text":"impl&lt;C:&nbsp;<a class=\"trait\" href=\"curve_arithmetic/curve_arithmetic/trait.Curve.html\" title=\"trait curve_arithmetic::curve_arithmetic::Curve\">Curve</a>&gt; <a class=\"trait\" href=\"id/sigma_protocols/common/trait.SigmaProtocol.html\" title=\"trait id::sigma_protocols::common::SigmaProtocol\">SigmaProtocol</a> for <a class=\"struct\" href=\"encrypted_transfers/proofs/struct.EncTrans.html\" title=\"struct encrypted_transfers::proofs::EncTrans\">EncTrans</a>&lt;C&gt;","synthetic":false,"types":["encrypted_transfers::proofs::enc_trans::EncTrans"]}];
+implementors["id"] = [];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

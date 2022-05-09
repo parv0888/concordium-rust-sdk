@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["AggregateDlog",""],["Witness","Aggregate dlog witness. We deliberately make it opaque."]],"type":[["Proof","Convenient alias for aggregate dlog proof"]]});

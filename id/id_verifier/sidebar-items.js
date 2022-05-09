@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["verify_account_ownership","Function for verifying account ownership. The arguments are"],["verify_attribute","Function for opening an attribute inside a commitment. The arguments are"],["verify_attribute_range","Function for verifying a range proof about an attribute inside a commitment. The arguments are"]]});

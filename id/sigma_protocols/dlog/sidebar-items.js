@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Dlog",""],["DlogSecret",""],["Witness","Dlog witness. We deliberately make it opaque. We implement Copy to make the interface easier to use."]],"type":[["Proof","Convenient alias for aggregate dlog proof"]]});

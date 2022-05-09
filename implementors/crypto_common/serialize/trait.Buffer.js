@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["random_oracle"] = [{"text":"impl <a class=\"trait\" href=\"crypto_common/serialize/trait.Buffer.html\" title=\"trait crypto_common::serialize::Buffer\">Buffer</a> for <a class=\"struct\" href=\"random_oracle/struct.RandomOracle.html\" title=\"struct random_oracle::RandomOracle\">RandomOracle</a>","synthetic":false,"types":["random_oracle::RandomOracle"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

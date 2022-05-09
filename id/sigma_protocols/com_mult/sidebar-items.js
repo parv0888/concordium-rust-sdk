@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["ComMult","The ComMult sigma proof instance."],["ComMultSecret",""],["Witness",""]]});

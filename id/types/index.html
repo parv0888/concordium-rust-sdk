@@ -1,0 +1,188 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Main types used in the identity layer, and their serialization implementations."><meta name="keywords" content="rust, rustlang, rust-lang, types"><title>id::types - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
+<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../id/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a><p class="location">Module types</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#constants">Constants</a></li><li><a href="#statics">Statics</a></li><li><a href="#traits">Traits</a></li><li><a href="#functions">Functions</a></li><li><a href="#types">Type Definitions</a></li></ul></div><p class="location"><a href="../index.html">id</a></p><div id="sidebar-vars" data-name="types" data-ty="mod" data-relpath="../"></div><script defer src="../sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
+                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../index.html">id</a>::<wbr><a class="mod" href="">types</a><button id="copy-path" onclick="copy_path(this)">⎘</button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../src/id/types.rs.html#1-2247" title="goto source code">[src]</a></span></h1><div class="docblock"><p>Main types used in the identity layer, and their serialization
+implementations.</p>
+</div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<table><tr class="module-item"><td><a class="struct" href="struct.AccCredentialInfo.html" title="id::types::AccCredentialInfo struct">AccCredentialInfo</a></td><td class="docblock-short"><p>Private and public data chosen by the credential holder before the
+interaction with the identity provider. The credential holder chooses a prf
+key and an attribute list.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AccountAddress.html" title="id::types::AccountAddress struct">AccountAddress</a></td><td class="docblock-short"><p>Address of an account. Textual representation uses base58check encoding with
+version byte 1.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AccountCredentialMessage.html" title="id::types::AccountCredentialMessage struct">AccountCredentialMessage</a></td><td class="docblock-short"><p>Account credential message is an account credential together with a message
+expiry. This is the payload that is sent to the chain when new accounts are
+created, either initial accounts or normal accounts.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AccountKeys.html" title="id::types::AccountKeys struct">AccountKeys</a></td><td class="docblock-short"><p>All account keys indexed by credentials.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AccountOwnershipProof.html" title="id::types::AccountOwnershipProof struct">AccountOwnershipProof</a></td><td class="docblock-short"><p>A list of pairs of index of key and Ed25519 signatures on the challenge
+of the proofs of the credential
+The list should be non-empty and at most 255 elements long, and have no
+duplicates. The current choice of data structure disallows duplicates by
+design.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AccountOwnershipSignature.html" title="id::types::AccountOwnershipSignature struct">AccountOwnershipSignature</a></td><td class="docblock-short"><p>Signature produced by the account holder when deploying a credential that
+ensures that they are the owner of the account keys that are part of the
+credential.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AnonymityRevocationRecord.html" title="id::types::AnonymityRevocationRecord struct">AnonymityRevocationRecord</a></td><td class="docblock-short"><p>Data that needs to be stored by the identity provider to support anonymity
+revocation.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ArData.html" title="id::types::ArData struct">ArData</a></td><td class="docblock-short"><p>Private and public data on an anonymity revoker.
+This is used purely off-chain.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ArIdentity.html" title="id::types::ArIdentity struct">ArIdentity</a></td><td class="docblock-short"><p>Identity of the anonymity revoker on the chain. This defines their
+evaluation point for secret sharing, and thus it cannot be 0.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ArInfo.html" title="id::types::ArInfo struct">ArInfo</a></td><td class="docblock-short"><p>Information on a single anonymity revoker held by the IP.
+Typically an IP will hold a more than one.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ArInfos.html" title="id::types::ArInfos struct">ArInfos</a></td><td class="docblock-short"><p>Collection of anonymity revokers.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AttributeList.html" title="id::types::AttributeList struct">AttributeList</a></td><td class="docblock-short"><p>An attribute list that is part of a normal credential. It consists of some
+mandatory attributes and some user selected attributes.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AttributeStringTag.html" title="id::types::AttributeStringTag struct">AttributeStringTag</a></td><td class="docblock-short"><p>Attribute tags have two representations. The “internal” one which is a u8
+element, and an external, human-readable one, which is a string. There is a
+defined mapping between them defined by the <a href="constant.ATTRIBUTE_NAMES.html" title="ATTRIBUTE_NAMES">ATTRIBUTE_NAMES</a> array (indices
+are internal tags, values at those indices are string tags).</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.AttributeTag.html" title="id::types::AttributeTag struct">AttributeTag</a></td><td class="docblock-short"><p>Attribute tags have two representations. The “internal” one which is a u8
+element, and an external, human-readable one, which is a string. There is a
+defined mapping between them defined by the <a href="constant.ATTRIBUTE_NAMES.html" title="ATTRIBUTE_NAMES">ATTRIBUTE_NAMES</a> array (indices
+are internal tags, values at those indices are string tags).
+The JSON instances for this type are via the <a href="struct.AttributeStringTag.html" title="AttributeStringTag">AttributeStringTag</a> type
+defined below.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ChainArData.html" title="id::types::ChainArData struct">ChainArData</a></td><td class="docblock-short"><p>Data relating to a single anonymity revoker sent by the account holder to
+the chain.
+Typically a vector of these will be sent to the chain.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ChainArDecryptedData.html" title="id::types::ChainArDecryptedData struct">ChainArDecryptedData</a></td><td class="docblock-short"><p>Data structure for when a anonymity revoker decrypts its encrypted share
+This is the decrypted counterpart of ChainArData.
+This structure contains an explicit ArIdentity in contrast to the
+<code>ChainArData</code>. The reason for that is the use-case for this structure is
+that an individual anonymity revoker decrypts its share and sends it, and we
+need the context for that. In the other cases the data is always in the
+context of a credential or pre-identity object, and as a result part of the
+map.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.ChoiceArParameters.html" title="id::types::ChoiceArParameters struct">ChoiceArParameters</a></td><td class="docblock-short"><p>Choice of anonymity revocation parameters</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CommitmentsRandomness.html" title="id::types::CommitmentsRandomness struct">CommitmentsRandomness</a></td><td class="docblock-short"><p>Randomness that is generated to commit to attributes when creating a
+credential. This randomness is needed later on if the user wishes to do
+something with those commitments, for example reveal the commited value, or
+prove a property of the value.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CredDeploymentProofs.html" title="id::types::CredDeploymentProofs struct">CredDeploymentProofs</a></td><td class="docblock-short"><p>Proofs that the credential is well-formed.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CredentialData.html" title="id::types::CredentialData struct">CredentialData</a></td><td class="docblock-short"><p>Credential data needed by the account holder to generate proofs to deploy
+the credential object. This contains all the keys on the credential at the
+moment of its deployment. If this creates the account then the account
+starts with exactly these keys.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CredentialDeploymentCommitments.html" title="id::types::CredentialDeploymentCommitments struct">CredentialDeploymentCommitments</a></td><td class="docblock-short"><p>The commitments sent by the account holder to the chain in order to
+deploy credentials</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CredentialDeploymentInfo.html" title="id::types::CredentialDeploymentInfo struct">CredentialDeploymentInfo</a></td><td class="docblock-short"><p>A credential with attributes, public keys, and proofs that it is
+well-formed.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CredentialDeploymentValues.html" title="id::types::CredentialDeploymentValues struct">CredentialDeploymentValues</a></td><td class="docblock-short"><p>Values (as opposed to proofs) in credential deployment.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CredentialHolderInfo.html" title="id::types::CredentialHolderInfo struct">CredentialHolderInfo</a></td><td class="docblock-short"><p>Private credential holder information. A user maintaints these
+through many different interactions with the identity provider and
+the chain.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.CredentialPublicKeys.html" title="id::types::CredentialPublicKeys struct">CredentialPublicKeys</a></td><td class="docblock-short"><p>Public credential keys currently on the account, together with the threshold
+needed for a valid signature on a transaction.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Description.html" title="id::types::Description struct">Description</a></td><td class="docblock-short"><p>Description either of an anonymity revoker or identity provider.
+Metadata that should be visible on the chain.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.GlobalContext.html" title="id::types::GlobalContext struct">GlobalContext</a></td><td class="docblock-short"><p>A set of cryptographic parameters that are particular to the chain and
+shared by everybody that interacts with the chain.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IdCredentials.html" title="id::types::IdCredentials struct">IdCredentials</a></td><td class="docblock-short"><p>In our case C: will be G1 and T will be G1 for now A secret credential is
+a scalar raising a generator to this scalar gives a public credentials. If
+two groups have the same scalar field we can have two different public
+credentials from the same secret credentials.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IdObjectUseData.html" title="id::types::IdObjectUseData struct">IdObjectUseData</a></td><td class="docblock-short"><p>Data needed to use the retrieved identity object to generate credentials.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IdOwnershipProofs.html" title="id::types::IdOwnershipProofs struct">IdOwnershipProofs</a></td><td class="docblock-short"><p>This structure contains all proofs, which are required to prove ownership of
+an identity, in a credential deployment.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IdentityObject.html" title="id::types::IdentityObject struct">IdentityObject</a></td><td class="docblock-short"><p>The data we get back from the identity provider.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.InitialAccountData.html" title="id::types::InitialAccountData struct">InitialAccountData</a></td><td class="docblock-short"><p>This contains all the keys on the account of the initial credential
+deployment.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.InitialCredentialDeploymentInfo.html" title="id::types::InitialCredentialDeploymentInfo struct">InitialCredentialDeploymentInfo</a></td><td class="docblock-short"><p>Information needed to create an <code>initial</code> account. This account is created
+on behalf of the user by the identity provider.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.InitialCredentialDeploymentValues.html" title="id::types::InitialCredentialDeploymentValues struct">InitialCredentialDeploymentValues</a></td><td class="docblock-short"><p>Values in initial credential deployment.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpAnonymityRevokers.html" title="id::types::IpAnonymityRevokers struct">IpAnonymityRevokers</a></td><td class="docblock-short"><p>Anonymity revokers associated with a single identity provider</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpArData.html" title="id::types::IpArData struct">IpArData</a></td><td class="docblock-short"><p>The data relating to a single anonymity revoker
+sent by the account holder to the identity provider.
+Typically the account holder will send a vector of these.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpArDecryptedData.html" title="id::types::IpArDecryptedData struct">IpArDecryptedData</a></td><td class="docblock-short"><p>Data structure for when a anonymity revoker decrypts its encrypted share
+This is the decrypted counterpart of IpArData.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpCdiSignature.html" title="id::types::IpCdiSignature struct">IpCdiSignature</a></td><td class="docblock-short"><p>Signature by the identity provider on the initial account creation. This is
+an ordinary ed25519 signature for performance reasons, and not the complex
+BLS signature that the identity provider signs normal credentials with.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpContext.html" title="id::types::IpContext struct">IpContext</a></td><td class="docblock-short"><p>Context needed to generate pre-identity object as well as to check it.
+This context is derived from the public information of the identity
+provider, as well as some other global parameters which can be found in the
+struct ‘GlobalContext’.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpData.html" title="id::types::IpData struct">IpData</a></td><td class="docblock-short"><p>Private and public data on an identity provider.
+This is used purely off-chain.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpIdentity.html" title="id::types::IpIdentity struct">IpIdentity</a></td><td class="docblock-short"><p>A succinct identifier of an identity provider on the chain.
+In credential deployments, and other interactions with the chain this is
+used to identify which identity provider is meant.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpInfo.html" title="id::types::IpInfo struct">IpInfo</a></td><td class="docblock-short"><p>Public information about an identity provider.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpInfos.html" title="id::types::IpInfos struct">IpInfos</a></td><td class="docblock-short"><p>Collection of identity providers.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.IpMetadata.html" title="id::types::IpMetadata struct">IpMetadata</a></td><td class="docblock-short"><p>Metadata that we need off-chain for various purposes, but should not go on
+the chain.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.Policy.html" title="id::types::Policy struct">Policy</a></td><td class="docblock-short"><p>A policy is (currently) revealed values of attributes that are part of the
+identity object. Policies are part of credentials.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.PreIdentityObject.html" title="id::types::PreIdentityObject struct">PreIdentityObject</a></td><td class="docblock-short"><p>Information sent from the account holder to the identity provider.
+This includes only the cryptographic parts, the attribute list is
+in a different object below.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.PreIdentityProof.html" title="id::types::PreIdentityProof struct">PreIdentityProof</a></td><td class="docblock-short"><p>Proof that the data sent to the identity provider
+is well-formed.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.PublicInformationForIp.html" title="id::types::PublicInformationForIp struct">PublicInformationForIp</a></td><td class="docblock-short"><p>This struct contains information from the account holder that the identity
+provider needs in order to create the initial credential for the account
+holder. It contains idCredPub, regId and the account keys.
+It is part of the preidentity object.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.SignatureThreshold.html" title="id::types::SignatureThreshold struct">SignatureThreshold</a></td><td class="docblock-short"><p>Threshold for the number of signatures required.
+The values of this type must maintain the property that they are not 0.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.UnsignedCredentialDeploymentInfo.html" title="id::types::UnsignedCredentialDeploymentInfo struct">UnsignedCredentialDeploymentInfo</a></td><td class="docblock-short"><p>This is the CredentialDeploymentInfo structure, that instead of containing
+CredDeploymentProofs, it contains UnsignedCredDeploymentProofs, and
+the reg_id that also has to be signed.</p>
+</td></tr><tr class="module-item"><td><a class="struct" href="struct.YearMonth.html" title="id::types::YearMonth struct">YearMonth</a></td><td class="docblock-short"><p>YearMonth in Gregorian calendar.
+The year is in Gregorian calendar and months are numbered from 1, i.e.,
+1 is January, …, 12 is December.
+Year must be a 4 digit year, i.e., between 1000 and 9999.</p>
+</td></tr></table><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<table><tr class="module-item"><td><a class="enum" href="enum.AccountCredential.html" title="id::types::AccountCredential enum">AccountCredential</a></td><td class="docblock-short"><p>A type encapsulating both types of credentials.
+Serialization must match the one in Haskell.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.AccountCredentialValues.html" title="id::types::AccountCredentialValues enum">AccountCredentialValues</a></td><td class="docblock-short"><p>A type encapsulating both types of credential values, analogous to
+AccountCredential.
+Serialization must match the one in Haskell.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.AccountCredentialWithoutProofs.html" title="id::types::AccountCredentialWithoutProofs enum">AccountCredentialWithoutProofs</a></td><td class="docblock-short"><p>Account credential with values and commitments, but without proofs.
+Serialization must match the serializaiton of <code>AccountCredential</code> in
+Haskell.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.SchemeId.html" title="id::types::SchemeId enum">SchemeId</a></td><td class="docblock-short"><p>Which signature scheme is being used. Currently only one is supported.</p>
+</td></tr><tr class="module-item"><td><a class="enum" href="enum.VerifyKey.html" title="id::types::VerifyKey enum">VerifyKey</a></td><td class="docblock-short"><p>Public AKA verification key for a given scheme. Only ed25519 is currently
+supported.</p>
+</td></tr></table><h2 id="constants" class="section-header"><a href="#constants">Constants</a></h2>
+<table><tr class="module-item"><td><a class="constant" href="constant.ACCOUNT_ADDRESS_SIZE.html" title="id::types::ACCOUNT_ADDRESS_SIZE constant">ACCOUNT_ADDRESS_SIZE</a></td><td class="docblock-short"><p>Size in bytes of an account address in binary encoding.</p>
+</td></tr><tr class="module-item"><td><a class="constant" href="constant.ATTRIBUTE_NAMES.html" title="id::types::ATTRIBUTE_NAMES constant">ATTRIBUTE_NAMES</a></td><td class="docblock-short"><p>NB: The length of this list must be less than 256.
+This must be consistent with the value of attributeNames in
+haskell-src/Concordium/ID/Types.hs</p>
+</td></tr><tr class="module-item"><td><a class="constant" href="constant.ATTRIBUTE_TAG_LEI.html" title="id::types::ATTRIBUTE_TAG_LEI constant">ATTRIBUTE_TAG_LEI</a></td><td class="docblock-short"><p>Attribute tag for the LEI attribute.</p>
+</td></tr><tr class="module-item"><td><a class="constant" href="constant.CHUNK_SIZE.html" title="id::types::CHUNK_SIZE constant">CHUNK_SIZE</a></td><td class="docblock-short"><p>Chunk size for encryption of prf key</p>
+</td></tr><tr class="module-item"><td><a class="constant" href="constant.NUM_BULLETPROOF_GENERATORS.html" title="id::types::NUM_BULLETPROOF_GENERATORS constant">NUM_BULLETPROOF_GENERATORS</a></td><td class="docblock-short"><p>This is currently the number required, since the only
+place these are used is for encrypted amounts.</p>
+</td></tr></table><h2 id="statics" class="section-header"><a href="#statics">Statics</a></h2>
+<table><tr class="module-item"><td><a class="static" href="static.PI_DIGITS.html" title="id::types::PI_DIGITS static">PI_DIGITS</a></td><td class="docblock-short"><p>NB: This includes digits of PI (starting with 314…) as ASCII characters
+this could be what is desired, but it is important to be aware of it.</p>
+</td></tr></table><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<table><tr class="module-item"><td><a class="trait" href="trait.Attribute.html" title="id::types::Attribute trait">Attribute</a></td><td class="docblock-short"><p>An abstraction of an attribute. In the id library internals the only thing
+we care about attributes is that they can be encoded as field elements.
+The meaning of attributes is then assigned at the outer layers when the
+library is used. In order to make the library as generic (and ultimately
+simple) as possible this trait is used.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.CredentialDataWithSigning.html" title="id::types::CredentialDataWithSigning trait">CredentialDataWithSigning</a></td><td class="docblock-short"><p>A helper trait to allow signing PublicInformationForIP in an implementation
+that does not give access to the secret keys.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.HasArPublicKey.html" title="id::types::HasArPublicKey trait">HasArPublicKey</a></td><td class="docblock-short"><p>A helper trait to access only the public key of the ArInfo structure.
+We use this to have functions work both on a map of public keys only, as
+well as on maps of ArInfos, see <a href="../chain/fn.verify_cdi.html" title="crate::chain::verify_cdi">crate::chain::verify_cdi</a>.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.InitialAccountDataWithSigning.html" title="id::types::InitialAccountDataWithSigning trait">InitialAccountDataWithSigning</a></td><td class="docblock-short"><p>A helper trait to allow signing PublicInformationForIP in an implementation
+that does not give access to the secret keys.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.PublicCredentialData.html" title="id::types::PublicCredentialData trait">PublicCredentialData</a></td><td class="docblock-short"><p>A helper trait to access the public parts of the CredentialData
+structure. We use this to allow implementations that does not give or have
+access to the secret keys.
+NB: the threshold should be at most the number of keypairs.</p>
+</td></tr><tr class="module-item"><td><a class="trait" href="trait.PublicInitialAccountData.html" title="id::types::PublicInitialAccountData trait">PublicInitialAccountData</a></td><td class="docblock-short"><p>A helper trait to access the public parts of the InitialAccountData
+structure. We use this to allow implementations that do not give or have
+access to the secret keys.
+NB: the threshold should be at most the number of keypairs.</p>
+</td></tr></table><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<table><tr class="module-item"><td><a class="fn" href="fn.mk_dummy_description.html" title="id::types::mk_dummy_description fn">mk_dummy_description</a></td><td class="docblock-short"><p>Make a dummy description with a given name.</p>
+</td></tr></table><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<table><tr class="module-item"><td><a class="type" href="type.ArPublicKey.html" title="id::types::ArPublicKey type">ArPublicKey</a></td><td class="docblock-short"><p>Public key of an anonymity revoker.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.CredId.html" title="id::types::CredId type">CredId</a></td><td class="docblock-short"><p>Type of credential registration IDs.</p>
+</td></tr><tr class="module-item"><td><a class="type" href="type.IdCredPubVerifiers.html" title="id::types::IdCredPubVerifiers type">IdCredPubVerifiers</a></td><td class="docblock-short"><p>A type alias for the combined proofs relating to the shared encryption of
+IdCredPub.</p>
+</td></tr></table></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="id" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script></body></html>

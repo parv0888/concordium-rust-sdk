@@ -833,18 +833,83 @@
 <span id="830">830</span>
 <span id="831">831</span>
 <span id="832">832</span>
+<span id="833">833</span>
+<span id="834">834</span>
+<span id="835">835</span>
+<span id="836">836</span>
+<span id="837">837</span>
+<span id="838">838</span>
+<span id="839">839</span>
+<span id="840">840</span>
+<span id="841">841</span>
+<span id="842">842</span>
+<span id="843">843</span>
+<span id="844">844</span>
+<span id="845">845</span>
+<span id="846">846</span>
+<span id="847">847</span>
+<span id="848">848</span>
+<span id="849">849</span>
+<span id="850">850</span>
+<span id="851">851</span>
+<span id="852">852</span>
+<span id="853">853</span>
+<span id="854">854</span>
+<span id="855">855</span>
+<span id="856">856</span>
+<span id="857">857</span>
+<span id="858">858</span>
+<span id="859">859</span>
+<span id="860">860</span>
+<span id="861">861</span>
+<span id="862">862</span>
+<span id="863">863</span>
+<span id="864">864</span>
+<span id="865">865</span>
+<span id="866">866</span>
+<span id="867">867</span>
+<span id="868">868</span>
+<span id="869">869</span>
+<span id="870">870</span>
+<span id="871">871</span>
+<span id="872">872</span>
+<span id="873">873</span>
+<span id="874">874</span>
+<span id="875">875</span>
+<span id="876">876</span>
+<span id="877">877</span>
+<span id="878">878</span>
+<span id="879">879</span>
+<span id="880">880</span>
+<span id="881">881</span>
+<span id="882">882</span>
+<span id="883">883</span>
+<span id="884">884</span>
+<span id="885">885</span>
+<span id="886">886</span>
+<span id="887">887</span>
+<span id="888">888</span>
+<span id="889">889</span>
+<span id="890">890</span>
+<span id="891">891</span>
+<span id="892">892</span>
+<span id="893">893</span>
+<span id="894">894</span>
+<span id="895">895</span>
+<span id="896">896</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">crate</span>::{
+    <span class="ident">constants::DEFAULT_NETWORK_ID</span>,
     <span class="ident">generated_types</span>::{
         <span class="self">self</span>, <span class="ident">node_info_response</span>, <span class="ident">p2p_client</span>, <span class="ident">AccountAddress</span>, <span class="ident">BlockHash</span>, <span class="ident">BlockHashAndAmount</span>,
-        <span class="ident">BlockHeight</span>, <span class="ident">Empty</span>, <span class="ident">GetAddressInfoRequest</span>, <span class="ident">GetModuleSourceRequest</span>,
-        <span class="ident">GetTransactionStatusInBlockRequest</span>, <span class="ident">JsonResponse</span>, <span class="ident">PeerConnectRequest</span>, <span class="ident">PeerElement</span>,
-        <span class="ident">PeersRequest</span>, <span class="ident">SendTransactionRequest</span>, <span class="ident">TransactionHash</span>,
+        <span class="ident">BlockHeight</span>, <span class="ident">Empty</span>, <span class="ident">GetAddressInfoRequest</span>, <span class="ident">GetModuleSourceRequest</span>, <span class="ident">GetPoolStatusRequest</span>,
+        <span class="ident">GetTransactionStatusInBlockRequest</span>, <span class="ident">InvokeContractRequest</span>, <span class="ident">JsonResponse</span>,
+        <span class="ident">PeerConnectRequest</span>, <span class="ident">PeerElement</span>, <span class="ident">PeersRequest</span>, <span class="ident">SendTransactionRequest</span>, <span class="ident">TransactionHash</span>,
     },
     <span class="ident">types</span>::{
-        <span class="self">self</span>, <span class="ident">network</span>, <span class="ident">queries</span>,
+        <span class="self">self</span>, <span class="ident">network</span>, <span class="ident">queries</span>, <span class="ident">smart_contracts</span>,
         <span class="ident">transactions</span>::{<span class="self">self</span>, <span class="ident">PayloadLike</span>},
-        <span class="ident">BakerId</span>,
+        <span class="ident">AccountIndex</span>, <span class="ident">BakerId</span>,
     },
 };
 <span class="kw">use</span> <span class="ident">anyhow::anyhow</span>;
@@ -942,7 +1007,7 @@
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="doccomment">/// Client that can perform queries.</span>
-<span class="doccomment">/// All endpoints take a &amp;mut self as an argument which means that a single</span>
+<span class="doccomment">/// All endpoints take a `&amp;mut self` as an argument which means that a single</span>
 <span class="doccomment">/// instance cannot be used concurrently. However instead of putting the Client</span>
 <span class="doccomment">/// behind a Mutex, the intended way to use it is to clone it. Cloning is very</span>
 <span class="doccomment">/// cheap and will reuse the underlying connection.</span>
@@ -962,16 +1027,18 @@
     }
 
     <span class="doccomment">/// Construct a new client by connecting to the specified destination.</span>
+    <span class="doccomment">/// The provided `token` must match the authentication token accepted by the</span>
+    <span class="doccomment">/// node.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">connect</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">Endpoint</span><span class="op">&gt;</span><span class="op">&gt;</span>(
         <span class="ident">dst</span>: <span class="ident">D</span>,
-        <span class="ident">token</span>: <span class="ident">String</span>,
+        <span class="ident">token</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">tonic::transport::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="op">&lt;</span><span class="ident">D</span> <span class="kw">as</span> <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">Endpoint</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">std::error::Error</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>, {
         <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">p2p_client::P2pClient::connect</span>(<span class="ident">dst</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">Client</span> {
             <span class="ident">client</span>,
-            <span class="ident">token</span>: <span class="ident">Arc::new</span>(<span class="ident">token</span>),
+            <span class="ident">token</span>: <span class="ident">Arc::new</span>(<span class="ident">token</span>.<span class="ident">into</span>()),
         })
     }
 
@@ -1143,9 +1210,11 @@
                             }
                             <span class="ident">AddedButWrongKeys</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">queries::ActiveConsensusState::IncorrectKeys</span>,
                             <span class="ident">ActiveInCommittee</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">queries::ActiveConsensusState::Active</span> {
-                                <span class="ident">baker_id</span>:  <span class="ident">BakerId::from</span>(<span class="ident">ni</span>.<span class="ident">consensus_baker_id</span>.<span class="ident">ok_or_else</span>(
-                                    <span class="op">|</span><span class="op">|</span> <span class="macro">anyhow!</span>(<span class="string">&quot;Invalid response, active but no baker id.&quot;</span>),
-                                )<span class="question-mark">?</span>),
+                                <span class="ident">baker_id</span>:  <span class="ident">BakerId::from</span>(<span class="ident">AccountIndex::from</span>(
+                                    <span class="ident">ni</span>.<span class="ident">consensus_baker_id</span>.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> {
+                                        <span class="macro">anyhow!</span>(<span class="string">&quot;Invalid response, active but no baker id.&quot;</span>)
+                                    })<span class="question-mark">?</span>,
+                                )),
                                 <span class="ident">finalizer</span>: <span class="ident">ni</span>.<span class="ident">consensus_finalizer_committee</span>,
                             },
                         };
@@ -1431,6 +1500,40 @@
         <span class="ident">parse_json_response</span>(<span class="ident">response</span>)
     }
 
+    <span class="doccomment">/// Get the IDs of the bakers registered in the given block.</span>
+    <span class="doccomment">/// Note that this list is in general different from the bakers that are</span>
+    <span class="doccomment">/// returned as part of [get_birk_parameters](Client::get_birk_parameters).</span>
+    <span class="doccomment">/// The latter are the bakers that are eligible for baking at the time of</span>
+    <span class="doccomment">/// the block.</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_baker_list</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BakerId</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
+            <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
+        })<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get_baker_list</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">parse_json_response</span>(<span class="ident">response</span>)
+    }
+
+    <span class="doccomment">/// Get the status of a given baker pool or passive delegation at the given</span>
+    <span class="doccomment">/// block. This is only supported if the node&#39;s protocol version is at least</span>
+    <span class="doccomment">/// [P4](crate::types::ProtocolVersion::P4). For earlier versions it will</span>
+    <span class="doccomment">/// return [NotFound](QueryError::NotFound).</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_pool_status</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">baker_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BakerId</span><span class="op">&gt;</span>,
+        <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::PoolStatus</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">GetPoolStatusRequest</span> {
+            <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
+            <span class="ident">l_pool</span>: <span class="ident">baker_id</span>.<span class="ident">is_none</span>(),
+            <span class="ident">baker_id</span>: <span class="ident">baker_id</span>.<span class="ident">map_or</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">bi</span><span class="op">|</span> <span class="ident">u64::from</span>(<span class="ident">AccountIndex::from</span>(<span class="ident">bi</span>))), <span class="comment">// not used if baker_id is none.</span>
+        })<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get_pool_status</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="ident">parse_json_response</span>(<span class="ident">response</span>)
+    }
+
     <span class="doccomment">/// Get the list of smart contract modules in the given block.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_module_list</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
@@ -1597,21 +1700,47 @@
         <span class="prelude-val">Ok</span>(<span class="ident">nn</span>)
     }
 
-    <span class="doccomment">/// Send the given block item on the given network.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">send_transaction</span><span class="op">&lt;</span><span class="ident">PayloadType</span>: <span class="ident">PayloadLike</span><span class="op">&gt;</span>(
+    <span class="doccomment">/// Invoke a contract in the given context and get the response.</span>
+    <span class="doccomment">/// Note that this is purely node-local transient operation and no</span>
+    <span class="doccomment">/// transaction or payment is involved. Use</span>
+    <span class="doccomment">/// [`send_transaction`](Self::send_transaction) if you need to update</span>
+    <span class="doccomment">/// the state of the contract on the chain.</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">invoke_contract</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">network_id</span>: <span class="ident">network::NetworkId</span>,
+        <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
+        <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">smart_contracts::ContractContext</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">smart_contracts::InvokeContractResult</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">InvokeContractRequest</span> {
+            <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
+            <span class="ident">context</span>:    <span class="ident">serde_json::to_string</span>(<span class="ident">context</span>)
+                .<span class="ident">expect</span>(<span class="string">&quot;Context serialization always succeeds.&quot;</span>),
+        })<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">invoke_contract</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">val</span> <span class="op">=</span> <span class="ident">serde_json::from_str</span>::<span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span>(<span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>.<span class="ident">as_str</span>())<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">serde_json::from_value</span>(<span class="ident">val</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">res</span>)
+    }
+
+    <span class="doccomment">/// Send the given block item.</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">send_block_item</span><span class="op">&lt;</span><span class="ident">PayloadType</span>: <span class="ident">PayloadLike</span><span class="op">&gt;</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bi</span>: <span class="kw-2">&amp;</span><span class="ident">transactions::BlockItem</span><span class="op">&lt;</span><span class="ident">PayloadType</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">types::hashes::TransactionHash</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">SendTransactionRequest</span> {
-            <span class="ident">network_id</span>: <span class="ident">u32::from</span>(<span class="ident">u16::from</span>(<span class="ident">network_id</span>)),
+            <span class="ident">network_id</span>: <span class="ident">u32::from</span>(<span class="ident">u16::from</span>(<span class="ident">DEFAULT_NETWORK_ID</span>)),
             <span class="ident">payload</span>:    <span class="ident">crypto_common::to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">crypto_common::Versioned::new</span>(
                 <span class="ident">crypto_common::VERSION_0</span>,
                 <span class="ident">bi</span>,
             )),
         })<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">send_transaction</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
-        <span class="prelude-val">Ok</span>(<span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>)
+        <span class="kw">if</span> <span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span> {
+            <span class="prelude-val">Ok</span>(<span class="ident">bi</span>.<span class="ident">hash</span>())
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">RPCError::CallError</span>(<span class="ident">tonic::Status::invalid_argument</span>(
+                <span class="string">&quot;Transaction was invalid and thus not accepted by the node.&quot;</span>,
+            )))
+        }
     }
 
     <span class="doccomment">/// Send the given account transaction item on the given network.</span>
@@ -1622,7 +1751,6 @@
     <span class="doccomment">/// that can be used to query the status is returned.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">send_raw_account_transaction</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">network_id</span>: <span class="ident">network::NetworkId</span>,
         <span class="ident">signatures</span>: <span class="kw-2">&amp;</span><span class="ident">TransactionSignature</span>, <span class="comment">// signatures for the transaction.</span>
         <span class="ident">body</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],                       <span class="comment">// body of the transaction (header + payload)</span>
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">types::hashes::TransactionHash</span><span class="op">&gt;</span> {
@@ -1636,7 +1764,7 @@
                                       <span class="comment">// compute the hash of the transaction</span>
         <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="ident">types::hashes::HashBytes::new</span>(<span class="ident">sha2::Sha256::digest</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>).<span class="ident">into</span>());
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">SendTransactionRequest</span> {
-            <span class="ident">network_id</span>: <span class="ident">u32::from</span>(<span class="ident">u16::from</span>(<span class="ident">network_id</span>)),
+            <span class="ident">network_id</span>: <span class="ident">u32::from</span>(<span class="ident">u16::from</span>(<span class="ident">DEFAULT_NETWORK_ID</span>)),
             <span class="ident">payload</span>:    <span class="ident">data</span>,
         })<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">send_transaction</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;

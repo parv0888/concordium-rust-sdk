@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["Challenge","Type of challenges computed from the random oracle. We use 32 byte output of SHA3-256"],["RandomOracle","State of the random oracle, used to incrementally build up the output."]]});

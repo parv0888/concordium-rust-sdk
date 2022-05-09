@@ -1,0 +1,1 @@
+initSidebarItems({"enum":[["PointDecodingError",""]],"fn":[["prove_dlog_ed25519","Construct a proof of knowledge of secret key."],["verify_dlog_ed25519",""]],"static":[["PROOF_LENGTH",""]],"struct":[["Ed25519DlogProof",""]]});
