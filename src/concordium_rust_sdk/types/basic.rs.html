@@ -1221,20 +1221,11 @@
 <span id="1218">1218</span>
 <span id="1219">1219</span>
 <span id="1220">1220</span>
-<span id="1221">1221</span>
-<span id="1222">1222</span>
-<span id="1223">1223</span>
-<span id="1224">1224</span>
-<span id="1225">1225</span>
-<span id="1226">1226</span>
-<span id="1227">1227</span>
-<span id="1228">1228</span>
-<span id="1229">1229</span>
 </pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="ident">crypto_common</span>::{
     <span class="ident">derive</span>::{<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serial</span>, <span class="ident">Serialize</span>},
     <span class="ident">deserial_string</span>,
-    <span class="ident">types</span>::{<span class="ident">Amount</span>, <span class="ident">Signature</span>},
+    <span class="ident">types::Signature</span>,
     <span class="ident">Buffer</span>, <span class="ident">Deserial</span>, <span class="ident">Get</span>, <span class="ident">ParseResult</span>, <span class="ident">Put</span>, <span class="ident">ReadBytesExt</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">SerdeSerialize</span>,
     <span class="ident">Serial</span>,
 };
@@ -1425,20 +1416,11 @@
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BakerPoolInfo</span> {
     <span class="doccomment">/// Whether the pool allows delegators.</span>
-    <span class="ident">open_status</span>:      <span class="ident">OpenStatus</span>,
+    <span class="kw">pub</span> <span class="ident">open_status</span>:      <span class="ident">OpenStatus</span>,
     <span class="doccomment">/// The URL that links to the metadata about the pool.</span>
-    <span class="ident">metadata_url</span>:     <span class="ident">UrlText</span>,
+    <span class="kw">pub</span> <span class="ident">metadata_url</span>:     <span class="ident">UrlText</span>,
     <span class="doccomment">/// The commission rates charged by the pool owner.</span>
-    <span class="ident">commission_rates</span>: <span class="ident">CommissionRates</span>,
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serial</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
-<span class="doccomment">/// Information about the delegated stake of the account.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AccountStakingDelegationInfo</span> {
-    <span class="ident">staked_amount</span>:     <span class="ident">Amount</span>,
-    <span class="ident">restake_earnings</span>:  <span class="ident">bool</span>,
-    <span class="ident">delegation_target</span>: <span class="ident">BakerId</span>,
+    <span class="kw">pub</span> <span class="ident">commission_rates</span>: <span class="ident">CommissionRates</span>,
 }
 
 <span class="doccomment">/// Slot number</span>

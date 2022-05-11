@@ -2815,7 +2815,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CommonRewardData</span> {
     <span class="doccomment">/// Protocol version that applies to these rewards. V0 variant</span>
     <span class="doccomment">/// only exists for protocol versions 1, 2, and 3.</span>
-    <span class="ident">protocol_version</span>:                <span class="ident">ProtocolVersion</span>,
+    <span class="kw">pub</span> <span class="ident">protocol_version</span>:            <span class="ident">ProtocolVersion</span>,
     <span class="doccomment">/// The total CCD in existence.</span>
     <span class="kw">pub</span> <span class="ident">total_amount</span>:                <span class="ident">Amount</span>,
     <span class="doccomment">/// The total CCD in encrypted balances.</span>
@@ -4107,7 +4107,7 @@
     <span class="ident">CooldownParametersCPV1</span>(<span class="ident">CooldownParameters</span>),
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;poolParametersCPV1&quot;</span>)]</span>
     <span class="ident">PoolParametersCPV1</span>(<span class="ident">PoolParameters</span>),
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;timeParameters&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;timeParametersCPV1&quot;</span>)]</span>
     <span class="ident">TimeParametersCPV1</span>(<span class="ident">TimeParameters</span>),
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;mintDistributionCPV1&quot;</span>)]</span>
     <span class="ident">MintDistributionCPV1</span>(<span class="ident">MintDistribution</span><span class="op">&lt;</span><span class="ident">ChainParameterVersion1</span><span class="op">&gt;</span>),
