@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `concordium-base/rust-src/id/src/account_holder.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>account_holder.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../id/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `concordium-base&#x2F;rust-src&#x2F;id&#x2F;src&#x2F;account_holder.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>account_holder.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../id/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1327,8 +1324,152 @@
 <span id="1324">1324</span>
 <span id="1325">1325</span>
 <span id="1326">1326</span>
-</pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Functionality needed by the account holder, either when interacting with the</span>
+<span id="1327">1327</span>
+<span id="1328">1328</span>
+<span id="1329">1329</span>
+<span id="1330">1330</span>
+<span id="1331">1331</span>
+<span id="1332">1332</span>
+<span id="1333">1333</span>
+<span id="1334">1334</span>
+<span id="1335">1335</span>
+<span id="1336">1336</span>
+<span id="1337">1337</span>
+<span id="1338">1338</span>
+<span id="1339">1339</span>
+<span id="1340">1340</span>
+<span id="1341">1341</span>
+<span id="1342">1342</span>
+<span id="1343">1343</span>
+<span id="1344">1344</span>
+<span id="1345">1345</span>
+<span id="1346">1346</span>
+<span id="1347">1347</span>
+<span id="1348">1348</span>
+<span id="1349">1349</span>
+<span id="1350">1350</span>
+<span id="1351">1351</span>
+<span id="1352">1352</span>
+<span id="1353">1353</span>
+<span id="1354">1354</span>
+<span id="1355">1355</span>
+<span id="1356">1356</span>
+<span id="1357">1357</span>
+<span id="1358">1358</span>
+<span id="1359">1359</span>
+<span id="1360">1360</span>
+<span id="1361">1361</span>
+<span id="1362">1362</span>
+<span id="1363">1363</span>
+<span id="1364">1364</span>
+<span id="1365">1365</span>
+<span id="1366">1366</span>
+<span id="1367">1367</span>
+<span id="1368">1368</span>
+<span id="1369">1369</span>
+<span id="1370">1370</span>
+<span id="1371">1371</span>
+<span id="1372">1372</span>
+<span id="1373">1373</span>
+<span id="1374">1374</span>
+<span id="1375">1375</span>
+<span id="1376">1376</span>
+<span id="1377">1377</span>
+<span id="1378">1378</span>
+<span id="1379">1379</span>
+<span id="1380">1380</span>
+<span id="1381">1381</span>
+<span id="1382">1382</span>
+<span id="1383">1383</span>
+<span id="1384">1384</span>
+<span id="1385">1385</span>
+<span id="1386">1386</span>
+<span id="1387">1387</span>
+<span id="1388">1388</span>
+<span id="1389">1389</span>
+<span id="1390">1390</span>
+<span id="1391">1391</span>
+<span id="1392">1392</span>
+<span id="1393">1393</span>
+<span id="1394">1394</span>
+<span id="1395">1395</span>
+<span id="1396">1396</span>
+<span id="1397">1397</span>
+<span id="1398">1398</span>
+<span id="1399">1399</span>
+<span id="1400">1400</span>
+<span id="1401">1401</span>
+<span id="1402">1402</span>
+<span id="1403">1403</span>
+<span id="1404">1404</span>
+<span id="1405">1405</span>
+<span id="1406">1406</span>
+<span id="1407">1407</span>
+<span id="1408">1408</span>
+<span id="1409">1409</span>
+<span id="1410">1410</span>
+<span id="1411">1411</span>
+<span id="1412">1412</span>
+<span id="1413">1413</span>
+<span id="1414">1414</span>
+<span id="1415">1415</span>
+<span id="1416">1416</span>
+<span id="1417">1417</span>
+<span id="1418">1418</span>
+<span id="1419">1419</span>
+<span id="1420">1420</span>
+<span id="1421">1421</span>
+<span id="1422">1422</span>
+<span id="1423">1423</span>
+<span id="1424">1424</span>
+<span id="1425">1425</span>
+<span id="1426">1426</span>
+<span id="1427">1427</span>
+<span id="1428">1428</span>
+<span id="1429">1429</span>
+<span id="1430">1430</span>
+<span id="1431">1431</span>
+<span id="1432">1432</span>
+<span id="1433">1433</span>
+<span id="1434">1434</span>
+<span id="1435">1435</span>
+<span id="1436">1436</span>
+<span id="1437">1437</span>
+<span id="1438">1438</span>
+<span id="1439">1439</span>
+<span id="1440">1440</span>
+<span id="1441">1441</span>
+<span id="1442">1442</span>
+<span id="1443">1443</span>
+<span id="1444">1444</span>
+<span id="1445">1445</span>
+<span id="1446">1446</span>
+<span id="1447">1447</span>
+<span id="1448">1448</span>
+<span id="1449">1449</span>
+<span id="1450">1450</span>
+<span id="1451">1451</span>
+<span id="1452">1452</span>
+<span id="1453">1453</span>
+<span id="1454">1454</span>
+<span id="1455">1455</span>
+<span id="1456">1456</span>
+<span id="1457">1457</span>
+<span id="1458">1458</span>
+<span id="1459">1459</span>
+<span id="1460">1460</span>
+<span id="1461">1461</span>
+<span id="1462">1462</span>
+<span id="1463">1463</span>
+<span id="1464">1464</span>
+<span id="1465">1465</span>
+<span id="1466">1466</span>
+<span id="1467">1467</span>
+<span id="1468">1468</span>
+<span id="1469">1469</span>
+<span id="1470">1470</span>
+<span id="1471">1471</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Functionality needed by the account holder, either when interacting with the</span>
 <span class="doccomment">//! identity provider, or when interacting with the chain.</span>
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">secret_sharing</span>::<span class="kw-2">*</span>,
@@ -1341,7 +1482,7 @@
 <span class="kw">use</span> <span class="ident">anyhow</span>::{<span class="ident">bail</span>, <span class="ident">ensure</span>};
 <span class="kw">use</span> <span class="ident">bulletproofs</span>::{
     <span class="ident">inner_product_proof::inner_product</span>,
-    <span class="ident">range_proof</span>::{<span class="ident">prove_given_scalars</span> <span class="kw">as</span> <span class="ident">bulletprove</span>, <span class="ident">prove_less_than_or_equal</span>},
+    <span class="ident">range_proof</span>::{<span class="ident">prove_given_scalars</span> <span class="kw">as</span> <span class="ident">bulletprove</span>, <span class="ident">prove_less_than_or_equal</span>, <span class="ident">RangeProof</span>},
 };
 <span class="kw">use</span> <span class="ident">crypto_common::types::TransactionTime</span>;
 <span class="kw">use</span> <span class="ident">curve_arithmetic</span>::{<span class="ident">Curve</span>, <span class="ident">Pairing</span>};
@@ -1370,7 +1511,7 @@
 
     <span class="comment">// From create_credential:</span>
     <span class="comment">// let id_cred_sec = &amp;aci.cred_holder_info.id_cred.id_cred_sec;</span>
-    <span class="kw">let</span> <span class="ident">reg_id_exponent</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">prf_key</span>.<span class="ident">prf_exponent</span>(<span class="kw">crate</span><span class="ident">::constants::INITIAL_CREDENTIAL_INDEX</span>) {
+    <span class="kw">let</span> <span class="ident">reg_id_exponent</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">prf_key</span>.<span class="ident">prf_exponent</span>(<span class="ident"><span class="kw">crate</span>::constants::INITIAL_CREDENTIAL_INDEX</span>) {
         <span class="prelude-val">Ok</span>(<span class="ident">exp</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">exp</span>,
         <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
     };
@@ -1396,38 +1537,216 @@
     <span class="prelude-val">Some</span>(<span class="ident">pub_info_for_ip</span>)
 }
 
-<span class="doccomment">/// Generate PreIdentityObject out of the account holder information,</span>
-<span class="doccomment">/// the chosen anonymity revoker information, and the necessary contextual</span>
-<span class="doccomment">/// information (group generators, shared commitment keys, etc).</span>
+<span class="doccomment">/// Two flows for creating identities are supported. The first flow involves the</span>
+<span class="doccomment">/// creation of an initial account, the second flow does not.</span>
+<span class="doccomment">/// The proofs used in the flows are very similar, and therefore factored out in</span>
+<span class="doccomment">/// the function `generate_pio_common` that constructs the common sigma protocol</span>
+<span class="doccomment">/// prover used in both flows:</span>
+<span class="doccomment">/// * In the version 0 flow, the common prover is AND&#39;ed with a prover showing</span>
+<span class="doccomment">///   that RegID = PRF(key_PRF, 0)</span>
+<span class="doccomment">/// * In the version 1 flow, the sigma protocol prover is the common prover</span>
+<span class="doccomment">/// The `generate_pio_common` function also produces the bulletproofs rangeproof</span>
+<span class="doccomment">/// used in both flows. The version 0 flow is kept for backwards compatibility.</span>
+
+<span class="doccomment">/// Generate a version 0 PreIdentityObject out of the account holder</span>
+<span class="doccomment">/// information, the chosen anonymity revoker information, and the necessary</span>
+<span class="doccomment">/// contextual information (group generators, shared commitment keys, etc).</span>
 <span class="doccomment">/// NB: In this method we assume that all the anonymity revokers in context</span>
 <span class="doccomment">/// are to be used.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_pio</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span>(
-    <span class="comment">// TODO: consider renaming this function</span>
     <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">IpContext</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">threshold</span>: <span class="ident">Threshold</span>,
-    <span class="ident">aci</span>: <span class="kw-2">&amp;</span><span class="ident">AccCredentialInfo</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="ident">id_use_data</span>: <span class="kw-2">&amp;</span><span class="ident">IdObjectUseData</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">initial_account</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">InitialAccountDataWithSigning</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">PreIdentityObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">ps_sig::SigRetrievalRandomness</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">csprng</span> <span class="op">=</span> <span class="ident">thread_rng</span>();
-
-    <span class="comment">// PRF related computation</span>
-    <span class="kw">let</span> <span class="ident">prf_key</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">aci</span>.<span class="ident">prf_key</span>;
-
-    <span class="comment">// Step 3: We should sign IDcred_PUB ,policy_ACC ,RegID_ACC ,vk_ACC ,pk_ACC</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">transcript</span> <span class="op">=</span> <span class="ident">RandomOracle::domain</span>(<span class="string">&quot;PreIdentityProof&quot;</span>);
+    <span class="comment">// Prove ownership of the initial account</span>
     <span class="kw">let</span> <span class="ident">pub_info_for_ip</span> <span class="op">=</span> <span class="ident">build_pub_info_for_ip</span>(
         <span class="ident">context</span>.<span class="ident">global_context</span>,
-        <span class="kw-2">&amp;</span><span class="ident">aci</span>.<span class="ident">cred_holder_info</span>.<span class="ident">id_cred</span>.<span class="ident">id_cred_sec</span>,
-        <span class="ident">prf_key</span>,
+        <span class="kw-2">&amp;</span><span class="ident">id_use_data</span>.<span class="ident">aci</span>.<span class="ident">cred_holder_info</span>.<span class="ident">id_cred</span>.<span class="ident">id_cred_sec</span>,
+        <span class="kw-2">&amp;</span><span class="ident">id_use_data</span>.<span class="ident">aci</span>.<span class="ident">prf_key</span>,
         <span class="ident">initial_account</span>,
     )<span class="question-mark">?</span>;
-
-    <span class="kw">let</span> <span class="ident">id_cred_pub</span> <span class="op">=</span> <span class="ident">pub_info_for_ip</span>.<span class="ident">id_cred_pub</span>;
-    <span class="kw">let</span> <span class="ident">reg_id</span> <span class="op">=</span> <span class="ident">pub_info_for_ip</span>.<span class="ident">reg_id</span>;
-
     <span class="kw">let</span> <span class="ident">proof_acc_sk</span> <span class="op">=</span> <span class="ident">AccountOwnershipProof</span> {
         <span class="ident">sigs</span>: <span class="ident">initial_account</span>.<span class="ident">sign_public_information_for_ip</span>(<span class="kw-2">&amp;</span><span class="ident">pub_info_for_ip</span>),
     };
-    <span class="comment">// --</span>
+    <span class="kw">let</span> <span class="ident">CommonPioGenerationOutput</span>{
+        <span class="ident">prover</span>,
+        <span class="ident">secret</span>,
+        <span class="ident">bulletproofs</span>,
+        <span class="ident">ip_ar_data</span>,
+        <span class="ident">choice_ar_parameters</span>,
+        <span class="ident">cmm_prf_sharing_coeff</span>,
+        .. <span class="comment">// id_cred_pub already in pub_info_for_ip</span>
+     } <span class="op">=</span> <span class="ident">generate_pio_common</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transcript</span>,
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>,
+        <span class="ident">context</span>,
+        <span class="ident">threshold</span>,
+        <span class="ident">id_use_data</span>,
+    )<span class="question-mark">?</span>;
+    <span class="comment">// Additionally prove that RegID = PRF(key_PRF, 0):</span>
+    <span class="kw">let</span> <span class="ident">prover_prf_regid</span> <span class="op">=</span> <span class="ident">com_eq::ComEq</span> {
+        <span class="ident">commitment</span>: <span class="ident">prover</span>.<span class="ident">first</span>.<span class="ident">second</span>.<span class="ident">commitment_1</span>,
+        <span class="ident">y</span>:          <span class="ident">context</span>.<span class="ident">global_context</span>.<span class="ident">on_chain_commitment_key</span>.<span class="ident">g</span>,
+        <span class="ident">g</span>:          <span class="ident">pub_info_for_ip</span>.<span class="ident">reg_id</span>,
+        <span class="ident">cmm_key</span>:    <span class="ident">prover</span>.<span class="ident">first</span>.<span class="ident">second</span>.<span class="ident">cmm_key_1</span>,
+    };
+
+    <span class="kw">let</span> <span class="ident">secret_prf_regid</span> <span class="op">=</span> <span class="ident">com_eq::ComEqSecret</span> {
+        <span class="ident">r</span>: <span class="ident">secret</span>.<span class="number">0</span> .<span class="number">1</span>.<span class="ident">rand_cmm_1</span>.<span class="ident">clone</span>(),
+        <span class="ident">a</span>: <span class="ident">id_use_data</span>.<span class="ident">aci</span>.<span class="ident">prf_key</span>.<span class="ident">to_value</span>(),
+    };
+    <span class="comment">// Add the prf_regid prover and secret</span>
+    <span class="kw">let</span> <span class="ident">prover</span> <span class="op">=</span> <span class="ident">prover</span>.<span class="ident">add_prover</span>(<span class="ident">prover_prf_regid</span>);
+    <span class="kw">let</span> <span class="ident">secret</span> <span class="op">=</span> (<span class="ident">secret</span>, <span class="ident">secret_prf_regid</span>);
+    <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;bulletproofs&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">bulletproofs</span>);
+    <span class="comment">// Randomness to retrieve the signature</span>
+    <span class="comment">// We add randomness from both of the commitments.</span>
+    <span class="comment">// See specification of ps_sig and id layer for why this is so.</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sig_retrieval_rand</span> <span class="op">=</span> <span class="ident">P::ScalarField::zero</span>();
+    <span class="ident">sig_retrieval_rand</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident">secret</span>.<span class="number">0</span> .<span class="number">0</span> .<span class="number">0</span> .<span class="number">1</span>.<span class="ident">r</span>);
+    <span class="ident">sig_retrieval_rand</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident">secret</span>.<span class="number">0</span> .<span class="number">0</span> .<span class="number">1</span>.<span class="ident">rand_cmm_1</span>);
+    <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="ident">prove</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transcript</span>, <span class="kw-2">&amp;</span><span class="ident">prover</span>, <span class="ident">secret</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>)<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">ip_ar_data</span> <span class="op">=</span> <span class="ident">ip_ar_data</span>
+        .<span class="ident">iter</span>()
+        .<span class="ident">zip</span>(<span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w2</span>.<span class="ident">witnesses</span>.<span class="ident">into_iter</span>())
+        .<span class="ident">map</span>(<span class="op">|</span>((<span class="ident">ar_id</span>, <span class="ident">f</span>), <span class="ident">w</span>)<span class="op">|</span> (<span class="kw-2">*</span><span class="ident">ar_id</span>, <span class="ident">f</span>(<span class="ident">w</span>)))
+        .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">ArIdentity</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+
+    <span class="comment">// Returning the version 0 pre-identity object.</span>
+    <span class="kw">let</span> <span class="ident">poks_common</span> <span class="op">=</span> <span class="ident">CommonPioProofFields</span> {
+        <span class="ident">challenge</span>: <span class="ident">proof</span>.<span class="ident">challenge</span>,
+        <span class="ident">id_cred_sec_witness</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w1</span>,
+        <span class="ident">commitments_same_proof</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w2</span>,
+        <span class="ident">commitments_prf_same</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w2</span>,
+        <span class="ident">bulletproofs</span>,
+    };
+    <span class="kw">let</span> <span class="ident">poks</span> <span class="op">=</span> <span class="ident">PreIdentityProof</span> {
+        <span class="ident">common_proof_fields</span>: <span class="ident">poks_common</span>,
+        <span class="ident">prf_regid_proof</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w2</span>,
+        <span class="ident">proof_acc_sk</span>,
+    };
+    <span class="kw">let</span> <span class="ident">pio</span> <span class="op">=</span> <span class="ident">PreIdentityObject</span> {
+        <span class="ident">pub_info_for_ip</span>,
+        <span class="ident">ip_ar_data</span>,
+        <span class="ident">choice_ar_parameters</span>,
+        <span class="ident">cmm_sc</span>: <span class="ident">prover</span>.<span class="ident">first</span>.<span class="ident">first</span>.<span class="ident">first</span>.<span class="ident">second</span>.<span class="ident">commitment</span>,
+        <span class="ident">cmm_prf</span>: <span class="ident">prover</span>.<span class="ident">first</span>.<span class="ident">first</span>.<span class="ident">second</span>.<span class="ident">commitment_1</span>,
+        <span class="ident">cmm_prf_sharing_coeff</span>,
+        <span class="ident">poks</span>,
+    };
+    <span class="prelude-val">Some</span>((<span class="ident">pio</span>, <span class="ident">ps_sig::SigRetrievalRandomness::new</span>(<span class="ident">sig_retrieval_rand</span>)))
+}
+
+<span class="doccomment">/// Generate a version 1 PreIdentityObject out of the account holder</span>
+<span class="doccomment">/// information, the chosen anonymity revoker information, and the necessary</span>
+<span class="doccomment">/// contextual information (group generators, shared commitment keys, etc).</span>
+<span class="doccomment">/// NB: In this method we assume that all the anonymity revokers in context</span>
+<span class="doccomment">/// are to be used.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_pio_v1</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span>(
+    <span class="comment">// TODO: consider renaming this function</span>
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">IpContext</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="ident">threshold</span>: <span class="ident">Threshold</span>,
+    <span class="ident">id_use_data</span>: <span class="kw-2">&amp;</span><span class="ident">IdObjectUseData</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">PreIdentityObjectV1</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">ps_sig::SigRetrievalRandomness</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">csprng</span> <span class="op">=</span> <span class="ident">thread_rng</span>();
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">transcript</span> <span class="op">=</span> <span class="ident">RandomOracle::domain</span>(<span class="string">&quot;PreIdentityProof&quot;</span>);
+    <span class="kw">let</span> <span class="ident">CommonPioGenerationOutput</span> {
+        <span class="ident">prover</span>,
+        <span class="ident">secret</span>,
+        <span class="ident">bulletproofs</span>,
+        <span class="ident">ip_ar_data</span>,
+        <span class="ident">choice_ar_parameters</span>,
+        <span class="ident">cmm_prf_sharing_coeff</span>,
+        <span class="ident">id_cred_pub</span>,
+    } <span class="op">=</span> <span class="ident">generate_pio_common</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transcript</span>,
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>,
+        <span class="ident">context</span>,
+        <span class="ident">threshold</span>,
+        <span class="ident">id_use_data</span>,
+    )<span class="question-mark">?</span>;
+    <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;bulletproofs&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">bulletproofs</span>);
+    <span class="comment">// Randomness to retrieve the signature</span>
+    <span class="comment">// We add randomness from both of the commitments.</span>
+    <span class="comment">// See specification of ps_sig and id layer for why this is so.</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sig_retrieval_rand</span> <span class="op">=</span> <span class="ident">P::ScalarField::zero</span>();
+    <span class="ident">sig_retrieval_rand</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident">secret</span>.<span class="number">0</span> .<span class="number">0</span> .<span class="number">1</span>.<span class="ident">r</span>);
+    <span class="ident">sig_retrieval_rand</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident">secret</span>.<span class="number">0</span> .<span class="number">1</span>.<span class="ident">rand_cmm_1</span>);
+    <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="ident">prove</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transcript</span>, <span class="kw-2">&amp;</span><span class="ident">prover</span>, <span class="ident">secret</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>)<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="ident">ip_ar_data</span> <span class="op">=</span> <span class="ident">ip_ar_data</span>
+        .<span class="ident">iter</span>()
+        .<span class="ident">zip</span>(<span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w2</span>.<span class="ident">witnesses</span>.<span class="ident">into_iter</span>())
+        .<span class="ident">map</span>(<span class="op">|</span>((<span class="ident">ar_id</span>, <span class="ident">f</span>), <span class="ident">w</span>)<span class="op">|</span> (<span class="kw-2">*</span><span class="ident">ar_id</span>, <span class="ident">f</span>(<span class="ident">w</span>)))
+        .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">ArIdentity</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
+
+    <span class="comment">// Returning the version 1 pre-identity object.</span>
+    <span class="kw">let</span> <span class="ident">poks</span> <span class="op">=</span> <span class="ident">CommonPioProofFields</span> {
+        <span class="ident">challenge</span>: <span class="ident">proof</span>.<span class="ident">challenge</span>,
+        <span class="ident">id_cred_sec_witness</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w1</span>,
+        <span class="ident">commitments_same_proof</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w2</span>,
+        <span class="ident">commitments_prf_same</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w2</span>,
+        <span class="ident">bulletproofs</span>,
+    };
+    <span class="kw">let</span> <span class="ident">pio</span> <span class="op">=</span> <span class="ident">PreIdentityObjectV1</span> {
+        <span class="ident">id_cred_pub</span>,
+        <span class="ident">ip_ar_data</span>,
+        <span class="ident">choice_ar_parameters</span>,
+        <span class="ident">cmm_sc</span>: <span class="ident">prover</span>.<span class="ident">first</span>.<span class="ident">first</span>.<span class="ident">second</span>.<span class="ident">commitment</span>,
+        <span class="ident">cmm_prf</span>: <span class="ident">prover</span>.<span class="ident">first</span>.<span class="ident">second</span>.<span class="ident">commitment_1</span>,
+        <span class="ident">cmm_prf_sharing_coeff</span>,
+        <span class="ident">poks</span>,
+    };
+    <span class="prelude-val">Some</span>((<span class="ident">pio</span>, <span class="ident">ps_sig::SigRetrievalRandomness::new</span>(<span class="ident">sig_retrieval_rand</span>)))
+}
+
+<span class="doccomment">/// Type alias for the sigma protocol prover that are used by both</span>
+<span class="doccomment">/// `generate_pio` and `generate_pio_v1`.</span>
+<span class="kw">type</span> <span class="ident">CommonPioProverType</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">AndAdapter</span><span class="op">&lt;</span>
+    <span class="ident">AndAdapter</span><span class="op">&lt;</span>
+        <span class="ident">AndAdapter</span><span class="op">&lt;</span><span class="ident">dlog::Dlog</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">com_eq::ComEq</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="op">&lt;</span><span class="ident">P</span> <span class="kw">as</span> <span class="ident">Pairing</span><span class="op">&gt;</span><span class="ident">::G1</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+        <span class="ident">com_eq_different_groups::ComEqDiffGroups</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">P</span> <span class="kw">as</span> <span class="ident">Pairing</span><span class="op">&gt;</span><span class="ident">::G1</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="op">&gt;</span>,
+    <span class="ident">ReplicateAdapter</span><span class="op">&lt;</span><span class="ident">com_enc_eq::ComEncEq</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+<span class="op">&gt;</span>;
+
+<span class="kw">type</span> <span class="ident">IpArDataClosures</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec</span><span class="op">&lt;</span>(
+    <span class="ident">ArIdentity</span>,
+    <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="ident">com_enc_eq::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IpArData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
+)<span class="op">&gt;</span>;
+
+<span class="doccomment">/// Various data returned by `generate_pio_common` needed by both</span>
+<span class="doccomment">/// `generate_pio` and `generate_pio_v1` in order to produce the relevant</span>
+<span class="doccomment">/// pre-identity object.</span>
+<span class="kw">struct</span> <span class="ident">CommonPioGenerationOutput</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="ident">prover</span>:                <span class="ident">CommonPioProverType</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="ident">secret</span>:                <span class="op">&lt;</span><span class="ident">CommonPioProverType</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="kw">as</span> <span class="ident">SigmaProtocol</span><span class="op">&gt;</span><span class="ident">::SecretData</span>,
+    <span class="ident">bulletproofs</span>:          <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RangeProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">ip_ar_data</span>:            <span class="ident">IpArDataClosures</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="ident">choice_ar_parameters</span>:  <span class="ident">ChoiceArParameters</span>,
+    <span class="ident">cmm_prf_sharing_coeff</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="ident">id_cred_pub</span>:           <span class="ident">C</span>,
+}
+
+<span class="doccomment">/// Function for generating the common parts of a pre-identity object. This</span>
+<span class="doccomment">/// includes constructing the sigma protocol prover that are used by both</span>
+<span class="doccomment">/// `generate_pio` and `generate_pio_v1` to generate a version 0 and version 1</span>
+<span class="doccomment">/// pre-identity object, respectively.</span>
+<span class="kw">fn</span> <span class="ident">generate_pio_common</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span>, <span class="ident">R</span>: <span class="ident">rand::Rng</span><span class="op">&gt;</span>(
+    <span class="ident">transcript</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">RandomOracle</span>,
+    <span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
+    <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">IpContext</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="ident">threshold</span>: <span class="ident">Threshold</span>,
+    <span class="ident">id_use_data</span>: <span class="kw-2">&amp;</span><span class="ident">IdObjectUseData</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CommonPioGenerationOutput</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">aci</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">id_use_data</span>.<span class="ident">aci</span>;
+
+    <span class="comment">// PRF related computation</span>
+    <span class="kw">let</span> <span class="ident">prf_key</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">aci</span>.<span class="ident">prf_key</span>;
 
     <span class="kw">let</span> <span class="ident">prf_value</span> <span class="op">=</span> <span class="ident">aci</span>.<span class="ident">prf_key</span>.<span class="ident">to_value</span>();
 
@@ -1435,10 +1754,10 @@
 
     <span class="kw">let</span> (<span class="ident">prf_key_data</span>, <span class="ident">cmm_prf_sharing_coeff</span>, <span class="ident">cmm_coeff_randomness</span>) <span class="op">=</span> <span class="ident">compute_sharing_data_prf</span>(
         <span class="kw-2">&amp;</span><span class="ident">prf_value</span>,
-        <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">ars_infos</span>,
+        <span class="ident">context</span>.<span class="ident">ars_infos</span>,
         <span class="ident">threshold</span>,
         <span class="ident">ar_commitment_key</span>,
-        <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">global_context</span>,
+        <span class="ident">context</span>.<span class="ident">global_context</span>,
     );
     <span class="kw">let</span> <span class="ident">number_of_ars</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">ars_infos</span>.<span class="ident">len</span>();
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ip_ar_data</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">number_of_ars</span>);
@@ -1450,14 +1769,18 @@
         <span class="ident">h</span>: <span class="ident">context</span>.<span class="ident">ip_info</span>.<span class="ident">ip_verify_key</span>.<span class="ident">g</span>,
     };
 
-    <span class="kw">let</span> (<span class="ident">cmm_sc</span>, <span class="ident">cmm_sc_rand</span>) <span class="op">=</span> <span class="ident">sc_ck</span>.<span class="ident">commit</span>(<span class="kw-2">&amp;</span><span class="ident">id_cred_sec</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
-    <span class="kw">let</span> <span class="ident">cmm_sc_rand</span> <span class="op">=</span> <span class="ident">cmm_sc_rand</span>;
+    <span class="kw">let</span> (<span class="ident">cmm_sc</span>, <span class="ident">cmm_sc_rand</span>) <span class="op">=</span> <span class="ident">sc_ck</span>.<span class="ident">commit</span>(<span class="kw-2">&amp;</span><span class="ident">id_cred_sec</span>, <span class="ident">csprng</span>);
     <span class="comment">// We now construct all the zero-knowledge proofs.</span>
     <span class="comment">// Since all proofs must be bound together, we</span>
     <span class="comment">// first construct inputs to all the proofs, and only at the end</span>
     <span class="comment">// do we produce all the different witnesses.</span>
 
     <span class="comment">// First the proof that we know id_cred_sec.</span>
+    <span class="kw">let</span> <span class="ident">id_cred_pub</span> <span class="op">=</span> <span class="ident">context</span>
+        .<span class="ident">global_context</span>
+        .<span class="ident">on_chain_commitment_key</span>
+        .<span class="ident">g</span>
+        .<span class="ident">mul_by_scalar</span>(<span class="ident">id_cred_sec</span>);
     <span class="kw">let</span> <span class="ident">prover</span> <span class="op">=</span> <span class="ident">dlog::Dlog</span>::<span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
         <span class="ident">public</span>: <span class="ident">id_cred_pub</span>,
         <span class="ident">coeff</span>:  <span class="ident">context</span>.<span class="ident">global_context</span>.<span class="ident">on_chain_commitment_key</span>.<span class="ident">g</span>,
@@ -1488,8 +1811,12 @@
         <span class="ident">g</span>: <span class="ident">context</span>.<span class="ident">ip_info</span>.<span class="ident">ip_verify_key</span>.<span class="ident">ys</span>[<span class="number">1</span>],
         <span class="ident">h</span>: <span class="ident">context</span>.<span class="ident">ip_info</span>.<span class="ident">ip_verify_key</span>.<span class="ident">g</span>,
     };
-    <span class="kw">let</span> (<span class="ident">cmm_prf</span>, <span class="ident">rand_cmm_prf</span>) <span class="op">=</span> <span class="ident">commitment_key_prf</span>.<span class="ident">commit</span>(<span class="ident">prf_key</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
-    <span class="kw">let</span> <span class="ident">rand_cmm_prf</span> <span class="op">=</span> <span class="ident">rand_cmm_prf</span>;
+    <span class="comment">// let (cmm_prf, rand_cmm_prf) = commitment_key_prf.commit(prf_key, &amp;mut</span>
+    <span class="comment">// csprng);</span>
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rand_cmm_prf_scalar</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">id_use_data</span>.<span class="ident">randomness</span>; <span class="comment">// m_0 from the bluepaper</span>
+    <span class="ident">rand_cmm_prf_scalar</span>.<span class="ident">sub_assign</span>(<span class="kw-2">&amp;</span><span class="ident">cmm_sc_rand</span>);
+    <span class="kw">let</span> <span class="ident">rand_cmm_prf</span> <span class="op">=</span> <span class="ident">PedersenRandomness::new</span>(<span class="ident">rand_cmm_prf_scalar</span>);
+    <span class="kw">let</span> <span class="ident">cmm_prf</span> <span class="op">=</span> <span class="ident">commitment_key_prf</span>.<span class="ident">hide</span>(<span class="ident">prf_key</span>, <span class="kw-2">&amp;</span><span class="ident">rand_cmm_prf</span>);
     <span class="kw">let</span> <span class="ident">snd_cmm_prf</span> <span class="op">=</span> <span class="ident">cmm_prf_sharing_coeff</span>.<span class="ident">first</span>()<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">rand_snd_cmm_prf</span> <span class="op">=</span> <span class="ident">cmm_coeff_randomness</span>.<span class="ident">first</span>()<span class="question-mark">?</span>.<span class="ident">clone</span>();
 
@@ -1502,7 +1829,7 @@
     });
     <span class="kw">let</span> <span class="ident">secret</span> <span class="op">=</span> (<span class="ident">secret</span>, <span class="ident">com_eq_different_groups::ComEqDiffGroupsSecret</span> {
         <span class="ident">value</span>:      <span class="ident">prf_key</span>.<span class="ident">to_value</span>(),
-        <span class="ident">rand_cmm_1</span>: <span class="ident">rand_cmm_prf</span>.<span class="ident">clone</span>(),
+        <span class="ident">rand_cmm_1</span>: <span class="ident">rand_cmm_prf</span>,
         <span class="ident">rand_cmm_2</span>: <span class="ident">rand_snd_cmm_prf</span>,
     });
 
@@ -1523,14 +1850,14 @@
         <span class="ident">ar_identities</span>,
         <span class="ident">threshold</span>,
     };
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">transcript</span> <span class="op">=</span> <span class="ident">RandomOracle::domain</span>(<span class="string">&quot;PreIdentityProof&quot;</span>);
+
     <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;ctx&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">global_context</span>);
     <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;choice_ar_parameters&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">choice_ar_parameters</span>);
     <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;cmm_sc&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">cmm_sc</span>);
     <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;cmm_prf&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">cmm_prf</span>);
     <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;cmm_prf_sharing_coeff&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">cmm_prf_sharing_coeff</span>);
 
-    <span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="ident">prf_key_data</span>.<span class="ident">iter</span>() {
+    <span class="kw">for</span> <span class="ident">item</span> <span class="kw">in</span> <span class="ident">prf_key_data</span> {
         <span class="kw">let</span> <span class="ident">u8_chunk_size</span> <span class="op">=</span> <span class="ident">u8::from</span>(<span class="ident">CHUNK_SIZE</span>);
         <span class="kw">let</span> <span class="ident">two_chunksize</span> <span class="op">=</span> <span class="ident">C::scalar_from_u64</span>(<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">u8_chunk_size</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">power_of_two</span> <span class="op">=</span> <span class="ident">C::Scalar::one</span>();
@@ -1563,12 +1890,14 @@
         };
         <span class="ident">replicated_provers</span>.<span class="ident">push</span>(<span class="ident">item_prover</span>);
         <span class="ident">replicated_secrets</span>.<span class="ident">push</span>(<span class="ident">secret</span>);
-        <span class="ident">ip_ar_data</span>.<span class="ident">push</span>((<span class="ident">item</span>.<span class="ident">ar</span>.<span class="ident">ar_identity</span>, <span class="kw">move</span> <span class="op">|</span><span class="ident">proof_com_enc_eq</span><span class="op">|</span> <span class="ident">IpArData</span> {
-            <span class="ident">enc_prf_key_share</span>: <span class="ident">item</span>.<span class="ident">encrypted_share</span>,
-            <span class="ident">proof_com_enc_eq</span>,
-        }));
+        <span class="kw">let</span> <span class="ident">encrypted_share</span> <span class="op">=</span> <span class="ident">item</span>.<span class="ident">encrypted_share</span>;
+        <span class="kw">let</span> <span class="ident">closure</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Fn</span>(<span class="ident">com_enc_eq::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">IpArData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="op">=</span>
+            <span class="ident">Box::new</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">proof_com_enc_eq</span><span class="op">|</span> <span class="ident">IpArData</span> {
+                <span class="ident">enc_prf_key_share</span>: <span class="ident">encrypted_share</span>,
+                <span class="ident">proof_com_enc_eq</span>,
+            });
+        <span class="ident">ip_ar_data</span>.<span class="ident">push</span>((<span class="ident">item</span>.<span class="ident">ar</span>.<span class="ident">ar_identity</span>, <span class="ident">closure</span>));
         <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;encrypted_share&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">item</span>.<span class="ident">encrypted_share</span>);
-
         <span class="kw">let</span> <span class="ident">cmm_key_bulletproof</span> <span class="op">=</span> <span class="ident">PedersenKey</span> {
             <span class="ident">g</span>: <span class="ident">h_in_exponent</span>,
             <span class="ident">h</span>: <span class="ident">item</span>.<span class="ident">ar_public_key</span>.<span class="ident">key</span>,
@@ -1579,8 +1908,8 @@
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">PedersenRandomness::new</span>(<span class="kw-2">*</span><span class="ident">x</span>.<span class="ident">as_ref</span>()))
             .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
         <span class="kw">let</span> <span class="ident">bulletproof</span> <span class="op">=</span> <span class="ident">bulletprove</span>(
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transcript</span>,
-            <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>,
+            <span class="ident">transcript</span>,
+            <span class="ident">csprng</span>,
             <span class="ident">u8::from</span>(<span class="ident">CHUNK_SIZE</span>),
             <span class="ident">item</span>.<span class="ident">share_in_chunks</span>.<span class="ident">len</span>() <span class="kw">as</span> <span class="ident">u8</span>,
             <span class="kw-2">&amp;</span><span class="ident">item</span>.<span class="ident">share_in_chunks</span>,
@@ -1591,68 +1920,20 @@
         <span class="ident">bulletproofs</span>.<span class="ident">push</span>(<span class="ident">bulletproof</span>);
     }
 
-    <span class="comment">// Proof that RegID_ACC = PRF(AHI.key_PRF ,0):</span>
-    <span class="kw">let</span> <span class="ident">prover_prf_regid</span> <span class="op">=</span> <span class="ident">com_eq::ComEq</span> {
-        <span class="ident">commitment</span>: <span class="ident">cmm_prf</span>,
-        <span class="ident">y</span>:          <span class="ident">context</span>.<span class="ident">global_context</span>.<span class="ident">on_chain_commitment_key</span>.<span class="ident">g</span>,
-        <span class="ident">g</span>:          <span class="ident">reg_id</span>,
-        <span class="ident">cmm_key</span>:    <span class="ident">commitment_key_prf</span>,
-    };
-
-    <span class="kw">let</span> <span class="ident">secret_prf_regid</span> <span class="op">=</span> <span class="ident">com_eq::ComEqSecret</span> {
-        <span class="ident">r</span>: <span class="ident">rand_cmm_prf</span>.<span class="ident">clone</span>(),
-        <span class="ident">a</span>: <span class="ident">prf_key</span>.<span class="ident">to_value</span>(),
-    };
-
     <span class="kw">let</span> <span class="ident">prover</span> <span class="op">=</span> <span class="ident">prover</span>.<span class="ident">add_prover</span>(<span class="ident">ReplicateAdapter</span> {
         <span class="ident">protocols</span>: <span class="ident">replicated_provers</span>,
     });
-
     <span class="kw">let</span> <span class="ident">secret</span> <span class="op">=</span> (<span class="ident">secret</span>, <span class="ident">replicated_secrets</span>);
 
-    <span class="kw">let</span> <span class="ident">prover</span> <span class="op">=</span> <span class="ident">prover</span>.<span class="ident">add_prover</span>(<span class="ident">prover_prf_regid</span>);
-    <span class="kw">let</span> <span class="ident">secret</span> <span class="op">=</span> (<span class="ident">secret</span>, <span class="ident">secret_prf_regid</span>);
-    <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;bulletproofs&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">bulletproofs</span>);
-    <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="ident">prove</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">transcript</span>, <span class="kw-2">&amp;</span><span class="ident">prover</span>, <span class="ident">secret</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>)<span class="question-mark">?</span>;
-
-    <span class="kw">let</span> <span class="ident">ip_ar_data</span> <span class="op">=</span> <span class="ident">ip_ar_data</span>
-        .<span class="ident">iter</span>()
-        .<span class="ident">zip</span>(<span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w2</span>.<span class="ident">witnesses</span>.<span class="ident">into_iter</span>())
-        .<span class="ident">map</span>(<span class="op">|</span>(<span class="kw-2">&amp;</span>(<span class="ident">ar_id</span>, <span class="ident">f</span>), <span class="ident">w</span>)<span class="op">|</span> (<span class="ident">ar_id</span>, <span class="ident">f</span>(<span class="ident">w</span>)))
-        .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">ArIdentity</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
-    <span class="kw">let</span> <span class="ident">poks</span> <span class="op">=</span> <span class="ident">PreIdentityProof</span> {
-        <span class="ident">challenge</span>: <span class="ident">proof</span>.<span class="ident">challenge</span>,
-        <span class="ident">id_cred_sec_witness</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w1</span>,
-        <span class="ident">commitments_same_proof</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w2</span>,
-        <span class="ident">commitments_prf_same</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w1</span>.<span class="ident">w1</span>.<span class="ident">w2</span>,
-        <span class="ident">prf_regid_proof</span>: <span class="ident">proof</span>.<span class="ident">witness</span>.<span class="ident">w2</span>,
-        <span class="ident">proof_acc_sk</span>,
+    <span class="prelude-val">Some</span>(<span class="ident">CommonPioGenerationOutput</span> {
+        <span class="ident">prover</span>,
+        <span class="ident">secret</span>,
         <span class="ident">bulletproofs</span>,
-    };
-    <span class="comment">// attribute list</span>
-    <span class="kw">let</span> <span class="ident">prio</span> <span class="op">=</span> <span class="ident">PreIdentityObject</span> {
-        <span class="ident">pub_info_for_ip</span>,
         <span class="ident">ip_ar_data</span>,
         <span class="ident">choice_ar_parameters</span>,
-        <span class="ident">cmm_sc</span>,
-        <span class="ident">cmm_prf</span>,
         <span class="ident">cmm_prf_sharing_coeff</span>,
-        <span class="ident">poks</span>,
-    };
-
-    <span class="comment">// Step 9:  Somewhere here we should also send the credential stuff for the</span>
-    <span class="comment">// initial account (the ACI in the bluepaper)</span>
-
-    <span class="comment">// Randomness to retrieve the signature</span>
-    <span class="comment">// We add randomness from both of the commitments.</span>
-    <span class="comment">// See specification of ps_sig and id layer for why this is so.</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sig_retrieval_rand</span> <span class="op">=</span> <span class="ident">P::ScalarField::zero</span>();
-    <span class="ident">sig_retrieval_rand</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident">cmm_sc_rand</span>);
-    <span class="ident">sig_retrieval_rand</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident">rand_cmm_prf</span>);
-    <span class="prelude-val">Some</span>((
-        <span class="ident">prio</span>,
-        <span class="ident">ps_sig::SigRetrievalRandomness::new</span>(<span class="ident">sig_retrieval_rand</span>),
-    ))
+        <span class="ident">id_cred_pub</span>,
+    })
 }
 
 <span class="doccomment">/// Convenient data structure to collect data related to a single AR</span>
@@ -1687,7 +1968,7 @@
     <span class="comment">// We evaluate the polynomial at ar_identities.</span>
     <span class="kw">let</span> <span class="ident">share_points</span> <span class="op">=</span> <span class="ident">ar_parameters</span>.<span class="ident">keys</span>().<span class="ident">copied</span>();
     <span class="comment">// share the scalar on ar_identity points.</span>
-    <span class="kw">let</span> <span class="ident">sharing_data</span> <span class="op">=</span> <span class="ident">share</span>::<span class="op">&lt;</span><span class="ident">C</span>, <span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">shared_scalar</span>, <span class="ident">share_points</span>, <span class="ident">threshold</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
+    <span class="kw">let</span> <span class="ident">sharing_data</span> <span class="op">=</span> <span class="ident">share</span>::<span class="op">&lt;</span><span class="ident">C</span>, <span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">shared_scalar</span>, <span class="ident">share_points</span>, <span class="ident">threshold</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
     <span class="comment">// commitments to the sharing coefficients</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cmm_sharing_coefficients</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">threshold</span>.<span class="ident">into</span>());
     <span class="comment">// first coefficient is the shared scalar</span>
@@ -1772,7 +2053,7 @@
     <span class="comment">// We evaluate the polynomial at ar_identities.</span>
     <span class="kw">let</span> <span class="ident">share_points</span> <span class="op">=</span> <span class="ident">ar_parameters</span>.<span class="ident">keys</span>().<span class="ident">copied</span>();
     <span class="comment">// share the scalar on ar_identity points.</span>
-    <span class="kw">let</span> <span class="ident">sharing_data</span> <span class="op">=</span> <span class="ident">share</span>::<span class="op">&lt;</span><span class="ident">C</span>, <span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">shared_scalar</span>, <span class="ident">share_points</span>, <span class="ident">threshold</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
+    <span class="kw">let</span> <span class="ident">sharing_data</span> <span class="op">=</span> <span class="ident">share</span>::<span class="op">&lt;</span><span class="ident">C</span>, <span class="kw">_</span>, <span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="ident">shared_scalar</span>, <span class="ident">share_points</span>, <span class="ident">threshold</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
     <span class="comment">// commitments to the sharing coefficients</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cmm_sharing_coefficients</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">threshold</span>.<span class="ident">into</span>());
     <span class="comment">// first coefficient is the shared scalar</span>
@@ -1839,6 +2120,7 @@
 <span class="doccomment">/// commitments later on. The information is meant to be valid in the context of</span>
 <span class="doccomment">/// a given identity provider, and global parameter.</span>
 <span class="doccomment">/// The &#39;cred_counter&#39; is used to generate a new credential ID.</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::too_many_arguments</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_credential</span><span class="op">&lt;</span>
     <span class="lifetime">&#39;a</span>,
     <span class="ident">P</span>: <span class="ident">Pairing</span>,
@@ -1846,11 +2128,12 @@
     <span class="ident">AttributeType</span>: <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">C::Scalar</span><span class="op">&gt;</span>,
 <span class="op">&gt;</span>(
     <span class="ident">context</span>: <span class="ident">IpContext</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
-    <span class="ident">id_object</span>: <span class="kw-2">&amp;</span><span class="ident">IdentityObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
+    <span class="ident">id_object</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">HasIdentityObjectFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="ident">id_object_use_data</span>: <span class="kw-2">&amp;</span><span class="ident">IdObjectUseData</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">cred_counter</span>: <span class="ident">u8</span>,
     <span class="ident">policy</span>: <span class="ident">Policy</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="ident">cred_data</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">CredentialDataWithSigning</span>,
+    <span class="ident">secret_data</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">HasAttributeRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">new_or_existing</span>: <span class="kw-2">&amp;</span><span class="ident">either::Either</span><span class="op">&lt;</span><span class="ident">TransactionTime</span>, <span class="ident">AccountAddress</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(
     <span class="ident">CredentialDeploymentInfo</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
@@ -1866,10 +2149,11 @@
         <span class="ident">policy</span>,
         <span class="ident">cred_data</span>.<span class="ident">get_cred_key_info</span>(),
         <span class="ident">new_or_existing</span>.<span class="ident">as_ref</span>().<span class="ident">right</span>(),
+        <span class="ident">secret_data</span>,
     )<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="ident">proof_acc_sk</span> <span class="op">=</span> <span class="ident">AccountOwnershipProof</span> {
-        <span class="ident">sigs</span>: <span class="ident">cred_data</span>.<span class="ident">sign</span>(<span class="kw-2">&amp;</span><span class="ident">new_or_existing</span>, <span class="kw-2">&amp;</span><span class="ident">unsigned_credential_info</span>),
+        <span class="ident">sigs</span>: <span class="ident">cred_data</span>.<span class="ident">sign</span>(<span class="ident">new_or_existing</span>, <span class="kw-2">&amp;</span><span class="ident">unsigned_credential_info</span>),
     };
 
     <span class="kw">let</span> <span class="ident">cdp</span> <span class="op">=</span> <span class="ident">CredDeploymentProofs</span> {
@@ -1885,12 +2169,7 @@
     <span class="prelude-val">Ok</span>((<span class="ident">info</span>, <span class="ident">commitments_randomness</span>))
 }
 
-<span class="doccomment">/// Generates an unsigned credential deployment info and outputs the randomness</span>
-<span class="doccomment">/// used in commitments. The information is meant to be valid in the context of</span>
-<span class="doccomment">/// a given identity provider, and global parameter.</span>
-<span class="doccomment">/// The &#39;cred_counter&#39; is used to generate a new credential ID.</span>
-<span class="doccomment">/// It should be the case that using the output, one can construct an actual</span>
-<span class="doccomment">/// credential deployment info, by signing the unsigned challenge.</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::too_many_arguments</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_unsigned_credential</span><span class="op">&lt;</span>
     <span class="lifetime">&#39;a</span>,
     <span class="ident">P</span>: <span class="ident">Pairing</span>,
@@ -1898,12 +2177,13 @@
     <span class="ident">AttributeType</span>: <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">C::Scalar</span><span class="op">&gt;</span>,
 <span class="op">&gt;</span>(
     <span class="ident">context</span>: <span class="ident">IpContext</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
-    <span class="ident">id_object</span>: <span class="kw-2">&amp;</span><span class="ident">IdentityObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
+    <span class="ident">id_object</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">HasIdentityObjectFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="ident">id_object_use_data</span>: <span class="kw-2">&amp;</span><span class="ident">IdObjectUseData</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">cred_counter</span>: <span class="ident">u8</span>,
     <span class="ident">policy</span>: <span class="ident">Policy</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="ident">cred_key_info</span>: <span class="ident">CredentialPublicKeys</span>,
     <span class="ident">addr</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">AccountAddress</span><span class="op">&gt;</span>,
+    <span class="ident">secret_data</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">HasAttributeRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(
     <span class="ident">UnsignedCredentialDeploymentInfo</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="ident">CommitmentsRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
@@ -1912,11 +2192,13 @@
     <span class="ident">AttributeType</span>: <span class="ident">Clone</span>, {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">csprng</span> <span class="op">=</span> <span class="ident">thread_rng</span>();
 
-    <span class="kw">let</span> <span class="ident">ip_sig</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">id_object</span>.<span class="ident">signature</span>;
+    <span class="kw">let</span> (<span class="ident">ip_sig</span>, <span class="ident">prio</span>, <span class="ident">alist</span>) <span class="op">=</span> (
+        <span class="ident">id_object</span>.<span class="ident">get_signature</span>(),
+        <span class="ident">id_object</span>.<span class="ident">get_common_pio_fields</span>(),
+        <span class="ident">id_object</span>.<span class="ident">get_attribute_list</span>(),
+    );
     <span class="kw">let</span> <span class="ident">sig_retrieval_rand</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">id_object_use_data</span>.<span class="ident">randomness</span>;
     <span class="kw">let</span> <span class="ident">aci</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">id_object_use_data</span>.<span class="ident">aci</span>;
-    <span class="kw">let</span> <span class="ident">prio</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">id_object</span>.<span class="ident">pre_identity_object</span>;
-    <span class="kw">let</span> <span class="ident">alist</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">id_object</span>.<span class="ident">alist</span>;
 
     <span class="kw">let</span> <span class="ident">prf_key</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">aci</span>.<span class="ident">prf_key</span>;
     <span class="kw">let</span> <span class="ident">id_cred_sec</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">aci</span>.<span class="ident">cred_holder_info</span>.<span class="ident">id_cred</span>.<span class="ident">id_cred_sec</span>;
@@ -1943,12 +2225,7 @@
     <span class="comment">// available in the given context, and remove the ones that are not.</span>
     <span class="kw">let</span> <span class="ident">chosen_ars</span> <span class="op">=</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">chosen_ars</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
-        <span class="kw">for</span> <span class="ident">ar_id</span> <span class="kw">in</span> <span class="ident">id_object</span>
-            .<span class="ident">pre_identity_object</span>
-            .<span class="ident">choice_ar_parameters</span>
-            .<span class="ident">ar_identities</span>
-            .<span class="ident">iter</span>()
-        {
+        <span class="kw">for</span> <span class="ident">ar_id</span> <span class="kw">in</span> <span class="ident">prio</span>.<span class="ident">choice_ar_parameters</span>.<span class="ident">ar_identities</span>.<span class="ident">iter</span>() {
             <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">info</span>) <span class="op">=</span> <span class="ident">context</span>.<span class="ident">ars_infos</span>.<span class="ident">get</span>(<span class="ident">ar_id</span>) {
                 <span class="comment">// FIXME: We could get rid of this clone if we passed in a map of references.</span>
                 <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">chosen_ars</span>.<span class="ident">insert</span>(<span class="kw-2">*</span><span class="ident">ar_id</span>, <span class="ident">info</span>.<span class="ident">clone</span>()); <span class="comment">// since we are</span>
@@ -1985,7 +2262,7 @@
     <span class="kw">let</span> <span class="ident">ip_pub_key</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">ip_info</span>.<span class="ident">ip_verify_key</span>;
 
     <span class="comment">// retrieve the signature on the underlying idcredsec + prf_key + attribute_list</span>
-    <span class="kw">let</span> <span class="ident">retrieved_sig</span> <span class="op">=</span> <span class="ident">ip_sig</span>.<span class="ident">retrieve</span>(<span class="kw-2">&amp;</span><span class="ident">sig_retrieval_rand</span>);
+    <span class="kw">let</span> <span class="ident">retrieved_sig</span> <span class="op">=</span> <span class="ident">ip_sig</span>.<span class="ident">retrieve</span>(<span class="ident">sig_retrieval_rand</span>);
 
     <span class="comment">// and then we blind the signature to disassociate it from the message.</span>
     <span class="comment">// only the second part is used (as per the protocol)</span>
@@ -1994,12 +2271,13 @@
     <span class="comment">// We use the on-chain pedersen commitment key.</span>
     <span class="kw">let</span> (<span class="ident">commitments</span>, <span class="ident">commitment_rands</span>) <span class="op">=</span> <span class="ident">compute_commitments</span>(
         <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">global_context</span>.<span class="ident">on_chain_commitment_key</span>,
-        <span class="kw-2">&amp;</span><span class="ident">alist</span>,
+        <span class="ident">alist</span>,
         <span class="ident">prf_key</span>,
         <span class="ident">cred_counter</span>,
         <span class="kw-2">&amp;</span><span class="ident">cmm_id_cred_sec_sharing_coeff</span>,
         <span class="ident">cmm_coeff_randomness</span>,
         <span class="kw-2">&amp;</span><span class="ident">policy</span>,
+        <span class="ident">secret_data</span>,
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>,
     )<span class="question-mark">?</span>;
 
@@ -2073,12 +2351,12 @@
         <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">global_context</span>.<span class="ident">on_chain_commitment_key</span>,
         <span class="kw-2">&amp;</span><span class="ident">commitments</span>,
         <span class="kw-2">&amp;</span><span class="ident">commitment_rands</span>,
-        <span class="kw-2">&amp;</span><span class="ident">id_cred_sec</span>,
-        <span class="kw-2">&amp;</span><span class="ident">prf_key</span>,
-        <span class="kw-2">&amp;</span><span class="ident">alist</span>,
-        <span class="ident">id_object</span>.<span class="ident">pre_identity_object</span>.<span class="ident">choice_ar_parameters</span>.<span class="ident">threshold</span>,
+        <span class="ident">id_cred_sec</span>,
+        <span class="ident">prf_key</span>,
+        <span class="ident">alist</span>,
+        <span class="ident">prio</span>.<span class="ident">choice_ar_parameters</span>.<span class="ident">threshold</span>,
         <span class="kw-2">&amp;</span><span class="ident">choice_ar_handles</span>,
-        <span class="kw-2">&amp;</span><span class="ident">ip_pub_key</span>,
+        <span class="ident">ip_pub_key</span>,
         <span class="kw-2">&amp;</span><span class="ident">blinded_sig</span>,
         <span class="ident">blind_rand</span>,
     )<span class="question-mark">?</span>;
@@ -2103,7 +2381,7 @@
         <span class="number">8</span>,
         <span class="ident">u64::from</span>(<span class="ident">cred_counter</span>),
         <span class="ident">u64::from</span>(<span class="ident">alist</span>.<span class="ident">max_accounts</span>),
-        <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">global_context</span>.<span class="ident">bulletproof_generators</span>(),
+        <span class="ident">context</span>.<span class="ident">global_context</span>.<span class="ident">bulletproof_generators</span>(),
         <span class="kw-2">&amp;</span><span class="ident">context</span>.<span class="ident">global_context</span>.<span class="ident">on_chain_commitment_key</span>,
         <span class="kw-2">&amp;</span><span class="ident">commitment_rands</span>.<span class="ident">cred_counter_rand</span>,
         <span class="kw-2">&amp;</span><span class="ident">commitment_rands</span>.<span class="ident">max_accounts_rand</span>,
@@ -2249,7 +2527,7 @@
 
     <span class="comment">// and all commitments to ARs with randomness 0</span>
     <span class="kw">for</span> <span class="ident">ar</span> <span class="kw">in</span> <span class="ident">ar_scalars</span>.<span class="ident">iter</span>() {
-        <span class="ident">comm_vec</span>.<span class="ident">push</span>(<span class="ident">commitment_key</span>.<span class="ident">hide_worker</span>(<span class="kw-2">&amp;</span><span class="ident">ar</span>, <span class="kw-2">&amp;</span><span class="ident">zero</span>));
+        <span class="ident">comm_vec</span>.<span class="ident">push</span>(<span class="ident">commitment_key</span>.<span class="ident">hide_worker</span>(<span class="ident">ar</span>, <span class="kw-2">&amp;</span><span class="ident">zero</span>));
     }
 
     <span class="ident">comm_vec</span>.<span class="ident">push</span>(<span class="ident">tags_cmm</span>);
@@ -2294,6 +2572,7 @@
     <span class="ident">cmm_id_cred_sec_sharing_coeff</span>: <span class="kw-2">&amp;</span>[<span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>],
     <span class="ident">cmm_coeff_randomness</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PedersenRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">policy</span>: <span class="kw-2">&amp;</span><span class="ident">Policy</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
+    <span class="ident">secret_data</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">HasAttributeRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
 ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span>(<span class="ident">CredentialDeploymentCommitments</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">CommitmentsRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>)<span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">id_cred_sec_rand</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">v</span>) <span class="op">=</span> <span class="ident">cmm_coeff_randomness</span>.<span class="ident">first</span>() {
@@ -2323,9 +2602,10 @@
         <span class="comment">// We can just commit with randomness 0.</span>
         <span class="kw">if</span> <span class="op">!</span><span class="ident">policy</span>.<span class="ident">policy_vec</span>.<span class="ident">contains_key</span>(<span class="kw-2">&amp;</span><span class="ident">i</span>) {
             <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="ident">::new</span>(<span class="ident">val</span>.<span class="ident">to_field_element</span>());
-            <span class="kw">let</span> (<span class="ident">cmm</span>, <span class="ident">rand</span>) <span class="op">=</span> <span class="ident">commitment_key</span>.<span class="ident">commit</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="ident">csprng</span>);
+            <span class="kw">let</span> <span class="ident">attr_rand</span> <span class="op">=</span> <span class="ident">secret_data</span>.<span class="ident">get_attribute_commitment_randomness</span>(<span class="ident">i</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">cmm</span> <span class="op">=</span> <span class="ident">commitment_key</span>.<span class="ident">hide</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="ident">attr_rand</span>);
             <span class="ident">cmm_attributes</span>.<span class="ident">insert</span>(<span class="ident">i</span>, <span class="ident">cmm</span>);
-            <span class="ident">attributes_rand</span>.<span class="ident">insert</span>(<span class="ident">i</span>, <span class="ident">rand</span>);
+            <span class="ident">attributes_rand</span>.<span class="ident">insert</span>(<span class="ident">i</span>, <span class="ident">attr_rand</span>);
         }
     }
     <span class="kw">let</span> <span class="ident">cdc</span> <span class="op">=</span> <span class="ident">CredentialDeploymentCommitments</span> {
@@ -2374,7 +2654,7 @@
 
     <span class="comment">// commitments are the public values. They all have to</span>
     <span class="kw">let</span> <span class="ident">public</span> <span class="op">=</span> [
-        <span class="ident">cmm_prf</span>.<span class="ident">combine</span>(<span class="kw-2">&amp;</span><span class="ident">cmm_cred_counter</span>),
+        <span class="ident">cmm_prf</span>.<span class="ident">combine</span>(<span class="ident">cmm_cred_counter</span>),
         <span class="ident">Commitment</span>(<span class="ident">reg_id</span>),
         <span class="ident">cmm_one</span>,
     ];
@@ -2386,8 +2666,8 @@
 
     <span class="comment">// combine the two randomness witnesses</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rand_1</span> <span class="op">=</span> <span class="ident">C::Scalar::zero</span>();
-    <span class="ident">rand_1</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident">prf_rand</span>);
-    <span class="ident">rand_1</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident">cred_counter_rand</span>);
+    <span class="ident">rand_1</span>.<span class="ident">add_assign</span>(<span class="ident">prf_rand</span>);
+    <span class="ident">rand_1</span>.<span class="ident">add_assign</span>(<span class="ident">cred_counter_rand</span>);
     <span class="comment">// reg_id is the commitment to reg_id_exponent with randomness 0</span>
     <span class="comment">// the right-hand side of the equation is commitment to 1 with randomness 0</span>
     <span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> [<span class="ident">Value::new</span>(<span class="ident">k</span>), <span class="ident">Value::new</span>(<span class="ident">reg_id_exponent</span>)];
@@ -2543,7 +2823,7 @@
             <span class="ident">ip_secret_key</span>,
             <span class="ident">ip_cdi_secret_key</span>,
         } <span class="op">=</span> <span class="ident">test_create_ip_info</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>, <span class="ident">num_ars</span>, <span class="ident">max_attrs</span>);
-        <span class="kw">let</span> <span class="ident">aci</span> <span class="op">=</span> <span class="ident">test_create_aci</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
+        <span class="kw">let</span> <span class="ident">id_use_data</span> <span class="op">=</span> <span class="ident">test_create_id_use_data</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
         <span class="kw">let</span> <span class="ident">acc_data</span> <span class="op">=</span> <span class="ident">InitialAccountData</span> {
             <span class="ident">keys</span>:      {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">keys</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
@@ -2558,8 +2838,14 @@
 
         <span class="kw">let</span> (<span class="ident">ars_infos</span>, <span class="kw">_</span>) <span class="op">=</span>
             <span class="ident">test_create_ars</span>(<span class="kw-2">&amp;</span><span class="ident">global_ctx</span>.<span class="ident">on_chain_commitment_key</span>.<span class="ident">g</span>, <span class="ident">num_ars</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
-        <span class="kw">let</span> (<span class="ident">context</span>, <span class="ident">pio</span>, <span class="ident">randomness</span>) <span class="op">=</span>
-            <span class="ident">test_create_pio</span>(<span class="kw-2">&amp;</span><span class="ident">aci</span>, <span class="kw-2">&amp;</span><span class="ident">ip_info</span>, <span class="kw-2">&amp;</span><span class="ident">ars_infos</span>, <span class="kw-2">&amp;</span><span class="ident">global_ctx</span>, <span class="ident">num_ars</span>, <span class="kw-2">&amp;</span><span class="ident">acc_data</span>);
+        <span class="kw">let</span> (<span class="ident">context</span>, <span class="ident">pio</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">test_create_pio</span>(
+            <span class="kw-2">&amp;</span><span class="ident">id_use_data</span>,
+            <span class="kw-2">&amp;</span><span class="ident">ip_info</span>,
+            <span class="kw-2">&amp;</span><span class="ident">ars_infos</span>,
+            <span class="kw-2">&amp;</span><span class="ident">global_ctx</span>,
+            <span class="ident">num_ars</span>,
+            <span class="kw-2">&amp;</span><span class="ident">acc_data</span>,
+        );
         <span class="kw">let</span> <span class="ident">alist</span> <span class="op">=</span> <span class="ident">test_create_attributes</span>();
         <span class="kw">let</span> <span class="ident">ver_ok</span> <span class="op">=</span> <span class="ident">verify_credentials</span>(
             <span class="kw-2">&amp;</span><span class="ident">pio</span>,
@@ -2577,7 +2863,6 @@
             <span class="ident">alist</span>,
             <span class="ident">signature</span>: <span class="ident">ip_sig</span>,
         };
-        <span class="kw">let</span> <span class="ident">id_use_data</span> <span class="op">=</span> <span class="ident">IdObjectUseData</span> { <span class="ident">aci</span>, <span class="ident">randomness</span> };
         <span class="kw">let</span> <span class="ident">valid_to</span> <span class="op">=</span> <span class="ident">YearMonth::new</span>(<span class="number">2022</span>, <span class="number">5</span>).<span class="ident">unwrap</span>(); <span class="comment">// May 2022</span>
         <span class="kw">let</span> <span class="ident">created_at</span> <span class="op">=</span> <span class="ident">YearMonth::new</span>(<span class="number">2020</span>, <span class="number">5</span>).<span class="ident">unwrap</span>(); <span class="comment">// May 2020</span>
         <span class="kw">let</span> <span class="ident">policy</span> <span class="op">=</span> <span class="ident">Policy</span> {
@@ -2608,6 +2893,7 @@
             <span class="ident">cred_ctr</span>,
             <span class="ident">policy</span>.<span class="ident">clone</span>(),
             <span class="kw-2">&amp;</span><span class="ident">acc_data</span>,
+            <span class="kw-2">&amp;</span><span class="ident">SystemAttributeRandomness</span> {},
             <span class="kw-2">&amp;</span><span class="ident">Left</span>(<span class="ident">EXPIRY</span>),
         )
         .<span class="ident">expect</span>(<span class="string">&quot;Could not generate CDI&quot;</span>);
@@ -2654,6 +2940,7 @@
         <span class="macro">assert_eq!</span>(<span class="ident">cdi</span>.<span class="ident">values</span>.<span class="ident">policy</span>, <span class="ident">policy</span>, <span class="string">&quot;CDI policy is invalid&quot;</span>);
     }
 }
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="id" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>

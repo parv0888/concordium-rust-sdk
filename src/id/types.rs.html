@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `concordium-base/rust-src/id/src/types.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>types.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings"></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../id/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `concordium-base&#x2F;rust-src&#x2F;id&#x2F;src&#x2F;types.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>types.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../id/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2248,8 +2245,244 @@
 <span id="2245">2245</span>
 <span id="2246">2246</span>
 <span id="2247">2247</span>
-</pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! Main types used in the identity layer, and their serialization</span>
+<span id="2248">2248</span>
+<span id="2249">2249</span>
+<span id="2250">2250</span>
+<span id="2251">2251</span>
+<span id="2252">2252</span>
+<span id="2253">2253</span>
+<span id="2254">2254</span>
+<span id="2255">2255</span>
+<span id="2256">2256</span>
+<span id="2257">2257</span>
+<span id="2258">2258</span>
+<span id="2259">2259</span>
+<span id="2260">2260</span>
+<span id="2261">2261</span>
+<span id="2262">2262</span>
+<span id="2263">2263</span>
+<span id="2264">2264</span>
+<span id="2265">2265</span>
+<span id="2266">2266</span>
+<span id="2267">2267</span>
+<span id="2268">2268</span>
+<span id="2269">2269</span>
+<span id="2270">2270</span>
+<span id="2271">2271</span>
+<span id="2272">2272</span>
+<span id="2273">2273</span>
+<span id="2274">2274</span>
+<span id="2275">2275</span>
+<span id="2276">2276</span>
+<span id="2277">2277</span>
+<span id="2278">2278</span>
+<span id="2279">2279</span>
+<span id="2280">2280</span>
+<span id="2281">2281</span>
+<span id="2282">2282</span>
+<span id="2283">2283</span>
+<span id="2284">2284</span>
+<span id="2285">2285</span>
+<span id="2286">2286</span>
+<span id="2287">2287</span>
+<span id="2288">2288</span>
+<span id="2289">2289</span>
+<span id="2290">2290</span>
+<span id="2291">2291</span>
+<span id="2292">2292</span>
+<span id="2293">2293</span>
+<span id="2294">2294</span>
+<span id="2295">2295</span>
+<span id="2296">2296</span>
+<span id="2297">2297</span>
+<span id="2298">2298</span>
+<span id="2299">2299</span>
+<span id="2300">2300</span>
+<span id="2301">2301</span>
+<span id="2302">2302</span>
+<span id="2303">2303</span>
+<span id="2304">2304</span>
+<span id="2305">2305</span>
+<span id="2306">2306</span>
+<span id="2307">2307</span>
+<span id="2308">2308</span>
+<span id="2309">2309</span>
+<span id="2310">2310</span>
+<span id="2311">2311</span>
+<span id="2312">2312</span>
+<span id="2313">2313</span>
+<span id="2314">2314</span>
+<span id="2315">2315</span>
+<span id="2316">2316</span>
+<span id="2317">2317</span>
+<span id="2318">2318</span>
+<span id="2319">2319</span>
+<span id="2320">2320</span>
+<span id="2321">2321</span>
+<span id="2322">2322</span>
+<span id="2323">2323</span>
+<span id="2324">2324</span>
+<span id="2325">2325</span>
+<span id="2326">2326</span>
+<span id="2327">2327</span>
+<span id="2328">2328</span>
+<span id="2329">2329</span>
+<span id="2330">2330</span>
+<span id="2331">2331</span>
+<span id="2332">2332</span>
+<span id="2333">2333</span>
+<span id="2334">2334</span>
+<span id="2335">2335</span>
+<span id="2336">2336</span>
+<span id="2337">2337</span>
+<span id="2338">2338</span>
+<span id="2339">2339</span>
+<span id="2340">2340</span>
+<span id="2341">2341</span>
+<span id="2342">2342</span>
+<span id="2343">2343</span>
+<span id="2344">2344</span>
+<span id="2345">2345</span>
+<span id="2346">2346</span>
+<span id="2347">2347</span>
+<span id="2348">2348</span>
+<span id="2349">2349</span>
+<span id="2350">2350</span>
+<span id="2351">2351</span>
+<span id="2352">2352</span>
+<span id="2353">2353</span>
+<span id="2354">2354</span>
+<span id="2355">2355</span>
+<span id="2356">2356</span>
+<span id="2357">2357</span>
+<span id="2358">2358</span>
+<span id="2359">2359</span>
+<span id="2360">2360</span>
+<span id="2361">2361</span>
+<span id="2362">2362</span>
+<span id="2363">2363</span>
+<span id="2364">2364</span>
+<span id="2365">2365</span>
+<span id="2366">2366</span>
+<span id="2367">2367</span>
+<span id="2368">2368</span>
+<span id="2369">2369</span>
+<span id="2370">2370</span>
+<span id="2371">2371</span>
+<span id="2372">2372</span>
+<span id="2373">2373</span>
+<span id="2374">2374</span>
+<span id="2375">2375</span>
+<span id="2376">2376</span>
+<span id="2377">2377</span>
+<span id="2378">2378</span>
+<span id="2379">2379</span>
+<span id="2380">2380</span>
+<span id="2381">2381</span>
+<span id="2382">2382</span>
+<span id="2383">2383</span>
+<span id="2384">2384</span>
+<span id="2385">2385</span>
+<span id="2386">2386</span>
+<span id="2387">2387</span>
+<span id="2388">2388</span>
+<span id="2389">2389</span>
+<span id="2390">2390</span>
+<span id="2391">2391</span>
+<span id="2392">2392</span>
+<span id="2393">2393</span>
+<span id="2394">2394</span>
+<span id="2395">2395</span>
+<span id="2396">2396</span>
+<span id="2397">2397</span>
+<span id="2398">2398</span>
+<span id="2399">2399</span>
+<span id="2400">2400</span>
+<span id="2401">2401</span>
+<span id="2402">2402</span>
+<span id="2403">2403</span>
+<span id="2404">2404</span>
+<span id="2405">2405</span>
+<span id="2406">2406</span>
+<span id="2407">2407</span>
+<span id="2408">2408</span>
+<span id="2409">2409</span>
+<span id="2410">2410</span>
+<span id="2411">2411</span>
+<span id="2412">2412</span>
+<span id="2413">2413</span>
+<span id="2414">2414</span>
+<span id="2415">2415</span>
+<span id="2416">2416</span>
+<span id="2417">2417</span>
+<span id="2418">2418</span>
+<span id="2419">2419</span>
+<span id="2420">2420</span>
+<span id="2421">2421</span>
+<span id="2422">2422</span>
+<span id="2423">2423</span>
+<span id="2424">2424</span>
+<span id="2425">2425</span>
+<span id="2426">2426</span>
+<span id="2427">2427</span>
+<span id="2428">2428</span>
+<span id="2429">2429</span>
+<span id="2430">2430</span>
+<span id="2431">2431</span>
+<span id="2432">2432</span>
+<span id="2433">2433</span>
+<span id="2434">2434</span>
+<span id="2435">2435</span>
+<span id="2436">2436</span>
+<span id="2437">2437</span>
+<span id="2438">2438</span>
+<span id="2439">2439</span>
+<span id="2440">2440</span>
+<span id="2441">2441</span>
+<span id="2442">2442</span>
+<span id="2443">2443</span>
+<span id="2444">2444</span>
+<span id="2445">2445</span>
+<span id="2446">2446</span>
+<span id="2447">2447</span>
+<span id="2448">2448</span>
+<span id="2449">2449</span>
+<span id="2450">2450</span>
+<span id="2451">2451</span>
+<span id="2452">2452</span>
+<span id="2453">2453</span>
+<span id="2454">2454</span>
+<span id="2455">2455</span>
+<span id="2456">2456</span>
+<span id="2457">2457</span>
+<span id="2458">2458</span>
+<span id="2459">2459</span>
+<span id="2460">2460</span>
+<span id="2461">2461</span>
+<span id="2462">2462</span>
+<span id="2463">2463</span>
+<span id="2464">2464</span>
+<span id="2465">2465</span>
+<span id="2466">2466</span>
+<span id="2467">2467</span>
+<span id="2468">2468</span>
+<span id="2469">2469</span>
+<span id="2470">2470</span>
+<span id="2471">2471</span>
+<span id="2472">2472</span>
+<span id="2473">2473</span>
+<span id="2474">2474</span>
+<span id="2475">2475</span>
+<span id="2476">2476</span>
+<span id="2477">2477</span>
+<span id="2478">2478</span>
+<span id="2479">2479</span>
+<span id="2480">2480</span>
+<span id="2481">2481</span>
+<span id="2482">2482</span>
+<span id="2483">2483</span>
+<span id="2484">2484</span>
+</pre><pre class="rust"><code><span class="doccomment">//! Main types used in the identity layer, and their serialization</span>
 <span class="doccomment">//! implementations.</span>
 <span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">secret_sharing::Threshold</span>,
@@ -2295,6 +2528,7 @@
     <span class="ident">io</span>::{<span class="ident">Cursor</span>, <span class="ident">Read</span>},
     <span class="ident">str::FromStr</span>,
 };
+<span class="kw">use</span> <span class="ident">thiserror::Error</span>;
 
 <span class="doccomment">/// NB: This includes digits of PI (starting with 314...) as ASCII characters</span>
 <span class="doccomment">/// this could be what is desired, but it is important to be aware of it.</span>
@@ -2310,10 +2544,10 @@
 <span class="doccomment">/// Chunk size for encryption of prf key</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">CHUNK_SIZE</span>: <span class="ident">ChunkSize</span> <span class="op">=</span> <span class="ident">ChunkSize::ThirtyTwo</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">Hash</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">From</span>)]</span>
 <span class="doccomment">/// Address of an account. Textual representation uses base58check encoding with</span>
 <span class="doccomment">/// version byte 1.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AccountAddress</span>(<span class="kw">pub</span>(<span class="kw">crate</span>) [<span class="ident">u8</span>; <span class="ident">ACCOUNT_ADDRESS_SIZE</span>]);
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AccountAddress</span>(<span class="kw">pub</span> [<span class="ident">u8</span>; <span class="ident">ACCOUNT_ADDRESS_SIZE</span>]);
 
 <span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">AccountAddress</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> { <span class="self">self</span>.<span class="number">0</span>.<span class="ident">to_base58check</span>(<span class="number">1</span>).<span class="ident">fmt</span>(<span class="ident">f</span>) }
@@ -2323,7 +2557,7 @@
 <span class="kw">impl</span> <span class="ident">std::str::FromStr</span> <span class="kw">for</span> <span class="ident">AccountAddress</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">version</span>, <span class="ident">body</span>) <span class="op">=</span> <span class="ident">v</span>
             .<span class="ident">from_base58check</span>()
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="string">&quot;The string is not valid base 58 check v1.&quot;</span>)<span class="question-mark">?</span>;
@@ -2367,7 +2601,7 @@
         <span class="macro">write!</span>(<span class="ident">formatter</span>, <span class="string">&quot;A base58 string, version 1.&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span> {
         <span class="ident">v</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">AccountAddress</span><span class="op">&gt;</span>()
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">de::Error::custom</span>(<span class="string">&quot;Wrong Base58 version.&quot;</span>))
     }
@@ -2448,7 +2682,7 @@
                 <span class="macro">write!</span>(<span class="ident">formatter</span>, <span class="string">&quot;A non-zero u8.&quot;</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_u64</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">visit_u64</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span> {
                 <span class="kw">if</span> <span class="ident">v</span> <span class="op">&gt;</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">255</span> {
                     <span class="prelude-val">Ok</span>(<span class="ident">SignatureThreshold</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident">u8</span>))
                 } <span class="kw">else</span> {
@@ -2472,7 +2706,7 @@
 <span class="kw">impl</span> <span class="ident">std::ops::Deref</span> <span class="kw">for</span> <span class="ident">IpCdiSignature</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">ed25519::Signature</span>;
 
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span><span class="ident">::Target</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span> }
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Target</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span> }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ed25519::Signature</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">IpCdiSignature</span> {
@@ -2488,7 +2722,7 @@
 <span class="kw">impl</span> <span class="ident">std::ops::Deref</span> <span class="kw">for</span> <span class="ident">AccountOwnershipSignature</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">ed25519::Signature</span>;
 
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span><span class="ident">::Target</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span> }
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Target</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span> }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ed25519::Signature</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AccountOwnershipSignature</span> {
@@ -2603,7 +2837,7 @@
 <span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ArIdentity</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">value</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
             <span class="prelude-val">Err</span>(<span class="string">&quot;Zero is not a valid ArIdentity.&quot;</span>)
         } <span class="kw">else</span> {
@@ -2615,7 +2849,7 @@
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">ArIdentity</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="ident">u32::from_str</span>(<span class="ident">s</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="string">&quot;Could not read u32.&quot;</span>)<span class="question-mark">?</span>;
         <span class="ident">ArIdentity::try_from</span>(<span class="ident">x</span>)
     }
@@ -2689,7 +2923,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">AttributeStringTag</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AttributeTag</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">anyhow::Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">v</span>: <span class="ident">AttributeStringTag</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">v</span>: <span class="ident">AttributeStringTag</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">idx</span>) <span class="op">=</span> <span class="ident">ATTRIBUTE_NAMES</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">v</span>.<span class="number">0</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">AttributeTag</span>(<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">u8</span>))
         } <span class="kw">else</span> {
@@ -2727,7 +2961,7 @@
 <span class="kw">impl</span> <span class="ident">std::str::FromStr</span> <span class="kw">for</span> <span class="ident">AttributeTag</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">anyhow::Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">idx</span>) <span class="op">=</span> <span class="ident">ATTRIBUTE_NAMES</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">s</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">AttributeTag</span>(<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">u8</span>))
         } <span class="kw">else</span> {
@@ -2794,7 +3028,7 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a year and month in format YYYYMM&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">de::Error</span>, {
         <span class="ident">YearMonth::from_str</span>(<span class="ident">s</span>).<span class="ident">map_err</span>(<span class="ident">de::Error::custom</span>)
@@ -2863,7 +3097,7 @@
 
     <span class="doccomment">/// Try to convert unsigned 64-bit integer to year and month. Least</span>
     <span class="doccomment">/// significant byte is month, following two bytes is year in big endian</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">v</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">v</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">month</span> <span class="op">=</span> (<span class="ident">v</span> <span class="op">&amp;</span> <span class="number">0xFF</span>) <span class="kw">as</span> <span class="ident">u8</span>;
         <span class="kw">let</span> <span class="ident">year</span> <span class="op">=</span> ((<span class="ident">v</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>) <span class="op">&amp;</span> <span class="number">0xFFFF</span>) <span class="kw">as</span> <span class="ident">u16</span>;
         <span class="ident">YearMonth::new</span>(<span class="ident">year</span>, <span class="ident">month</span>).<span class="ident">ok_or</span>(())
@@ -2975,7 +3209,7 @@
 <span class="doccomment">/// The data relating to a single anonymity revoker</span>
 <span class="doccomment">/// sent by the account holder to the identity provider.</span>
 <span class="doccomment">/// Typically the account holder will send a vector of these.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">bound</span>(<span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;C: Curve&quot;</span>, <span class="ident">deserialize</span> <span class="op">=</span> <span class="string">&quot;C: Curve&quot;</span>))]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">IpArData</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Encryption in chunks (in little endian) of the PRF key share</span>
@@ -3040,7 +3274,7 @@
 <span class="comment">// will keep it for now for compatibility.</span>
 <span class="comment">// We need to remove it in the future.</span>
 <span class="doccomment">/// Choice of anonymity revocation parameters</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serialize</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serialize</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ChoiceArParameters</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;arIdentities&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">set_size_length</span> <span class="op">=</span> <span class="number">2</span>]</span>
@@ -3050,13 +3284,61 @@
 }
 
 <span class="doccomment">/// Proof that the data sent to the identity provider</span>
-<span class="doccomment">/// is well-formed.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>)]</span>
+<span class="doccomment">/// is well-formed. The serialize instance is implemented manually in order to</span>
+<span class="doccomment">/// be backwards-compatible.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PreIdentityProof</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="ident">common_proof_fields</span>: <span class="ident">CommonPioProofFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Witness to the proof that reg_id = PRF(prf_key, 0)</span>
+    <span class="kw">pub</span> <span class="ident">prf_regid_proof</span>:     <span class="ident">com_eq::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Signature on the public information for the IP from the account holder</span>
+    <span class="kw">pub</span> <span class="ident">proof_acc_sk</span>:        <span class="ident">AccountOwnershipProof</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">PreIdentityProof</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">Buffer</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">B</span>) {
+        <span class="ident">out</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">common_proof_fields</span>.<span class="ident">challenge</span>);
+        <span class="ident">out</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">common_proof_fields</span>.<span class="ident">id_cred_sec_witness</span>);
+        <span class="ident">out</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">common_proof_fields</span>.<span class="ident">commitments_same_proof</span>);
+        <span class="ident">out</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">common_proof_fields</span>.<span class="ident">commitments_prf_same</span>);
+        <span class="ident">out</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">prf_regid_proof</span>);
+        <span class="ident">out</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">proof_acc_sk</span>);
+        <span class="ident">out</span>.<span class="ident">put</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">common_proof_fields</span>.<span class="ident">bulletproofs</span>);
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">PreIdentityProof</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">challenge</span>: <span class="ident">Challenge</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">id_cred_sec_witness</span>: <span class="ident">dlog::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">commitments_same_proof</span>: <span class="ident">com_eq::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">commitments_prf_same</span>: <span class="ident">com_eq_different_groups::Witness</span><span class="op">&lt;</span><span class="ident">P::G1</span>, <span class="ident">C</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">prf_regid_proof</span>: <span class="ident">com_eq::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">proof_acc_sk</span>: <span class="ident">AccountOwnershipProof</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">bulletproofs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RangeProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">common_proof_fields</span> <span class="op">=</span> <span class="ident">CommonPioProofFields</span> {
+            <span class="ident">challenge</span>,
+            <span class="ident">id_cred_sec_witness</span>,
+            <span class="ident">commitments_same_proof</span>,
+            <span class="ident">commitments_prf_same</span>,
+            <span class="ident">bulletproofs</span>,
+        };
+        <span class="prelude-val">Ok</span>(<span class="ident">PreIdentityProof</span> {
+            <span class="ident">common_proof_fields</span>,
+            <span class="ident">prf_regid_proof</span>,
+            <span class="ident">proof_acc_sk</span>,
+        })
+    }
+}
+
+<span class="doccomment">/// Common proof for both identity creation flows that the data sent to the</span>
+<span class="doccomment">/// identity provider is well-formed.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CommonPioProofFields</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Challenge for the combined proof. This includes the three proofs below,</span>
     <span class="doccomment">/// and additionally also the proofs in IpArData.</span>
     <span class="kw">pub</span> <span class="ident">challenge</span>:              <span class="ident">Challenge</span>,
-    <span class="doccomment">/// Witness to the proof of konwledge of IdCredSec.</span>
+    <span class="doccomment">/// Witness to the proof of knowledge of IdCredSec.</span>
     <span class="kw">pub</span> <span class="ident">id_cred_sec_witness</span>:    <span class="ident">dlog::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="doccomment">/// Witness to the proof that cmm_sc and id_cred_pub</span>
     <span class="doccomment">/// are hiding the same id_cred_sec.</span>
@@ -3065,10 +3347,6 @@
     <span class="doccomment">/// second commitment to the prf key (hidden in cmm_prf_sharing_coeff)</span>
     <span class="doccomment">/// are hiding the same value.</span>
     <span class="kw">pub</span> <span class="ident">commitments_prf_same</span>:   <span class="ident">com_eq_different_groups::Witness</span><span class="op">&lt;</span><span class="ident">P::G1</span>, <span class="ident">C</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Witness to the proof that reg_id = PRF(prf_key, 0)</span>
-    <span class="kw">pub</span> <span class="ident">prf_regid_proof</span>:        <span class="ident">com_eq::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
-    <span class="doccomment">/// Signature on the public information for the IP from the account holder</span>
-    <span class="kw">pub</span> <span class="ident">proof_acc_sk</span>:           <span class="ident">AccountOwnershipProof</span>,
     <span class="doccomment">/// Bulletproofs for showing that chunks are small so that encryption</span>
     <span class="doccomment">/// of the prf key can be decrypted</span>
     <span class="kw">pub</span> <span class="ident">bulletproofs</span>:           <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">RangeProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
@@ -3083,8 +3361,9 @@
 
 <span class="doccomment">/// Information sent from the account holder to the identity provider.</span>
 <span class="doccomment">/// This includes only the cryptographic parts, the attribute list is</span>
-<span class="doccomment">/// in a different object below.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Serialize</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+<span class="doccomment">/// in a different object below. This is for the flow, where a initial account</span>
+<span class="doccomment">/// is to be created.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">bound</span>(
     <span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;P: Pairing, C: Curve&lt;Scalar=P::ScalarField&gt;&quot;</span>,
     <span class="ident">deserialize</span> <span class="op">=</span> <span class="string">&quot;P: Pairing, C: Curve&lt;Scalar=P::ScalarField&gt;&quot;</span>
@@ -3128,7 +3407,101 @@
     <span class="kw">pub</span> <span class="ident">poks</span>:                  <span class="ident">PreIdentityProof</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
 }
 
-<span class="doccomment">/// The data we get back from the identity provider.</span>
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">PreIdentityObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_common_pio_fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CommonPioFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+        <span class="ident">CommonPioFields</span> {
+            <span class="ident">ip_ar_data</span>:            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ip_ar_data</span>,
+            <span class="ident">choice_ar_parameters</span>:  <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">choice_ar_parameters</span>,
+            <span class="ident">cmm_sc</span>:                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cmm_sc</span>,
+            <span class="ident">cmm_prf</span>:               <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cmm_prf</span>,
+            <span class="ident">cmm_prf_sharing_coeff</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cmm_prf_sharing_coeff</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">PreIdentityObjectV1</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_common_pio_fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CommonPioFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+        <span class="ident">CommonPioFields</span> {
+            <span class="ident">ip_ar_data</span>:            <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">ip_ar_data</span>,
+            <span class="ident">choice_ar_parameters</span>:  <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">choice_ar_parameters</span>,
+            <span class="ident">cmm_sc</span>:                <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cmm_sc</span>,
+            <span class="ident">cmm_prf</span>:               <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cmm_prf</span>,
+            <span class="ident">cmm_prf_sharing_coeff</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cmm_prf_sharing_coeff</span>,
+        }
+    }
+}
+
+<span class="doccomment">/// Information sent from the account holder to the identity provider.</span>
+<span class="doccomment">/// This includes only the cryptographic parts, the attribute list is</span>
+<span class="doccomment">/// in a different object below. This is for the flow, where no initial account</span>
+<span class="doccomment">/// is involved.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">bound</span>(
+    <span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;P: Pairing, C: Curve&lt;Scalar=P::ScalarField&gt;&quot;</span>,
+    <span class="ident">deserialize</span> <span class="op">=</span> <span class="string">&quot;P: Pairing, C: Curve&lt;Scalar=P::ScalarField&gt;&quot;</span>
+))]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PreIdentityObjectV1</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="comment">// TODO: consider renaming this struct</span>
+    <span class="attribute">#[<span class="ident">serde</span>(
+        <span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;idCredPub&quot;</span>,
+        <span class="ident">serialize_with</span> <span class="op">=</span> <span class="string">&quot;base16_encode&quot;</span>,
+        <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;base16_decode&quot;</span>
+    )]</span>
+    <span class="kw">pub</span> <span class="ident">id_cred_pub</span>:           <span class="ident">C</span>,
+    <span class="doccomment">/// Anonymity revocation data for the chosen anonymity revokers.</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;ipArData&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">map_size_length</span> <span class="op">=</span> <span class="number">4</span>]</span>
+    <span class="kw">pub</span> <span class="ident">ip_ar_data</span>:            <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">ArIdentity</span>, <span class="ident">IpArData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Choice of anonyimity revocation parameters.</span>
+    <span class="doccomment">/// NB:IP needs to check that they make sense in the context of the public</span>
+    <span class="doccomment">/// keys they are allowed to use.</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;choiceArData&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">choice_ar_parameters</span>:  <span class="ident">ChoiceArParameters</span>,
+    <span class="doccomment">/// Commitment to id cred sec using the commitment key of IP derived from</span>
+    <span class="doccomment">/// the PS public key. This is used to compute the message that the IP</span>
+    <span class="doccomment">/// signs.</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;idCredSecCommitment&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">cmm_sc</span>:                <span class="ident">PedersenCommitment</span><span class="op">&lt;</span><span class="ident">P::G1</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Commitment to the prf key in group G1.</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;prfKeyCommitmentWithIP&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">cmm_prf</span>:               <span class="ident">PedersenCommitment</span><span class="op">&lt;</span><span class="ident">P::G1</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// commitments to the coefficients of the polynomial</span>
+    <span class="doccomment">/// used to share the prf key</span>
+    <span class="doccomment">/// K + b1 X + b2 X^2...</span>
+    <span class="doccomment">/// where K is the prf key</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;prfKeySharingCoeffCommitments&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">cmm_prf_sharing_coeff</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PedersenCommitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Proofs of knowledge. See the documentation of PreIdentityProof for</span>
+    <span class="doccomment">/// details.</span>
+    <span class="attribute">#[<span class="ident">serde</span>(
+        <span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;proofsOfKnowledge&quot;</span>,
+        <span class="ident">serialize_with</span> <span class="op">=</span> <span class="string">&quot;base16_encode&quot;</span>,
+        <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;base16_decode&quot;</span>
+    )]</span>
+    <span class="kw">pub</span> <span class="ident">poks</span>:                  <span class="ident">CommonPioProofFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CommonPioFields</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Anonymity revocation data for the chosen anonymity revokers.</span>
+    <span class="kw">pub</span> <span class="ident">ip_ar_data</span>:            <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">ArIdentity</span>, <span class="ident">IpArData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Choice of anonyimity revocation parameters.</span>
+    <span class="doccomment">/// NB:IP needs to check that they make sense in the context of the public</span>
+    <span class="doccomment">/// keys they are allowed to use.</span>
+    <span class="kw">pub</span> <span class="ident">choice_ar_parameters</span>:  <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ChoiceArParameters</span>,
+    <span class="doccomment">/// Commitment to id cred sec using the commitment key of IP derived from</span>
+    <span class="doccomment">/// the PS public key. This is used to compute the message that the IP</span>
+    <span class="doccomment">/// signs.</span>
+    <span class="kw">pub</span> <span class="ident">cmm_sc</span>:                <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PedersenCommitment</span><span class="op">&lt;</span><span class="ident">P::G1</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Commitment to the prf key in group G1.</span>
+    <span class="kw">pub</span> <span class="ident">cmm_prf</span>:               <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">PedersenCommitment</span><span class="op">&lt;</span><span class="ident">P::G1</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// commitments to the coefficients of the polynomial</span>
+    <span class="doccomment">/// used to share the prf key</span>
+    <span class="doccomment">/// K + b1 X + b2 X^2...</span>
+    <span class="doccomment">/// where K is the prf key</span>
+    <span class="kw">pub</span> <span class="ident">cmm_prf_sharing_coeff</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">PedersenCommitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+}
+
+<span class="doccomment">/// The data we get back from the identity provider in the version 0 flow.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">bound</span>(
     <span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;P: Pairing, C: Curve&lt;Scalar=P::ScalarField&gt;, AttributeType: Attribute&lt;C::Scalar&gt; \
@@ -3152,6 +3525,73 @@
         <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;base16_decode&quot;</span>
     )]</span>
     <span class="kw">pub</span> <span class="ident">signature</span>:           <span class="ident">ps_sig::Signature</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+}
+
+<span class="doccomment">/// The data we get back from the identity provider in the version 1 flow.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">bound</span>(
+    <span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;P: Pairing, C: Curve&lt;Scalar=P::ScalarField&gt;, AttributeType: Attribute&lt;C::Scalar&gt; \
+                 + SerdeSerialize&quot;</span>,
+    <span class="ident">deserialize</span> <span class="op">=</span> <span class="string">&quot;P: Pairing, C: Curve&lt;Scalar=P::ScalarField&gt;, AttributeType: \
+                   Attribute&lt;C::Scalar&gt; + SerdeDeserialize&lt;&#39;de&gt;&quot;</span>
+))]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">IdentityObjectV1</span><span class="op">&lt;</span>
+    <span class="ident">P</span>: <span class="ident">Pairing</span>,
+    <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span>,
+    <span class="ident">AttributeType</span>: <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">C::Scalar</span><span class="op">&gt;</span>,
+<span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;preIdentityObject&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">pre_identity_object</span>: <span class="ident">PreIdentityObjectV1</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Chosen attribute list.</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;attributeList&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="ident">alist</span>:               <span class="ident">AttributeList</span><span class="op">&lt;</span><span class="ident">C::Scalar</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
+    <span class="attribute">#[<span class="ident">serde</span>(
+        <span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;signature&quot;</span>,
+        <span class="ident">serialize_with</span> <span class="op">=</span> <span class="string">&quot;base16_encode&quot;</span>,
+        <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;base16_decode&quot;</span>
+    )]</span>
+    <span class="kw">pub</span> <span class="ident">signature</span>:           <span class="ident">ps_sig::Signature</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
+}
+
+<span class="doccomment">/// Trait for extracting the relevants parts of an identity object needed for</span>
+<span class="doccomment">/// creating a credential</span>
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HasIdentityObjectFields</span><span class="op">&lt;</span>
+    <span class="ident">P</span>: <span class="ident">Pairing</span>,
+    <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span>,
+    <span class="ident">AttributeType</span>: <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">C::Scalar</span><span class="op">&gt;</span>,
+<span class="op">&gt;</span> {
+    <span class="doccomment">/// Get the common fields of the pre-identity object.</span>
+    <span class="kw">fn</span> <span class="ident">get_common_pio_fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CommonPioFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Get the attribute list</span>
+    <span class="kw">fn</span> <span class="ident">get_attribute_list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">AttributeList</span><span class="op">&lt;</span><span class="ident">C::Scalar</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>;
+
+    <span class="doccomment">/// Get the signature</span>
+    <span class="kw">fn</span> <span class="ident">get_signature</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ps_sig::Signature</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>;
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span>, <span class="ident">AttributeType</span>: <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">C::Scalar</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="ident">HasIdentityObjectFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">IdentityObject</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>
+{
+    <span class="kw">fn</span> <span class="ident">get_common_pio_fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CommonPioFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">pre_identity_object</span>.<span class="ident">get_common_pio_fields</span>()
+    }
+
+    <span class="kw">fn</span> <span class="ident">get_attribute_list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">AttributeList</span><span class="op">&lt;</span><span class="ident">C::Scalar</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">alist</span> }
+
+    <span class="kw">fn</span> <span class="ident">get_signature</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ps_sig::Signature</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">signature</span> }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pairing</span>, <span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&lt;</span><span class="ident">Scalar</span> <span class="op">=</span> <span class="ident">P::ScalarField</span><span class="op">&gt;</span>, <span class="ident">AttributeType</span>: <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">C::Scalar</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    <span class="ident">HasIdentityObjectFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">IdentityObjectV1</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>
+{
+    <span class="kw">fn</span> <span class="ident">get_common_pio_fields</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CommonPioFields</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">pre_identity_object</span>.<span class="ident">get_common_pio_fields</span>()
+    }
+
+    <span class="kw">fn</span> <span class="ident">get_attribute_list</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">AttributeList</span><span class="op">&lt;</span><span class="ident">C::Scalar</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">alist</span> }
+
+    <span class="kw">fn</span> <span class="ident">get_signature</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">ps_sig::Signature</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">signature</span> }
 }
 
 <span class="doccomment">/// Anonymity revokers associated with a single identity provider</span>
@@ -3544,13 +3984,13 @@
                 <span class="macro">write!</span>(<span class="ident">formatter</span>, <span class="string">&quot;Either a string or a map with verification key.&quot;</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">de::Error</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">decode</span>(<span class="ident">v</span>).<span class="ident">map_err</span>(<span class="ident">de::Error::custom</span>)<span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">from_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursor::new</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>)).<span class="ident">map_err</span>(<span class="ident">de::Error::custom</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">VerifyKey::Ed25519VerifyKey</span>(<span class="ident">key</span>))
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">de::MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">de::MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">map</span>;
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tmp_map</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">String</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
                 <span class="kw">while</span> <span class="ident">tmp_map</span>.<span class="ident">len</span>() <span class="op">&lt;</span> <span class="number">2</span> {
@@ -3738,7 +4178,7 @@
             )
         }
 
-        <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">A</span>: <span class="ident">de::MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>, {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">map</span> <span class="op">=</span> <span class="ident">map</span>;
@@ -3918,7 +4358,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span> <span class="ident">GlobalContext</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Generate a new global context.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span>(<span class="ident">genesis_string</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="self">Self</span><span class="ident">::generate_size</span>(<span class="ident">genesis_string</span>, <span class="ident">NUM_BULLETPROOF_GENERATORS</span>)
+        <span class="ident"><span class="self">Self</span>::generate_size</span>(<span class="ident">genesis_string</span>, <span class="ident">NUM_BULLETPROOF_GENERATORS</span>)
     }
 
     <span class="doccomment">/// Generate a new global context with the given number of</span>
@@ -3960,7 +4400,7 @@
     <span class="doccomment">/// amount.</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_size</span>(<span class="ident">genesis_string</span>: <span class="ident">String</span>, <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="comment">// initialize the first generator from pi digits.</span>
-        <span class="self">Self</span><span class="ident">::generate_from_seed</span>(<span class="ident">genesis_string</span>, <span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="ident">PI_DIGITS</span>[<span class="number">0</span>..<span class="number">1000</span>])
+        <span class="ident"><span class="self">Self</span>::generate_from_seed</span>(<span class="ident">genesis_string</span>, <span class="ident">n</span>, <span class="kw-2">&amp;</span><span class="ident">PI_DIGITS</span>[<span class="number">0</span>..<span class="number">1000</span>])
     }
 
     <span class="doccomment">/// The generator for encryption in the exponent is the second component of</span>
@@ -4072,7 +4512,7 @@
 
 <span class="doccomment">/// Create account keys with a single credential at index 0</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">CredentialData</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">AccountKeys</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">cd</span>: <span class="ident">CredentialData</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span><span class="ident">::from</span>((<span class="ident">CredentialIndex</span> { <span class="ident">index</span>: <span class="number">0</span> }, <span class="ident">cd</span>)) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">cd</span>: <span class="ident">CredentialData</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::from</span>((<span class="ident">CredentialIndex</span> { <span class="ident">index</span>: <span class="number">0</span> }, <span class="ident">cd</span>)) }
 }
 
 <span class="doccomment">/// Create account keys with a single credential at the given index</span>
@@ -4131,10 +4571,10 @@
         <span class="ident">new_or_existing</span>: <span class="kw-2">&amp;</span><span class="ident">Either</span><span class="op">&lt;</span><span class="ident">types::TransactionTime</span>, <span class="ident">AccountAddress</span><span class="op">&gt;</span>,
         <span class="ident">unsigned_cred_info</span>: <span class="kw-2">&amp;</span><span class="ident">UnsignedCredentialDeploymentInfo</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">KeyIndex</span>, <span class="ident">AccountOwnershipSignature</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">to_sign</span> <span class="op">=</span> <span class="kw">crate</span><span class="ident">::utils::credential_hash_to_sign</span>(
+        <span class="kw">let</span> <span class="ident">to_sign</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::utils::credential_hash_to_sign</span>(
             <span class="kw-2">&amp;</span><span class="ident">unsigned_cred_info</span>.<span class="ident">values</span>,
             <span class="kw-2">&amp;</span><span class="ident">unsigned_cred_info</span>.<span class="ident">proofs</span>,
-            <span class="kw-2">&amp;</span><span class="ident">new_or_existing</span>,
+            <span class="ident">new_or_existing</span>,
         );
         <span class="self">self</span>.<span class="ident">keys</span>
             .<span class="ident">iter</span>()
@@ -4428,6 +4868,36 @@
     },
 }
 
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HasAttributeRandomness</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span> {
+    <span class="kw">type</span> <span class="ident">ErrorType</span>: <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">std::error::Error</span>;
+
+    <span class="kw">fn</span> <span class="ident">get_attribute_commitment_randomness</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">attribute_tag</span>: <span class="ident">AttributeTag</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PedersenRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident"><span class="self">Self</span>::ErrorType</span><span class="op">&gt;</span>;
+}
+
+<span class="doccomment">/// The empty type, here used as an impossible error in the implemention of</span>
+<span class="doccomment">/// `HasAttributeRandomness` for `SystemAttributeRandomness`.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Error</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">ImpossibleError</span> {}
+
+<span class="doccomment">/// Struct implementing `HasAttributeRandomness` using system randomness, to be</span>
+<span class="doccomment">/// parsed to the `create_credential` function from account_holder.rs.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">SystemAttributeRandomness</span>;
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span> <span class="ident">HasAttributeRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">SystemAttributeRandomness</span> {
+    <span class="kw">type</span> <span class="ident">ErrorType</span> <span class="op">=</span> <span class="ident">ImpossibleError</span>;
+
+    <span class="kw">fn</span> <span class="ident">get_attribute_commitment_randomness</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">_attribute_tag</span>: <span class="ident">AttributeTag</span>,
+    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PedersenRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident"><span class="self">Self</span>::ErrorType</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">csprng</span> <span class="op">=</span> <span class="ident">rand::thread_rng</span>();
+        <span class="prelude-val">Ok</span>(<span class="ident">PedersenRandomness::generate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>))
+    }
+}
+
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
 <span class="kw">mod</span> <span class="ident">tests</span> {
     <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
@@ -4496,6 +4966,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 }
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="id" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
-    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script></body></html>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>

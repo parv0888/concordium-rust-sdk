@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src/types/summary_helper.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>summary_helper.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../concordium_rust_sdk/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `src&#x2F;types&#x2F;summary_helper.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>summary_helper.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../concordium_rust_sdk/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1301,8 +1298,7 @@
 <span id="1298">1298</span>
 <span id="1299">1299</span>
 <span id="1300">1300</span>
-</pre><div class="example-wrap"><pre class="rust ">
-<span class="doccomment">//! This private module contains an auxiliary definition of `BlockItemSummary`</span>
+</pre><pre class="rust"><code><span class="doccomment">//! This private module contains an auxiliary definition of `BlockItemSummary`</span>
 <span class="doccomment">//! that matches the one in Haskell code of the node. We only use this</span>
 <span class="doccomment">//! definition to derive JSON serialization of [super::BlockItemSummary] via</span>
 <span class="doccomment">//! the [BlockItemSummary] in this module and the `TryFrom`/`Into` instances.</span>
@@ -1318,7 +1314,7 @@
     <span class="ident">Energy</span>, <span class="ident">InstanceUpdatedEvent</span>, <span class="ident">Memo</span>, <span class="ident">NewEncryptedAmountEvent</span>, <span class="ident">OpenStatus</span>, <span class="ident">RegisteredData</span>,
     <span class="ident">RejectReason</span>, <span class="ident">TransactionIndex</span>, <span class="ident">TransactionType</span>, <span class="ident">UpdatePayload</span>, <span class="ident">UrlText</span>,
 };
-<span class="kw">use</span> <span class="kw">crate</span><span class="ident">::types::Address</span>;
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::types::Address</span>;
 <span class="kw">use</span> <span class="ident">crypto_common</span>::{
     <span class="ident">types</span>::{<span class="ident">Amount</span>, <span class="ident">Timestamp</span>, <span class="ident">TransactionTime</span>},
     <span class="ident">SerdeDeserialize</span>, <span class="ident">SerdeSerialize</span>,
@@ -1366,7 +1362,7 @@
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;updateTransaction&quot;</span>)]</span>
     <span class="doccomment">/// Chain updates are signed by the governance keys. They affect the core</span>
     <span class="doccomment">/// parameters of the chain.</span>
-    <span class="ident">Update</span>(<span class="kw">super</span><span class="ident">::UpdateType</span>),
+    <span class="ident">Update</span>(<span class="ident"><span class="kw">super</span>::UpdateType</span>),
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
@@ -1534,7 +1530,7 @@
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
     <span class="ident">Interrupted</span> {
         <span class="doccomment">/// Address of the contract that was interrupted.</span>
-        <span class="ident">address</span>: <span class="kw">super</span><span class="ident">::ContractAddress</span>,
+        <span class="ident">address</span>: <span class="ident"><span class="kw">super</span>::ContractAddress</span>,
         <span class="doccomment">/// Events generated up to the interrupt.</span>
         <span class="ident">events</span>:  <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">smart_contracts::ContractEvent</span><span class="op">&gt;</span>,
     },
@@ -1542,7 +1538,7 @@
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
     <span class="ident">Resumed</span> {
         <span class="doccomment">/// Address of the contract that is resuming.</span>
-        <span class="ident">address</span>: <span class="kw">super</span><span class="ident">::ContractAddress</span>,
+        <span class="ident">address</span>: <span class="ident"><span class="kw">super</span>::ContractAddress</span>,
         <span class="doccomment">/// Whether the interrupt succeeded or not.</span>
         <span class="ident">success</span>: <span class="ident">bool</span>,
     },
@@ -1649,52 +1645,52 @@
     },
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::ContractTraceElement</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Event</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="kw">super</span><span class="ident">::ContractTraceElement</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident"><span class="kw">super</span>::ContractTraceElement</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Event</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: <span class="ident"><span class="kw">super</span>::ContractTraceElement</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">match</span> <span class="ident">e</span> {
-            <span class="kw">super</span><span class="ident">::ContractTraceElement::Updated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Updated</span> { <span class="ident">data</span> },
-            <span class="kw">super</span><span class="ident">::ContractTraceElement::Transferred</span> { <span class="ident">from</span>, <span class="ident">amount</span>, <span class="ident">to</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Transferred</span> {
+            <span class="ident"><span class="kw">super</span>::ContractTraceElement::Updated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Updated</span> { <span class="ident">data</span> },
+            <span class="ident"><span class="kw">super</span>::ContractTraceElement::Transferred</span> { <span class="ident">from</span>, <span class="ident">amount</span>, <span class="ident">to</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::Transferred</span> {
                 <span class="ident">from</span>: <span class="ident">Address::Contract</span>(<span class="ident">from</span>),
                 <span class="ident">amount</span>,
                 <span class="ident">to</span>: <span class="ident">Address::Account</span>(<span class="ident">to</span>),
             },
-            <span class="kw">crate</span><span class="ident">::types::ContractTraceElement::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> } <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident"><span class="kw">crate</span>::types::ContractTraceElement::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">Event::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> }
             }
-            <span class="kw">crate</span><span class="ident">::types::ContractTraceElement::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> } <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident"><span class="kw">crate</span>::types::ContractTraceElement::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> } <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="ident">Event::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> }
             }
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">super</span><span class="ident">::ContractTraceElement</span> {
+<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">super</span>::ContractTraceElement</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">ConversionError</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">Event</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">Event</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">value</span> {
-            <span class="ident">Event::Updated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::ContractTraceElement::Updated</span> { <span class="ident">data</span> }),
+            <span class="ident">Event::Updated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::ContractTraceElement::Updated</span> { <span class="ident">data</span> }),
             <span class="ident">Event::Transferred</span> {
                 <span class="ident">from</span>: <span class="ident">Address::Contract</span>(<span class="ident">from</span>),
                 <span class="ident">amount</span>,
                 <span class="ident">to</span>: <span class="ident">Address::Account</span>(<span class="ident">to</span>),
-            } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::ContractTraceElement::Transferred</span> { <span class="ident">from</span>, <span class="ident">amount</span>, <span class="ident">to</span> }),
+            } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::ContractTraceElement::Transferred</span> { <span class="ident">from</span>, <span class="ident">amount</span>, <span class="ident">to</span> }),
             <span class="ident">Event::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::ContractTraceElement::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> })
+                <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::ContractTraceElement::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> })
             }
             <span class="ident">Event::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::ContractTraceElement::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> })
+                <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::ContractTraceElement::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> })
             }
             <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ConversionError::InvalidTransactionResult</span>),
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::BlockItemSummary</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BlockItemSummary</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">bi</span>: <span class="kw">super</span><span class="ident">::BlockItemSummary</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident"><span class="kw">super</span>::BlockItemSummary</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BlockItemSummary</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">bi</span>: <span class="ident"><span class="kw">super</span>::BlockItemSummary</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
         <span class="kw">match</span> <span class="ident">bi</span>.<span class="ident">details</span> {
-            <span class="kw">super</span><span class="ident">::BlockItemSummaryDetails::AccountTransaction</span>(
-                <span class="kw">super</span><span class="ident">::AccountTransactionDetails</span> {
+            <span class="ident"><span class="kw">super</span>::BlockItemSummaryDetails::AccountTransaction</span>(
+                <span class="ident"><span class="kw">super</span>::AccountTransactionDetails</span> {
                     <span class="ident">cost</span>,
                     <span class="ident">sender</span>,
                     <span class="ident">effects</span>,
@@ -1713,36 +1709,36 @@
                     })
                 };
                 <span class="kw">let</span> (<span class="ident">transaction_type</span>, <span class="ident">result</span>) <span class="op">=</span> <span class="kw">match</span> <span class="ident">effects</span> {
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::None</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::None</span> {
                         <span class="ident">transaction_type</span>,
                         <span class="ident">reject_reason</span>,
                     } <span class="op">=</span><span class="op">&gt;</span> (<span class="ident">transaction_type</span>, <span class="ident">BlockItemResult::Reject</span> {
                         <span class="ident">reject_reason</span>: <span class="ident">Box::new</span>(<span class="ident">reject_reason</span>),
                     }),
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::ModuleDeployed</span> { <span class="ident">module_ref</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::ModuleDeployed</span> { <span class="ident">module_ref</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(<span class="ident">TransactionType::DeployModule</span>, <span class="ident">Event::ModuleDeployed</span> {
                             <span class="ident">module_ref</span>,
                         })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::ContractInitialized</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::ContractInitialized</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(<span class="ident">TransactionType::InitContract</span>, <span class="ident">Event::ContractInitialized</span> {
                             <span class="ident">data</span>,
                         })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::ContractUpdateIssued</span> { <span class="ident">effects</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::ContractUpdateIssued</span> { <span class="ident">effects</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">let</span> <span class="ident">events</span> <span class="op">=</span> <span class="ident">effects</span>.<span class="ident">into_iter</span>().<span class="ident">map</span>(<span class="ident">Event::from</span>).<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
                         (<span class="prelude-val">Some</span>(<span class="ident">TransactionType::Update</span>), <span class="ident">BlockItemResult::Success</span> {
                             <span class="ident">events</span>,
                         })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::AccountTransfer</span> { <span class="ident">amount</span>, <span class="ident">to</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::AccountTransfer</span> { <span class="ident">amount</span>, <span class="ident">to</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(<span class="ident">TransactionType::Transfer</span>, <span class="ident">Event::Transferred</span> {
                             <span class="ident">from</span>: <span class="ident">Address::Account</span>(<span class="ident">sender</span>),
                             <span class="ident">amount</span>,
                             <span class="ident">to</span>: <span class="ident">Address::Account</span>(<span class="ident">to</span>),
                         })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::AccountTransferWithMemo</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::AccountTransferWithMemo</span> {
                         <span class="ident">amount</span>,
                         <span class="ident">to</span>,
                         <span class="ident">memo</span>,
@@ -1755,16 +1751,16 @@
                         },
                         <span class="ident">Event::TransferMemo</span> { <span class="ident">memo</span> },
                     ),
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerAdded</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerAdded</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(<span class="ident">TransactionType::AddBaker</span>, <span class="ident">Event::BakerAdded</span> { <span class="ident">data</span> })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerRemoved</span> { <span class="ident">baker_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerRemoved</span> { <span class="ident">baker_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(<span class="ident">TransactionType::RemoveBaker</span>, <span class="ident">Event::BakerRemoved</span> {
                             <span class="ident">baker_id</span>,
                             <span class="ident">account</span>: <span class="ident">sender</span>,
                         })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerStakeUpdated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerStakeUpdated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">data</span>) <span class="op">=</span> <span class="ident">data</span> {
                             <span class="ident">mk_success_1</span>(
                                 <span class="ident">TransactionType::UpdateBakerStake</span>,
@@ -1789,7 +1785,7 @@
                             )
                         }
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerRestakeEarningsUpdated</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerRestakeEarningsUpdated</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">restake_earnings</span>,
                     } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">mk_success_1</span>(
@@ -1800,12 +1796,12 @@
                             <span class="ident">restake_earnings</span>,
                         },
                     ),
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerKeysUpdated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerKeysUpdated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(<span class="ident">TransactionType::UpdateBakerKeys</span>, <span class="ident">Event::BakerKeysUpdated</span> {
                             <span class="ident">data</span>,
                         })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::EncryptedAmountTransferred</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::EncryptedAmountTransferred</span> {
                         <span class="ident">removed</span>,
                         <span class="ident">added</span>,
                     } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">mk_success_2</span>(
@@ -1813,7 +1809,7 @@
                         <span class="ident">Event::EncryptedAmountsRemoved</span> { <span class="ident">data</span>: <span class="ident">removed</span> },
                         <span class="ident">Event::NewEncryptedAmount</span> { <span class="ident">data</span>: <span class="ident">added</span> },
                     ),
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::EncryptedAmountTransferredWithMemo</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::EncryptedAmountTransferredWithMemo</span> {
                         <span class="ident">removed</span>,
                         <span class="ident">added</span>,
                         <span class="ident">memo</span>,
@@ -1823,13 +1819,13 @@
                         <span class="ident">Event::NewEncryptedAmount</span> { <span class="ident">data</span>: <span class="ident">added</span> },
                         <span class="ident">Event::TransferMemo</span> { <span class="ident">memo</span> },
                     ),
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::TransferredToEncrypted</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::TransferredToEncrypted</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(
                             <span class="ident">TransactionType::TransferToEncrypted</span>,
                             <span class="ident">Event::EncryptedSelfAmountAdded</span> { <span class="ident">data</span> },
                         )
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::TransferredToPublic</span> { <span class="ident">removed</span>, <span class="ident">amount</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::TransferredToPublic</span> { <span class="ident">removed</span>, <span class="ident">amount</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_2</span>(
                             <span class="ident">TransactionType::TransferToPublic</span>,
                             <span class="ident">Event::EncryptedAmountsRemoved</span> { <span class="ident">data</span>: <span class="ident">removed</span> },
@@ -1839,7 +1835,7 @@
                             },
                         )
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::TransferredWithSchedule</span> { <span class="ident">to</span>, <span class="ident">amount</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::TransferredWithSchedule</span> { <span class="ident">to</span>, <span class="ident">amount</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(
                             <span class="ident">TransactionType::TransferWithSchedule</span>,
                             <span class="ident">Event::TransferredWithSchedule</span> {
@@ -1849,7 +1845,7 @@
                             },
                         )
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::TransferredWithScheduleAndMemo</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::TransferredWithScheduleAndMemo</span> {
                         <span class="ident">to</span>,
                         <span class="ident">amount</span>,
                         <span class="ident">memo</span>,
@@ -1862,13 +1858,13 @@
                         },
                         <span class="ident">Event::TransferMemo</span> { <span class="ident">memo</span> },
                     ),
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::CredentialKeysUpdated</span> { <span class="ident">cred_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::CredentialKeysUpdated</span> { <span class="ident">cred_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(
                             <span class="ident">TransactionType::UpdateCredentialKeys</span>,
                             <span class="ident">Event::CredentialKeysUpdated</span> { <span class="ident">cred_id</span> },
                         )
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::CredentialsUpdated</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::CredentialsUpdated</span> {
                         <span class="ident">new_cred_ids</span>,
                         <span class="ident">removed_cred_ids</span>,
                         <span class="ident">new_threshold</span>,
@@ -1881,26 +1877,26 @@
                             <span class="ident">new_threshold</span>,
                         },
                     ),
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::DataRegistered</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::DataRegistered</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="ident">mk_success_1</span>(<span class="ident">TransactionType::RegisterData</span>, <span class="ident">Event::DataRegistered</span> {
                             <span class="ident">data</span>,
                         })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerConfigured</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerConfigured</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">TransactionType::ConfigureBaker</span>;
                         <span class="kw">let</span> <span class="ident">events</span> <span class="op">=</span> <span class="ident">data</span>
                             .<span class="ident">into_iter</span>()
                             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">ev</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">ev</span> {
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerAdded</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerAdded</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="ident">Event::BakerAdded</span> { <span class="ident">data</span> }
                                 }
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerRemoved</span> { <span class="ident">baker_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerRemoved</span> { <span class="ident">baker_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="ident">Event::BakerRemoved</span> {
                                         <span class="ident">baker_id</span>,
                                         <span class="ident">account</span>: <span class="ident">sender</span>,
                                     }
                                 }
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerStakeIncreased</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerStakeIncreased</span> {
                                     <span class="ident">baker_id</span>,
                                     <span class="ident">new_stake</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::BakerStakeIncreased</span> {
@@ -1908,7 +1904,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">new_stake</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerStakeDecreased</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerStakeDecreased</span> {
                                     <span class="ident">baker_id</span>,
                                     <span class="ident">new_stake</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::BakerStakeDecreased</span> {
@@ -1916,7 +1912,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">new_stake</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerSetOpenStatus</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetOpenStatus</span> {
                                     <span class="ident">baker_id</span>,
                                     <span class="ident">open_status</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::BakerSetOpenStatus</span> {
@@ -1924,7 +1920,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">open_status</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerSetMetadataURL</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetMetadataURL</span> {
                                     <span class="ident">baker_id</span>,
                                     <span class="ident">metadata_url</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::BakerSetMetadataURL</span> {
@@ -1932,7 +1928,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">metadata_url</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerSetTransactionFeeCommission</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetTransactionFeeCommission</span> {
                                     <span class="ident">baker_id</span>,
                                     <span class="ident">transaction_fee_commission</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::BakerSetTransactionFeeCommission</span> {
@@ -1940,7 +1936,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">transaction_fee_commission</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerSetBakingRewardCommission</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetBakingRewardCommission</span> {
                                     <span class="ident">baker_id</span>,
                                     <span class="ident">baking_reward_commission</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::BakerSetBakingRewardCommission</span> {
@@ -1948,7 +1944,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">baking_reward_commission</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerSetFinalizationRewardCommission</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetFinalizationRewardCommission</span> {
                                     <span class="ident">baker_id</span>,
                                     <span class="ident">finalization_reward_commission</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::BakerSetFinalizationRewardCommission</span> {
@@ -1956,7 +1952,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">finalization_reward_commission</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerRestakeEarningsUpdated</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerRestakeEarningsUpdated</span> {
                                     <span class="ident">baker_id</span>,
                                     <span class="ident">restake_earnings</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::BakerSetRestakeEarnings</span> {
@@ -1964,19 +1960,19 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">restake_earnings</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::BakerEvent::BakerKeysUpdated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident"><span class="kw">super</span>::BakerEvent::BakerKeysUpdated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="ident">Event::BakerKeysUpdated</span> { <span class="ident">data</span> }
                                 }
                             })
                             .<span class="ident">collect</span>();
                         (<span class="prelude-val">Some</span>(<span class="ident">ty</span>), <span class="ident">BlockItemResult::Success</span> { <span class="ident">events</span> })
                     }
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::DelegationConfigured</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::DelegationConfigured</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
                         <span class="kw">let</span> <span class="ident">ty</span> <span class="op">=</span> <span class="ident">TransactionType::ConfigureDelegation</span>;
                         <span class="kw">let</span> <span class="ident">events</span> <span class="op">=</span> <span class="ident">data</span>
                             .<span class="ident">into_iter</span>()
                             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">ev</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">ev</span> {
-                                <span class="kw">super</span><span class="ident">::DelegationEvent::DelegationStakeIncreased</span> {
+                                <span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationStakeIncreased</span> {
                                     <span class="ident">delegator_id</span>,
                                     <span class="ident">new_stake</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::DelegationStakeIncreased</span> {
@@ -1984,7 +1980,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">new_stake</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::DelegationEvent::DelegationStakeDecreased</span> {
+                                <span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationStakeDecreased</span> {
                                     <span class="ident">delegator_id</span>,
                                     <span class="ident">new_stake</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::DelegationStakeDecreased</span> {
@@ -1992,7 +1988,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">new_stake</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::DelegationEvent::DelegationSetRestakeEarnings</span> {
+                                <span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationSetRestakeEarnings</span> {
                                     <span class="ident">delegator_id</span>,
                                     <span class="ident">restake_earnings</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::DelegationSetRestakeEarnings</span> {
@@ -2000,7 +1996,7 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">restake_earnings</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::DelegationEvent::DelegationSetDelegationTarget</span> {
+                                <span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationSetDelegationTarget</span> {
                                     <span class="ident">delegator_id</span>,
                                     <span class="ident">delegation_target</span>,
                                 } <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Event::DelegationSetDelegationTarget</span> {
@@ -2008,13 +2004,13 @@
                                     <span class="ident">account</span>: <span class="ident">sender</span>,
                                     <span class="ident">delegation_target</span>,
                                 },
-                                <span class="kw">super</span><span class="ident">::DelegationEvent::DelegationAdded</span> { <span class="ident">delegator_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationAdded</span> { <span class="ident">delegator_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="ident">Event::DelegationAdded</span> {
                                         <span class="ident">delegator_id</span>,
                                         <span class="ident">account</span>: <span class="ident">sender</span>,
                                     }
                                 }
-                                <span class="kw">super</span><span class="ident">::DelegationEvent::DelegationRemoved</span> { <span class="ident">delegator_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationRemoved</span> { <span class="ident">delegator_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
                                     <span class="ident">Event::DelegationRemoved</span> {
                                         <span class="ident">delegator_id</span>,
                                         <span class="ident">account</span>: <span class="ident">sender</span>,
@@ -2035,7 +2031,7 @@
                     <span class="ident">index</span>: <span class="ident">bi</span>.<span class="ident">index</span>,
                 }
             }
-            <span class="kw">super</span><span class="ident">::BlockItemSummaryDetails::AccountCreation</span>(<span class="kw">super</span><span class="ident">::AccountCreationDetails</span> {
+            <span class="ident"><span class="kw">super</span>::BlockItemSummaryDetails::AccountCreation</span>(<span class="ident"><span class="kw">super</span>::AccountCreationDetails</span> {
                 <span class="ident">credential_type</span>,
                 <span class="ident">address</span>,
                 <span class="ident">reg_id</span>,
@@ -2056,7 +2052,7 @@
                 },
                 <span class="ident">index</span>:        <span class="ident">bi</span>.<span class="ident">index</span>,
             },
-            <span class="kw">super</span><span class="ident">::BlockItemSummaryDetails::Update</span>(<span class="kw">super</span><span class="ident">::UpdateDetails</span> {
+            <span class="ident"><span class="kw">super</span>::BlockItemSummaryDetails::Update</span>(<span class="ident"><span class="kw">super</span>::UpdateDetails</span> {
                 <span class="ident">effective_time</span>,
                 <span class="ident">payload</span>,
             }) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">BlockItemSummary</span> {
@@ -2094,8 +2090,8 @@
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
 <span class="kw">fn</span> <span class="ident">with_singleton</span>(
     <span class="ident">events</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Event</span><span class="op">&gt;</span>,
-    <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="ident">Event</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::AccountTransactionEffects</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::AccountTransactionEffects</span>, <span class="ident">ConversionError</span><span class="op">&gt;</span> {
+    <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="ident">Event</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="kw">super</span>::AccountTransactionEffects</span><span class="op">&gt;</span>,
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="kw">super</span>::AccountTransactionEffects</span>, <span class="ident">ConversionError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">events_arr</span>: [<span class="kw">_</span>; <span class="number">1</span>] <span class="op">=</span> <span class="ident">events</span>
         .<span class="ident">try_into</span>()
         .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ConversionError::InvalidTransactionResult</span>)<span class="question-mark">?</span>;
@@ -2108,12 +2104,12 @@
     <span class="ident">cost</span>: <span class="ident">Amount</span>,
     <span class="ident">sender</span>: <span class="ident">AccountAddress</span>,
     <span class="ident">value</span>: <span class="ident">BlockItemResult</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">super</span><span class="ident">::AccountTransactionDetails</span>, <span class="ident">ConversionError</span><span class="op">&gt;</span> {
+) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="kw">super</span>::AccountTransactionDetails</span>, <span class="ident">ConversionError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">mk_none</span> <span class="op">=</span> <span class="op">|</span><span class="ident">reject_reason</span><span class="op">|</span> {
-        <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::AccountTransactionDetails</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionDetails</span> {
             <span class="ident">cost</span>,
             <span class="ident">sender</span>,
-            <span class="ident">effects</span>: <span class="kw">super</span><span class="ident">::AccountTransactionEffects::None</span> {
+            <span class="ident">effects</span>: <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::None</span> {
                 <span class="ident">transaction_type</span>: <span class="ident">ty</span>,
                 <span class="ident">reject_reason</span>,
             },
@@ -2121,7 +2117,7 @@
     };
 
     <span class="kw">let</span> <span class="ident">mk_success</span> <span class="op">=</span> <span class="op">|</span><span class="ident">effects</span><span class="op">|</span> {
-        <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::AccountTransactionDetails</span> {
+        <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionDetails</span> {
             <span class="ident">cost</span>,
             <span class="ident">sender</span>,
             <span class="ident">effects</span>,
@@ -2140,7 +2136,7 @@
         <span class="ident">TransactionType::DeployModule</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                 <span class="ident">Event::ModuleDeployed</span> { <span class="ident">module_ref</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::ModuleDeployed</span> { <span class="ident">module_ref</span> })
+                    <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::ModuleDeployed</span> { <span class="ident">module_ref</span> })
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
@@ -2149,7 +2145,7 @@
         <span class="ident">TransactionType::InitContract</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                 <span class="ident">Event::ContractInitialized</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::ContractInitialized</span> { <span class="ident">data</span> })
+                    <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::ContractInitialized</span> { <span class="ident">data</span> })
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
@@ -2158,9 +2154,9 @@
         <span class="ident">TransactionType::Update</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">events</span>
                 .<span class="ident">into_iter</span>()
-                .<span class="ident">map</span>(<span class="kw">super</span><span class="ident">::ContractTraceElement::try_from</span>)
+                .<span class="ident">map</span>(<span class="ident"><span class="kw">super</span>::ContractTraceElement::try_from</span>)
                 .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
-            <span class="ident">mk_success</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::ContractUpdateIssued</span> { <span class="ident">effects</span> })
+            <span class="ident">mk_success</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::ContractUpdateIssued</span> { <span class="ident">effects</span> })
         }
         <span class="ident">TransactionType::Transfer</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
@@ -2168,7 +2164,7 @@
                     <span class="ident">from</span>: <span class="kw">_</span>,
                     <span class="ident">amount</span>,
                     <span class="ident">to</span>: <span class="ident">Address::Account</span>(<span class="ident">to</span>),
-                } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::AccountTransfer</span> { <span class="ident">amount</span>, <span class="ident">to</span> }),
+                } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::AccountTransfer</span> { <span class="ident">amount</span>, <span class="ident">to</span> }),
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
             <span class="ident">mk_success</span>(<span class="ident">effects</span>)
@@ -2183,7 +2179,7 @@
                     <span class="ident">amount</span>,
                     <span class="ident">to</span>: <span class="ident">Address::Account</span>(<span class="ident">to</span>),
                 }, <span class="ident">Event::TransferMemo</span> { <span class="ident">memo</span> }] <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="ident">mk_success</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::AccountTransferWithMemo</span> {
+                    <span class="ident">mk_success</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::AccountTransferWithMemo</span> {
                         <span class="ident">amount</span>,
                         <span class="ident">to</span>,
                         <span class="ident">memo</span>,
@@ -2195,7 +2191,7 @@
         <span class="ident">TransactionType::AddBaker</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                 <span class="ident">Event::BakerAdded</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerAdded</span> { <span class="ident">data</span> })
+                    <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerAdded</span> { <span class="ident">data</span> })
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
@@ -2206,22 +2202,22 @@
                 <span class="ident">Event::BakerRemoved</span> {
                     <span class="ident">baker_id</span>,
                     <span class="ident">account</span>: <span class="kw">_</span>,
-                } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerRemoved</span> { <span class="ident">baker_id</span> }),
+                } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerRemoved</span> { <span class="ident">baker_id</span> }),
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
             <span class="ident">mk_success</span>(<span class="ident">effects</span>)
         }
         <span class="ident">TransactionType::UpdateBakerStake</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">events</span>.<span class="ident">is_empty</span>() {
-                <span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerStakeUpdated</span> { <span class="ident">data</span>: <span class="prelude-val">None</span> }
+                <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerStakeUpdated</span> { <span class="ident">data</span>: <span class="prelude-val">None</span> }
             } <span class="kw">else</span> {
                 <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                     <span class="ident">Event::BakerStakeDecreased</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">new_stake</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerStakeUpdated</span> {
-                        <span class="ident">data</span>: <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::BakerStakeUpdatedData</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerStakeUpdated</span> {
+                        <span class="ident">data</span>: <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::BakerStakeUpdatedData</span> {
                             <span class="ident">baker_id</span>,
                             <span class="ident">new_stake</span>,
                             <span class="ident">increased</span>: <span class="bool-val">false</span>,
@@ -2231,8 +2227,8 @@
                         <span class="ident">baker_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">new_stake</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerStakeUpdated</span> {
-                        <span class="ident">data</span>: <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::BakerStakeUpdatedData</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerStakeUpdated</span> {
+                        <span class="ident">data</span>: <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::BakerStakeUpdatedData</span> {
                             <span class="ident">baker_id</span>,
                             <span class="ident">new_stake</span>,
                             <span class="ident">increased</span>: <span class="bool-val">true</span>,
@@ -2250,7 +2246,7 @@
                     <span class="ident">account</span>: <span class="kw">_</span>,
                     <span class="ident">restake_earnings</span>,
                 } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(
-                    <span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerRestakeEarningsUpdated</span> {
+                    <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerRestakeEarningsUpdated</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">restake_earnings</span>,
                     },
@@ -2262,7 +2258,7 @@
         <span class="ident">TransactionType::UpdateBakerKeys</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                 <span class="ident">Event::BakerKeysUpdated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerKeysUpdated</span> { <span class="ident">data</span> })
+                    <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerKeysUpdated</span> { <span class="ident">data</span> })
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
@@ -2271,7 +2267,7 @@
         <span class="ident">TransactionType::UpdateCredentialKeys</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                 <span class="ident">Event::CredentialKeysUpdated</span> { <span class="ident">cred_id</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::CredentialKeysUpdated</span> { <span class="ident">cred_id</span> })
+                    <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::CredentialKeysUpdated</span> { <span class="ident">cred_id</span> })
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
@@ -2284,7 +2280,7 @@
             <span class="kw">match</span> <span class="ident">events_arr</span> {
                 [<span class="ident">Event::EncryptedAmountsRemoved</span> { <span class="ident">data</span>: <span class="ident">removed</span> }, <span class="ident">Event::NewEncryptedAmount</span> { <span class="ident">data</span>: <span class="ident">added</span> }] <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">mk_success</span>(
-                        <span class="kw">super</span><span class="ident">::AccountTransactionEffects::EncryptedAmountTransferred</span> {
+                        <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::EncryptedAmountTransferred</span> {
                             <span class="ident">removed</span>,
                             <span class="ident">added</span>,
                         },
@@ -2300,7 +2296,7 @@
             <span class="kw">match</span> <span class="ident">events_arr</span> {
                 [<span class="ident">Event::EncryptedAmountsRemoved</span> { <span class="ident">data</span>: <span class="ident">removed</span> }, <span class="ident">Event::NewEncryptedAmount</span> { <span class="ident">data</span>: <span class="ident">added</span> }, <span class="ident">Event::TransferMemo</span> { <span class="ident">memo</span> }] <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">mk_success</span>(
-                        <span class="kw">super</span><span class="ident">::AccountTransactionEffects::EncryptedAmountTransferredWithMemo</span> {
+                        <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::EncryptedAmountTransferredWithMemo</span> {
                             <span class="ident">removed</span>,
                             <span class="ident">added</span>,
                             <span class="ident">memo</span>,
@@ -2313,7 +2309,7 @@
         <span class="ident">TransactionType::TransferToEncrypted</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                 <span class="ident">Event::EncryptedSelfAmountAdded</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::TransferredToEncrypted</span> { <span class="ident">data</span> })
+                    <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::TransferredToEncrypted</span> { <span class="ident">data</span> })
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
@@ -2325,7 +2321,7 @@
                 .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ConversionError::InvalidTransactionResult</span>)<span class="question-mark">?</span>;
             <span class="kw">match</span> <span class="ident">events_arr</span> {
                 [<span class="ident">Event::EncryptedAmountsRemoved</span> { <span class="ident">data</span>: <span class="ident">removed</span> }, <span class="ident">Event::AmountAddedByDecryption</span> { <span class="ident">account</span>: <span class="kw">_</span>, <span class="ident">amount</span> }] <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="ident">mk_success</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::TransferredToPublic</span> {
+                    <span class="ident">mk_success</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::TransferredToPublic</span> {
                         <span class="ident">removed</span>,
                         <span class="ident">amount</span>,
                     })
@@ -2336,7 +2332,7 @@
         <span class="ident">TransactionType::TransferWithSchedule</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                 <span class="ident">Event::TransferredWithSchedule</span> { <span class="ident">to</span>, <span class="ident">amount</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::TransferredWithSchedule</span> { <span class="ident">to</span>, <span class="ident">amount</span> })
+                    <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::TransferredWithSchedule</span> { <span class="ident">to</span>, <span class="ident">amount</span> })
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
@@ -2349,7 +2345,7 @@
             <span class="kw">match</span> <span class="ident">events_arr</span> {
                 [<span class="ident">Event::TransferredWithSchedule</span> { <span class="ident">to</span>, <span class="ident">amount</span>, .. }, <span class="ident">Event::TransferMemo</span> { <span class="ident">memo</span> }] <span class="op">=</span><span class="op">&gt;</span> {
                     <span class="ident">mk_success</span>(
-                        <span class="kw">super</span><span class="ident">::AccountTransactionEffects::TransferredWithScheduleAndMemo</span> {
+                        <span class="ident"><span class="kw">super</span>::AccountTransactionEffects::TransferredWithScheduleAndMemo</span> {
                             <span class="ident">to</span>,
                             <span class="ident">amount</span>,
                             <span class="ident">memo</span>,
@@ -2366,7 +2362,7 @@
                     <span class="ident">removed_cred_ids</span>,
                     <span class="ident">new_threshold</span>,
                     ..
-                } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::CredentialsUpdated</span> {
+                } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::CredentialsUpdated</span> {
                     <span class="ident">new_cred_ids</span>,
                     <span class="ident">removed_cred_ids</span>,
                     <span class="ident">new_threshold</span>,
@@ -2378,7 +2374,7 @@
         <span class="ident">TransactionType::RegisterData</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">effects</span> <span class="op">=</span> <span class="ident">with_singleton</span>(<span class="ident">events</span>, <span class="op">|</span><span class="ident">e</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">e</span> {
                 <span class="ident">Event::DataRegistered</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="prelude-val">Some</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::DataRegistered</span> { <span class="ident">data</span> })
+                    <span class="prelude-val">Some</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::DataRegistered</span> { <span class="ident">data</span> })
                 }
                 <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
             })<span class="question-mark">?</span>;
@@ -2388,15 +2384,15 @@
             <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">events</span>
                 .<span class="ident">into_iter</span>()
                 .<span class="ident">map</span>(<span class="op">|</span><span class="ident">ev</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">ev</span> {
-                    <span class="ident">Event::BakerAdded</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerAdded</span> { <span class="ident">data</span> }),
+                    <span class="ident">Event::BakerAdded</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerAdded</span> { <span class="ident">data</span> }),
                     <span class="ident">Event::BakerRemoved</span> { <span class="ident">baker_id</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerRemoved</span> { <span class="ident">baker_id</span> })
+                        <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerRemoved</span> { <span class="ident">baker_id</span> })
                     }
                     <span class="ident">Event::BakerSetOpenStatus</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">open_status</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerSetOpenStatus</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetOpenStatus</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">open_status</span>,
                     }),
@@ -2404,7 +2400,7 @@
                         <span class="ident">baker_id</span>,
                         <span class="ident">new_stake</span>,
                         ..
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerStakeIncreased</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerStakeIncreased</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">new_stake</span>,
                     }),
@@ -2412,7 +2408,7 @@
                         <span class="ident">baker_id</span>,
                         <span class="ident">new_stake</span>,
                         ..
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerStakeDecreased</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerStakeDecreased</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">new_stake</span>,
                     }),
@@ -2420,18 +2416,18 @@
                         <span class="ident">baker_id</span>,
                         <span class="ident">restake_earnings</span>,
                         ..
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerRestakeEarningsUpdated</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerRestakeEarningsUpdated</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">restake_earnings</span>,
                     }),
                     <span class="ident">Event::BakerKeysUpdated</span> { <span class="ident">data</span> } <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerKeysUpdated</span> { <span class="ident">data</span> })
+                        <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerKeysUpdated</span> { <span class="ident">data</span> })
                     }
                     <span class="ident">Event::BakerSetMetadataURL</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">metadata_url</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerSetMetadataURL</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetMetadataURL</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">metadata_url</span>,
                     }),
@@ -2439,7 +2435,7 @@
                         <span class="ident">baker_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">transaction_fee_commission</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerSetTransactionFeeCommission</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetTransactionFeeCommission</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">transaction_fee_commission</span>,
                     }),
@@ -2447,7 +2443,7 @@
                         <span class="ident">baker_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">baking_reward_commission</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerSetBakingRewardCommission</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetBakingRewardCommission</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">baking_reward_commission</span>,
                     }),
@@ -2455,14 +2451,14 @@
                         <span class="ident">baker_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">finalization_reward_commission</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BakerEvent::BakerSetFinalizationRewardCommission</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BakerEvent::BakerSetFinalizationRewardCommission</span> {
                         <span class="ident">baker_id</span>,
                         <span class="ident">finalization_reward_commission</span>,
                     }),
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ConversionError::InvalidTransactionResult</span>),
                 })
                 .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">ConversionError</span><span class="op">&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
-            <span class="ident">mk_success</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::BakerConfigured</span> { <span class="ident">data</span> })
+            <span class="ident">mk_success</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::BakerConfigured</span> { <span class="ident">data</span> })
         }
         <span class="ident">TransactionType::ConfigureDelegation</span> <span class="op">=</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">events</span>
@@ -2472,7 +2468,7 @@
                         <span class="ident">delegator_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">new_stake</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::DelegationEvent::DelegationStakeIncreased</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationStakeIncreased</span> {
                         <span class="ident">delegator_id</span>,
                         <span class="ident">new_stake</span>,
                     }),
@@ -2480,7 +2476,7 @@
                         <span class="ident">delegator_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">new_stake</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::DelegationEvent::DelegationStakeDecreased</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationStakeDecreased</span> {
                         <span class="ident">delegator_id</span>,
                         <span class="ident">new_stake</span>,
                     }),
@@ -2488,7 +2484,7 @@
                         <span class="ident">delegator_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">restake_earnings</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::DelegationEvent::DelegationSetRestakeEarnings</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationSetRestakeEarnings</span> {
                         <span class="ident">delegator_id</span>,
                         <span class="ident">restake_earnings</span>,
                     }),
@@ -2496,30 +2492,30 @@
                         <span class="ident">delegator_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
                         <span class="ident">delegation_target</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::DelegationEvent::DelegationSetDelegationTarget</span> {
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationSetDelegationTarget</span> {
                         <span class="ident">delegator_id</span>,
                         <span class="ident">delegation_target</span>,
                     }),
                     <span class="ident">Event::DelegationAdded</span> {
                         <span class="ident">delegator_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::DelegationEvent::DelegationAdded</span> { <span class="ident">delegator_id</span> }),
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationAdded</span> { <span class="ident">delegator_id</span> }),
                     <span class="ident">Event::DelegationRemoved</span> {
                         <span class="ident">delegator_id</span>,
                         <span class="ident">account</span>: <span class="kw">_</span>,
-                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::DelegationEvent::DelegationRemoved</span> { <span class="ident">delegator_id</span> }),
+                    } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::DelegationEvent::DelegationRemoved</span> { <span class="ident">delegator_id</span> }),
                     <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ConversionError::InvalidTransactionResult</span>),
                 })
                 .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw">_</span>, <span class="ident">ConversionError</span><span class="op">&gt;</span><span class="op">&gt;</span>()<span class="question-mark">?</span>;
-            <span class="ident">mk_success</span>(<span class="kw">super</span><span class="ident">::AccountTransactionEffects::DelegationConfigured</span> { <span class="ident">data</span> })
+            <span class="ident">mk_success</span>(<span class="ident"><span class="kw">super</span>::AccountTransactionEffects::DelegationConfigured</span> { <span class="ident">data</span> })
         }
     }
 }
 
-<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">BlockItemSummary</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw">super</span><span class="ident">::BlockItemSummary</span> {
+<span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">BlockItemSummary</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">super</span>::BlockItemSummary</span> {
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">ConversionError</span>;
 
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">BlockItemSummary</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="self">Self</span><span class="ident">::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">BlockItemSummary</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="ident">value</span>.<span class="ident">summary_type</span> {
             <span class="ident">BlockItemType::Account</span>(<span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">index</span>;
@@ -2529,11 +2525,11 @@
                     .<span class="ident">sender</span>
                     .<span class="ident">ok_or</span>(<span class="ident">ConversionError::InvalidTransactionResult</span>)<span class="question-mark">?</span>;
                 <span class="kw">let</span> <span class="ident">details</span> <span class="op">=</span> <span class="ident">convert_account_transaction</span>(<span class="ident">ty</span>, <span class="ident">value</span>.<span class="ident">cost</span>, <span class="ident">sender</span>, <span class="ident">value</span>.<span class="ident">result</span>)<span class="question-mark">?</span>;
-                <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BlockItemSummary</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BlockItemSummary</span> {
                     <span class="ident">index</span>,
                     <span class="ident">energy_cost</span>,
                     <span class="ident">hash</span>,
-                    <span class="ident">details</span>: <span class="kw">super</span><span class="ident">::BlockItemSummaryDetails::AccountTransaction</span>(<span class="ident">details</span>),
+                    <span class="ident">details</span>: <span class="ident"><span class="kw">super</span>::BlockItemSummaryDetails::AccountTransaction</span>(<span class="ident">details</span>),
                 })
             }
             <span class="ident">BlockItemType::CredentialDeployment</span>(<span class="ident">credential_type</span>) <span class="op">=</span><span class="op">&gt;</span> {
@@ -2556,13 +2552,13 @@
                         <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ConversionError::FailedAccountCreation</span>)
                     }
                 };
-                <span class="kw">let</span> <span class="ident">acd</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::AccountCreationDetails</span> {
+                <span class="kw">let</span> <span class="ident">acd</span> <span class="op">=</span> <span class="ident"><span class="kw">super</span>::AccountCreationDetails</span> {
                     <span class="ident">credential_type</span>,
                     <span class="ident">address</span>,
                     <span class="ident">reg_id</span>,
                 };
-                <span class="kw">let</span> <span class="ident">details</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::BlockItemSummaryDetails::AccountCreation</span>(<span class="ident">acd</span>);
-                <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BlockItemSummary</span> {
+                <span class="kw">let</span> <span class="ident">details</span> <span class="op">=</span> <span class="ident"><span class="kw">super</span>::BlockItemSummaryDetails::AccountCreation</span>(<span class="ident">acd</span>);
+                <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BlockItemSummary</span> {
                     <span class="ident">index</span>: <span class="ident">value</span>.<span class="ident">index</span>,
                     <span class="ident">energy_cost</span>: <span class="ident">value</span>.<span class="ident">energy_cost</span>,
                     <span class="ident">hash</span>: <span class="ident">value</span>.<span class="ident">hash</span>,
@@ -2578,7 +2574,7 @@
                                 <span class="ident">payload</span>,
                             } <span class="op">=</span> <span class="ident">events</span>.<span class="ident">remove</span>(<span class="number">0</span>)
                             {
-                                <span class="kw">super</span><span class="ident">::UpdateDetails</span> {
+                                <span class="ident"><span class="kw">super</span>::UpdateDetails</span> {
                                     <span class="ident">effective_time</span>,
                                     <span class="ident">payload</span>,
                                 }
@@ -2591,8 +2587,8 @@
                     }
                     <span class="ident">BlockItemResult::Reject</span> { .. } <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ConversionError::FailedUpdate</span>),
                 };
-                <span class="kw">let</span> <span class="ident">details</span> <span class="op">=</span> <span class="kw">super</span><span class="ident">::BlockItemSummaryDetails::Update</span>(<span class="ident">ud</span>);
-                <span class="prelude-val">Ok</span>(<span class="kw">super</span><span class="ident">::BlockItemSummary</span> {
+                <span class="kw">let</span> <span class="ident">details</span> <span class="op">=</span> <span class="ident"><span class="kw">super</span>::BlockItemSummaryDetails::Update</span>(<span class="ident">ud</span>);
+                <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::BlockItemSummary</span> {
                     <span class="ident">index</span>: <span class="ident">value</span>.<span class="ident">index</span>,
                     <span class="ident">energy_cost</span>: <span class="ident">value</span>.<span class="ident">energy_cost</span>,
                     <span class="ident">hash</span>: <span class="ident">value</span>.<span class="ident">hash</span>,
@@ -2602,6 +2598,7 @@
         }
     }
 }
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="concordium_rust_sdk" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
-    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</body></html>

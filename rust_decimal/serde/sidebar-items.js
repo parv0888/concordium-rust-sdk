@@ -1,0 +1,1 @@
+initSidebarItems({"mod":[["arbitrary_precision","Serialize/deserialize Decimals as arbitrary precision numbers in JSON using the `arbitrary_precision` feature within `serde_json`."],["float","Serialize/deserialize Decimals as floats."]],"struct":[["DecimalFromString",""]]});

@@ -1,7 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `/home/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/serde-1.0.137/src/de/impls.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>impls.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings"></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="icon" type="image/svg+xml" href="../../../favicon.svg">
-<link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png">
-<link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../serde/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu"><img src="../../../brush.svg" width="18" height="18" alt="Pick another theme!"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" class="help-button">?</button>
-                <a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" height="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;serde-1.0.137&#x2F;src&#x2F;de&#x2F;impls.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>impls.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../serde/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2727,8 +2724,7 @@
 <span id="2724">2724</span>
 <span id="2725">2725</span>
 <span id="2726">2726</span>
-</pre><div class="example-wrap"><pre class="rust ">
-<span class="kw">use</span> <span class="ident">lib</span>::<span class="kw-2">*</span>;
+</pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">lib</span>::<span class="kw-2">*</span>;
 
 <span class="kw">use</span> <span class="ident">de</span>::{
     <span class="ident">Deserialize</span>, <span class="ident">Deserializer</span>, <span class="ident">EnumAccess</span>, <span class="ident">Error</span>, <span class="ident">SeqAccess</span>, <span class="ident">Unexpected</span>, <span class="ident">VariantAccess</span>, <span class="ident">Visitor</span>,
@@ -2753,7 +2749,7 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;unit&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_unit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_unit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -2791,7 +2787,7 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a boolean&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_bool</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_bool</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -2865,7 +2861,7 @@
 <span class="macro">macro_rules!</span> <span class="ident">num_self</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
@@ -2874,11 +2870,11 @@
     };
 
     (<span class="ident">nonzero</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>:<span class="ident">ident</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::new</span>(<span class="ident">v</span>) {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::new</span>(<span class="ident">v</span>) {
                 <span class="prelude-val">Ok</span>(<span class="ident">nonzero</span>)
             } <span class="kw">else</span> {
                 <span class="prelude-val">Err</span>(<span class="ident">Error::invalid_value</span>(<span class="ident">Unexpected::Unsigned</span>(<span class="number">0</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
@@ -2890,20 +2886,20 @@
 <span class="macro">macro_rules!</span> <span class="ident">num_as_self</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
-            <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="self">Self</span><span class="ident">::Value</span>)
+            <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident"><span class="self">Self</span>::Value</span>)
         }
     };
 
     (<span class="ident">nonzero</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>:<span class="ident">ident</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
                 <span class="prelude-val">Ok</span>(<span class="ident">nonzero</span>)
             } <span class="kw">else</span> {
                 <span class="prelude-val">Err</span>(<span class="ident">Error::invalid_value</span>(<span class="ident">Unexpected::Unsigned</span>(<span class="number">0</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
@@ -2915,14 +2911,14 @@
 <span class="macro">macro_rules!</span> <span class="ident">int_to_int</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
-            <span class="kw">if</span> <span class="self">Self</span><span class="ident">::Value::min_value</span>() <span class="kw">as</span> <span class="ident">i64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span>
-                <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::max_value</span>() <span class="kw">as</span> <span class="ident">i64</span>
+            <span class="kw">if</span> <span class="ident"><span class="self">Self</span>::Value::min_value</span>() <span class="kw">as</span> <span class="ident">i64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span>
+                <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::max_value</span>() <span class="kw">as</span> <span class="ident">i64</span>
             {
-                <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="self">Self</span><span class="ident">::Value</span>)
+                <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident"><span class="self">Self</span>::Value</span>)
             } <span class="kw">else</span> {
                 <span class="prelude-val">Err</span>(<span class="ident">Error::invalid_value</span>(<span class="ident">Unexpected::Signed</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
             }
@@ -2930,14 +2926,14 @@
     };
 
     (<span class="ident">nonzero</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>:<span class="ident">ident</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
             <span class="kw">if</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive::min_value</span>() <span class="kw">as</span> <span class="ident">i64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span>
                 <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive::max_value</span>() <span class="kw">as</span> <span class="ident">i64</span>
             {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
                     <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">nonzero</span>);
                 }
             }
@@ -2949,12 +2945,12 @@
 <span class="macro">macro_rules!</span> <span class="ident">int_to_uint</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
-            <span class="kw">if</span> <span class="number">0</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">v</span> <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::max_value</span>() <span class="kw">as</span> <span class="ident">u64</span> {
-                <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="self">Self</span><span class="ident">::Value</span>)
+            <span class="kw">if</span> <span class="number">0</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">v</span> <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::max_value</span>() <span class="kw">as</span> <span class="ident">u64</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident"><span class="self">Self</span>::Value</span>)
             } <span class="kw">else</span> {
                 <span class="prelude-val">Err</span>(<span class="ident">Error::invalid_value</span>(<span class="ident">Unexpected::Signed</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident">i64</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
             }
@@ -2962,12 +2958,12 @@
     };
 
     (<span class="ident">nonzero</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>:<span class="ident">ident</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
             <span class="kw">if</span> <span class="number">0</span> <span class="op">&lt;</span> <span class="ident">v</span> <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive::max_value</span>() <span class="kw">as</span> <span class="ident">u64</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
                     <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">nonzero</span>);
                 }
             }
@@ -2979,12 +2975,12 @@
 <span class="macro">macro_rules!</span> <span class="ident">uint_to_self</span> {
     (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">inline</span>]</span>
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
-            <span class="kw">if</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::max_value</span>() <span class="kw">as</span> <span class="ident">u64</span> {
-                <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="self">Self</span><span class="ident">::Value</span>)
+            <span class="kw">if</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::max_value</span>() <span class="kw">as</span> <span class="ident">u64</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident"><span class="self">Self</span>::Value</span>)
             } <span class="kw">else</span> {
                 <span class="prelude-val">Err</span>(<span class="ident">Error::invalid_value</span>(<span class="ident">Unexpected::Unsigned</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident">u64</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
             }
@@ -2992,12 +2988,12 @@
     };
 
     (<span class="ident">nonzero</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>:<span class="ident">ident</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">E</span>: <span class="ident">Error</span>,
         {
             <span class="kw">if</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u64</span> <span class="op">&lt;</span><span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive::max_value</span>() <span class="kw">as</span> <span class="ident">u64</span> {
-                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
                     <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">nonzero</span>);
                 }
             }
@@ -3099,14 +3095,14 @@
 <span class="macro">serde_if_integer128!</span> {
     <span class="macro">macro_rules!</span> <span class="ident">num_128</span> {
         (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">E</span>: <span class="ident">Error</span>,
             {
-                <span class="kw">if</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i128</span> <span class="op">&gt;</span><span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>
-                    <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u128</span> <span class="op">&lt;</span><span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>
+                <span class="kw">if</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i128</span> <span class="op">&gt;</span><span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u128</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>
                 {
-                    <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="self">Self</span><span class="ident">::Value</span>)
+                    <span class="prelude-val">Ok</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="ident"><span class="self">Self</span>::Value</span>)
                 } <span class="kw">else</span> {
                     <span class="prelude-val">Err</span>(<span class="ident">Error::invalid_value</span>(
                         <span class="ident">Unexpected::Other</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>)),
@@ -3117,14 +3113,14 @@
         };
 
         (<span class="ident">nonzero</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>:<span class="ident">ident</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span>:<span class="ident">ident</span>) <span class="op">=</span><span class="op">&gt;</span> {
-            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">visit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">E</span>: <span class="ident">Error</span>,
             {
                 <span class="kw">if</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">i128</span> <span class="op">&gt;</span><span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive::min_value</span>() <span class="kw">as</span> <span class="ident">i128</span>
                     <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="kw">as</span> <span class="ident">u128</span> <span class="op">&lt;</span><span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive::max_value</span>() <span class="kw">as</span> <span class="ident">u128</span>
                 {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="self">Self</span><span class="ident">::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">nonzero</span>) <span class="op">=</span> <span class="ident"><span class="self">Self</span>::Value::new</span>(<span class="ident">v</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">primitive</span>) {
                         <span class="prelude-val">Ok</span>(<span class="ident">nonzero</span>)
                     } <span class="kw">else</span> {
                         <span class="prelude-val">Err</span>(<span class="ident">Error::invalid_value</span>(<span class="ident">Unexpected::Unsigned</span>(<span class="number">0</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
@@ -3168,7 +3164,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">visit_char</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_char</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">char</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3176,7 +3172,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3213,21 +3209,21 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a string&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="prelude-val">Ok</span>(<span class="ident">v</span>.<span class="ident">to_owned</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_string</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_string</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="prelude-val">Ok</span>(<span class="ident">v</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3237,7 +3233,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_byte_buf</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_byte_buf</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3259,7 +3255,7 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a string&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3268,7 +3264,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_string</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_string</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3276,7 +3272,7 @@
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3290,7 +3286,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_byte_buf</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_byte_buf</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3335,14 +3331,14 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a borrowed string&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_borrowed_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_borrowed_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="prelude-val">Ok</span>(<span class="ident">v</span>) <span class="comment">// so easy</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_borrowed_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_borrowed_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3370,14 +3366,14 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a borrowed byte array&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_borrowed_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_borrowed_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="prelude-val">Ok</span>(<span class="ident">v</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_borrowed_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_borrowed_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3407,7 +3403,7 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;byte array&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
@@ -3421,28 +3417,28 @@
         <span class="ident">CString::new</span>(<span class="ident">values</span>).<span class="ident">map_err</span>(<span class="ident">Error::custom</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="ident">CString::new</span>(<span class="ident">v</span>).<span class="ident">map_err</span>(<span class="ident">Error::custom</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_byte_buf</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_byte_buf</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="ident">CString::new</span>(<span class="ident">v</span>).<span class="ident">map_err</span>(<span class="ident">Error::custom</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="ident">CString::new</span>(<span class="ident">v</span>).<span class="ident">map_err</span>(<span class="ident">Error::custom</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_string</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_string</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3500,7 +3496,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">visit_unit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_unit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3508,7 +3504,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">visit_none</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_none</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3516,7 +3512,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">visit_some</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">D::Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_some</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">D::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
@@ -3524,7 +3520,7 @@
     }
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">__private_visit_untagged_option</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, ()<span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">__private_visit_untagged_option</span><span class="op">&lt;</span><span class="ident">D</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">deserializer</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, ()<span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
@@ -3566,7 +3562,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">visit_unit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_unit</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -3623,7 +3619,7 @@
                     }
 
                     <span class="attribute">#[<span class="ident">inline</span>]</span>
-                    <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">access</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">access</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
                     {
@@ -3659,7 +3655,7 @@
                     }
 
                     <span class="attribute">#[<span class="ident">inline</span>]</span>
-                    <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">access</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">access</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
                     {
@@ -3759,7 +3755,7 @@
                 <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a sequence&quot;</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -3795,7 +3791,7 @@
                 <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a sequence&quot;</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -3850,7 +3846,7 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
@@ -3882,7 +3878,7 @@
                 }
 
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+                <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
                 <span class="kw">where</span>
                     <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
                 {
@@ -3906,7 +3902,7 @@
                 }
 
                 <span class="attribute">#[<span class="ident">inline</span>]</span>
-                <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+                <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
                 <span class="kw">where</span>
                     <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
                 {
@@ -4005,7 +4001,7 @@
 
                         <span class="attribute">#[<span class="ident">inline</span>]</span>
                         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>)]</span>
-                        <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+                        <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
                         <span class="kw">where</span>
                             <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
                         {
@@ -4039,7 +4035,7 @@
 
                         <span class="attribute">#[<span class="ident">inline</span>]</span>
                         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>)]</span>
-                        <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+                        <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
                         <span class="kw">where</span>
                             <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
                         {
@@ -4115,7 +4111,7 @@
                     }
 
                     <span class="attribute">#[<span class="ident">inline</span>]</span>
-                    <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">access</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">access</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">A</span>: <span class="ident">MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
                     {
@@ -4195,7 +4191,7 @@
                         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">expecting_message</span>)
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_u64</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_u64</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -4207,7 +4203,7 @@
                         }
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -4219,7 +4215,7 @@
                         }
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -4265,7 +4261,7 @@
             }
 
 
-            <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">EnumAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -4363,14 +4359,14 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;a borrowed path&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_borrowed_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_borrowed_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="prelude-val">Ok</span>(<span class="ident">v</span>.<span class="ident">as_ref</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_borrowed_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_borrowed_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -4401,21 +4397,21 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;path string&quot;</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="prelude-val">Ok</span>(<span class="ident">From::from</span>(<span class="ident">v</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_string</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_string</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="prelude-val">Ok</span>(<span class="ident">From::from</span>(<span class="ident">v</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -4424,7 +4420,7 @@
             .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">Error::invalid_value</span>(<span class="ident">Unexpected::Bytes</span>(<span class="ident">v</span>), <span class="kw-2">&amp;</span><span class="self">self</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_byte_buf</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_byte_buf</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">v</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
@@ -4472,7 +4468,7 @@
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">unix</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">EnumAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
@@ -4487,7 +4483,7 @@
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">windows</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">A</span>: <span class="ident">EnumAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
     {
@@ -4722,7 +4718,7 @@
                         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;`secs` or `nanos`&quot;</span>)
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -4733,7 +4729,7 @@
                         }
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -4772,7 +4768,7 @@
                 <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;struct Duration&quot;</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -4792,7 +4788,7 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">Duration::new</span>(<span class="ident">secs</span>, <span class="ident">nanos</span>))
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -4860,7 +4856,7 @@
                         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;`secs_since_epoch` or `nanos_since_epoch`&quot;</span>)
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -4871,7 +4867,7 @@
                         }
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -4910,7 +4906,7 @@
                 <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;struct SystemTime&quot;</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -4930,7 +4926,7 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">Duration::new</span>(<span class="ident">secs</span>, <span class="ident">nanos</span>))
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -5062,7 +5058,7 @@
                     <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;`start` or `end`&quot;</span>)
                 }
 
-                <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                 <span class="kw">where</span>
                     <span class="ident">E</span>: <span class="ident">Error</span>,
                 {
@@ -5073,7 +5069,7 @@
                     }
                 }
 
-                <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                 <span class="kw">where</span>
                     <span class="ident">E</span>: <span class="ident">Error</span>,
                 {
@@ -5107,7 +5103,7 @@
             <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">expecting</span>)
         }
 
-        <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="ident">visit_seq</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">seq</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">A</span>: <span class="ident">SeqAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
         {
@@ -5126,7 +5122,7 @@
             <span class="prelude-val">Ok</span>((<span class="ident">start</span>, <span class="ident">end</span>))
         }
 
-        <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+        <span class="kw">fn</span> <span class="ident">visit_map</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">map</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
         <span class="kw">where</span>
             <span class="ident">A</span>: <span class="ident">MapAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
         {
@@ -5193,7 +5189,7 @@
                         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;`Unbounded`, `Included` or `Excluded`&quot;</span>)
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_u64</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_u64</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -5205,7 +5201,7 @@
                         }
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -5217,7 +5213,7 @@
                         }
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -5251,7 +5247,7 @@
                 <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;enum Bound&quot;</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">EnumAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -5304,7 +5300,7 @@
                         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;`Ok` or `Err`&quot;</span>)
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_u64</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_u64</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -5315,7 +5311,7 @@
                         }
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -5326,7 +5322,7 @@
                         }
                     }
 
-                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+                    <span class="kw">fn</span> <span class="ident">visit_bytes</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">value</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
                     <span class="kw">where</span>
                         <span class="ident">E</span>: <span class="ident">Error</span>,
                     {
@@ -5360,7 +5356,7 @@
                 <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="string">&quot;enum Result&quot;</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
+            <span class="kw">fn</span> <span class="ident">visit_enum</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">data</span>: <span class="ident">A</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">A::Error</span><span class="op">&gt;</span>
             <span class="kw">where</span>
                 <span class="ident">A</span>: <span class="ident">EnumAccess</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
             {
@@ -5400,7 +5396,7 @@
                 <span class="kw">where</span>
                     <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>,
                 {
-                    <span class="ident">Deserialize::deserialize</span>(<span class="ident">deserializer</span>).<span class="ident">map</span>(<span class="self">Self</span><span class="ident">::new</span>)
+                    <span class="ident">Deserialize::deserialize</span>(<span class="ident">deserializer</span>).<span class="ident">map</span>(<span class="ident"><span class="self">Self</span>::new</span>)
                 }
             }
         )<span class="op">*</span>
@@ -5447,13 +5443,14 @@
         <span class="ident">formatter</span>.<span class="ident">write_str</span>(<span class="self">self</span>.<span class="ident">expecting</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="ident">::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">visit_str</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Value</span>, <span class="ident">E</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">Error</span>,
     {
         <span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">map_err</span>(<span class="ident">Error::custom</span>)
     }
 }
-</pre></div>
+</code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="serde" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>
-    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script></body></html>
+    <script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script>
+</body></html>
