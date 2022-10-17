@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tracing-core-0.1.28&#x2F;src&#x2F;callsite.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>callsite.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../tracing_core/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;tracing&#x2F;master&#x2F;assets&#x2F;logo-type.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tracing-core-0.1.30&#x2F;src&#x2F;callsite.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>callsite.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../tracing_core/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;tracing&#x2F;master&#x2F;assets&#x2F;logo-type.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -609,6 +609,16 @@
 <span id="609">609</span>
 <span id="610">610</span>
 <span id="611">611</span>
+<span id="612">612</span>
+<span id="613">613</span>
+<span id="614">614</span>
+<span id="615">615</span>
+<span id="616">616</span>
+<span id="617">617</span>
+<span id="618">618</span>
+<span id="619">619</span>
+<span id="620">620</span>
+<span id="621">621</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Callsites represent the source locations from which spans or events</span>
 <span class="doccomment">//! originate.</span>
 <span class="doccomment">//!</span>
@@ -748,8 +758,17 @@
 
     <span class="doccomment">/// Returns the [metadata] associated with the callsite.</span>
     <span class="doccomment">///</span>
+    <span class="doccomment">/// &lt;div class=&quot;example-wrap&quot; style=&quot;display:inline-block&quot;&gt;</span>
+    <span class="doccomment">/// &lt;pre class=&quot;ignore&quot; style=&quot;white-space:normal;font:inherit;&quot;&gt;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// **Note:** Implementations of this method should not produce [`Metadata`]</span>
+    <span class="doccomment">/// that share the same callsite [`Identifier`] but otherwise differ in any</span>
+    <span class="doccomment">/// way (e.g., have different `name`s).</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// &lt;/pre&gt;&lt;/div&gt;</span>
+    <span class="doccomment">///</span>
     <span class="doccomment">/// [metadata]: super::metadata::Metadata</span>
-    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Metadata</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Metadata</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// This method is an *internal implementation detail* of `tracing-core`. It</span>
     <span class="doccomment">/// is *not* intended to be called or overridden from downstream code.</span>
@@ -766,7 +785,7 @@
     <span class="comment">// for `&amp;dyn Callsite`s in the future.</span>
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">private_type_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="ident">private::Private</span><span class="op">&lt;</span>()<span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">private::Private</span><span class="op">&lt;</span><span class="ident">TypeId</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">private_type_id</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="ident">private::Private</span><span class="op">&lt;</span>()<span class="op">&gt;</span>) -&gt; <span class="ident">private::Private</span><span class="op">&lt;</span><span class="ident">TypeId</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="lifetime">&#39;static</span>,
     {
@@ -842,7 +861,7 @@
     <span class="ident">rebuild_callsite_interest</span>(<span class="ident">callsite</span>, <span class="kw-2">&amp;</span><span class="ident">DISPATCHERS</span>.<span class="ident">rebuilder</span>());
 
     <span class="comment">// Is this a `DefaultCallsite`? If so, use the fancy linked list!</span>
-    <span class="kw">if</span> <span class="ident">callsite</span>.<span class="ident">private_type_id</span>(<span class="ident">private::Private</span>(())).<span class="number">0</span> <span class="op">=</span><span class="op">=</span> <span class="ident">TypeId::of</span>::<span class="op">&lt;</span><span class="ident">DefaultCallsite</span><span class="op">&gt;</span>() {
+    <span class="kw">if</span> <span class="ident">callsite</span>.<span class="ident">private_type_id</span>(<span class="ident">private::Private</span>(())).<span class="number">0</span> <span class="op">==</span> <span class="ident">TypeId::of</span>::<span class="op">&lt;</span><span class="ident">DefaultCallsite</span><span class="op">&gt;</span>() {
         <span class="kw">let</span> <span class="ident">callsite</span> <span class="op">=</span> <span class="kw">unsafe</span> {
             <span class="comment">// Safety: the pointer cast is safe because the type id of the</span>
             <span class="comment">// provided callsite matches that of the target type for the cast</span>
@@ -884,7 +903,7 @@
     <span class="kw">const</span> <span class="ident">INTEREST_ALWAYS</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">2</span>;
 
     <span class="doccomment">/// Returns a new `DefaultCallsite` with the specified `Metadata`.</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Metadata</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">meta</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">Metadata</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">interest</span>: <span class="ident">AtomicU8::new</span>(<span class="number">0xFF</span>),
             <span class="ident">meta</span>,
@@ -911,7 +930,7 @@
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">never</span>)]</span>
     <span class="comment">// This only happens once (or if the cached interest value was corrupted).</span>
     <span class="attribute">#[<span class="ident">cold</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Interest</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">register</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="self">self</span>) -&gt; <span class="ident">Interest</span> {
         <span class="comment">// Attempt to advance the registration state to `REGISTERING`...</span>
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">registration</span>.<span class="ident">compare_exchange</span>(
             <span class="ident"><span class="self">Self</span>::UNREGISTERED</span>,
@@ -919,7 +938,7 @@
             <span class="ident">Ordering::AcqRel</span>,
             <span class="ident">Ordering::Acquire</span>,
         ) {
-            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
                 <span class="comment">// Okay, we advanced the state, try to register the callsite.</span>
                 <span class="ident">rebuild_callsite_interest</span>(<span class="self">self</span>, <span class="kw-2">&amp;</span><span class="ident">DISPATCHERS</span>.<span class="ident">rebuilder</span>());
                 <span class="ident">CALLSITES</span>.<span class="ident">push_default</span>(<span class="self">self</span>);
@@ -927,9 +946,9 @@
             }
             <span class="comment">// Great, the callsite is already registered! Just load its</span>
             <span class="comment">// previous cached interest.</span>
-            <span class="prelude-val">Err</span>(<span class="ident"><span class="self">Self</span>::REGISTERED</span>) <span class="op">=</span><span class="op">&gt;</span> {}
+            <span class="prelude-val">Err</span>(<span class="ident"><span class="self">Self</span>::REGISTERED</span>) =&gt; {}
             <span class="comment">// Someone else is registering...</span>
-            <span class="prelude-val">Err</span>(<span class="ident">_state</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="prelude-val">Err</span>(<span class="ident">_state</span>) =&gt; {
                 <span class="macro">debug_assert_eq!</span>(
                     <span class="ident">_state</span>,
                     <span class="ident"><span class="self">Self</span>::REGISTERING</span>,
@@ -941,21 +960,21 @@
         }
 
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">interest</span>.<span class="ident">load</span>(<span class="ident">Ordering::Relaxed</span>) {
-            <span class="ident"><span class="self">Self</span>::INTEREST_NEVER</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Interest::never</span>(),
-            <span class="ident"><span class="self">Self</span>::INTEREST_ALWAYS</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Interest::always</span>(),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Interest::sometimes</span>(),
+            <span class="ident"><span class="self">Self</span>::INTEREST_NEVER</span> =&gt; <span class="ident">Interest::never</span>(),
+            <span class="ident"><span class="self">Self</span>::INTEREST_ALWAYS</span> =&gt; <span class="ident">Interest::always</span>(),
+            <span class="kw">_</span> =&gt; <span class="ident">Interest::sometimes</span>(),
         }
     }
 
     <span class="doccomment">/// Returns the callsite&#39;s cached `Interest`, or registers it for the</span>
     <span class="doccomment">/// first time if it has not yet been registered.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interest</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Interest</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">interest</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="self">self</span>) -&gt; <span class="ident">Interest</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">interest</span>.<span class="ident">load</span>(<span class="ident">Ordering::Relaxed</span>) {
-            <span class="ident"><span class="self">Self</span>::INTEREST_NEVER</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Interest::never</span>(),
-            <span class="ident"><span class="self">Self</span>::INTEREST_SOMETIMES</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Interest::sometimes</span>(),
-            <span class="ident"><span class="self">Self</span>::INTEREST_ALWAYS</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Interest::always</span>(),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">register</span>(),
+            <span class="ident"><span class="self">Self</span>::INTEREST_NEVER</span> =&gt; <span class="ident">Interest::never</span>(),
+            <span class="ident"><span class="self">Self</span>::INTEREST_SOMETIMES</span> =&gt; <span class="ident">Interest::sometimes</span>(),
+            <span class="ident"><span class="self">Self</span>::INTEREST_ALWAYS</span> =&gt; <span class="ident">Interest::always</span>(),
+            <span class="kw">_</span> =&gt; <span class="self">self</span>.<span class="ident">register</span>(),
         }
     }
 }
@@ -963,15 +982,15 @@
 <span class="kw">impl</span> <span class="ident">Callsite</span> <span class="kw">for</span> <span class="ident">DefaultCallsite</span> {
     <span class="kw">fn</span> <span class="ident">set_interest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">interest</span>: <span class="ident">Interest</span>) {
         <span class="kw">let</span> <span class="ident">interest</span> <span class="op">=</span> <span class="kw">match</span> () {
-            <span class="kw">_</span> <span class="kw">if</span> <span class="ident">interest</span>.<span class="ident">is_never</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::INTEREST_NEVER</span>,
-            <span class="kw">_</span> <span class="kw">if</span> <span class="ident">interest</span>.<span class="ident">is_always</span>() <span class="op">=</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::INTEREST_ALWAYS</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::INTEREST_SOMETIMES</span>,
+            <span class="kw">_</span> <span class="kw">if</span> <span class="ident">interest</span>.<span class="ident">is_never</span>() =&gt; <span class="ident"><span class="self">Self</span>::INTEREST_NEVER</span>,
+            <span class="kw">_</span> <span class="kw">if</span> <span class="ident">interest</span>.<span class="ident">is_always</span>() =&gt; <span class="ident"><span class="self">Self</span>::INTEREST_ALWAYS</span>,
+            <span class="kw">_</span> =&gt; <span class="ident"><span class="self">Self</span>::INTEREST_SOMETIMES</span>,
         };
         <span class="self">self</span>.<span class="ident">interest</span>.<span class="ident">store</span>(<span class="ident">interest</span>, <span class="ident">Ordering::SeqCst</span>);
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Metadata</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Metadata</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">meta</span>
     }
 }
@@ -979,7 +998,7 @@
 <span class="comment">// ===== impl Identifier =====</span>
 
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Identifier</span> {
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Identifier</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Identifier</span>) -&gt; <span class="ident">bool</span> {
         <span class="ident">core::ptr::eq</span>(
             <span class="self">self</span>.<span class="number">0</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> (),
             <span class="ident">other</span>.<span class="number">0</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> (),
@@ -990,7 +1009,7 @@
 <span class="kw">impl</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Identifier</span> {}
 
 <span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Identifier</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Identifier({:p})&quot;</span>, <span class="self">self</span>.<span class="number">0</span>)
     }
 }
@@ -1060,10 +1079,10 @@
                 <span class="ident">Ordering::AcqRel</span>,
                 <span class="ident">Ordering::Acquire</span>,
             ) {
-                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; {
                     <span class="kw">break</span>;
                 }
-                <span class="prelude-val">Err</span>(<span class="ident">current</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">head</span> <span class="op">=</span> <span class="ident">current</span>,
+                <span class="prelude-val">Err</span>(<span class="ident">current</span>) =&gt; <span class="ident">head</span> <span class="op">=</span> <span class="ident">current</span>,
             }
         }
     }
@@ -1089,6 +1108,7 @@
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">register_dispatch</span>(<span class="ident">dispatch</span>: <span class="kw-2">&amp;</span><span class="ident">Dispatch</span>) {
     <span class="kw">let</span> <span class="ident">dispatchers</span> <span class="op">=</span> <span class="ident">DISPATCHERS</span>.<span class="ident">register_dispatch</span>(<span class="ident">dispatch</span>);
+    <span class="ident">dispatch</span>.<span class="ident">subscriber</span>().<span class="ident">on_register_dispatch</span>(<span class="ident">dispatch</span>);
     <span class="ident">CALLSITES</span>.<span class="ident">rebuild_interest</span>(<span class="ident">dispatchers</span>);
 }
 
@@ -1102,8 +1122,8 @@
     <span class="ident">dispatchers</span>.<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">dispatch</span><span class="op">|</span> {
         <span class="kw">let</span> <span class="ident">this_interest</span> <span class="op">=</span> <span class="ident">dispatch</span>.<span class="ident">register_callsite</span>(<span class="ident">meta</span>);
         <span class="ident">interest</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">interest</span>.<span class="ident">take</span>() {
-            <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">this_interest</span>),
-            <span class="prelude-val">Some</span>(<span class="ident">that_interest</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="ident">that_interest</span>.<span class="ident">and</span>(<span class="ident">this_interest</span>)),
+            <span class="prelude-val">None</span> =&gt; <span class="prelude-val">Some</span>(<span class="ident">this_interest</span>),
+            <span class="prelude-val">Some</span>(<span class="ident">that_interest</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">that_interest</span>.<span class="ident">and</span>(<span class="ident">this_interest</span>)),
         }
     });
 
@@ -1139,20 +1159,20 @@
     }
 
     <span class="kw">impl</span> <span class="ident">Dispatchers</span> {
-        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
             <span class="self">Self</span> {
                 <span class="ident">has_just_one</span>: <span class="ident">AtomicBool::new</span>(<span class="bool-val">true</span>),
             }
         }
 
-        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">rebuilder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
+        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">rebuilder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
             <span class="kw">if</span> <span class="self">self</span>.<span class="ident">has_just_one</span>.<span class="ident">load</span>(<span class="ident">Ordering::SeqCst</span>) {
                 <span class="kw">return</span> <span class="ident">Rebuilder::JustOne</span>;
             }
             <span class="ident">Rebuilder::Read</span>(<span class="ident">LOCKED_DISPATCHERS</span>.<span class="ident">read</span>().<span class="ident">unwrap</span>())
         }
 
-        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">register_dispatch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dispatch</span>: <span class="kw-2">&amp;</span><span class="ident">dispatcher::Dispatch</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
+        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">register_dispatch</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dispatch</span>: <span class="kw-2">&amp;</span><span class="ident">dispatcher::Dispatch</span>) -&gt; <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">dispatchers</span> <span class="op">=</span> <span class="ident">LOCKED_DISPATCHERS</span>.<span class="ident">write</span>().<span class="ident">unwrap</span>();
             <span class="ident">dispatchers</span>.<span class="ident">retain</span>(<span class="op">|</span><span class="ident">d</span><span class="op">|</span> <span class="ident">d</span>.<span class="ident">upgrade</span>().<span class="ident">is_some</span>());
             <span class="ident">dispatchers</span>.<span class="ident">push</span>(<span class="ident">dispatch</span>.<span class="ident">registrar</span>());
@@ -1165,12 +1185,12 @@
     <span class="kw">impl</span> <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
         <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">for_each</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnMut</span>(<span class="kw-2">&amp;</span><span class="ident">dispatcher::Dispatch</span>)) {
             <span class="kw">let</span> <span class="ident">iter</span> <span class="op">=</span> <span class="kw">match</span> <span class="self">self</span> {
-                <span class="ident">Rebuilder::JustOne</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">Rebuilder::JustOne</span> =&gt; {
                     <span class="ident">dispatcher::get_default</span>(<span class="ident">f</span>);
                     <span class="kw">return</span>;
                 }
-                <span class="ident">Rebuilder::Read</span>(<span class="ident">vec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">vec</span>.<span class="ident">iter</span>(),
-                <span class="ident">Rebuilder::Write</span>(<span class="ident">vec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">vec</span>.<span class="ident">iter</span>(),
+                <span class="ident">Rebuilder::Read</span>(<span class="ident">vec</span>) =&gt; <span class="ident">vec</span>.<span class="ident">iter</span>(),
+                <span class="ident">Rebuilder::Write</span>(<span class="ident">vec</span>) =&gt; <span class="ident">vec</span>.<span class="ident">iter</span>(),
             };
             <span class="ident">iter</span>.<span class="ident">filter_map</span>(<span class="ident">dispatcher::Registrar::upgrade</span>)
                 .<span class="ident">for_each</span>(<span class="op">|</span><span class="ident">dispatch</span><span class="op">|</span> <span class="ident">f</span>(<span class="kw-2">&amp;</span><span class="ident">dispatch</span>))
@@ -1186,18 +1206,18 @@
     <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">struct</span> <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">dispatcher::Dispatch</span><span class="op">&gt;</span>);
 
     <span class="kw">impl</span> <span class="ident">Dispatchers</span> {
-        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
             <span class="self">Self</span>(())
         }
 
-        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">rebuilder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
+        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">rebuilder</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span> {
             <span class="ident">Rebuilder</span>(<span class="prelude-val">None</span>)
         }
 
         <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">fn</span> <span class="ident">register_dispatch</span><span class="op">&lt;</span><span class="lifetime">&#39;dispatch</span><span class="op">&gt;</span>(
             <span class="kw-2">&amp;</span><span class="self">self</span>,
             <span class="ident">dispatch</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;dispatch</span> <span class="ident">dispatcher::Dispatch</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;dispatch</span><span class="op">&gt;</span> {
+        ) -&gt; <span class="ident">Rebuilder</span><span class="op">&lt;</span><span class="lifetime">&#39;dispatch</span><span class="op">&gt;</span> {
             <span class="comment">// nop; on no_std, there can only ever be one dispatcher</span>
             <span class="ident">Rebuilder</span>(<span class="prelude-val">Some</span>(<span class="ident">dispatch</span>))
         }

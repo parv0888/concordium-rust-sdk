@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tonic-0.7.2&#x2F;src&#x2F;metadata&#x2F;value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>value.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../tonic/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;website&#x2F;master&#x2F;public&#x2F;img&#x2F;icons&#x2F;tonic.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tonic-0.8.2&#x2F;src&#x2F;metadata&#x2F;value.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>value.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../tonic/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;website&#x2F;master&#x2F;public&#x2F;img&#x2F;icons&#x2F;tonic.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1119,7 +1119,7 @@
     <span class="doccomment">/// assert_eq!(val, &quot;Hello!!&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_static</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_static</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">MetadataValue</span> {
             <span class="ident">inner</span>: <span class="ident">VE::from_static</span>(<span class="ident">src</span>),
             <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -1152,7 +1152,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">deprecated</span> <span class="op">=</span> <span class="string">&quot;Use TryFrom instead&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_from_bytes</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">InvalidMetadataValueBytes</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">try_from_bytes</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">InvalidMetadataValueBytes</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::try_from</span>(<span class="ident">src</span>)
     }
 
@@ -1168,7 +1168,7 @@
     <span class="doccomment">/// share the memory anyways.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">deprecated</span> <span class="op">=</span> <span class="string">&quot;Use TryFrom instead&quot;</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_shared</span>(<span class="ident">src</span>: <span class="ident">Bytes</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">InvalidMetadataValueBytes</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_shared</span>(<span class="ident">src</span>: <span class="ident">Bytes</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">InvalidMetadataValueBytes</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::try_from</span>(<span class="ident">src</span>)
     }
 
@@ -1181,7 +1181,7 @@
     <span class="doccomment">/// This function does NOT validate that illegal bytes are not contained</span>
     <span class="doccomment">/// within the buffer.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_shared_unchecked</span>(<span class="ident">src</span>: <span class="ident">Bytes</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_shared_unchecked</span>(<span class="ident">src</span>: <span class="ident">Bytes</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">MetadataValue</span> {
             <span class="ident">inner</span>: <span class="ident">HeaderValue::from_maybe_shared_unchecked</span>(<span class="ident">src</span>),
             <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -1201,7 +1201,7 @@
     <span class="doccomment">/// assert!(!val.is_empty());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="ident">VE::is_empty</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -1223,7 +1223,7 @@
     <span class="doccomment">/// assert_eq!(val.to_bytes().unwrap().as_ref(), b&quot;hello&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Bytes</span>, <span class="ident">InvalidMetadataValueBytes</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Bytes</span>, <span class="ident">InvalidMetadataValueBytes</span><span class="op">&gt;</span> {
         <span class="ident">VE::decode</span>(<span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>())
     }
 
@@ -1268,7 +1268,7 @@
     <span class="doccomment">/// assert!(!val.is_sensitive());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sensitive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_sensitive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">is_sensitive</span>()
     }
 
@@ -1289,7 +1289,7 @@
     <span class="doccomment">/// assert_eq!(val.as_encoded_bytes(), b&quot;SGVsbG8h&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_encoded_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_encoded_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>()
     }
 
@@ -1297,7 +1297,7 @@
     <span class="doccomment">/// caller has made sure that the value is of the correct Ascii or Binary</span>
     <span class="doccomment">/// value encoding.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unchecked_from_header_value</span>(<span class="ident">value</span>: <span class="ident">HeaderValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unchecked_from_header_value</span>(<span class="ident">value</span>: <span class="ident">HeaderValue</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">MetadataValue</span> {
             <span class="ident">inner</span>: <span class="ident">value</span>,
             <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -1308,7 +1308,7 @@
     <span class="doccomment">/// that the caller has made sure that the value is of the correct Ascii or</span>
     <span class="doccomment">/// Binary value encoding.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unchecked_from_header_value_ref</span>(<span class="ident">header_value</span>: <span class="kw-2">&amp;</span><span class="ident">HeaderValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unchecked_from_header_value_ref</span>(<span class="ident">header_value</span>: <span class="kw-2">&amp;</span><span class="ident">HeaderValue</span>) -&gt; <span class="kw-2">&amp;</span><span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">header_value</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">HeaderValue</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="self">Self</span>) }
     }
 
@@ -1316,7 +1316,7 @@
     <span class="doccomment">/// that the caller has made sure that the value is of the correct Ascii or</span>
     <span class="doccomment">/// Binary value encoding.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unchecked_from_mut_header_value_ref</span>(<span class="ident">header_value</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">HeaderValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unchecked_from_mut_header_value_ref</span>(<span class="ident">header_value</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">HeaderValue</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span>(<span class="ident">header_value</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">HeaderValue</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="self">Self</span>) }
     }
 }
@@ -1351,7 +1351,7 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">InvalidMetadataValueBytes</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident">VE::from_bytes</span>(<span class="ident">src</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">value</span><span class="op">|</span> <span class="ident">MetadataValue</span> {
             <span class="ident">inner</span>: <span class="ident">value</span>,
             <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -1389,7 +1389,7 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">InvalidMetadataValueBytes</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>; <span class="ident">N</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>; <span class="ident">N</span>]) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::try_from</span>(<span class="ident">src</span>.<span class="ident">as_ref</span>())
     }
 }
@@ -1408,7 +1408,7 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">InvalidMetadataValueBytes</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="ident">Bytes</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="ident">Bytes</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident">VE::from_shared</span>(<span class="ident">src</span>).<span class="ident">map</span>(<span class="op">|</span><span class="ident">value</span><span class="op">|</span> <span class="ident">MetadataValue</span> {
             <span class="ident">inner</span>: <span class="ident">value</span>,
             <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -1430,7 +1430,7 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">InvalidMetadataValueBytes</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">src</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::try_from</span>(<span class="ident">src</span>.<span class="ident">as_slice</span>())
     }
 }
@@ -1445,7 +1445,7 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">InvalidMetadataValue</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident">s</span>.<span class="ident">parse</span>()
     }
 }
@@ -1460,7 +1460,7 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">InvalidMetadataValue</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident">s</span>.<span class="ident">parse</span>()
     }
 }
@@ -1475,7 +1475,7 @@
     <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">InvalidMetadataValue</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">s</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">s</span>: <span class="ident">String</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident">s</span>.<span class="ident">parse</span>()
     }
 }
@@ -1508,7 +1508,7 @@
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::should_implement_trait</span>)]</span>
     <span class="attribute">#[<span class="ident">deprecated</span> <span class="op">=</span> <span class="string">&quot;Use TryFrom or FromStr instead&quot;</span>]</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">InvalidMetadataValue</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">InvalidMetadataValue</span><span class="op">&gt;</span> {
         <span class="ident">src</span>.<span class="ident">parse</span>()
     }
 
@@ -1526,7 +1526,7 @@
     <span class="doccomment">/// assert_eq!(val, AsciiMetadataValue::try_from(b&quot;accept&quot;).unwrap());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_key</span><span class="op">&lt;</span><span class="ident">KeyVE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span>(<span class="ident">key</span>: <span class="ident">MetadataKey</span><span class="op">&lt;</span><span class="ident">KeyVE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_key</span><span class="op">&lt;</span><span class="ident">KeyVE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span>(<span class="ident">key</span>: <span class="ident">MetadataKey</span><span class="op">&lt;</span><span class="ident">KeyVE</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">key</span>.<span class="ident">into</span>()
     }
 
@@ -1545,7 +1545,7 @@
     <span class="doccomment">/// assert_eq!(val.len(), 5);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">len</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">len</span>()
     }
 
@@ -1562,7 +1562,7 @@
     <span class="doccomment">/// let val = AsciiMetadataValue::from_static(&quot;hello&quot;);</span>
     <span class="doccomment">/// assert_eq!(val.to_str().unwrap(), &quot;hello&quot;);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">ToStrError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_str</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">ToStrError</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">to_str</span>().<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ToStrError::new</span>())
     }
 
@@ -1577,7 +1577,7 @@
     <span class="doccomment">/// assert_eq!(val.as_bytes(), b&quot;hello&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>()
     }
 }
@@ -1593,7 +1593,7 @@
     <span class="doccomment">/// assert_eq!(val, &amp;b&quot;hello\xfa&quot;[..]);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_bytes</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_bytes</span>(<span class="ident">src</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="self">Self</span> {
         <span class="comment">// Only the Ascii version of try_from can fail.</span>
         <span class="ident"><span class="self">Self</span>::try_from</span>(<span class="ident">src</span>).<span class="ident">unwrap</span>()
     }
@@ -1601,20 +1601,20 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">VE::fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">f</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">KeyVE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">MetadataKey</span><span class="op">&lt;</span><span class="ident">KeyVE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Ascii</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">h</span>: <span class="ident">MetadataKey</span><span class="op">&lt;</span><span class="ident">KeyVE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Ascii</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">h</span>: <span class="ident">MetadataKey</span><span class="op">&lt;</span><span class="ident">KeyVE</span><span class="op">&gt;</span>) -&gt; <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Ascii</span><span class="op">&gt;</span> {
         <span class="ident">MetadataValue</span> {
             <span class="ident">inner</span>: <span class="ident">h</span>.<span class="ident">inner</span>.<span class="ident">into</span>(),
             <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -1623,9 +1623,9 @@
 }
 
 <span class="macro">macro_rules!</span> <span class="ident">from_integers</span> {
-    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>) <span class="op">=</span><span class="op">&gt;</span> {$(
+    ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>:<span class="ident">ident</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>:<span class="ident">ident</span> =&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">max_len</span>:<span class="ident">expr</span>),<span class="kw-2">*</span>) =&gt; {$(
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Ascii</span><span class="op">&gt;</span> {
-            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">num</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Ascii</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">num</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">t</span>) -&gt; <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Ascii</span><span class="op">&gt;</span> {
                 <span class="ident">MetadataValue</span> {
                     <span class="ident">inner</span>: <span class="ident">HeaderValue::from</span>(<span class="ident">num</span>),
                     <span class="ident">phantom</span>: <span class="ident">PhantomData</span>,
@@ -1650,30 +1650,30 @@
     <span class="comment">// integer type =&gt; maximum decimal length</span>
 
     <span class="comment">// u8 purposely left off... AsciiMetadataValue::from(b&#39;3&#39;) could be confusing</span>
-    <span class="ident">from_u16</span>: <span class="ident">u16</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">5</span>,
-    <span class="ident">from_i16</span>: <span class="ident">i16</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">6</span>,
-    <span class="ident">from_u32</span>: <span class="ident">u32</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">10</span>,
-    <span class="ident">from_i32</span>: <span class="ident">i32</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">11</span>,
-    <span class="ident">from_u64</span>: <span class="ident">u64</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">20</span>,
-    <span class="ident">from_i64</span>: <span class="ident">i64</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">20</span>
+    <span class="ident">from_u16</span>: <span class="ident">u16</span> =&gt; <span class="number">5</span>,
+    <span class="ident">from_i16</span>: <span class="ident">i16</span> =&gt; <span class="number">6</span>,
+    <span class="ident">from_u32</span>: <span class="ident">u32</span> =&gt; <span class="number">10</span>,
+    <span class="ident">from_i32</span>: <span class="ident">i32</span> =&gt; <span class="number">11</span>,
+    <span class="ident">from_u64</span>: <span class="ident">u64</span> =&gt; <span class="number">20</span>,
+    <span class="ident">from_i64</span>: <span class="ident">i64</span> =&gt; <span class="number">20</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;16&quot;</span>)]</span>
 <span class="macro">from_integers!</span> {
-    <span class="ident">from_usize</span>: <span class="ident">usize</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">5</span>,
-    <span class="ident">from_isize</span>: <span class="ident">isize</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">6</span>
+    <span class="ident">from_usize</span>: <span class="ident">usize</span> =&gt; <span class="number">5</span>,
+    <span class="ident">from_isize</span>: <span class="ident">isize</span> =&gt; <span class="number">6</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;32&quot;</span>)]</span>
 <span class="macro">from_integers!</span> {
-    <span class="ident">from_usize</span>: <span class="ident">usize</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">10</span>,
-    <span class="ident">from_isize</span>: <span class="ident">isize</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">11</span>
+    <span class="ident">from_usize</span>: <span class="ident">usize</span> =&gt; <span class="number">10</span>,
+    <span class="ident">from_isize</span>: <span class="ident">isize</span> =&gt; <span class="number">11</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_pointer_width</span> <span class="op">=</span> <span class="string">&quot;64&quot;</span>)]</span>
 <span class="macro">from_integers!</span> {
-    <span class="ident">from_usize</span>: <span class="ident">usize</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">20</span>,
-    <span class="ident">from_isize</span>: <span class="ident">isize</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">20</span>
+    <span class="ident">from_usize</span>: <span class="ident">usize</span> =&gt; <span class="number">20</span>,
+    <span class="ident">from_isize</span>: <span class="ident">isize</span> =&gt; <span class="number">20</span>
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
@@ -1702,7 +1702,7 @@
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">InvalidMetadataValue</span>;
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Ascii</span><span class="op">&gt;</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Ascii</span><span class="op">&gt;</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="ident">HeaderValue::from_str</span>(<span class="ident">s</span>)
             .<span class="ident">map</span>(<span class="op">|</span><span class="ident">value</span><span class="op">|</span> <span class="ident">MetadataValue</span> {
                 <span class="ident">inner</span>: <span class="ident">value</span>,
@@ -1714,14 +1714,14 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Bytes</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">value</span>: <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bytes</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">value</span>: <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="ident">Bytes</span> {
         <span class="ident">Bytes::copy_from_slice</span>(<span class="ident">value</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">t</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">t</span>.<span class="ident">clone</span>()
     }
 }
@@ -1729,13 +1729,13 @@
 <span class="comment">// ===== ToStrError =====</span>
 
 <span class="kw">impl</span> <span class="ident">ToStrError</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">ToStrError</span> { <span class="ident">_priv</span>: () }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ToStrError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="string">&quot;failed to convert metadata to a str&quot;</span>)
     }
 }
@@ -1751,8 +1751,8 @@
 <span class="kw">impl</span> <span class="ident">Hash</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">Binary</span><span class="op">&gt;</span> {
     <span class="kw">fn</span> <span class="ident">hash</span><span class="op">&lt;</span><span class="ident">H</span>: <span class="ident">Hasher</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">H</span>) {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">to_bytes</span>() {
-            <span class="prelude-val">Ok</span>(<span class="ident">b</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">b</span>.<span class="ident">hash</span>(<span class="ident">state</span>),
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">e</span>.<span class="ident">hash</span>(<span class="ident">state</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">b</span>) =&gt; <span class="ident">b</span>.<span class="ident">hash</span>(<span class="ident">state</span>),
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="ident">e</span>.<span class="ident">hash</span>(<span class="ident">state</span>),
         }
     }
 }
@@ -1761,7 +1761,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
         <span class="comment">// Note: Different binary strings that after base64 decoding</span>
         <span class="comment">// will count as the same value for Binary values. Also,</span>
         <span class="comment">// different invalid base64 values count as equal for Binary</span>
@@ -1774,112 +1774,112 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">inner</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">Ord</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">cmp::Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="ident">cmp::Ordering</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">inner</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">bool</span> {
         <span class="ident">VE::equals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">other</span>.<span class="ident">as_bytes</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">bool</span> {
         <span class="ident">VE::equals</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>, <span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">str</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">partial_cmp</span>(<span class="ident">other</span>.<span class="ident">as_bytes</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">partial_cmp</span>(<span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">str</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw-2">*</span><span class="ident">other</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="ident">other</span> <span class="op">==</span> <span class="kw-2">*</span><span class="self">self</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> [<span class="ident">u8</span>] {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw-2">*</span><span class="ident">other</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="ident">other</span> <span class="op">==</span> <span class="kw-2">*</span><span class="self">self</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">str</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_bytes</span>().<span class="ident">partial_cmp</span>(<span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> [<span class="ident">u8</span>] {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">partial_cmp</span>(<span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>[..]
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>) -&gt; <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="ident">other</span>[..]
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">String</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">partial_cmp</span>(<span class="ident">other</span>.<span class="ident">as_bytes</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw-2">*</span><span class="ident">other</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="ident">other</span> <span class="op">==</span> <span class="kw-2">*</span><span class="self">self</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">String</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_bytes</span>().<span class="ident">partial_cmp</span>(<span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>())
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="ident">other</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="kw-2">*</span><span class="ident">other</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         (<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">partial_cmp</span>(<span class="ident">other</span>)
     }
 }
@@ -1889,8 +1889,8 @@
     <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>: <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="op">&amp;&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">other</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="op">&amp;&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>) -&gt; <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="self">self</span> <span class="op">==</span> <span class="kw-2">*</span><span class="kw-2">*</span><span class="ident">other</span>
     }
 }
 
@@ -1899,21 +1899,21 @@
     <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>: <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
 {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="op">&amp;&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="op">&amp;&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">T</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">*</span><span class="ident">other</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="kw-2">*</span><span class="ident">other</span> <span class="op">=</span><span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="ident">bool</span> {
+        <span class="kw-2">*</span><span class="ident">other</span> <span class="op">==</span> <span class="kw-2">*</span><span class="self">self</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">as_bytes</span>().<span class="ident">partial_cmp</span>(<span class="ident">other</span>.<span class="ident">inner</span>.<span class="ident">as_bytes</span>())
     }
 }
@@ -1939,7 +1939,7 @@
 
 <span class="attribute">#[<span class="ident">test</span>]</span>
 <span class="kw">fn</span> <span class="ident">test_is_empty</span>() {
-    <span class="kw">fn</span> <span class="ident">from_str</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span><span class="op">&lt;</span><span class="ident">VE</span>: <span class="ident">ValueEncoding</span><span class="op">&gt;</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">MetadataValue</span><span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span> {
         <span class="ident">MetadataValue</span>::<span class="op">&lt;</span><span class="ident">VE</span><span class="op">&gt;</span><span class="ident">::unchecked_from_header_value</span>(<span class="ident">s</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>())
     }
 
@@ -2029,7 +2029,7 @@
     <span class="kw">use</span> <span class="ident">std::collections::hash_map::DefaultHasher</span>;
     <span class="kw">type</span> <span class="ident">AMV</span> <span class="op">=</span> <span class="ident">AsciiMetadataValue</span>;
 
-    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">value</span>: <span class="ident">AMV</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">value</span>: <span class="ident">AMV</span>) -&gt; <span class="ident">u64</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hasher</span> <span class="op">=</span> <span class="ident">DefaultHasher::new</span>();
         <span class="ident">value</span>.<span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">hasher</span>);
         <span class="ident">hasher</span>.<span class="ident">finish</span>()
@@ -2052,7 +2052,7 @@
     <span class="kw">use</span> <span class="ident">std::collections::hash_map::DefaultHasher</span>;
     <span class="kw">type</span> <span class="ident">BMV</span> <span class="op">=</span> <span class="ident">BinaryMetadataValue</span>;
 
-    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">value</span>: <span class="ident">BMV</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">value</span>: <span class="ident">BMV</span>) -&gt; <span class="ident">u64</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hasher</span> <span class="op">=</span> <span class="ident">DefaultHasher::new</span>();
         <span class="ident">value</span>.<span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">hasher</span>);
         <span class="ident">hasher</span>.<span class="ident">finish</span>()
@@ -2074,7 +2074,7 @@
     <span class="kw">use</span> <span class="ident">std::collections::hash_map::DefaultHasher</span>;
     <span class="kw">type</span> <span class="ident">BMV</span> <span class="op">=</span> <span class="ident">BinaryMetadataValue</span>;
 
-    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">value</span>: <span class="ident">BMV</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">fn</span> <span class="ident">hash</span>(<span class="ident">value</span>: <span class="ident">BMV</span>) -&gt; <span class="ident">u64</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hasher</span> <span class="op">=</span> <span class="ident">DefaultHasher::new</span>();
         <span class="ident">value</span>.<span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">hasher</span>);
         <span class="ident">hasher</span>.<span class="ident">finish</span>()

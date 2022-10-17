@@ -1,0 +1,480 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `concordium-base&#x2F;smart-contracts&#x2F;wasm-chain-integration&#x2F;src&#x2F;constants.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>constants.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../wasm_chain_integration/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<span id="2">  2</span>
+<span id="3">  3</span>
+<span id="4">  4</span>
+<span id="5">  5</span>
+<span id="6">  6</span>
+<span id="7">  7</span>
+<span id="8">  8</span>
+<span id="9">  9</span>
+<span id="10"> 10</span>
+<span id="11"> 11</span>
+<span id="12"> 12</span>
+<span id="13"> 13</span>
+<span id="14"> 14</span>
+<span id="15"> 15</span>
+<span id="16"> 16</span>
+<span id="17"> 17</span>
+<span id="18"> 18</span>
+<span id="19"> 19</span>
+<span id="20"> 20</span>
+<span id="21"> 21</span>
+<span id="22"> 22</span>
+<span id="23"> 23</span>
+<span id="24"> 24</span>
+<span id="25"> 25</span>
+<span id="26"> 26</span>
+<span id="27"> 27</span>
+<span id="28"> 28</span>
+<span id="29"> 29</span>
+<span id="30"> 30</span>
+<span id="31"> 31</span>
+<span id="32"> 32</span>
+<span id="33"> 33</span>
+<span id="34"> 34</span>
+<span id="35"> 35</span>
+<span id="36"> 36</span>
+<span id="37"> 37</span>
+<span id="38"> 38</span>
+<span id="39"> 39</span>
+<span id="40"> 40</span>
+<span id="41"> 41</span>
+<span id="42"> 42</span>
+<span id="43"> 43</span>
+<span id="44"> 44</span>
+<span id="45"> 45</span>
+<span id="46"> 46</span>
+<span id="47"> 47</span>
+<span id="48"> 48</span>
+<span id="49"> 49</span>
+<span id="50"> 50</span>
+<span id="51"> 51</span>
+<span id="52"> 52</span>
+<span id="53"> 53</span>
+<span id="54"> 54</span>
+<span id="55"> 55</span>
+<span id="56"> 56</span>
+<span id="57"> 57</span>
+<span id="58"> 58</span>
+<span id="59"> 59</span>
+<span id="60"> 60</span>
+<span id="61"> 61</span>
+<span id="62"> 62</span>
+<span id="63"> 63</span>
+<span id="64"> 64</span>
+<span id="65"> 65</span>
+<span id="66"> 66</span>
+<span id="67"> 67</span>
+<span id="68"> 68</span>
+<span id="69"> 69</span>
+<span id="70"> 70</span>
+<span id="71"> 71</span>
+<span id="72"> 72</span>
+<span id="73"> 73</span>
+<span id="74"> 74</span>
+<span id="75"> 75</span>
+<span id="76"> 76</span>
+<span id="77"> 77</span>
+<span id="78"> 78</span>
+<span id="79"> 79</span>
+<span id="80"> 80</span>
+<span id="81"> 81</span>
+<span id="82"> 82</span>
+<span id="83"> 83</span>
+<span id="84"> 84</span>
+<span id="85"> 85</span>
+<span id="86"> 86</span>
+<span id="87"> 87</span>
+<span id="88"> 88</span>
+<span id="89"> 89</span>
+<span id="90"> 90</span>
+<span id="91"> 91</span>
+<span id="92"> 92</span>
+<span id="93"> 93</span>
+<span id="94"> 94</span>
+<span id="95"> 95</span>
+<span id="96"> 96</span>
+<span id="97"> 97</span>
+<span id="98"> 98</span>
+<span id="99"> 99</span>
+<span id="100">100</span>
+<span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
+<span id="215">215</span>
+<span id="216">216</span>
+<span id="217">217</span>
+<span id="218">218</span>
+<span id="219">219</span>
+<span id="220">220</span>
+<span id="221">221</span>
+<span id="222">222</span>
+<span id="223">223</span>
+<span id="224">224</span>
+<span id="225">225</span>
+<span id="226">226</span>
+<span id="227">227</span>
+<span id="228">228</span>
+<span id="229">229</span>
+<span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+</pre><pre class="rust"><code><span class="doccomment">/// Maximum size of a V0 contract state in bytes.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_CONTRACT_STATE</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">16384</span>; <span class="comment">// 16kB</span>
+
+<span class="doccomment">/// Maximum number of nested function calls.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_ACTIVATION_FRAMES</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">1024</span>;
+
+<span class="doccomment">/// Maximum size of the init/receive parameter.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_PARAMETER_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1024</span>;
+
+<span class="doccomment">/// Maximum size of a log message.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_LOG_SIZE</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">512</span>;
+
+<span class="doccomment">/// Maximum number of log messages per execution.</span>
+<span class="doccomment">/// This together with the previous constant limits the amount of data that can</span>
+<span class="doccomment">/// be logged to 16kB.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_NUM_LOGS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">64</span>;
+
+<span class="doccomment">/// Base cost of a log event call.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">LOG_EVENT_BASE_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">500</span>;
+
+<span class="doccomment">/// Base cost of any action. With this cost there can be at most</span>
+<span class="doccomment">/// 3_000_000 actions produced in a block (with 3_000_000NRG maximum).</span>
+<span class="doccomment">/// A memory representation of a single action is 16 bytes, which</span>
+<span class="doccomment">/// would lead to 48MB memory being used temporarily for the buffer.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BASE_ACTION_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">1000</span>;
+
+<span class="doccomment">/// Base cost of a send action. There is more data and it also requires</span>
+<span class="doccomment">/// allocations which are a significant cost. The fixed amount of data is 72</span>
+<span class="doccomment">/// bytes.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BASE_SEND_ACTION_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">BASE_ACTION_COST</span> <span class="op">+</span> <span class="number">72000</span>;
+
+<span class="doccomment">/// Base cost of a simple_transfer action. There is more data (40 bytes) and it</span>
+<span class="doccomment">/// also requires allocations which are a significant cost.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BASE_SIMPLE_TRANSFER_ACTION_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">BASE_ACTION_COST</span> <span class="op">+</span> <span class="number">40000</span>;
+
+<span class="comment">// TODO: These should in principle be const fn, but rust in 1.45.2 u64::from</span>
+<span class="comment">// are not marked as const fn, so they are not.</span>
+
+<span class="doccomment">/// Cost of copying the given amount of bytes from the host (e.g., parameter or</span>
+<span class="doccomment">/// contract state) to the Wasm memory. The 10 is to account for copying empty</span>
+<span class="doccomment">/// buffers and is based on benchmarks.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_from_host_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">10</span> <span class="op">+</span> <span class="ident">u64::from</span>(<span class="ident">x</span>) }
+<span class="doccomment">/// Cost of copying the given amount of bytes to the host (e.g., parameter or</span>
+<span class="doccomment">/// contract state) from the Wasm to host memory. The 10 is to account for</span>
+<span class="doccomment">/// copying empty buffers and is based on benchmarks.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_to_host_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">10</span> <span class="op">+</span> <span class="ident">u64::from</span>(<span class="ident">x</span>) }
+
+<span class="doccomment">/// Cost of allocating additional smart contract state. The argument is the</span>
+<span class="doccomment">/// number of additional bytes. The `/100` guarantees that with 3_000_000NRG</span>
+<span class="doccomment">/// we can produce at most 30MB additional contract state per block.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">additional_state_size_cost</span>(<span class="ident">x</span>: <span class="ident">u64</span>) -&gt; <span class="ident">u64</span> { <span class="ident">x</span> <span class="op">/</span> <span class="number">100</span> }
+
+<span class="doccomment">/// Cost of logging an event of a given size.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">log_event_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> {
+    <span class="comment">// this corresponds to 1NRG per byte stored + base cost</span>
+    <span class="ident">LOG_EVENT_BASE_COST</span> <span class="op">+</span> <span class="number">1000</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">x</span>)
+}
+
+<span class="doccomment">/// Cost of a &quot;send&quot; action. `x` is the size of the parameter in bytes.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">action_send_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> {
+    <span class="comment">// the 1000 factor corresponds to 1NRG per byte.</span>
+    <span class="comment">// With this the maximum amount of data that would have to be stored would be</span>
+    <span class="comment">// 3MB with the expected maximum of 3000000NRG per block</span>
+    <span class="ident">BASE_SEND_ACTION_COST</span> <span class="op">+</span> <span class="number">1000</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">x</span>)
+}
+
+<span class="doccomment">/// Cost of traversing a key in the instance state.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">traverse_key_cost</span>(<span class="ident">key_len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> {
+    <span class="ident">BASE_STATE_COST</span> <span class="op">+</span> <span class="ident">copy_to_host_cost</span>(<span class="ident">key_len</span>) <span class="op">+</span> <span class="ident">u64::from</span>(<span class="ident">key_len</span>)
+}
+
+<span class="doccomment">/// Cost of creating an entry in the instance state.</span>
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">create_entry_cost</span>(<span class="ident">key_len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> {
+    <span class="comment">// 48 accounts for overall administrative costs and storing the indirection</span>
+    <span class="comment">// for the entry. The 8 and 100 come from experimentation and benchmarking.</span>
+    <span class="comment">// We want to encourage short keys so we charge linearly for those.</span>
+    <span class="kw">if</span> <span class="ident">key_len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">64</span> {
+        <span class="number">48</span> <span class="op">+</span> <span class="number">8</span> <span class="op">*</span> <span class="ident">copy_from_host_cost</span>(<span class="ident">key_len</span>) <span class="op">+</span> <span class="number">100</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">key_len</span>)
+    } <span class="kw">else</span> {
+        <span class="comment">// And charge quadratically for larger keys (more than 64 bytes).</span>
+        <span class="comment">// With this the largest key is around 40kB with 3_000_000NRG.</span>
+        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u64::from</span>(<span class="ident">key_len</span>);
+        <span class="kw">let</span> <span class="ident">q</span> <span class="op">=</span> <span class="number">100u64</span>.<span class="ident">checked_mul</span>(<span class="ident">len</span> <span class="op">*</span> <span class="ident">len</span>);
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">q</span>) <span class="op">=</span> <span class="ident">q</span> {
+            <span class="number">48</span> <span class="op">+</span> <span class="number">8</span> <span class="op">*</span> <span class="ident">copy_from_host_cost</span>(<span class="ident">key_len</span>) <span class="op">+</span> <span class="ident">q</span> <span class="op">/</span> <span class="number">64</span>
+        } <span class="kw">else</span> {
+            <span class="ident">u64::MAX</span>
+        }
+    }
+}
+
+<span class="doccomment">/// Cost of looking up an entry in the instance state.</span>
+<span class="doccomment">/// Compared to creating an entry this does not require extra storage for the</span>
+<span class="doccomment">/// key. The only cost is tree traversal and storing an indirection, which is 8</span>
+<span class="doccomment">/// bytes. With this cost we limit the amount of extra storage that is needed.</span>
+<span class="doccomment">/// For each entry lookup we allocate a new pointer indirection. Which is 8</span>
+<span class="doccomment">/// bytes. With these costs we limit the amount of memory needed to store these</span>
+<span class="doccomment">/// indirections to 300MB for 3_000_000NRG (with current conversion rates of NRG</span>
+<span class="doccomment">/// to InterpreterEnergy).</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">lookup_entry_cost</span>(<span class="ident">key_len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> {
+    <span class="number">80</span> <span class="op">+</span> <span class="number">4</span> <span class="op">*</span> <span class="ident">copy_from_host_cost</span>(<span class="ident">key_len</span>) <span class="op">+</span> <span class="number">16</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">key_len</span>)
+}
+
+<span class="doccomment">/// Cost of accessing the instance state.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">BASE_STATE_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">20</span>;
+
+<span class="doccomment">/// Cost of allocation of one page of memory in relation to execution cost.</span>
+<span class="doccomment">/// FIXME: It is unclear whether this is really necessary with the hard limit we</span>
+<span class="doccomment">/// have on memory use.</span>
+<span class="doccomment">/// If we keep it, the cost must be analyzed and put into perspective</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MEMORY_COST_FACTOR</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">100</span>;
+
+<span class="doccomment">/// Cost of the invoke action. This is just the base cost to cover</span>
+<span class="doccomment">/// administrative costs of an invoke. Specific costs of the action are charged</span>
+<span class="doccomment">/// later by the scheduler.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">INVOKE_BASE_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">500</span>;
+
+<span class="doccomment">/// Cost of delete_prefix which accounts for finding the prefix. It is</span>
+<span class="doccomment">/// parametrized by the length of the key.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete_prefix_find_cost</span>(<span class="ident">len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">10</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">len</span>) }
+
+<span class="doccomment">/// Cost of a new iterator. This accounts for tree traversal as well</span>
+<span class="doccomment">/// as the storage the execution engine needs to keep for the iterator.</span>
+<span class="doccomment">/// When looking up an iterator we construct a structure that keeps track of the</span>
+<span class="doccomment">/// current position in the tree. This iterator is constructed for any key,</span>
+<span class="doccomment">/// including the empty key. Hence the base cost of 80 is there to ensure we</span>
+<span class="doccomment">/// don&#39;t run out of memory. It limits memory use to around 300MB in the worst</span>
+<span class="doccomment">/// case.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Additionally, since we have to store the key for the iterator we have to</span>
+<span class="doccomment">/// charge adequately so that memory use is bounded. This is the reason for the</span>
+<span class="doccomment">/// 100 factor.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_iterator_cost</span>(<span class="ident">len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">80</span> <span class="op">+</span> <span class="number">100</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">len</span>) }
+
+<span class="doccomment">/// Basic administrative cost that is charged when an invalid iterator is</span>
+<span class="doccomment">/// attempted to be deleted.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">DELETE_ITERATOR_BASE_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">10</span>;
+
+<span class="doccomment">/// Delete an iterator. Since we need to unlock the region locked by it this</span>
+<span class="doccomment">/// cost is based on the length of the key. The exact factor of 32 is estimated</span>
+<span class="doccomment">/// based on benchmarks.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete_iterator_cost</span>(<span class="ident">len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">32</span> <span class="op">+</span> <span class="number">32</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">len</span>) }
+
+<span class="doccomment">/// Cost of return the size of the iterator key. This is constant since the</span>
+<span class="doccomment">/// iterator key is readily available.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ITERATOR_KEY_SIZE_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">10</span>;
+
+<span class="doccomment">/// Basic administrative cost of advancing an iterator.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ITERATOR_NEXT_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">32</span>;
+
+<span class="doccomment">/// Step cost of a tree traversal when invalidating entries when deleting a</span>
+<span class="doccomment">/// prefix, as well as when advancing an iterator.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">TREE_TRAVERSAL_STEP_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">40</span>;
+
+<span class="doccomment">/// Cost of deleting an entry based on key length. This involves lookup in the</span>
+<span class="doccomment">/// &quot;locked&quot; map so it is relatively expensive.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">delete_entry_cost</span>(<span class="ident">key_len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> {
+    <span class="number">80</span> <span class="op">+</span> <span class="number">4</span> <span class="op">*</span> <span class="ident">copy_from_host_cost</span>(<span class="ident">key_len</span>) <span class="op">+</span> <span class="number">16</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">key_len</span>)
+}
+
+<span class="doccomment">/// Base cost of resizing an entry. This accounts for lookup of the entry.</span>
+<span class="doccomment">/// When the entry is resized to a larger value there is additional cost charged</span>
+<span class="doccomment">/// based on how much extra memory there is.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">RESIZE_ENTRY_BASE_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">10</span>;
+
+<span class="doccomment">/// Maximum size (in bytes) of data in the entry. The execution engine relies on</span>
+<span class="doccomment">/// this being strictly less than [u32::MAX].</span>
+<span class="doccomment">/// Realistically this is much above any bound implied by energy, however it is</span>
+<span class="doccomment">/// good to have it explicit since correctness of the implementation relies on</span>
+<span class="doccomment">/// this.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_ENTRY_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">30</span>;
+
+<span class="doccomment">/// Maximum size of a key in V1 contract state. The execution engine relies on</span>
+<span class="doccomment">/// this being strictly less than [u32::MAX].</span>
+<span class="doccomment">/// Realistically this is much above any bound implied by energy, however it is</span>
+<span class="doccomment">/// good to have it explicit since correctness of the implementation relies on</span>
+<span class="doccomment">/// this.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_KEY_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">30</span>;
+
+<span class="doccomment">/// Cost of allocating additional data in the entry. The argument is the</span>
+<span class="doccomment">/// number of additional bytes.</span>
+<span class="doccomment">/// This is needed since we do allocate memory on entry_resize. As a result</span>
+<span class="doccomment">/// we must bound how much can be allocated.</span>
+<span class="doccomment">/// With `100` we have at most 30MB of memory allocated with 3000000NRG. We can</span>
+<span class="doccomment">/// relax this a bit, but not much.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">additional_entry_size_cost</span>(<span class="ident">x</span>: <span class="ident">u64</span>) -&gt; <span class="ident">u64</span> { <span class="number">100</span> <span class="op">*</span> <span class="ident">x</span> }
+
+<span class="doccomment">/// Cost of querying entry size.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">ENTRY_SIZE_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">32</span>;
+
+<span class="doccomment">/// Cost of copying the given amount of bytes from the host (e.g., parameter or</span>
+<span class="doccomment">/// contract state) to the Wasm memory.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">read_entry_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">32</span> <span class="op">+</span> <span class="ident">u64::from</span>(<span class="ident">x</span> <span class="op">/</span> <span class="number">8</span>) }
+<span class="doccomment">/// Cost of copying the given amount of bytes to the host (e.g., parameter or</span>
+<span class="doccomment">/// contract state) from the Wasm to host memory.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_entry_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">32</span> <span class="op">+</span> <span class="ident">u64::from</span>(<span class="ident">x</span> <span class="op">/</span> <span class="number">8</span>) }
+
+<span class="doccomment">/// Cost of writing the given bytes of the return value.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">write_output_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">10</span> <span class="op">+</span> <span class="ident">u64::from</span>(<span class="ident">x</span>) }
+
+<span class="doccomment">/// Cost of adding an additional byte to the output. With the factor of 30</span>
+<span class="doccomment">/// and 3000000NRG there can be at most 100MB of output produced.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">additional_output_size_cost</span>(<span class="ident">x</span>: <span class="ident">u64</span>) -&gt; <span class="ident">u64</span> { <span class="number">30</span> <span class="op">*</span> <span class="ident">x</span> }
+
+<span class="doccomment">/// Cost of verification of an ed25519 with the Zebra implementation.</span>
+<span class="doccomment">/// The cost depends on the size of the message and is based on benchmarking.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">verify_ed25519_cost</span>(<span class="ident">message_len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">100_000</span> <span class="op">+</span> <span class="number">100</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">message_len</span>) }
+
+<span class="doccomment">/// Cost of verification of an ecdsa over secp256k1 with the bitcoin-core</span>
+<span class="doccomment">/// implementation. Since signature verification only works on 32 byte messages</span>
+<span class="doccomment">/// (which are meant to be hashes) the cost is constant.</span>
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">VERIFY_ECDSA_SECP256K1_COST</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="number">100_000</span>;
+
+<span class="doccomment">/// Cost of computing a SHA2-256 digest of the message of the given length.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_sha2_256_cost</span>(<span class="ident">data_len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">500</span> <span class="op">+</span> <span class="number">7</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">data_len</span>) }
+
+<span class="doccomment">/// Cost of computing a SHA3-256 digest of the message of the given length.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_sha3_256_cost</span>(<span class="ident">data_len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">500</span> <span class="op">+</span> <span class="number">5</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">data_len</span>) }
+
+<span class="doccomment">/// Cost of computing a Keccak-256 digest of the message of the given length.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_keccak_256_cost</span>(<span class="ident">data_len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">500</span> <span class="op">+</span> <span class="number">5</span> <span class="op">*</span> <span class="ident">u64::from</span>(<span class="ident">data_len</span>) }
+</code></pre></div>
+</section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="wasm_chain_integration" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script><script src="../../source-script.js"></script><script src="../../source-files.js"></script>
+</body></html>

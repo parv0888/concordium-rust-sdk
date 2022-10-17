@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tonic-0.7.2&#x2F;src&#x2F;request.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>request.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../tonic/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;website&#x2F;master&#x2F;public&#x2F;img&#x2F;icons&#x2F;tonic.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tonic-0.8.2&#x2F;src&#x2F;request.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>request.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../tonic/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;website&#x2F;master&#x2F;public&#x2F;img&#x2F;icons&#x2F;tonic.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -523,7 +523,7 @@
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">IntoRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>: <span class="ident">sealed::Sealed</span> {
     <span class="doccomment">/// Wrap the input message `T` in a `tonic::Request`</span>
-    <span class="kw">fn</span> <span class="ident">into_request</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_request</span>(<span class="self">self</span>) -&gt; <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// Trait implemented by RPC streaming request types.</span>
@@ -567,7 +567,7 @@
     <span class="kw">type</span> <span class="ident">Message</span>;
 
     <span class="doccomment">/// Wrap the stream of messages in a `tonic::Request`</span>
-    <span class="kw">fn</span> <span class="ident">into_streaming_request</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Stream</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">into_streaming_request</span>(<span class="self">self</span>) -&gt; <span class="ident">Request</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Stream</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
@@ -582,7 +582,7 @@
     <span class="doccomment">///    name: &quot;Bob&quot;.into(),</span>
     <span class="doccomment">/// });</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">message</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">message</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Request</span> {
             <span class="ident">metadata</span>: <span class="ident">MetadataMap::new</span>(),
             <span class="ident">message</span>,
@@ -591,35 +591,35 @@
     }
 
     <span class="doccomment">/// Get a reference to the message</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">T</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">message</span>
     }
 
     <span class="doccomment">/// Get a mutable reference to the message</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">message</span>
     }
 
     <span class="doccomment">/// Get a reference to the custom request metadata.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">MetadataMap</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">metadata</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">MetadataMap</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">metadata</span>
     }
 
     <span class="doccomment">/// Get a mutable reference to the request metadata.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">metadata_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">MetadataMap</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">metadata_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">MetadataMap</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">metadata</span>
     }
 
     <span class="doccomment">/// Consumes `self`, returning the message</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="self">self</span>) -&gt; <span class="ident">T</span> {
         <span class="self">self</span>.<span class="ident">message</span>
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">into_parts</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">MetadataMap</span>, <span class="ident">Extensions</span>, <span class="ident">T</span>) {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">into_parts</span>(<span class="self">self</span>) -&gt; (<span class="ident">MetadataMap</span>, <span class="ident">Extensions</span>, <span class="ident">T</span>) {
         (<span class="self">self</span>.<span class="ident">metadata</span>, <span class="self">self</span>.<span class="ident">extensions</span>, <span class="self">self</span>.<span class="ident">message</span>)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_parts</span>(<span class="ident">metadata</span>: <span class="ident">MetadataMap</span>, <span class="ident">extensions</span>: <span class="ident">Extensions</span>, <span class="ident">message</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_parts</span>(<span class="ident">metadata</span>: <span class="ident">MetadataMap</span>, <span class="ident">extensions</span>: <span class="ident">Extensions</span>, <span class="ident">message</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">metadata</span>,
             <span class="ident">extensions</span>,
@@ -627,7 +627,7 @@
         }
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_http_parts</span>(<span class="ident">parts</span>: <span class="ident">http::request::Parts</span>, <span class="ident">message</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">from_http_parts</span>(<span class="ident">parts</span>: <span class="ident">http::request::Parts</span>, <span class="ident">message</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Request</span> {
             <span class="ident">metadata</span>: <span class="ident">MetadataMap::from_headers</span>(<span class="ident">parts</span>.<span class="ident">headers</span>),
             <span class="ident">message</span>,
@@ -636,7 +636,7 @@
     }
 
     <span class="doccomment">/// Convert an HTTP request to a gRPC request</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_http</span>(<span class="ident">http</span>: <span class="ident">http::Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_http</span>(<span class="ident">http</span>: <span class="ident">http::Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> (<span class="ident">parts</span>, <span class="ident">message</span>) <span class="op">=</span> <span class="ident">http</span>.<span class="ident">into_parts</span>();
         <span class="ident">Request::from_http_parts</span>(<span class="ident">parts</span>, <span class="ident">message</span>)
     }
@@ -647,15 +647,15 @@
         <span class="ident">method</span>: <span class="ident">http::Method</span>,
         <span class="ident">version</span>: <span class="ident">http::Version</span>,
         <span class="ident">sanitize_headers</span>: <span class="ident">SanitizeHeaders</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">http::Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">http::Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">request</span> <span class="op">=</span> <span class="ident">http::Request::new</span>(<span class="self">self</span>.<span class="ident">message</span>);
 
         <span class="kw-2">*</span><span class="ident">request</span>.<span class="ident">version_mut</span>() <span class="op">=</span> <span class="ident">version</span>;
         <span class="kw-2">*</span><span class="ident">request</span>.<span class="ident">method_mut</span>() <span class="op">=</span> <span class="ident">method</span>;
         <span class="kw-2">*</span><span class="ident">request</span>.<span class="ident">uri_mut</span>() <span class="op">=</span> <span class="ident">uri</span>;
         <span class="kw-2">*</span><span class="ident">request</span>.<span class="ident">headers_mut</span>() <span class="op">=</span> <span class="kw">match</span> <span class="ident">sanitize_headers</span> {
-            <span class="ident">SanitizeHeaders::Yes</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">into_sanitized_headers</span>(),
-            <span class="ident">SanitizeHeaders::No</span> <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">into_headers</span>(),
+            <span class="ident">SanitizeHeaders::Yes</span> =&gt; <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">into_sanitized_headers</span>(),
+            <span class="ident">SanitizeHeaders::No</span> =&gt; <span class="self">self</span>.<span class="ident">metadata</span>.<span class="ident">into_headers</span>(),
         };
         <span class="kw-2">*</span><span class="ident">request</span>.<span class="ident">extensions_mut</span>() <span class="op">=</span> <span class="self">self</span>.<span class="ident">extensions</span>.<span class="ident">into_http</span>();
 
@@ -663,9 +663,9 @@
     }
 
     <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">map</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">map</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">U</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">U</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">U</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">T</span>) -&gt; <span class="ident">U</span>,
     {
         <span class="kw">let</span> <span class="ident">message</span> <span class="op">=</span> <span class="ident">f</span>(<span class="self">self</span>.<span class="ident">message</span>);
 
@@ -681,7 +681,7 @@
     <span class="doccomment">/// This will return `None` if the `IO` type used</span>
     <span class="doccomment">/// does not implement `Connected` or when using a unix domain socket.</span>
     <span class="doccomment">/// This currently only works on the server side.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_addr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">remote_addr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SocketAddr</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;transport&quot;</span>)]</span>
         {
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
@@ -718,7 +718,7 @@
     <span class="doccomment">/// TLS enabled connections.</span>
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;transport&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">docsrs</span>, <span class="ident">doc</span>(<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;transport&quot;</span>)))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">peer_certs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Certificate</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">peer_certs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Arc</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Certificate</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
         {
             <span class="self">self</span>.<span class="ident">extensions</span>()
@@ -766,7 +766,7 @@
     }
 
     <span class="doccomment">/// Returns a reference to the associated extensions.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extensions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Extensions</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extensions</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">Extensions</span> {
         <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">extensions</span>
     }
 
@@ -815,19 +815,19 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extensions_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Extensions</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">extensions_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Extensions</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">extensions</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">IntoRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">T</span> {
-    <span class="kw">fn</span> <span class="ident">into_request</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into_request</span>(<span class="self">self</span>) -&gt; <span class="ident">Request</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">Request::new</span>(<span class="self">self</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">IntoRequest</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_request</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into_request</span>(<span class="self">self</span>) -&gt; <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">self</span>
     }
 }
@@ -839,7 +839,7 @@
     <span class="kw">type</span> <span class="ident">Stream</span> <span class="op">=</span> <span class="ident">T</span>;
     <span class="kw">type</span> <span class="ident">Message</span> <span class="op">=</span> <span class="ident">T::Item</span>;
 
-    <span class="kw">fn</span> <span class="ident">into_streaming_request</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Request</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">into_streaming_request</span>(<span class="self">self</span>) -&gt; <span class="ident">Request</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">Request::new</span>(<span class="self">self</span>)
     }
 }
@@ -851,7 +851,7 @@
     <span class="kw">type</span> <span class="ident">Stream</span> <span class="op">=</span> <span class="ident">T</span>;
     <span class="kw">type</span> <span class="ident">Message</span> <span class="op">=</span> <span class="ident">T::Item</span>;
 
-    <span class="kw">fn</span> <span class="ident">into_streaming_request</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">into_streaming_request</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>
     }
 }
@@ -862,12 +862,12 @@
     <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Sealed</span> {}
 }
 
-<span class="kw">fn</span> <span class="ident">duration_to_grpc_timeout</span>(<span class="ident">duration</span>: <span class="ident">Duration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">fn</span> <span class="ident">duration_to_grpc_timeout</span>(<span class="ident">duration</span>: <span class="ident">Duration</span>) -&gt; <span class="ident">String</span> {
     <span class="kw">fn</span> <span class="ident">try_format</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span><span class="op">&gt;</span>(
         <span class="ident">duration</span>: <span class="ident">Duration</span>,
         <span class="ident">unit</span>: <span class="ident">char</span>,
-        <span class="ident">convert</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="ident">Duration</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+        <span class="ident">convert</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="ident">Duration</span>) -&gt; <span class="ident">T</span>,
+    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="comment">// The gRPC spec specifies that the timeout most be at most 8 digits. So this is the largest a</span>
         <span class="comment">// value can be before we need to use a bigger unit.</span>
         <span class="kw">let</span> <span class="ident">max_size</span>: <span class="ident">u128</span> <span class="op">=</span> <span class="number">99_999_999</span>; <span class="comment">// exactly 8 digits</span>

@@ -138,11 +138,11 @@
 }
 
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">trait</span> <span class="ident">Drive</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Future</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_empty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="kw">fn</span> <span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">future</span>: <span class="ident">F</span>);
 
-    <span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F::Output</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">poll</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">F::Output</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">Svc</span>, <span class="ident">S</span>, <span class="ident">Q</span><span class="op">&gt;</span> <span class="ident">CallAll</span><span class="op">&lt;</span><span class="ident">Svc</span>, <span class="ident">S</span>, <span class="ident">Q</span><span class="op">&gt;</span>
@@ -152,7 +152,7 @@
     <span class="ident">S</span>: <span class="ident">Stream</span>,
     <span class="ident">Q</span>: <span class="ident">Drive</span><span class="op">&lt;</span><span class="ident">Svc::Future</span><span class="op">&gt;</span>,
 {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">service</span>: <span class="ident">Svc</span>, <span class="ident">stream</span>: <span class="ident">S</span>, <span class="ident">queue</span>: <span class="ident">Q</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CallAll</span><span class="op">&lt;</span><span class="ident">Svc</span>, <span class="ident">S</span>, <span class="ident">Q</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">service</span>: <span class="ident">Svc</span>, <span class="ident">stream</span>: <span class="ident">S</span>, <span class="ident">queue</span>: <span class="ident">Q</span>) -&gt; <span class="ident">CallAll</span><span class="op">&lt;</span><span class="ident">Svc</span>, <span class="ident">S</span>, <span class="ident">Q</span><span class="op">&gt;</span> {
         <span class="ident">CallAll</span> {
             <span class="ident">service</span>: <span class="prelude-val">Some</span>(<span class="ident">service</span>),
             <span class="ident">stream</span>,
@@ -162,19 +162,19 @@
     }
 
     <span class="doccomment">/// Extract the wrapped [`Service`].</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Svc</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">into_inner</span>(<span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">Svc</span> {
         <span class="self">self</span>.<span class="ident">service</span>.<span class="ident">take</span>().<span class="ident">expect</span>(<span class="string">&quot;Service already taken&quot;</span>)
     }
 
     <span class="doccomment">/// Extract the wrapped [`Service`].</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">take_service</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Svc</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">take_service</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>) -&gt; <span class="ident">Svc</span> {
         <span class="self">self</span>.<span class="ident">project</span>()
             .<span class="ident">service</span>
             .<span class="ident">take</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;Service already taken&quot;</span>)
     }
 
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unordered</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="kw">super</span>::CallAllUnordered</span><span class="op">&lt;</span><span class="ident">Svc</span>, <span class="ident">S</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">unordered</span>(<span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident"><span class="kw">super</span>::CallAllUnordered</span><span class="op">&lt;</span><span class="ident">Svc</span>, <span class="ident">S</span><span class="op">&gt;</span> {
         <span class="macro">assert!</span>(<span class="self">self</span>.<span class="ident">queue</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">eof</span>);
 
         <span class="ident"><span class="kw">super</span>::CallAllUnordered::new</span>(<span class="self">self</span>.<span class="ident">service</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>(), <span class="self">self</span>.<span class="ident">stream</span>)
@@ -190,7 +190,7 @@
 {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Svc::Response</span>, <span class="ident"><span class="kw">crate</span>::BoxError</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">this</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">project</span>();
 
         <span class="kw">loop</span> {
@@ -223,10 +223,10 @@
             <span class="comment">// stream returns `Pending`. It may be a while until we get around to actually</span>
             <span class="comment">// using it.</span>
             <span class="kw">match</span> <span class="macro">ready!</span>(<span class="ident">this</span>.<span class="ident">stream</span>.<span class="ident">as_mut</span>().<span class="ident">poll_next</span>(<span class="ident">cx</span>)) {
-                <span class="prelude-val">Some</span>(<span class="ident">req</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">req</span>) =&gt; {
                     <span class="ident">this</span>.<span class="ident">queue</span>.<span class="ident">push</span>(<span class="ident">svc</span>.<span class="ident">call</span>(<span class="ident">req</span>));
                 }
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">None</span> =&gt; {
                     <span class="comment">// We&#39;re all done once any outstanding requests have completed</span>
                     <span class="kw-2">*</span><span class="ident">this</span>.<span class="ident">eof</span> <span class="op">=</span> <span class="bool-val">true</span>;
                 }

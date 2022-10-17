@@ -669,16 +669,16 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Display</span> <span class="kw">for</span> <span class="ident">CdiVerificationError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">CdiVerificationError::RegId</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;RegIdVerificationError&quot;</span>),
-            <span class="ident">CdiVerificationError::IdCredPub</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;IdCredPubVerificationError&quot;</span>),
-            <span class="ident">CdiVerificationError::Signature</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;SignatureVerificationError&quot;</span>),
-            <span class="ident">CdiVerificationError::Dlog</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;DlogVerificationError&quot;</span>),
-            <span class="ident">CdiVerificationError::AccountOwnership</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;AccountOwnership&quot;</span>),
-            <span class="ident">CdiVerificationError::Policy</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;PolicyVerificationError&quot;</span>),
-            <span class="ident">CdiVerificationError::Ar</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;AnonymityRevokerVerificationError&quot;</span>),
-            <span class="ident">CdiVerificationError::Proof</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;ProofVerificationError&quot;</span>),
+            <span class="ident">CdiVerificationError::RegId</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;RegIdVerificationError&quot;</span>),
+            <span class="ident">CdiVerificationError::IdCredPub</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;IdCredPubVerificationError&quot;</span>),
+            <span class="ident">CdiVerificationError::Signature</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;SignatureVerificationError&quot;</span>),
+            <span class="ident">CdiVerificationError::Dlog</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;DlogVerificationError&quot;</span>),
+            <span class="ident">CdiVerificationError::AccountOwnership</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;AccountOwnership&quot;</span>),
+            <span class="ident">CdiVerificationError::Policy</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;PolicyVerificationError&quot;</span>),
+            <span class="ident">CdiVerificationError::Ar</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;AnonymityRevokerVerificationError&quot;</span>),
+            <span class="ident">CdiVerificationError::Proof</span> =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;ProofVerificationError&quot;</span>),
         }
     }
 }
@@ -697,7 +697,7 @@
     <span class="ident">known_ars</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">ArIdentity</span>, <span class="ident">A</span><span class="op">&gt;</span>,
     <span class="ident">cdi</span>: <span class="kw-2">&amp;</span><span class="ident">CredentialDeploymentInfo</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="ident">new_or_existing</span>: <span class="kw-2">&amp;</span><span class="ident">Either</span><span class="op">&lt;</span><span class="ident">TransactionTime</span>, <span class="ident">AccountAddress</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">CdiVerificationError</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">CdiVerificationError</span><span class="op">&gt;</span> {
     <span class="comment">// We need to check that the threshold is actually equal to</span>
     <span class="comment">// the number of coefficients in the sharing polynomial</span>
     <span class="comment">// (corresponding to the degree+1)</span>
@@ -834,14 +834,14 @@
     <span class="ident">ip_info</span>: <span class="kw-2">&amp;</span><span class="ident">IpInfo</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
     <span class="ident">cdi</span>: <span class="kw-2">&amp;</span><span class="ident">InitialCredentialDeploymentInfo</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="ident">expiry</span>: <span class="ident">TransactionTime</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">CdiVerificationError</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">CdiVerificationError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hasher</span> <span class="op">=</span> <span class="ident">Sha256::new</span>();
     <span class="ident">hasher</span>.<span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="ident">to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">expiry</span>));
     <span class="ident">hasher</span>.<span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="ident">to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">cdi</span>.<span class="ident">values</span>));
     <span class="kw">let</span> <span class="ident">signed</span> <span class="op">=</span> <span class="ident">hasher</span>.<span class="ident">finalize</span>();
     <span class="kw">match</span> <span class="ident">ip_info</span>.<span class="ident">ip_cdi_verify_key</span>.<span class="ident">verify</span>(<span class="ident">signed</span>.<span class="ident">as_ref</span>(), <span class="kw-2">&amp;</span><span class="ident">cdi</span>.<span class="ident">sig</span>) {
-        <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">CdiVerificationError::Signature</span>),
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(()),
+        <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="prelude-val">Err</span>(<span class="ident">CdiVerificationError::Signature</span>),
+        <span class="kw">_</span> =&gt; <span class="prelude-val">Ok</span>(()),
     }
 }
 
@@ -852,7 +852,7 @@
     <span class="ident">chain_ar_data</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">ArIdentity</span>, <span class="ident">ChainArData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">cmm_sharing_coeff</span>: <span class="kw-2">&amp;</span>[<span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>],
     <span class="ident">proof_id_cred_pub</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">ArIdentity</span>, <span class="ident">com_enc_eq::Witness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">IdCredPubVerifiers</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">CdiVerificationError</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">IdCredPubVerifiers</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident">CdiVerificationError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">provers</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">proof_id_cred_pub</span>.<span class="ident">len</span>());
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">witnesses</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">proof_id_cred_pub</span>.<span class="ident">len</span>());
 
@@ -896,7 +896,7 @@
     <span class="ident">_commitment_key</span>: <span class="kw-2">&amp;</span><span class="ident">CommitmentKey</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">_commitments</span>: <span class="kw-2">&amp;</span><span class="ident">CredentialDeploymentCommitments</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">_policy</span>: <span class="kw-2">&amp;</span><span class="ident">Policy</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) -&gt; <span class="ident">bool</span> {
     <span class="bool-val">true</span>
 }
 
@@ -917,7 +917,7 @@
     <span class="ident">commitments</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">CredentialDeploymentCommitments</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">ip_pub_key</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ps_sig::PublicKey</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
     <span class="ident">blinded_sig</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ps_sig::BlindedSignature</span><span class="op">&lt;</span><span class="ident">P</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">com_eq_sig::ComEqSig</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">com_eq_sig::ComEqSig</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">ar_scalars</span> <span class="op">=</span> <span class="ident">utils::encode_ars</span>(<span class="ident">choice_ar_parameters</span>)<span class="question-mark">?</span>;
     <span class="comment">// Capacity for id_cred_sec, cmm_prf, (threshold, valid_to, created_at), tags</span>
     <span class="comment">// ar_scalars and cmm_attributes</span>
@@ -945,8 +945,8 @@
                 .<span class="ident">keys</span>()
                 .<span class="ident">chain</span>(<span class="ident">commitments</span>.<span class="ident">cmm_attributes</span>.<span class="ident">keys</span>()),
         ) {
-            <span class="prelude-val">Ok</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">v</span>,
-            <span class="prelude-val">Err</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Ok</span>(<span class="ident">v</span>) =&gt; <span class="ident">v</span>,
+            <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">None</span>,
         }
     };
 
@@ -961,11 +961,11 @@
     <span class="comment">// At this point we know all tags are distinct.</span>
 
     <span class="kw">let</span> <span class="ident">f</span> <span class="op">=</span> <span class="op">|</span><span class="ident">v</span>: <span class="ident">Either</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">AttributeType</span>, <span class="kw-2">&amp;</span><span class="ident">Commitment</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">v</span> {
-        <span class="ident">Either::Left</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="ident">Either::Left</span>(<span class="ident">v</span>) =&gt; {
             <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="ident">::new</span>(<span class="ident">v</span>.<span class="ident">to_field_element</span>());
             <span class="ident">comm_vec</span>.<span class="ident">push</span>(<span class="ident">commitment_key</span>.<span class="ident">hide</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="ident">zero</span>));
         }
-        <span class="ident">Either::Right</span>(<span class="ident">v</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="ident">Either::Right</span>(<span class="ident">v</span>) =&gt; {
             <span class="ident">comm_vec</span>.<span class="ident">push</span>(<span class="kw-2">*</span><span class="ident">v</span>);
         }
     };
@@ -1091,7 +1091,7 @@
         <span class="macro">assert_eq!</span>(<span class="ident">cdi_check</span>, <span class="prelude-val">Ok</span>(()));
 
         <span class="comment">// Testing with an existing RegId (i.e. an existing account)</span>
-        <span class="kw">let</span> <span class="ident">existing_reg_id</span> <span class="op">=</span> <span class="ident">AccountAddress::new</span>(<span class="kw-2">&amp;</span><span class="ident">cdi</span>.<span class="ident">values</span>.<span class="ident">cred_id</span>);
+        <span class="kw">let</span> <span class="ident">existing_reg_id</span> <span class="op">=</span> <span class="ident">account_address_from_registration_id</span>(<span class="kw-2">&amp;</span><span class="ident">cdi</span>.<span class="ident">values</span>.<span class="ident">cred_id</span>);
         <span class="kw">let</span> <span class="ident">cred_data</span> <span class="op">=</span> <span class="ident">CredentialData</span> {
             <span class="ident">keys</span>:      {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">keys</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
@@ -1193,7 +1193,7 @@
         <span class="macro">assert_eq!</span>(<span class="ident">cdi_check</span>, <span class="prelude-val">Ok</span>(()));
 
         <span class="comment">// Testing with an existing RegId (i.e. an existing account)</span>
-        <span class="kw">let</span> <span class="ident">existing_reg_id</span> <span class="op">=</span> <span class="ident">AccountAddress::new</span>(<span class="kw-2">&amp;</span><span class="ident">cdi</span>.<span class="ident">values</span>.<span class="ident">cred_id</span>);
+        <span class="kw">let</span> <span class="ident">existing_reg_id</span> <span class="op">=</span> <span class="ident">account_address_from_registration_id</span>(<span class="kw-2">&amp;</span><span class="ident">cdi</span>.<span class="ident">values</span>.<span class="ident">cred_id</span>);
         <span class="kw">let</span> <span class="ident">cred_data</span> <span class="op">=</span> <span class="ident">CredentialData</span> {
             <span class="ident">keys</span>:      {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">keys</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();

@@ -469,137 +469,137 @@
     <span class="kw">type</span> <span class="ident">Real</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FloatConst</span>;
 
     <span class="doccomment">/// Returns `true` if this value is `NaN` and false otherwise.</span>
-    <span class="kw">fn</span> <span class="ident">is_nan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_nan</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="doccomment">/// Returns `true` if this value is positive infinity or negative infinity and</span>
     <span class="doccomment">/// false otherwise.</span>
-    <span class="kw">fn</span> <span class="ident">is_infinite</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_infinite</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="doccomment">/// Returns `true` if this number is neither infinite nor `NaN`.</span>
-    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="doccomment">/// Returns `true` if the number is neither zero, infinite,</span>
     <span class="doccomment">/// [subnormal](http://en.wikipedia.org/wiki/Denormal_number), or `NaN`.</span>
-    <span class="kw">fn</span> <span class="ident">is_normal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_normal</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="doccomment">/// Take the reciprocal (inverse) of a number, `1/x`. See also [Complex::finv].</span>
-    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Raises `self` to a signed integer power.</span>
-    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">powi</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Raises `self` to a real power.</span>
-    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident"><span class="self">Self</span>::Real</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">powf</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident"><span class="self">Self</span>::Real</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Raises `self` to a complex power.</span>
-    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>) -&gt; <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Take the square root of a number.</span>
-    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns `e^(self)`, (the exponential function).</span>
-    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">exp</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns `2^(self)`.</span>
-    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">exp2</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns `base^(self)`.</span>
-    <span class="kw">fn</span> <span class="ident">expf</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">expf</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns the natural logarithm of the number.</span>
-    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">ln</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns the logarithm of the number with respect to an arbitrary base.</span>
-    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns the base 2 logarithm of the number.</span>
-    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">log2</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns the base 10 logarithm of the number.</span>
-    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">log10</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Take the cubic root of a number.</span>
-    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">cbrt</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Computes the sine of a number (in radians).</span>
-    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">sin</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Computes the cosine of a number (in radians).</span>
-    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">cos</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Computes the tangent of a number (in radians).</span>
-    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">tan</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Computes the arcsine of a number. Return value is in radians in</span>
     <span class="doccomment">/// the range [-pi/2, pi/2] or NaN if the number is outside the range</span>
     <span class="doccomment">/// [-1, 1].</span>
-    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">asin</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Computes the arccosine of a number. Return value is in radians in</span>
     <span class="doccomment">/// the range [0, pi] or NaN if the number is outside the range</span>
     <span class="doccomment">/// [-1, 1].</span>
-    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">acos</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Computes the arctangent of a number. Return value is in radians in the</span>
     <span class="doccomment">/// range [-pi/2, pi/2];</span>
-    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">atan</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Hyperbolic sine function.</span>
-    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">sinh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Hyperbolic cosine function.</span>
-    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">cosh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Hyperbolic tangent function.</span>
-    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">tanh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Inverse hyperbolic sine function.</span>
-    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">asinh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Inverse hyperbolic cosine function.</span>
-    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">acosh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Inverse hyperbolic tangent function.</span>
-    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">atanh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns the real part of the number.</span>
-    <span class="kw">fn</span> <span class="ident">re</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span>;
+    <span class="kw">fn</span> <span class="ident">re</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span>;
 
     <span class="doccomment">/// Returns the imaginary part of the number.</span>
-    <span class="kw">fn</span> <span class="ident">im</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span>;
+    <span class="kw">fn</span> <span class="ident">im</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span>;
 
     <span class="doccomment">/// Returns the absolute value of the number. See also [Complex::norm]</span>
-    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span>;
+    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span>;
 
     <span class="doccomment">/// Returns the L1 norm `|re| + |im|` -- the [Manhattan distance] from the origin.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [Manhattan distance]: https://en.wikipedia.org/wiki/Taxicab_geometry</span>
-    <span class="kw">fn</span> <span class="ident">l1_norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span>;
+    <span class="kw">fn</span> <span class="ident">l1_norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span>;
 
     <span class="doccomment">/// Computes the argument of the number.</span>
-    <span class="kw">fn</span> <span class="ident">arg</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span>;
+    <span class="kw">fn</span> <span class="ident">arg</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span>;
 
     <span class="doccomment">/// Computes the complex conjugate of the number.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Formula: `a+bi -&gt; a-bi`</span>
-    <span class="kw">fn</span> <span class="ident">conj</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">conj</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 }
 
 <span class="macro">macro_rules!</span> <span class="ident">forward</span> {
-    ($( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">base</span>:<span class="ident">ident</span> :: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>:<span class="ident">ident</span> ( <span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> )<span class="op">*</span> ) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ret</span>:<span class="ident">ty</span> ; )<span class="kw-2">*</span>)
-        <span class="op">=</span><span class="op">&gt;</span> {$(
+    ($( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">base</span>:<span class="ident">ident</span> :: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>:<span class="ident">ident</span> ( <span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> )<span class="op">*</span> ) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ret</span>:<span class="ident">ty</span> ; )<span class="kw-2">*</span>)
+        =&gt; {$(
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(<span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> )<span class="op">*</span> ) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ret</span> {
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(<span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> )<span class="op">*</span> ) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ret</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">base</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(<span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span> )<span class="op">*</span> )
             }
         )<span class="kw-2">*</span>};
 }
 
 <span class="macro">macro_rules!</span> <span class="ident">forward_ref</span> {
-    ($( <span class="self">Self</span> :: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>:<span class="ident">ident</span> ( <span class="op">&amp;</span> <span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> )<span class="op">*</span> ) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ret</span>:<span class="ident">ty</span> ; )<span class="kw-2">*</span>)
-        <span class="op">=</span><span class="op">&gt;</span> {$(
+    ($( <span class="self">Self</span> :: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>:<span class="ident">ident</span> ( <span class="op">&amp;</span> <span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span>:<span class="ident">ident</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ty</span> )<span class="op">*</span> ) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ret</span>:<span class="ident">ty</span> ; )<span class="kw-2">*</span>)
+        =&gt; {$(
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(<span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> )<span class="op">*</span> ) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ret</span> {
+            <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(<span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span> : <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span> )<span class="op">*</span> ) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ret</span> {
                 <span class="self">Self</span>::<span class="macro-nonterminal">$</span><span class="macro-nonterminal">method</span>(<span class="kw-2">&amp;</span><span class="self">self</span> $( , <span class="macro-nonterminal">$</span><span class="macro-nonterminal">arg</span> )<span class="op">*</span> )
             }
         )<span class="kw-2">*</span>};
@@ -611,19 +611,19 @@
 {
     <span class="kw">type</span> <span class="ident">Real</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">re</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span> {
+    <span class="kw">fn</span> <span class="ident">re</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span> {
         <span class="self">self</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">im</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span> {
+    <span class="kw">fn</span> <span class="ident">im</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span> {
         <span class="ident">T::zero</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">l1_norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span> {
+    <span class="kw">fn</span> <span class="ident">l1_norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span> {
         <span class="self">self</span>.<span class="ident">abs</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">arg</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span> {
+    <span class="kw">fn</span> <span class="ident">arg</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_nan</span>() {
             <span class="self">self</span>
         } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_sign_negative</span>() {
@@ -633,123 +633,123 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">powc</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>) -&gt; <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span> {
         <span class="ident">Complex::new</span>(<span class="self">self</span>, <span class="ident">T::zero</span>()).<span class="ident">powc</span>(<span class="ident">exp</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">conj</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">conj</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">expf</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">expf</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">base</span>.<span class="ident">powf</span>(<span class="self">self</span>)
     }
 
     <span class="macro">forward!</span> {
-        <span class="ident">Float::is_normal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-        <span class="ident">Float::is_infinite</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-        <span class="ident">Float::is_finite</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-        <span class="ident">Float::is_nan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
-        <span class="ident">Float::recip</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::powf</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::exp2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::ln</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::log2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::log10</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::tan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::asin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::acos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::atan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::sinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::cosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::tanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::asinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::acosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::atanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Float::abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+        <span class="ident">Float::is_normal</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+        <span class="ident">Float::is_infinite</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+        <span class="ident">Float::is_finite</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+        <span class="ident">Float::is_nan</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span>;
+        <span class="ident">Float::recip</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::powi</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::powf</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="self">Self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::sqrt</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::cbrt</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::exp</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::exp2</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::ln</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="self">Self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::log2</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::log10</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::sin</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::cos</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::tan</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::asin</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::acos</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::atan</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::sinh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::cosh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::tanh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::asinh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::acosh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::atanh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Float::abs</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Float</span> <span class="op">+</span> <span class="ident">FloatConst</span><span class="op">&gt;</span> <span class="ident">ComplexFloat</span> <span class="kw">for</span> <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Real</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">re</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span> {
+    <span class="kw">fn</span> <span class="ident">re</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span> {
         <span class="self">self</span>.<span class="ident">re</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">im</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span> {
+    <span class="kw">fn</span> <span class="ident">im</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span> {
         <span class="self">self</span>.<span class="ident">im</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span> {
+    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span> {
         <span class="self">self</span>.<span class="ident">norm</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">recip</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">finv</span>()
     }
 
     <span class="comment">// `Complex::l1_norm` uses `Signed::abs` to let it work</span>
     <span class="comment">// for integers too, but we can just use `Float::abs`.</span>
-    <span class="kw">fn</span> <span class="ident">l1_norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span> {
+    <span class="kw">fn</span> <span class="ident">l1_norm</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span> {
         <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">abs</span>() <span class="op">+</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">abs</span>()
     }
 
     <span class="comment">// `Complex::is_*` methods use `T: FloatCore`, but we</span>
     <span class="comment">// have `T: Float` that can do them as well.</span>
-    <span class="kw">fn</span> <span class="ident">is_nan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_nan</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">is_nan</span>() <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">is_nan</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_infinite</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_infinite</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="op">!</span><span class="self">self</span>.<span class="ident">is_nan</span>() <span class="op">&amp;&amp;</span> (<span class="self">self</span>.<span class="ident">re</span>.<span class="ident">is_infinite</span>() <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">is_infinite</span>())
     }
 
-    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_finite</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">is_finite</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">is_finite</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_normal</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_normal</span>(<span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">re</span>.<span class="ident">is_normal</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">im</span>.<span class="ident">is_normal</span>()
     }
 
     <span class="macro">forward!</span> {
-        <span class="ident">Complex::arg</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Real</span>;
-        <span class="ident">Complex::powc</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>;
-        <span class="ident">Complex::exp2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::log2</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::log10</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::powf</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident"><span class="self">Self</span>::Real</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::sqrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::cbrt</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::exp</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::expf</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::ln</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::sin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::cos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::tan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::asin</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::acos</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::atan</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::sinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::cosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::tanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::asinh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::acosh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident">Complex::atanh</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+        <span class="ident">Complex::arg</span>(<span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Real</span>;
+        <span class="ident">Complex::powc</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>) -&gt; <span class="ident">Complex</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Real</span><span class="op">&gt;</span>;
+        <span class="ident">Complex::exp2</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::log</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::log2</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::log10</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::powf</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident"><span class="self">Self</span>::Real</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::sqrt</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::cbrt</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::exp</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::expf</span>(<span class="self">self</span>, <span class="ident">base</span>: <span class="ident"><span class="self">Self</span>::Real</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::ln</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::sin</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::cos</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::tan</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::asin</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::acos</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::atan</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::sinh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::cosh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::tanh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::asinh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::acosh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident">Complex::atanh</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
     }
 
     <span class="macro">forward_ref!</span> {
-        <span class="ident"><span class="self">Self</span>::powi</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
-        <span class="ident"><span class="self">Self</span>::conj</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+        <span class="ident"><span class="self">Self</span>::powi</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">n</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span>;
+        <span class="ident"><span class="self">Self</span>::conj</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span>;
     }
 }
 
@@ -762,13 +762,13 @@
     };
     <span class="kw">use</span> <span class="ident">std::f64</span>; <span class="comment">// for constants before Rust 1.43.</span>
 
-    <span class="kw">fn</span> <span class="ident">closef</span>(<span class="ident">a</span>: <span class="ident">f64</span>, <span class="ident">b</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">closef</span>(<span class="ident">a</span>: <span class="ident">f64</span>, <span class="ident">b</span>: <span class="ident">f64</span>) -&gt; <span class="ident">bool</span> {
         <span class="ident">close_to_tolf</span>(<span class="ident">a</span>, <span class="ident">b</span>, <span class="number">1e-10</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">close_to_tolf</span>(<span class="ident">a</span>: <span class="ident">f64</span>, <span class="ident">b</span>: <span class="ident">f64</span>, <span class="ident">tol</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">close_to_tolf</span>(<span class="ident">a</span>: <span class="ident">f64</span>, <span class="ident">b</span>: <span class="ident">f64</span>, <span class="ident">tol</span>: <span class="ident">f64</span>) -&gt; <span class="ident">bool</span> {
         <span class="comment">// returns true if a and b are reasonably close</span>
-        <span class="kw">let</span> <span class="ident">close</span> <span class="op">=</span> (<span class="ident">a</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">a</span> <span class="op">-</span> <span class="ident">b</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">tol</span>;
+        <span class="kw">let</span> <span class="ident">close</span> <span class="op">=</span> (<span class="ident">a</span> <span class="op">==</span> <span class="ident">b</span>) <span class="op">|</span><span class="op">|</span> (<span class="ident">a</span> <span class="op">-</span> <span class="ident">b</span>).<span class="ident">abs</span>() <span class="op">&lt;</span> <span class="ident">tol</span>;
         <span class="kw">if</span> <span class="op">!</span><span class="ident">close</span> {
             <span class="macro">println!</span>(<span class="string">&quot;{:?} != {:?}&quot;</span>, <span class="ident">a</span>, <span class="ident">b</span>);
         }

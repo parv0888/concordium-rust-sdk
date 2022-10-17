@@ -191,7 +191,7 @@
 <span class="kw">fn</span> <span class="ident">collect_with_consumer</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">vec</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">len</span>: <span class="ident">usize</span>, <span class="ident">scope_fn</span>: <span class="ident">F</span>)
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Send</span>,
-    <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">CollectConsumer</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">CollectResult</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident">CollectConsumer</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="ident">CollectResult</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span>,
 {
     <span class="comment">// Reserve space for `len` more elements in the vector,</span>
     <span class="ident">vec</span>.<span class="ident">reserve</span>(<span class="ident">len</span>);
@@ -214,7 +214,7 @@
     <span class="comment">// should have seen `len` total writes.</span>
     <span class="kw">let</span> <span class="ident">actual_writes</span> <span class="op">=</span> <span class="ident">result</span>.<span class="ident">len</span>();
     <span class="macro">assert!</span>(
-        <span class="ident">actual_writes</span> <span class="op">=</span><span class="op">=</span> <span class="ident">len</span>,
+        <span class="ident">actual_writes</span> <span class="op">==</span> <span class="ident">len</span>,
         <span class="string">&quot;expected {} total writes, but got {}&quot;</span>,
         <span class="ident">len</span>,
         <span class="ident">actual_writes</span>

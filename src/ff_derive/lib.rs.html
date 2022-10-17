@@ -1080,7 +1080,7 @@
 <span class="kw">use</span> <span class="ident">std::str::FromStr</span>;
 
 <span class="attribute">#[<span class="ident">proc_macro_derive</span>(<span class="ident">PrimeField</span>, <span class="ident">attributes</span>(<span class="ident">PrimeFieldModulus</span>, <span class="ident">PrimeFieldGenerator</span>))]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prime_field</span>(<span class="ident">input</span>: <span class="ident">proc_macro::TokenStream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro::TokenStream</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prime_field</span>(<span class="ident">input</span>: <span class="ident">proc_macro::TokenStream</span>) -&gt; <span class="ident">proc_macro::TokenStream</span> {
     <span class="comment">// Parse the type definition</span>
     <span class="kw">let</span> <span class="ident">ast</span>: <span class="ident">syn::DeriveInput</span> <span class="op">=</span> <span class="ident">syn::parse</span>(<span class="ident">input</span>).<span class="ident">unwrap</span>();
 
@@ -1128,45 +1128,45 @@
 }
 
 <span class="doccomment">/// Fetches the ident being wrapped by the type we&#39;re deriving.</span>
-<span class="kw">fn</span> <span class="ident">fetch_wrapped_ident</span>(<span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Data</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn::Ident</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">fetch_wrapped_ident</span>(<span class="ident">body</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Data</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">syn::Ident</span><span class="op">&gt;</span> {
     <span class="kw">match</span> <span class="ident">body</span> {
-        <span class="kw-2">&amp;</span><span class="ident">syn::Data::Struct</span>(<span class="kw-2">ref</span> <span class="ident">variant_data</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">variant_data</span>.<span class="ident">fields</span> {
-            <span class="ident">syn::Fields::Unnamed</span>(<span class="kw-2">ref</span> <span class="ident">fields</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                <span class="kw">if</span> <span class="ident">fields</span>.<span class="ident">unnamed</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+        <span class="kw-2">&amp;</span><span class="ident">syn::Data::Struct</span>(<span class="kw-2">ref</span> <span class="ident">variant_data</span>) =&gt; <span class="kw">match</span> <span class="ident">variant_data</span>.<span class="ident">fields</span> {
+            <span class="ident">syn::Fields::Unnamed</span>(<span class="kw-2">ref</span> <span class="ident">fields</span>) =&gt; {
+                <span class="kw">if</span> <span class="ident">fields</span>.<span class="ident">unnamed</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> {
                     <span class="kw">match</span> <span class="ident">fields</span>.<span class="ident">unnamed</span>[<span class="number">0</span>].<span class="ident">ty</span> {
-                        <span class="ident">syn::Type::Path</span>(<span class="kw-2">ref</span> <span class="ident">path</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+                        <span class="ident">syn::Type::Path</span>(<span class="kw-2">ref</span> <span class="ident">path</span>) =&gt; {
+                            <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">path</span>.<span class="ident">segments</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> {
                                 <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">path</span>.<span class="ident">path</span>.<span class="ident">segments</span>[<span class="number">0</span>].<span class="ident">ident</span>.<span class="ident">clone</span>());
                             }
                         }
-                        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                        <span class="kw">_</span> =&gt; {}
                     }
                 }
             }
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+            <span class="kw">_</span> =&gt; {}
         },
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+        <span class="kw">_</span> =&gt; {}
     };
 
     <span class="prelude-val">None</span>
 }
 
 <span class="doccomment">/// Fetch an attribute string from the derived struct.</span>
-<span class="kw">fn</span> <span class="ident">fetch_attr</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">attrs</span>: <span class="kw-2">&amp;</span>[<span class="ident">syn::Attribute</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">fetch_attr</span>(<span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">attrs</span>: <span class="kw-2">&amp;</span>[<span class="ident">syn::Attribute</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">for</span> <span class="ident">attr</span> <span class="kw">in</span> <span class="ident">attrs</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">meta</span>) <span class="op">=</span> <span class="ident">attr</span>.<span class="ident">parse_meta</span>() {
             <span class="kw">match</span> <span class="ident">meta</span> {
-                <span class="ident">syn::Meta::NameValue</span>(<span class="ident">nv</span>) <span class="op">=</span><span class="op">&gt;</span> {
-                    <span class="kw">if</span> <span class="ident">nv</span>.<span class="ident">path</span>.<span class="ident">get_ident</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">i</span>.<span class="ident">to_string</span>()) <span class="op">=</span><span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>.<span class="ident">to_string</span>()) {
+                <span class="ident">syn::Meta::NameValue</span>(<span class="ident">nv</span>) =&gt; {
+                    <span class="kw">if</span> <span class="ident">nv</span>.<span class="ident">path</span>.<span class="ident">get_ident</span>().<span class="ident">map</span>(<span class="op">|</span><span class="ident">i</span><span class="op">|</span> <span class="ident">i</span>.<span class="ident">to_string</span>()) <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="ident">name</span>.<span class="ident">to_string</span>()) {
                         <span class="kw">match</span> <span class="ident">nv</span>.<span class="ident">lit</span> {
-                            <span class="ident">syn::Lit::Str</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">s</span>.<span class="ident">value</span>()),
-                            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">syn::Lit::Str</span>(<span class="kw-2">ref</span> <span class="ident">s</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">s</span>.<span class="ident">value</span>()),
+                            <span class="kw">_</span> =&gt; {
                                 <span class="macro">panic!</span>(<span class="string">&quot;attribute {} should be a string&quot;</span>, <span class="ident">name</span>);
                             }
                         }
                     }
                 }
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="kw">_</span> =&gt; {
                     <span class="macro">panic!</span>(<span class="string">&quot;attribute {} should be a string&quot;</span>, <span class="ident">name</span>);
                 }
             }
@@ -1177,14 +1177,14 @@
 }
 
 <span class="comment">// Implement PrimeFieldRepr for the wrapped ident `repr` with `limbs` limbs.</span>
-<span class="kw">fn</span> <span class="ident">prime_field_repr_impl</span>(<span class="ident">repr</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Ident</span>, <span class="ident">limbs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro2::TokenStream</span> {
+<span class="kw">fn</span> <span class="ident">prime_field_repr_impl</span>(<span class="ident">repr</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Ident</span>, <span class="ident">limbs</span>: <span class="ident">usize</span>) -&gt; <span class="ident">proc_macro2::TokenStream</span> {
     <span class="macro">quote!</span> {
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Default</span>)]</span>
         <span class="kw">pub</span> <span class="kw">struct</span> #<span class="ident">repr</span>(<span class="kw">pub</span> [<span class="ident">u64</span>; #<span class="ident">limbs</span>]);
 
         <span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> #<span class="ident">repr</span>
         {
-            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::fmt::Result</span> {
+            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
                 <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;0x&quot;</span>)<span class="question-mark">?</span>;
                 <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">rev</span>() {
                     <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{:016x}&quot;</span>, <span class="kw-2">*</span><span class="ident">i</span>)<span class="question-mark">?</span>;
@@ -1195,7 +1195,7 @@
         }
 
         <span class="kw">impl</span> <span class="ident">::std::fmt::Display</span> <span class="kw">for</span> #<span class="ident">repr</span> {
-            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::fmt::Result</span> {
+            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
                 <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;0x&quot;</span>)<span class="question-mark">?</span>;
                 <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">rev</span>() {
                     <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{:016x}&quot;</span>, <span class="kw-2">*</span><span class="ident">i</span>)<span class="question-mark">?</span>;
@@ -1207,21 +1207,21 @@
 
         <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u64</span>]<span class="op">&gt;</span> <span class="kw">for</span> #<span class="ident">repr</span> {
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u64</span>] {
+            <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u64</span>] {
                 <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
             }
         }
 
         <span class="kw">impl</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">u64</span>]<span class="op">&gt;</span> <span class="kw">for</span> #<span class="ident">repr</span> {
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u64</span>] {
+            <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u64</span>] {
                 <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>
             }
         }
 
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> #<span class="ident">repr</span> {
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> #<span class="ident">repr</span> {
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="ident">u64</span>) -&gt; #<span class="ident">repr</span> {
                 <span class="kw">use</span> <span class="ident">std::default::Default</span>;
 
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">repr</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::default</span>();
@@ -1232,7 +1232,7 @@
 
         <span class="kw">impl</span> <span class="ident">Ord</span> <span class="kw">for</span> #<span class="ident">repr</span> {
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">repr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::cmp::Ordering</span> {
+            <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">repr</span>) -&gt; <span class="ident">::std::cmp::Ordering</span> {
                 <span class="kw">for</span> (<span class="ident">a</span>, <span class="ident">b</span>) <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">rev</span>().<span class="ident">zip</span>(<span class="ident">other</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">rev</span>()) {
                     <span class="kw">if</span> <span class="ident">a</span> <span class="op">&lt;</span> <span class="ident">b</span> {
                         <span class="kw">return</span> <span class="ident">::std::cmp::Ordering::Less</span>
@@ -1247,25 +1247,25 @@
 
         <span class="kw">impl</span> <span class="ident">PartialOrd</span> <span class="kw">for</span> #<span class="ident">repr</span> {
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">repr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">::std::cmp::Ordering</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">repr</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">::std::cmp::Ordering</span><span class="op">&gt;</span> {
                 <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">cmp</span>(<span class="ident">other</span>))
             }
         }
 
         <span class="kw">impl</span> <span class="ident">::ff::PrimeFieldRepr</span> <span class="kw">for</span> #<span class="ident">repr</span> {
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">is_odd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-                <span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>] <span class="op">&amp;</span> <span class="number">1</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>
+            <span class="kw">fn</span> <span class="ident">is_odd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="number">0</span>[<span class="number">0</span>] <span class="op">&amp;</span> <span class="number">1</span> <span class="op">==</span> <span class="number">1</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">is_even</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_even</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
                 <span class="op">!</span><span class="self">self</span>.<span class="ident">is_odd</span>()
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-                <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>)
+            <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">e</span><span class="op">|</span> <span class="ident">e</span> <span class="op">==</span> <span class="number">0</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
@@ -1343,7 +1343,7 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">num_bits</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+            <span class="kw">fn</span> <span class="ident">num_bits</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ret</span> <span class="op">=</span> (#<span class="ident">limbs</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">*</span> <span class="number">64</span>;
                 <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">iter</span>().<span class="ident">rev</span>() {
                     <span class="kw">let</span> <span class="ident">leading</span> <span class="op">=</span> <span class="ident">i</span>.<span class="ident">leading_zeros</span>();
@@ -1378,7 +1378,7 @@
 }
 
 <span class="doccomment">/// Convert BigUint into a vector of 64-bit limbs.</span>
-<span class="kw">fn</span> <span class="ident">biguint_to_real_u64_vec</span>(<span class="kw-2">mut</span> <span class="ident">v</span>: <span class="ident">BigUint</span>, <span class="ident">limbs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">biguint_to_real_u64_vec</span>(<span class="kw-2">mut</span> <span class="ident">v</span>: <span class="ident">BigUint</span>, <span class="ident">limbs</span>: <span class="ident">usize</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">BigUint::one</span>() <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">64</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ret</span> <span class="op">=</span> <span class="macro">vec!</span>[];
 
@@ -1391,18 +1391,18 @@
         <span class="ident">ret</span>.<span class="ident">push</span>(<span class="number">0</span>);
     }
 
-    <span class="macro">assert!</span>(<span class="ident">ret</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">limbs</span>);
+    <span class="macro">assert!</span>(<span class="ident">ret</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="ident">limbs</span>);
 
     <span class="ident">ret</span>
 }
 
 <span class="doccomment">/// Convert BigUint into a tokenized vector of 64-bit limbs.</span>
-<span class="kw">fn</span> <span class="ident">biguint_to_u64_vec</span>(<span class="ident">v</span>: <span class="ident">BigUint</span>, <span class="ident">limbs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro2::TokenStream</span> {
+<span class="kw">fn</span> <span class="ident">biguint_to_u64_vec</span>(<span class="ident">v</span>: <span class="ident">BigUint</span>, <span class="ident">limbs</span>: <span class="ident">usize</span>) -&gt; <span class="ident">proc_macro2::TokenStream</span> {
     <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">biguint_to_real_u64_vec</span>(<span class="ident">v</span>, <span class="ident">limbs</span>);
     <span class="macro">quote!</span>([#(#<span class="ident">ret</span>,)<span class="kw-2">*</span>])
 }
 
-<span class="kw">fn</span> <span class="ident">biguint_num_bits</span>(<span class="kw-2">mut</span> <span class="ident">v</span>: <span class="ident">BigUint</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+<span class="kw">fn</span> <span class="ident">biguint_num_bits</span>(<span class="kw-2">mut</span> <span class="ident">v</span>: <span class="ident">BigUint</span>) -&gt; <span class="ident">u32</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bits</span> <span class="op">=</span> <span class="number">0</span>;
 
     <span class="kw">while</span> <span class="ident">v</span> <span class="op">!</span><span class="op">=</span> <span class="ident">BigUint::zero</span>() {
@@ -1414,7 +1414,7 @@
 }
 
 <span class="doccomment">/// BigUint modular exponentiation by square-and-multiply.</span>
-<span class="kw">fn</span> <span class="ident">exp</span>(<span class="ident">base</span>: <span class="ident">BigUint</span>, <span class="ident">exp</span>: <span class="kw-2">&amp;</span><span class="ident">BigUint</span>, <span class="ident">modulus</span>: <span class="kw-2">&amp;</span><span class="ident">BigUint</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BigUint</span> {
+<span class="kw">fn</span> <span class="ident">exp</span>(<span class="ident">base</span>: <span class="ident">BigUint</span>, <span class="ident">exp</span>: <span class="kw-2">&amp;</span><span class="ident">BigUint</span>, <span class="ident">modulus</span>: <span class="kw-2">&amp;</span><span class="ident">BigUint</span>) -&gt; <span class="ident">BigUint</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">BigUint::one</span>();
 
     <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">exp</span>
@@ -1455,7 +1455,7 @@
     <span class="ident">modulus</span>: <span class="ident">BigUint</span>,
     <span class="ident">limbs</span>: <span class="ident">usize</span>,
     <span class="ident">generator</span>: <span class="ident">BigUint</span>,
-) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">proc_macro2::TokenStream</span>, <span class="ident">proc_macro2::TokenStream</span>) {
+) -&gt; (<span class="ident">proc_macro2::TokenStream</span>, <span class="ident">proc_macro2::TokenStream</span>) {
     <span class="kw">let</span> <span class="ident">modulus_num_bits</span> <span class="op">=</span> <span class="ident">biguint_num_bits</span>(<span class="ident">modulus</span>.<span class="ident">clone</span>());
 
     <span class="comment">// The number of bits we should &quot;shave&quot; from a randomly sampled reputation, i.e.,</span>
@@ -1485,12 +1485,12 @@
     <span class="kw">let</span> <span class="ident">mod_minus_1_over_2</span> <span class="op">=</span>
         <span class="ident">biguint_to_u64_vec</span>((<span class="kw-2">&amp;</span><span class="ident">modulus</span> <span class="op">-</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;1&quot;</span>).<span class="ident">unwrap</span>()) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>, <span class="ident">limbs</span>);
     <span class="kw">let</span> <span class="ident">legendre_impl</span> <span class="op">=</span> <span class="macro">quote!</span> {
-        <span class="kw">fn</span> <span class="ident">legendre</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::ff::LegendreSymbol</span> {
+        <span class="kw">fn</span> <span class="ident">legendre</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">::ff::LegendreSymbol</span> {
             <span class="comment">// s = self^((modulus - 1) // 2)</span>
             <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pow</span>(#<span class="ident">mod_minus_1_over_2</span>);
-            <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="ident"><span class="self">Self</span>::zero</span>() {
+            <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="ident"><span class="self">Self</span>::zero</span>() {
                 <span class="ident">::ff::LegendreSymbol::Zero</span>
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="ident"><span class="self">Self</span>::one</span>() {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="ident"><span class="self">Self</span>::one</span>() {
                 <span class="ident">::ff::LegendreSymbol::QuadraticResidue</span>
             } <span class="kw">else</span> {
                 <span class="ident">::ff::LegendreSymbol::QuadraticNonResidue</span>
@@ -1499,7 +1499,7 @@
     };
 
     <span class="kw">let</span> <span class="ident">sqrt_impl</span> <span class="op">=</span>
-        <span class="kw">if</span> (<span class="kw-2">&amp;</span><span class="ident">modulus</span> <span class="op">%</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;4&quot;</span>).<span class="ident">unwrap</span>()) <span class="op">=</span><span class="op">=</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;3&quot;</span>).<span class="ident">unwrap</span>() {
+        <span class="kw">if</span> (<span class="kw-2">&amp;</span><span class="ident">modulus</span> <span class="op">%</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;4&quot;</span>).<span class="ident">unwrap</span>()) <span class="op">==</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;3&quot;</span>).<span class="ident">unwrap</span>() {
             <span class="kw">let</span> <span class="ident">mod_minus_3_over_4</span> <span class="op">=</span>
                 <span class="ident">biguint_to_u64_vec</span>((<span class="kw-2">&amp;</span><span class="ident">modulus</span> <span class="op">-</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;3&quot;</span>).<span class="ident">unwrap</span>()) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">2</span>, <span class="ident">limbs</span>);
 
@@ -1510,7 +1510,7 @@
                 <span class="kw">impl</span> <span class="ident">::ff::SqrtField</span> <span class="kw">for</span> #<span class="ident">name</span> {
                     #<span class="ident">legendre_impl</span>
 
-                    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+                    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
                         <span class="comment">// Shank&#39;s algorithm for q mod 4 = 3</span>
                         <span class="comment">// https://eprint.iacr.org/2012/685.pdf (page 9, algorithm 2)</span>
 
@@ -1520,7 +1520,7 @@
                         <span class="ident">a0</span>.<span class="ident">square</span>();
                         <span class="ident">a0</span>.<span class="ident">mul_assign</span>(<span class="self">self</span>);
 
-                        <span class="kw">if</span> <span class="ident">a0</span>.<span class="number">0</span> <span class="op">=</span><span class="op">=</span> #<span class="ident">repr</span>(#<span class="ident">rneg</span>) {
+                        <span class="kw">if</span> <span class="ident">a0</span>.<span class="number">0</span> <span class="op">==</span> #<span class="ident">repr</span>(#<span class="ident">rneg</span>) {
                             <span class="prelude-val">None</span>
                         } <span class="kw">else</span> {
                             <span class="ident">a1</span>.<span class="ident">mul_assign</span>(<span class="self">self</span>);
@@ -1529,7 +1529,7 @@
                     }
                 }
             }
-        } <span class="kw">else</span> <span class="kw">if</span> (<span class="kw-2">&amp;</span><span class="ident">modulus</span> <span class="op">%</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;16&quot;</span>).<span class="ident">unwrap</span>()) <span class="op">=</span><span class="op">=</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;1&quot;</span>).<span class="ident">unwrap</span>() {
+        } <span class="kw">else</span> <span class="kw">if</span> (<span class="kw-2">&amp;</span><span class="ident">modulus</span> <span class="op">%</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;16&quot;</span>).<span class="ident">unwrap</span>()) <span class="op">==</span> <span class="ident">BigUint::from_str</span>(<span class="string">&quot;1&quot;</span>).<span class="ident">unwrap</span>() {
             <span class="kw">let</span> <span class="ident">t_plus_1_over_2</span> <span class="op">=</span> <span class="ident">biguint_to_u64_vec</span>((<span class="kw-2">&amp;</span><span class="ident">t</span> <span class="op">+</span> <span class="ident">BigUint::one</span>()) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>, <span class="ident">limbs</span>);
             <span class="kw">let</span> <span class="ident">t</span> <span class="op">=</span> <span class="ident">biguint_to_u64_vec</span>(<span class="ident">t</span>.<span class="ident">clone</span>(), <span class="ident">limbs</span>);
 
@@ -1537,14 +1537,14 @@
                 <span class="kw">impl</span> <span class="ident">::ff::SqrtField</span> <span class="kw">for</span> #<span class="ident">name</span> {
                     #<span class="ident">legendre_impl</span>
 
-                    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+                    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
                         <span class="comment">// Tonelli-Shank&#39;s algorithm for q mod 16 = 1</span>
                         <span class="comment">// https://eprint.iacr.org/2012/685.pdf (page 12, algorithm 5)</span>
 
                         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">legendre</span>() {
-                            <span class="ident">::ff::LegendreSymbol::Zero</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="self">self</span>),
-                            <span class="ident">::ff::LegendreSymbol::QuadraticNonResidue</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">None</span>,
-                            <span class="ident">::ff::LegendreSymbol::QuadraticResidue</span> <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">::ff::LegendreSymbol::Zero</span> =&gt; <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="self">self</span>),
+                            <span class="ident">::ff::LegendreSymbol::QuadraticNonResidue</span> =&gt; <span class="prelude-val">None</span>,
+                            <span class="ident">::ff::LegendreSymbol::QuadraticResidue</span> =&gt; {
                                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">c</span> <span class="op">=</span> #<span class="ident">name</span>(<span class="ident">ROOT_OF_UNITY</span>);
                                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pow</span>(#<span class="ident">t_plus_1_over_2</span>);
                                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">pow</span>(#<span class="ident">t</span>);
@@ -1556,7 +1556,7 @@
                                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">t2i</span> <span class="op">=</span> <span class="ident">t</span>;
                                         <span class="ident">t2i</span>.<span class="ident">square</span>();
                                         <span class="kw">loop</span> {
-                                            <span class="kw">if</span> <span class="ident">t2i</span> <span class="op">=</span><span class="op">=</span> <span class="ident"><span class="self">Self</span>::one</span>() {
+                                            <span class="kw">if</span> <span class="ident">t2i</span> <span class="op">==</span> <span class="ident"><span class="self">Self</span>::one</span>() {
                                                 <span class="kw">break</span>;
                                             }
                                             <span class="ident">t2i</span>.<span class="ident">square</span>();
@@ -1637,9 +1637,9 @@
     <span class="ident">name</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Ident</span>,
     <span class="ident">repr</span>: <span class="kw-2">&amp;</span><span class="ident">syn::Ident</span>,
     <span class="ident">limbs</span>: <span class="ident">usize</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro2::TokenStream</span> {
+) -&gt; <span class="ident">proc_macro2::TokenStream</span> {
     <span class="comment">// Returns r{n} as an ident.</span>
-    <span class="kw">fn</span> <span class="ident">get_temp</span>(<span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn::Ident</span> {
+    <span class="kw">fn</span> <span class="ident">get_temp</span>(<span class="ident">n</span>: <span class="ident">usize</span>) -&gt; <span class="ident">syn::Ident</span> {
         <span class="ident">syn::Ident::new</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;r{}&quot;</span>, <span class="ident">n</span>), <span class="ident">proc_macro2::Span::call_site</span>())
     }
 
@@ -1658,7 +1658,7 @@
     );
 
     <span class="comment">// Implement montgomery reduction for some number of limbs</span>
-    <span class="kw">fn</span> <span class="ident">mont_impl</span>(<span class="ident">limbs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro2::TokenStream</span> {
+    <span class="kw">fn</span> <span class="ident">mont_impl</span>(<span class="ident">limbs</span>: <span class="ident">usize</span>) -&gt; <span class="ident">proc_macro2::TokenStream</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">gen</span> <span class="op">=</span> <span class="ident">proc_macro2::TokenStream::new</span>();
 
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">limbs</span> {
@@ -1680,7 +1680,7 @@
 
             <span class="kw">let</span> <span class="ident">temp</span> <span class="op">=</span> <span class="ident">get_temp</span>(<span class="ident">i</span> <span class="op">+</span> <span class="ident">limbs</span>);
 
-            <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="ident">gen</span>.<span class="ident">extend</span>(<span class="macro">quote!</span> {
                     #<span class="ident">temp</span> <span class="op">=</span> <span class="ident">::ff::adc</span>(#<span class="ident">temp</span>, <span class="number">0</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">carry</span>);
                 });
@@ -1708,7 +1708,7 @@
         <span class="ident">gen</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">sqr_impl</span>(<span class="ident">a</span>: <span class="ident">proc_macro2::TokenStream</span>, <span class="ident">limbs</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro2::TokenStream</span> {
+    <span class="kw">fn</span> <span class="ident">sqr_impl</span>(<span class="ident">a</span>: <span class="ident">proc_macro2::TokenStream</span>, <span class="ident">limbs</span>: <span class="ident">usize</span>) -&gt; <span class="ident">proc_macro2::TokenStream</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">gen</span> <span class="op">=</span> <span class="ident">proc_macro2::TokenStream::new</span>();
 
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..(<span class="ident">limbs</span> <span class="op">-</span> <span class="number">1</span>) {
@@ -1718,7 +1718,7 @@
 
             <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> (<span class="ident">i</span> <span class="op">+</span> <span class="number">1</span>)..<span class="ident">limbs</span> {
                 <span class="kw">let</span> <span class="ident">temp</span> <span class="op">=</span> <span class="ident">get_temp</span>(<span class="ident">i</span> <span class="op">+</span> <span class="ident">j</span>);
-                <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">0</span> {
                     <span class="ident">gen</span>.<span class="ident">extend</span>(<span class="macro">quote!</span> {
                         <span class="kw">let</span> #<span class="ident">temp</span> <span class="op">=</span> <span class="ident">::ff::mac_with_carry</span>(<span class="number">0</span>, (#<span class="ident">a</span>.<span class="number">0</span>).<span class="number">0</span>[#<span class="ident">i</span>], (#<span class="ident">a</span>.<span class="number">0</span>).<span class="number">0</span>[#<span class="ident">j</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">carry</span>);
                     });
@@ -1740,11 +1740,11 @@
             <span class="kw">let</span> <span class="ident">temp0</span> <span class="op">=</span> <span class="ident">get_temp</span>(<span class="ident">limbs</span> <span class="op">*</span> <span class="number">2</span> <span class="op">-</span> <span class="ident">i</span>);
             <span class="kw">let</span> <span class="ident">temp1</span> <span class="op">=</span> <span class="ident">get_temp</span>(<span class="ident">limbs</span> <span class="op">*</span> <span class="number">2</span> <span class="op">-</span> <span class="ident">i</span> <span class="op">-</span> <span class="number">1</span>);
 
-            <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+            <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">1</span> {
                 <span class="ident">gen</span>.<span class="ident">extend</span>(<span class="macro">quote!</span> {
                     <span class="kw">let</span> #<span class="ident">temp0</span> <span class="op">=</span> #<span class="ident">temp1</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">63</span>;
                 });
-            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> (<span class="ident">limbs</span> <span class="op">*</span> <span class="number">2</span> <span class="op">-</span> <span class="number">1</span>) {
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> (<span class="ident">limbs</span> <span class="op">*</span> <span class="number">2</span> <span class="op">-</span> <span class="number">1</span>) {
                 <span class="ident">gen</span>.<span class="ident">extend</span>(<span class="macro">quote!</span> {
                     <span class="kw">let</span> #<span class="ident">temp0</span> <span class="op">=</span> #<span class="ident">temp0</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>;
                 });
@@ -1762,7 +1762,7 @@
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">limbs</span> {
             <span class="kw">let</span> <span class="ident">temp0</span> <span class="op">=</span> <span class="ident">get_temp</span>(<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span>);
             <span class="kw">let</span> <span class="ident">temp1</span> <span class="op">=</span> <span class="ident">get_temp</span>(<span class="ident">i</span> <span class="op">*</span> <span class="number">2</span> <span class="op">+</span> <span class="number">1</span>);
-            <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="ident">gen</span>.<span class="ident">extend</span>(<span class="macro">quote!</span> {
                     <span class="kw">let</span> #<span class="ident">temp0</span> <span class="op">=</span> <span class="ident">::ff::mac_with_carry</span>(<span class="number">0</span>, (#<span class="ident">a</span>.<span class="number">0</span>).<span class="number">0</span>[#<span class="ident">i</span>], (#<span class="ident">a</span>.<span class="number">0</span>).<span class="number">0</span>[#<span class="ident">i</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">carry</span>);
                 });
@@ -1794,7 +1794,7 @@
         <span class="ident">a</span>: <span class="ident">proc_macro2::TokenStream</span>,
         <span class="ident">b</span>: <span class="ident">proc_macro2::TokenStream</span>,
         <span class="ident">limbs</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro2::TokenStream</span> {
+    ) -&gt; <span class="ident">proc_macro2::TokenStream</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">gen</span> <span class="op">=</span> <span class="ident">proc_macro2::TokenStream::new</span>();
 
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">limbs</span> {
@@ -1805,7 +1805,7 @@
             <span class="kw">for</span> <span class="ident">j</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">limbs</span> {
                 <span class="kw">let</span> <span class="ident">temp</span> <span class="op">=</span> <span class="ident">get_temp</span>(<span class="ident">i</span> <span class="op">+</span> <span class="ident">j</span>);
 
-                <span class="kw">if</span> <span class="ident">i</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">i</span> <span class="op">==</span> <span class="number">0</span> {
                     <span class="ident">gen</span>.<span class="ident">extend</span>(<span class="macro">quote!</span> {
                         <span class="kw">let</span> #<span class="ident">temp</span> <span class="op">=</span> <span class="ident">::ff::mac_with_carry</span>(<span class="number">0</span>, (#<span class="ident">a</span>.<span class="number">0</span>).<span class="number">0</span>[#<span class="ident">i</span>], (#<span class="ident">b</span>.<span class="number">0</span>).<span class="number">0</span>[#<span class="ident">j</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">carry</span>);
                     });
@@ -1855,14 +1855,14 @@
         <span class="kw">impl</span> <span class="ident">::std::marker::Copy</span> <span class="kw">for</span> #<span class="ident">name</span> { }
 
         <span class="kw">impl</span> <span class="ident">::std::clone::Clone</span> <span class="kw">for</span> #<span class="ident">name</span> {
-            <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> #<span class="ident">name</span> {
+            <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #<span class="ident">name</span> {
                 <span class="kw-2">*</span><span class="self">self</span>
             }
         }
 
         <span class="kw">impl</span> <span class="ident">::std::cmp::PartialEq</span> <span class="kw">for</span> #<span class="ident">name</span> {
-            <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">name</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-                <span class="self">self</span>.<span class="number">0</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="number">0</span>
+            <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">name</span>) -&gt; <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="number">0</span> <span class="op">==</span> <span class="ident">other</span>.<span class="number">0</span>
             }
         }
 
@@ -1870,7 +1870,7 @@
 
         <span class="kw">impl</span> <span class="ident">::std::fmt::Debug</span> <span class="kw">for</span> #<span class="ident">name</span>
         {
-            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::fmt::Result</span> {
+            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
                 <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}({:?})&quot;</span>, <span class="macro">stringify!</span>(#<span class="ident">name</span>), <span class="self">self</span>.<span class="ident">into_repr</span>())
             }
         }
@@ -1878,26 +1878,26 @@
         <span class="doccomment">/// Elements are ordered lexicographically.</span>
         <span class="kw">impl</span> <span class="ident">Ord</span> <span class="kw">for</span> #<span class="ident">name</span> {
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">name</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::cmp::Ordering</span> {
+            <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">name</span>) -&gt; <span class="ident">::std::cmp::Ordering</span> {
                 <span class="self">self</span>.<span class="ident">into_repr</span>().<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">into_repr</span>())
             }
         }
 
         <span class="kw">impl</span> <span class="ident">PartialOrd</span> <span class="kw">for</span> #<span class="ident">name</span> {
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">name</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">::std::cmp::Ordering</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span>#<span class="ident">name</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">::std::cmp::Ordering</span><span class="op">&gt;</span> {
                 <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">cmp</span>(<span class="ident">other</span>))
             }
         }
 
         <span class="kw">impl</span> <span class="ident">::std::fmt::Display</span> <span class="kw">for</span> #<span class="ident">name</span> {
-            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::fmt::Result</span> {
+            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
                 <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}({})&quot;</span>, <span class="macro">stringify!</span>(#<span class="ident">name</span>), <span class="self">self</span>.<span class="ident">into_repr</span>())
             }
         }
 
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span>#<span class="ident">name</span><span class="op">&gt;</span> <span class="kw">for</span> #<span class="ident">repr</span> {
-            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: #<span class="ident">name</span>) <span class="op">-</span><span class="op">&gt;</span> #<span class="ident">repr</span> {
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">e</span>: #<span class="ident">name</span>) -&gt; #<span class="ident">repr</span> {
                 <span class="ident">e</span>.<span class="ident">into_repr</span>()
             }
         }
@@ -1905,7 +1905,7 @@
         <span class="kw">impl</span> <span class="ident">::ff::PrimeField</span> <span class="kw">for</span> #<span class="ident">name</span> {
             <span class="kw">type</span> <span class="ident">Repr</span> <span class="op">=</span> #<span class="ident">repr</span>;
 
-            <span class="kw">fn</span> <span class="ident">from_repr</span>(<span class="ident">r</span>: #<span class="ident">repr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>#<span class="ident">name</span>, <span class="ident">PrimeFieldDecodingError</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">from_repr</span>(<span class="ident">r</span>: #<span class="ident">repr</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>#<span class="ident">name</span>, <span class="ident">PrimeFieldDecodingError</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> #<span class="ident">name</span>(<span class="ident">r</span>);
                 <span class="kw">if</span> <span class="ident">r</span>.<span class="ident">is_valid</span>() {
                     <span class="ident">r</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span>#<span class="ident">name</span>(<span class="ident">R2</span>));
@@ -1916,7 +1916,7 @@
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">into_repr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> #<span class="ident">repr</span> {
+            <span class="kw">fn</span> <span class="ident">into_repr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; #<span class="ident">repr</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
                 <span class="ident">r</span>.<span class="ident">mont_reduce</span>(
                     #<span class="ident">into_repr_params</span>
@@ -1925,7 +1925,7 @@
                 <span class="ident">r</span>.<span class="number">0</span>
             }
 
-            <span class="kw">fn</span> <span class="ident">char</span>() <span class="op">-</span><span class="op">&gt;</span> #<span class="ident">repr</span> {
+            <span class="kw">fn</span> <span class="ident">char</span>() -&gt; #<span class="ident">repr</span> {
                 <span class="ident">MODULUS</span>
             }
 
@@ -1933,20 +1933,20 @@
 
             <span class="kw">const</span> <span class="ident">CAPACITY</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::NUM_BITS</span> <span class="op">-</span> <span class="number">1</span>;
 
-            <span class="kw">fn</span> <span class="ident">multiplicative_generator</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">multiplicative_generator</span>() -&gt; <span class="self">Self</span> {
                 #<span class="ident">name</span>(<span class="ident">GENERATOR</span>)
             }
 
             <span class="kw">const</span> <span class="ident">S</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">S</span>;
 
-            <span class="kw">fn</span> <span class="ident">root_of_unity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">root_of_unity</span>() -&gt; <span class="self">Self</span> {
                 #<span class="ident">name</span>(<span class="ident">ROOT_OF_UNITY</span>)
             }
         }
 
         <span class="kw">impl</span> <span class="ident">::ff::Field</span> <span class="kw">for</span> #<span class="ident">name</span> {
             <span class="doccomment">/// Computes a uniformly random element using rejection sampling.</span>
-            <span class="kw">fn</span> <span class="ident">random</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">::rand_core::RngCore</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">std::marker::Sized</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">random</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">::rand_core::RngCore</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">std::marker::Sized</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="self">Self</span> {
                 <span class="kw">loop</span> {
                     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">tmp</span> <span class="op">=</span> {
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">repr</span> <span class="op">=</span> [<span class="number">0u64</span>; #<span class="ident">limbs</span>];
@@ -1966,17 +1966,17 @@
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">zero</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">zero</span>() -&gt; <span class="self">Self</span> {
                 #<span class="ident">name</span>(#<span class="ident">repr::from</span>(<span class="number">0</span>))
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">one</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">one</span>() -&gt; <span class="self">Self</span> {
                 #<span class="ident">name</span>(<span class="ident">R</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
                 <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_zero</span>()
             }
 
@@ -2017,7 +2017,7 @@
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
                     <span class="prelude-val">None</span>
                 } <span class="kw">else</span> {
@@ -2064,7 +2064,7 @@
                         }
                     }
 
-                    <span class="kw">if</span> <span class="ident">u</span> <span class="op">=</span><span class="op">=</span> <span class="ident">one</span> {
+                    <span class="kw">if</span> <span class="ident">u</span> <span class="op">==</span> <span class="ident">one</span> {
                         <span class="prelude-val">Some</span>(<span class="ident">b</span>)
                     } <span class="kw">else</span> {
                         <span class="prelude-val">Some</span>(<span class="ident">c</span>)
@@ -2094,7 +2094,7 @@
             <span class="doccomment">/// Determines if the element is really in the field. This is only used</span>
             <span class="doccomment">/// internally.</span>
             <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-            <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_valid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
                 <span class="self">self</span>.<span class="number">0</span> <span class="op">&lt;</span> <span class="ident">MODULUS</span>
             }
 

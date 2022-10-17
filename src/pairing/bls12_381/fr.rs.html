@@ -1041,7 +1041,7 @@
 <span class="kw">fn</span> <span class="ident">test_fr_repr_ordering</span>() {
     <span class="kw">fn</span> <span class="ident">assert_equality</span>(<span class="ident">a</span>: <span class="ident">FrRepr</span>, <span class="ident">b</span>: <span class="ident">FrRepr</span>) {
         <span class="macro">assert_eq!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
-        <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">::std::cmp::Ordering::Equal</span>);
+        <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="op">==</span> <span class="ident">::std::cmp::Ordering::Equal</span>);
     }
 
     <span class="kw">fn</span> <span class="ident">assert_lt</span>(<span class="ident">a</span>: <span class="ident">FrRepr</span>, <span class="ident">b</span>: <span class="ident">FrRepr</span>) {
@@ -1244,7 +1244,7 @@
         <span class="number">0x298a30c744b31acf</span>,
     ]));
     <span class="macro">assert!</span>(
-        <span class="ident">t</span> <span class="op">=</span><span class="op">=</span> <span class="ident">FrRepr</span>([
+        <span class="ident">t</span> <span class="op">==</span> <span class="ident">FrRepr</span>([
             <span class="number">0xb813415048991c1f</span>,
             <span class="number">0x10ad07ae88725d92</span>,
             <span class="number">0x5a7b851271759961</span>,
@@ -1661,7 +1661,7 @@
         <span class="number">0x5ae3f03b561a841d</span>,
     ])));
     <span class="macro">assert!</span>(
-        <span class="ident">tmp</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Fr</span>(<span class="ident">FrRepr</span>([
+        <span class="ident">tmp</span> <span class="op">==</span> <span class="ident">Fr</span>(<span class="ident">FrRepr</span>([
             <span class="number">0x23717213ce710f71</span>,
             <span class="number">0xdbee1fe53a16e1af</span>,
             <span class="number">0xf565d3e1c2a48000</span>,
@@ -1865,7 +1865,7 @@
 
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">sqrt</span>().<span class="ident">unwrap</span>();
 
-        <span class="macro">assert!</span>(<span class="ident">a</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b</span> <span class="op">|</span><span class="op">|</span> <span class="ident">nega</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b</span>);
+        <span class="macro">assert!</span>(<span class="ident">a</span> <span class="op">==</span> <span class="ident">b</span> <span class="op">|</span><span class="op">|</span> <span class="ident">nega</span> <span class="op">==</span> <span class="ident">b</span>);
     }
 
     <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">1000</span> {

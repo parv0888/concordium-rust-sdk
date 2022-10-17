@@ -206,16 +206,26 @@
 <span id="206">206</span>
 <span id="207">207</span>
 <span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">SerdeDeserialize</span>, <span class="ident">SerdeSerialize</span>};
-<span class="kw">use</span> <span class="ident">aes::Aes256</span>;
-<span class="kw">use</span> <span class="ident">block_modes</span>::{<span class="ident">block_padding::Pkcs7</span>, <span class="ident">BlockMode</span>, <span class="ident">Cbc</span>};
+<span class="kw">use</span> <span class="ident">aes</span>::{
+    <span class="ident">cipher</span>::{<span class="ident">block_padding::Pkcs7</span>, <span class="ident">BlockDecryptMut</span>, <span class="ident">BlockEncryptMut</span>, <span class="ident">KeyIvInit</span>},
+    <span class="ident">Aes256</span>,
+};
 <span class="kw">use</span> <span class="ident">hmac::Hmac</span>;
 <span class="kw">use</span> <span class="ident">rand::Rng</span>;
 <span class="kw">use</span> <span class="ident">serde</span>::{<span class="ident">Deserializer</span>, <span class="ident">Serializer</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">convert::TryInto</span>, <span class="ident">str::FromStr</span>};
 <span class="kw">use</span> <span class="ident">thiserror::Error</span>;
 
-<span class="kw">type</span> <span class="ident">Cipher</span> <span class="op">=</span> <span class="ident">Cbc</span><span class="op">&lt;</span><span class="ident">Aes256</span>, <span class="ident">Pkcs7</span><span class="op">&gt;</span>;
+<span class="comment">// Encryption</span>
+<span class="kw">type</span> <span class="ident">CipherC</span> <span class="op">=</span> <span class="ident">cbc::Encryptor</span><span class="op">&lt;</span><span class="ident">Aes256</span><span class="op">&gt;</span>;
+<span class="comment">// Decryption</span>
+<span class="kw">type</span> <span class="ident">CipherD</span> <span class="op">=</span> <span class="ident">cbc::Decryptor</span><span class="op">&lt;</span><span class="ident">Aes256</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// AES block size in bytes</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">AES_BLOCK_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">16</span>;
@@ -226,23 +236,23 @@
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Password</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">password</span>: <span class="ident">String</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident">Password</span> { <span class="ident">password</span> } }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">password</span>: <span class="ident">String</span>) -&gt; <span class="self">Self</span> { <span class="ident">Password</span> { <span class="ident">password</span> } }
 }
 
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Password</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="op">&lt;</span><span class="ident">String</span> <span class="kw">as</span> <span class="ident">FromStr</span><span class="op">&gt;</span><span class="ident">::Err</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> { <span class="prelude-val">Ok</span>(<span class="ident">Password</span> { <span class="ident">password</span>: <span class="ident">s</span>.<span class="ident">into</span>() }) }
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> { <span class="prelude-val">Ok</span>(<span class="ident">Password</span> { <span class="ident">password</span>: <span class="ident">s</span>.<span class="ident">into</span>() }) }
 }
 
 <span class="comment">// Helpers for JSON serialization in base64 standard format.</span>
-<span class="kw">fn</span> <span class="ident">as_base64</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
+<span class="kw">fn</span> <span class="ident">as_base64</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="ident">S</span><span class="op">&gt;</span>(<span class="ident">key</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>, <span class="ident">serializer</span>: <span class="ident">S</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">S::Ok</span>, <span class="ident">S::Error</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">S</span>: <span class="ident">Serializer</span>, {
     <span class="ident">serializer</span>.<span class="ident">serialize_str</span>(<span class="kw-2">&amp;</span><span class="ident">base64::encode</span>(<span class="ident">key</span>.<span class="ident">as_ref</span>()))
 }
 
-<span class="kw">fn</span> <span class="ident">from_base64</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>, <span class="ident">X</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">des</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">X</span>, <span class="ident">D::Error</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">from_base64</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span>, <span class="ident">X</span>: <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">des</span>: <span class="ident">D</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">X</span>, <span class="ident">D::Error</span><span class="op">&gt;</span> {
     <span class="kw">use</span> <span class="ident">serde::de::Error</span>;
     <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">String::deserialize</span>(<span class="ident">des</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">decoded</span> <span class="op">=</span> <span class="ident">base64::decode</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="ident">err</span><span class="op">|</span> <span class="ident">Error::custom</span>(<span class="ident">err</span>.<span class="ident">to_string</span>()))<span class="question-mark">?</span>;
@@ -250,7 +260,7 @@
 }
 
 <span class="doccomment">/// This is needed before Rust 1.48 due to lacking TryFrom instances for Vec.</span>
-<span class="kw">fn</span> <span class="ident">from_base64_array</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">des</span>: <span class="ident">D</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>[<span class="ident">u8</span>; <span class="ident">AES_BLOCK_SIZE</span>], <span class="ident">D::Error</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">from_base64_array</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span>, <span class="ident">D</span>: <span class="ident">Deserializer</span><span class="op">&lt;</span><span class="lifetime">&#39;de</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">des</span>: <span class="ident">D</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>[<span class="ident">u8</span>; <span class="ident">AES_BLOCK_SIZE</span>], <span class="ident">D::Error</span><span class="op">&gt;</span> {
     <span class="kw">use</span> <span class="ident">serde::de::Error</span>;
     <span class="kw">let</span> <span class="ident">data</span>: <span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">from_base64</span>(<span class="ident">des</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">arr</span>: <span class="ident">Box</span><span class="op">&lt;</span>[<span class="ident">u8</span>; <span class="ident">AES_BLOCK_SIZE</span>]<span class="op">&gt;</span> <span class="op">=</span> <span class="ident">data</span>
@@ -335,7 +345,7 @@
     <span class="ident">pass</span>: <span class="kw-2">&amp;</span><span class="ident">Password</span>,
     <span class="ident">plaintext</span>: <span class="kw-2">&amp;</span><span class="ident">A</span>,
     <span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EncryptedData</span> {
+) -&gt; <span class="ident">EncryptedData</span> {
     <span class="comment">// Derive the key for AES.</span>
     <span class="comment">// The key will be 256 bits, we are using sha256.</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">key</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">32</span>];
@@ -349,9 +359,9 @@
     <span class="comment">// bits (16 bytes)</span>
     <span class="kw">let</span> <span class="ident">initialization_vector</span>: [<span class="ident">u8</span>; <span class="ident">AES_BLOCK_SIZE</span>] <span class="op">=</span> <span class="ident">csprng</span>.<span class="ident">gen</span>();
     <span class="comment">// Construct the cipher.</span>
-    <span class="kw">let</span> <span class="ident">cipher</span> <span class="op">=</span> <span class="ident">Cipher::new_fix</span>((<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">into</span>(), (<span class="kw-2">&amp;</span><span class="ident">initialization_vector</span>).<span class="ident">into</span>());
+    <span class="kw">let</span> <span class="ident">cipher</span> <span class="op">=</span> <span class="ident">CipherC::new</span>((<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">into</span>(), (<span class="kw-2">&amp;</span><span class="ident">initialization_vector</span>).<span class="ident">into</span>());
     <span class="kw">let</span> <span class="ident">cipher_text</span> <span class="op">=</span> <span class="ident">CipherText</span> {
-        <span class="ident">ct</span>: <span class="ident">cipher</span>.<span class="ident">encrypt_vec</span>(<span class="ident">plaintext</span>.<span class="ident">as_ref</span>()),
+        <span class="ident">ct</span>: <span class="ident">cipher</span>.<span class="ident">encrypt_padded_vec_mut</span>::<span class="op">&lt;</span><span class="ident">Pkcs7</span><span class="op">&gt;</span>(<span class="ident">plaintext</span>.<span class="ident">as_ref</span>()),
     };
 
     <span class="kw">let</span> <span class="ident">metadata</span> <span class="op">=</span> <span class="ident">EncryptionMetadata</span> {
@@ -376,7 +386,7 @@
 }
 
 <span class="doccomment">/// Dual to the `encrypt` method.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decrypt</span>(<span class="ident">pass</span>: <span class="kw-2">&amp;</span><span class="ident">Password</span>, <span class="ident">et</span>: <span class="kw-2">&amp;</span><span class="ident">EncryptedData</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">DecryptionError</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decrypt</span>(<span class="ident">pass</span>: <span class="kw-2">&amp;</span><span class="ident">Password</span>, <span class="ident">et</span>: <span class="kw-2">&amp;</span><span class="ident">EncryptedData</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">DecryptionError</span><span class="op">&gt;</span> {
     <span class="comment">// Derive the key for AES.</span>
     <span class="comment">// The key will be 256 bits, we are using sha256.</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">key</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">32</span>];
@@ -387,9 +397,9 @@
         <span class="ident">et</span>.<span class="ident">metadata</span>.<span class="ident">iterations</span>,
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">key</span>,
     );
-    <span class="kw">let</span> <span class="ident">cipher</span> <span class="op">=</span> <span class="ident">Cipher::new_fix</span>((<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">into</span>(), (<span class="kw-2">&amp;</span><span class="ident">et</span>.<span class="ident">metadata</span>.<span class="ident">initialization_vector</span>).<span class="ident">into</span>());
+    <span class="kw">let</span> <span class="ident">cipher</span> <span class="op">=</span> <span class="ident">CipherD::new</span>((<span class="kw-2">&amp;</span><span class="ident">key</span>).<span class="ident">into</span>(), (<span class="kw-2">&amp;</span><span class="ident">et</span>.<span class="ident">metadata</span>.<span class="ident">initialization_vector</span>).<span class="ident">into</span>());
     <span class="ident">cipher</span>
-        .<span class="ident">decrypt_vec</span>(<span class="kw-2">&amp;</span><span class="ident">et</span>.<span class="ident">cipher_text</span>.<span class="ident">ct</span>)
+        .<span class="ident">decrypt_padded_vec_mut</span>::<span class="op">&lt;</span><span class="ident">Pkcs7</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">et</span>.<span class="ident">cipher_text</span>.<span class="ident">ct</span>)
         .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">DecryptionError::BlockMode</span>)
 }
 

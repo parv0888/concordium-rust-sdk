@@ -155,31 +155,31 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">C::Scalar</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Randomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">C::Scalar</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">randomness</span> }
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">C::Scalar</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">randomness</span> }
 }
 
 <span class="doccomment">/// This trait allows automatic conversion of &amp;Randomness&lt;C&gt; to &amp;C::Scalar.</span>
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Randomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">C::Scalar</span>;
 
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">C::Scalar</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">randomness</span> }
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">C::Scalar</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">randomness</span> }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span> <span class="ident">Randomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">v</span>: <span class="ident">C::Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">v</span>: <span class="ident">C::Scalar</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Randomness</span> {
             <span class="ident">randomness</span>: <span class="ident">Rc::new</span>(<span class="ident">Secret::new</span>(<span class="ident">v</span>)),
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Value</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Value</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
         <span class="ident">Value</span> {
             <span class="ident">value</span>: <span class="self">self</span>.<span class="ident">randomness</span>.<span class="ident">clone</span>(),
         }
     }
 
     <span class="doccomment">/// Generate a non-zero randomness. Used in encryption.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) -&gt; <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Rng</span>, {
         <span class="ident">Randomness::new</span>(<span class="ident">C::generate_non_zero_scalar</span>(<span class="ident">csprng</span>))
@@ -192,14 +192,14 @@
     <span class="doccomment">/// A `Result` whose okay value is a cipher key or whose error value</span>
     <span class="doccomment">/// is an `ElgamalError` wrapping the internal error that occurred.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_bytes_unchecked</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_bytes_unchecked</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">bytes</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">g</span> <span class="op">=</span> <span class="ident">C::bytes_to_curve_unchecked</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">C::bytes_to_curve_unchecked</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">Cipher</span>(<span class="ident">g</span>, <span class="ident">h</span>))
     }
 
     <span class="doccomment">/// Generate a random cipher.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span>) -&gt; <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">T</span>: <span class="ident">Rng</span>, {
         <span class="ident">Cipher</span>(<span class="ident">C::generate</span>(<span class="ident">csprng</span>), <span class="ident">C::generate</span>(<span class="ident">csprng</span>))
@@ -211,19 +211,19 @@
     <span class="doccomment">/// key, that is the responsibility of the caller. In case ciphers were</span>
     <span class="doccomment">/// produced with different public keys, their combination is still</span>
     <span class="doccomment">/// mathematically valid, however it does not have meaning.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">combine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">combine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">plus_point</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="number">0</span>), <span class="self">self</span>.<span class="number">1</span>.<span class="ident">plus_point</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="number">1</span>))
     }
 
     <span class="doccomment">/// Scale the ciphertext by the given scalar. If the input is encryption of</span>
     <span class="doccomment">/// `m`, then the result is the encryption of `m^e`, where `e` is the given</span>
     <span class="doccomment">/// exponent.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">e</span>: <span class="kw-2">&amp;</span><span class="ident">C::Scalar</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">e</span>: <span class="kw-2">&amp;</span><span class="ident">C::Scalar</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">mul_by_scalar</span>(<span class="ident">e</span>), <span class="self">self</span>.<span class="number">1</span>.<span class="ident">mul_by_scalar</span>(<span class="ident">e</span>))
     }
 
     <span class="doccomment">/// Same as `scale`, but provided for convenience.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale_u64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">e</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">self</span>.<span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="ident">C::scalar_from_u64</span>(<span class="ident">e</span>)) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scale_u64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">e</span>: <span class="ident">u64</span>) -&gt; <span class="self">Self</span> { <span class="self">self</span>.<span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="ident">C::scalar_from_u64</span>(<span class="ident">e</span>)) }
 }
 
 <span class="doccomment">/// Perform a &quot;linear combination in the exponent&quot;, i.e., multiply each of the</span>
@@ -233,7 +233,7 @@
 <span class="doccomment">/// \sum_i v_i \cdot s_i where s_i is the i-th scalar.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function assumes the two slices have the same length.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multicombine</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span>(<span class="ident">ciphers</span>: <span class="kw-2">&amp;</span>[<span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>], <span class="ident">scalars</span>: <span class="kw-2">&amp;</span>[<span class="ident">C::Scalar</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">multicombine</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span>(<span class="ident">ciphers</span>: <span class="kw-2">&amp;</span>[<span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>], <span class="ident">scalars</span>: <span class="kw-2">&amp;</span>[<span class="ident">C::Scalar</span>]) -&gt; <span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
     <span class="macro">assert_eq!</span>(
         <span class="ident">ciphers</span>.<span class="ident">len</span>(),
         <span class="ident">scalars</span>.<span class="ident">len</span>(),
@@ -249,7 +249,7 @@
     <span class="kw">use</span> <span class="ident">pairing::bls12_381</span>::{<span class="ident">G1</span>, <span class="ident">G2</span>};
 
     <span class="macro">macro_rules!</span> <span class="ident">macro_test_cipher_to_byte_conversion</span> {
-        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">function_name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">curve_type</span>:<span class="ident">path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">function_name</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">curve_type</span>:<span class="ident">path</span>) =&gt; {
             <span class="attribute">#[<span class="ident">test</span>]</span>
             <span class="kw">pub</span> <span class="kw">fn</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">function_name</span>() {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">csprng</span> <span class="op">=</span> <span class="ident">thread_rng</span>();

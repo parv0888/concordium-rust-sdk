@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tonic-0.7.2&#x2F;src&#x2F;transport&#x2F;server&#x2F;incoming.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>incoming.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../tonic/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;website&#x2F;master&#x2F;public&#x2F;img&#x2F;icons&#x2F;tonic.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tonic-0.8.2&#x2F;src&#x2F;transport&#x2F;server&#x2F;incoming.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>incoming.rs - source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../../storage.js"></script><script src="../../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../../tonic/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;website&#x2F;master&#x2F;public&#x2F;img&#x2F;icons&#x2F;tonic.svg' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -151,6 +151,50 @@
 <span id="151">151</span>
 <span id="152">152</span>
 <span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">Connected</span>, <span class="ident">Server</span>};
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::transport::service::ServerIo</span>;
 <span class="kw">use</span> <span class="ident">futures_core::Stream</span>;
@@ -171,25 +215,19 @@
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">tcp_incoming</span><span class="op">&lt;</span><span class="ident">IO</span>, <span class="ident">IE</span>, <span class="ident">L</span><span class="op">&gt;</span>(
     <span class="ident">incoming</span>: <span class="kw">impl</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">IO</span>, <span class="ident">IE</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">_server</span>: <span class="ident">Server</span><span class="op">&lt;</span><span class="ident">L</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ServerIo</span><span class="op">&lt;</span><span class="ident">IO</span><span class="op">&gt;</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span>
+) -&gt; <span class="kw">impl</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ServerIo</span><span class="op">&lt;</span><span class="ident">IO</span><span class="op">&gt;</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">IO</span>: <span class="ident">AsyncRead</span> <span class="op">+</span> <span class="ident">AsyncWrite</span> <span class="op">+</span> <span class="ident">Connected</span> <span class="op">+</span> <span class="ident">Unpin</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     <span class="ident">IE</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span>,
 {
-    <span class="macro">async_stream::try_stream!</span> {
-        <span class="macro">futures_util::pin_mut!</span>(<span class="ident">incoming</span>);
-
-        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">stream</span>) <span class="op">=</span> <span class="ident">incoming</span>.<span class="ident">try_next</span>().<span class="kw">await</span><span class="question-mark">?</span> {
-            <span class="kw">yield</span> <span class="ident">ServerIo::new_io</span>(<span class="ident">stream</span>);
-        }
-    }
+    <span class="ident">incoming</span>.<span class="ident">err_into</span>().<span class="ident">map_ok</span>(<span class="ident">ServerIo::new_io</span>)
 }
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;tls&quot;</span>)]</span>
 <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">tcp_incoming</span><span class="op">&lt;</span><span class="ident">IO</span>, <span class="ident">IE</span>, <span class="ident">L</span><span class="op">&gt;</span>(
     <span class="ident">incoming</span>: <span class="kw">impl</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">IO</span>, <span class="ident">IE</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="ident">server</span>: <span class="ident">Server</span><span class="op">&lt;</span><span class="ident">L</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="kw">impl</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ServerIo</span><span class="op">&lt;</span><span class="ident">IO</span><span class="op">&gt;</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span>
+) -&gt; <span class="kw">impl</span> <span class="ident">Stream</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ServerIo</span><span class="op">&lt;</span><span class="ident">IO</span><span class="op">&gt;</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">IO</span>: <span class="ident">AsyncRead</span> <span class="op">+</span> <span class="ident">AsyncWrite</span> <span class="op">+</span> <span class="ident">Connected</span> <span class="op">+</span> <span class="ident">Unpin</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     <span class="ident">IE</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span>,
@@ -202,7 +240,7 @@
 
         <span class="kw">loop</span> {
             <span class="kw">match</span> <span class="ident">select</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">incoming</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">tasks</span>).<span class="kw">await</span> {
-                <span class="ident">SelectOutput::Incoming</span>(<span class="ident">stream</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">SelectOutput::Incoming</span>(<span class="ident">stream</span>) =&gt; {
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">tls</span>) <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">server</span>.<span class="ident">tls</span> {
                         <span class="kw">let</span> <span class="ident">tls</span> <span class="op">=</span> <span class="ident">tls</span>.<span class="ident">clone</span>();
 
@@ -217,15 +255,15 @@
                     }
                 }
 
-                <span class="ident">SelectOutput::Io</span>(<span class="ident">io</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">SelectOutput::Io</span>(<span class="ident">io</span>) =&gt; {
                     <span class="kw">yield</span> <span class="ident">io</span>;
                 }
 
-                <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>) =&gt; {
                     <span class="macro">tracing::debug!</span>(<span class="ident">message</span> <span class="op">=</span> <span class="string">&quot;Accept loop error.&quot;</span>, <span class="ident">error</span> <span class="op">=</span> <span class="op">%</span><span class="ident">e</span>);
                 }
 
-                <span class="ident">SelectOutput::Done</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="ident">SelectOutput::Done</span> =&gt; {
                     <span class="kw">break</span>;
                 }
             }
@@ -239,7 +277,7 @@
     <span class="ident">tasks</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">futures_util::stream::futures_unordered::FuturesUnordered</span><span class="op">&lt;</span>
         <span class="ident">tokio::task::JoinHandle</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">ServerIo</span><span class="op">&lt;</span><span class="ident">IO</span><span class="op">&gt;</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     <span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SelectOutput</span><span class="op">&lt;</span><span class="ident">IO</span><span class="op">&gt;</span>
+) -&gt; <span class="ident">SelectOutput</span><span class="op">&lt;</span><span class="ident">IO</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">IE</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span>,
 {
@@ -247,26 +285,26 @@
 
     <span class="kw">if</span> <span class="ident">tasks</span>.<span class="ident">is_empty</span>() {
         <span class="kw">return</span> <span class="kw">match</span> <span class="ident">incoming</span>.<span class="ident">try_next</span>().<span class="kw">await</span> {
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">stream</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Incoming</span>(<span class="ident">stream</span>),
-            <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Done</span>,
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()),
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">stream</span>)) =&gt; <span class="ident">SelectOutput::Incoming</span>(<span class="ident">stream</span>),
+            <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; <span class="ident">SelectOutput::Done</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()),
         };
     }
 
     <span class="macro">tokio::select!</span> {
-        <span class="ident">stream</span> <span class="op">=</span> <span class="ident">incoming</span>.<span class="ident">try_next</span>() <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="ident">stream</span> <span class="op">=</span> <span class="ident">incoming</span>.<span class="ident">try_next</span>() =&gt; {
             <span class="kw">match</span> <span class="ident">stream</span> {
-                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">stream</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Incoming</span>(<span class="ident">stream</span>),
-                <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Done</span>,
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()),
+                <span class="prelude-val">Ok</span>(<span class="prelude-val">Some</span>(<span class="ident">stream</span>)) =&gt; <span class="ident">SelectOutput::Incoming</span>(<span class="ident">stream</span>),
+                <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>) =&gt; <span class="ident">SelectOutput::Done</span>,
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()),
             }
         }
 
-        <span class="ident">accept</span> <span class="op">=</span> <span class="ident">tasks</span>.<span class="ident">next</span>() <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="ident">accept</span> <span class="op">=</span> <span class="ident">tasks</span>.<span class="ident">next</span>() =&gt; {
             <span class="kw">match</span> <span class="ident">accept</span>.<span class="ident">expect</span>(<span class="string">&quot;FuturesUnordered stream should never end&quot;</span>) {
-                <span class="prelude-val">Ok</span>(<span class="prelude-val">Ok</span>(<span class="ident">io</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Io</span>(<span class="ident">io</span>),
-                <span class="prelude-val">Ok</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>),
-                <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()),
+                <span class="prelude-val">Ok</span>(<span class="prelude-val">Ok</span>(<span class="ident">io</span>)) =&gt; <span class="ident">SelectOutput::Io</span>(<span class="ident">io</span>),
+                <span class="prelude-val">Ok</span>(<span class="prelude-val">Err</span>(<span class="ident">e</span>)) =&gt; <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>),
+                <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="ident">SelectOutput::Err</span>(<span class="ident">e</span>.<span class="ident">into</span>()),
             }
         }
     }
@@ -280,16 +318,52 @@
     <span class="ident">Done</span>,
 }
 
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">TcpIncoming</span> {
+<span class="doccomment">/// Binds a socket address for a [Router](super::Router)</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// An incoming stream, usable with [Router::serve_with_incoming](super::Router::serve_with_incoming),</span>
+<span class="doccomment">/// of `AsyncRead + AsyncWrite` that communicate with clients that connect to a socket address.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TcpIncoming</span> {
     <span class="ident">inner</span>: <span class="ident">AddrIncoming</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">TcpIncoming</span> {
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">new</span>(
+    <span class="doccomment">/// Creates an instance by binding (opening) the specified socket address</span>
+    <span class="doccomment">/// to which the specified TCP &#39;nodelay&#39; and &#39;keepalive&#39; parameters are applied.</span>
+    <span class="doccomment">/// Returns a TcpIncoming if the socket address was successfully bound.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">/// ```no_run</span>
+    <span class="doccomment">/// # use tower_service::Service;</span>
+    <span class="doccomment">/// # use http::{request::Request, response::Response};</span>
+    <span class="doccomment">/// # use tonic::{body::BoxBody, transport::{Body, NamedService, Server, server::TcpIncoming}};</span>
+    <span class="doccomment">/// # use core::convert::Infallible;</span>
+    <span class="doccomment">/// # use std::error::Error;</span>
+    <span class="doccomment">/// # fn main() { }  // Cannot have type parameters, hence instead define:</span>
+    <span class="doccomment">/// # fn run&lt;S&gt;(some_service: S) -&gt; Result&lt;(), Box&lt;dyn Error + Send + Sync&gt;&gt;</span>
+    <span class="doccomment">/// # where</span>
+    <span class="doccomment">/// #   S: Service&lt;Request&lt;Body&gt;, Response = Response&lt;BoxBody&gt;, Error = Infallible&gt; + NamedService + Clone + Send + &#39;static,</span>
+    <span class="doccomment">/// #   S::Future: Send + &#39;static,</span>
+    <span class="doccomment">/// # {</span>
+    <span class="doccomment">/// // Find a free port</span>
+    <span class="doccomment">/// let mut port = 1322;</span>
+    <span class="doccomment">/// let tinc = loop {</span>
+    <span class="doccomment">///    let addr = format!(&quot;127.0.0.1:{}&quot;, port).parse().unwrap();</span>
+    <span class="doccomment">///    match TcpIncoming::new(addr, true, None) {</span>
+    <span class="doccomment">///       Ok(t) =&gt; break t,</span>
+    <span class="doccomment">///       Err(_) =&gt; port += 1</span>
+    <span class="doccomment">///    }</span>
+    <span class="doccomment">/// };</span>
+    <span class="doccomment">/// Server::builder()</span>
+    <span class="doccomment">///    .add_service(some_service)</span>
+    <span class="doccomment">///    .serve_with_incoming(tinc);</span>
+    <span class="doccomment">/// # Ok(())</span>
+    <span class="doccomment">/// # }</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
         <span class="ident">addr</span>: <span class="ident">SocketAddr</span>,
         <span class="ident">nodelay</span>: <span class="ident">bool</span>,
         <span class="ident">keepalive</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Duration</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">AddrIncoming::bind</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>)<span class="question-mark">?</span>;
         <span class="ident">inner</span>.<span class="ident">set_nodelay</span>(<span class="ident">nodelay</span>);
         <span class="ident">inner</span>.<span class="ident">set_keepalive</span>(<span class="ident">keepalive</span>);
@@ -300,8 +374,22 @@
 <span class="kw">impl</span> <span class="ident">Stream</span> <span class="kw">for</span> <span class="ident">TcpIncoming</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">AddrStream</span>, <span class="ident">std::io::Error</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_next</span>(<span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Item</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">Pin::new</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">inner</span>).<span class="ident">poll_accept</span>(<span class="ident">cx</span>)
+    }
+}
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::transport::server::TcpIncoming</span>;
+    <span class="attribute">#[<span class="ident">tokio::test</span>]</span>
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">one_tcpincoming_at_a_time</span>() {
+        <span class="kw">let</span> <span class="ident">addr</span> <span class="op">=</span> <span class="string">&quot;127.0.0.1:1322&quot;</span>.<span class="ident">parse</span>().<span class="ident">unwrap</span>();
+        {
+            <span class="kw">let</span> <span class="ident">_t1</span> <span class="op">=</span> <span class="ident">TcpIncoming::new</span>(<span class="ident">addr</span>, <span class="bool-val">true</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+            <span class="kw">let</span> <span class="ident">_t2</span> <span class="op">=</span> <span class="ident">TcpIncoming::new</span>(<span class="ident">addr</span>, <span class="bool-val">true</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap_err</span>();
+        }
+        <span class="kw">let</span> <span class="ident">_t3</span> <span class="op">=</span> <span class="ident">TcpIncoming::new</span>(<span class="ident">addr</span>, <span class="bool-val">true</span>, <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
     }
 }
 </code></pre></div>

@@ -846,7 +846,7 @@
 <span class="kw">where</span>
     <span class="ident">T</span>: <span class="ident">Clone</span>,
 {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">prefix</span>: <span class="self">self</span>.<span class="ident">prefix</span>.<span class="ident">clone</span>(),
             <span class="ident">wild_child</span>: <span class="self">self</span>.<span class="ident">wild_child</span>,
@@ -864,7 +864,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Node</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">prefix</span>: <span class="ident">Vec::new</span>(),
             <span class="ident">wild_child</span>: <span class="bool-val">false</span>,
@@ -878,7 +878,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">Node</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">route</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">val</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">InsertError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">insert</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">route</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>, <span class="ident">val</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">InsertError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">route</span> <span class="op">=</span> <span class="ident">route</span>.<span class="ident">into</span>().<span class="ident">into_bytes</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">prefix</span> <span class="op">=</span> <span class="ident">route</span>.<span class="ident">as_ref</span>();
 
@@ -900,7 +900,7 @@
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="op">=</span> <span class="number">0</span>;
             <span class="kw">let</span> <span class="ident">max</span> <span class="op">=</span> <span class="ident">min</span>(<span class="ident">prefix</span>.<span class="ident">len</span>(), <span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>());
 
-            <span class="kw">while</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">max</span> <span class="op">&amp;&amp;</span> <span class="ident">prefix</span>[<span class="ident">i</span>] <span class="op">=</span><span class="op">=</span> <span class="ident">current</span>.<span class="ident">prefix</span>[<span class="ident">i</span>] {
+            <span class="kw">while</span> <span class="ident">i</span> <span class="op">&lt;</span> <span class="ident">max</span> <span class="op">&amp;&amp;</span> <span class="ident">prefix</span>[<span class="ident">i</span>] <span class="op">==</span> <span class="ident">current</span>.<span class="ident">prefix</span>[<span class="ident">i</span>] {
                 <span class="ident">i</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             }
 
@@ -930,9 +930,9 @@
                 <span class="kw">let</span> <span class="ident">idxc</span> <span class="op">=</span> <span class="ident">prefix</span>[<span class="number">0</span>];
 
                 <span class="comment">// `/` after param</span>
-                <span class="kw">if</span> <span class="ident">current</span>.<span class="ident">node_type</span> <span class="op">=</span><span class="op">=</span> <span class="ident">NodeType::Param</span>
-                    <span class="op">&amp;&amp;</span> <span class="ident">idxc</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;/&#39;</span>
-                    <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">children</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span>
+                <span class="kw">if</span> <span class="ident">current</span>.<span class="ident">node_type</span> <span class="op">==</span> <span class="ident">NodeType::Param</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">idxc</span> <span class="op">==</span> <span class="string">b&#39;/&#39;</span>
+                    <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">children</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span>
                 {
                     <span class="ident">current</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">current</span>.<span class="ident">children</span>[<span class="number">0</span>];
                     <span class="ident">current</span>.<span class="ident">priority</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
@@ -942,7 +942,7 @@
 
                 <span class="comment">// Check if a child with the next path byte exists</span>
                 <span class="kw">for</span> <span class="kw-2">mut</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">current</span>.<span class="ident">indices</span>.<span class="ident">len</span>() {
-                    <span class="kw">if</span> <span class="ident">idxc</span> <span class="op">=</span><span class="op">=</span> <span class="ident">current</span>.<span class="ident">indices</span>[<span class="ident">i</span>] {
+                    <span class="kw">if</span> <span class="ident">idxc</span> <span class="op">==</span> <span class="ident">current</span>.<span class="ident">indices</span>[<span class="ident">i</span>] {
                         <span class="ident">i</span> <span class="op">=</span> <span class="ident">current</span>.<span class="ident">update_child_priority</span>(<span class="ident">i</span>);
                         <span class="ident">current</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">current</span>.<span class="ident">children</span>[<span class="ident">i</span>];
 
@@ -962,12 +962,12 @@
 
                     <span class="comment">// Check if the wildcard matches</span>
                     <span class="kw">if</span> <span class="ident">prefix</span>.<span class="ident">len</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>()
-                        <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">prefix</span> <span class="op">=</span><span class="op">=</span> <span class="ident">prefix</span>[..<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>()]
+                        <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">prefix</span> <span class="op">==</span> <span class="ident">prefix</span>[..<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>()]
                         <span class="comment">// Adding a child to a CatchAll Node is not possible</span>
                         <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">node_type</span> <span class="op">!</span><span class="op">=</span> <span class="ident">NodeType::CatchAll</span>
                         <span class="comment">// Check for longer wildcard, e.g. :name and :names</span>
                         <span class="op">&amp;&amp;</span> (<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="ident">prefix</span>.<span class="ident">len</span>()
-                            <span class="op">|</span><span class="op">|</span> <span class="ident">prefix</span>[<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>()] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;/&#39;</span>)
+                            <span class="op">|</span><span class="op">|</span> <span class="ident">prefix</span>[<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>()] <span class="op">==</span> <span class="string">b&#39;/&#39;</span>)
                     {
                         <span class="kw">continue</span> <span class="lifetime">&#39;walk</span>;
                     }
@@ -990,7 +990,7 @@
     }
 
     <span class="comment">// add a child node, keeping wildcards at the end</span>
-    <span class="kw">fn</span> <span class="ident">add_child</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">child</span>: <span class="ident">Node</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">add_child</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">child</span>: <span class="ident">Node</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">children</span>.<span class="ident">len</span>();
 
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">wild_child</span> <span class="op">&amp;&amp;</span> <span class="ident">len</span> <span class="op">&gt;</span> <span class="number">0</span> {
@@ -1004,7 +1004,7 @@
 
     <span class="comment">// Increments priority of the given child and reorders if necessary</span>
     <span class="comment">// returns the new position (index) of the child</span>
-    <span class="kw">fn</span> <span class="ident">update_child_priority</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">update_child_priority</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">pos</span>: <span class="ident">usize</span>) -&gt; <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">children</span>[<span class="ident">pos</span>].<span class="ident">priority</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
         <span class="kw">let</span> <span class="ident">prio</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="ident">pos</span>].<span class="ident">priority</span>;
         <span class="comment">// adjust position (move to front)</span>
@@ -1030,7 +1030,7 @@
         <span class="ident">new_pos</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">insert_child</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">prefix</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">route</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">val</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">InsertError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">insert_child</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">prefix</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">route</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">val</span>: <span class="ident">T</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">InsertError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current</span> <span class="op">=</span> <span class="self">self</span>;
 
         <span class="kw">loop</span> {
@@ -1056,7 +1056,7 @@
             }
 
             <span class="comment">// Param</span>
-            <span class="kw">if</span> <span class="ident">wildcard</span>[<span class="number">0</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;:&#39;</span> {
+            <span class="kw">if</span> <span class="ident">wildcard</span>[<span class="number">0</span>] <span class="op">==</span> <span class="string">b&#39;:&#39;</span> {
                 <span class="comment">// Insert prefix before the current wildcard</span>
                 <span class="kw">if</span> <span class="ident">wildcard_index</span> <span class="op">&gt;</span> <span class="number">0</span> {
                     <span class="ident">current</span>.<span class="ident">prefix</span> <span class="op">=</span> <span class="ident">prefix</span>[..<span class="ident">wildcard_index</span>].<span class="ident">to_owned</span>();
@@ -1098,7 +1098,7 @@
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InsertError::InvalidCatchAll</span>);
             }
 
-            <span class="kw">if</span> <span class="op">!</span><span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">last</span>().<span class="ident">copied</span>() <span class="op">=</span><span class="op">=</span> <span class="prelude-val">Some</span>(<span class="string">b&#39;/&#39;</span>) {
+            <span class="kw">if</span> <span class="op">!</span><span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">last</span>().<span class="ident">copied</span>() <span class="op">==</span> <span class="prelude-val">Some</span>(<span class="string">b&#39;/&#39;</span>) {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">InsertError::conflict</span>(<span class="ident">route</span>, <span class="ident">prefix</span>, <span class="ident">current</span>));
             }
 
@@ -1149,9 +1149,9 @@
 
 <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
 <span class="macro">macro_rules!</span> <span class="ident">backtracker</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">skipped_nodes</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">path</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">current</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">backtracking</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">walk</span>:<span class="ident">lifetime</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">skipped_nodes</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">path</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">current</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">params</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">backtracking</span>:<span class="ident">ident</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">walk</span>:<span class="ident">lifetime</span>) =&gt; {
         <span class="macro">macro_rules!</span> <span class="ident">try_backtrack</span> {
-            () <span class="op">=</span><span class="op">&gt;</span> {
+            () =&gt; {
                 <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">skipped</span>) <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">skipped_nodes</span>.<span class="ident">pop</span>() {
                     <span class="kw">if</span> <span class="ident">skipped</span>.<span class="ident">path</span>.<span class="ident">ends_with</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">path</span>) {
                         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">path</span> <span class="op">=</span> <span class="ident">skipped</span>.<span class="ident">path</span>;
@@ -1174,7 +1174,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">at</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="lifetime">&#39;p</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="lifetime">&#39;n</span> <span class="self">self</span>,
         <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;p</span> [<span class="ident">u8</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;n</span> <span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Params</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="lifetime">&#39;p</span><span class="op">&gt;</span>), <span class="ident">MatchError</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(<span class="kw-2">&amp;</span><span class="lifetime">&#39;n</span> <span class="ident">UnsafeCell</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Params</span><span class="op">&lt;</span><span class="lifetime">&#39;n</span>, <span class="lifetime">&#39;p</span><span class="op">&gt;</span>), <span class="ident">MatchError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">full_path</span> <span class="op">=</span> <span class="ident">path</span>;
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current</span> <span class="op">=</span> <span class="self">self</span>;
@@ -1189,14 +1189,14 @@
             <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>() {
                 <span class="kw">let</span> (<span class="ident">prefix</span>, <span class="ident">rest</span>) <span class="op">=</span> <span class="ident">path</span>.<span class="ident">split_at</span>(<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>());
 
-                <span class="kw">if</span> <span class="ident">prefix</span> <span class="op">=</span><span class="op">=</span> <span class="ident">current</span>.<span class="ident">prefix</span> {
+                <span class="kw">if</span> <span class="ident">prefix</span> <span class="op">==</span> <span class="ident">current</span>.<span class="ident">prefix</span> {
                     <span class="ident">path</span> <span class="op">=</span> <span class="ident">rest</span>;
                     <span class="kw">let</span> <span class="ident">index</span> <span class="op">=</span> <span class="ident">path</span>[<span class="number">0</span>];
 
                     <span class="comment">// Try all the non-wildcard children first by matching the indices</span>
                     <span class="comment">// unless we are currently backtracking</span>
                     <span class="kw">if</span> <span class="op">!</span><span class="ident">backtracking</span> {
-                        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">current</span>.<span class="ident">indices</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="ident">index</span>) {
+                        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">current</span>.<span class="ident">indices</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">==</span> <span class="ident">index</span>) {
                             <span class="kw">if</span> <span class="ident">current</span>.<span class="ident">wild_child</span> {
                                 <span class="ident">skipped_nodes</span>.<span class="ident">push</span>(<span class="ident">Skipped</span> {
                                     <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">full_path</span>
@@ -1212,7 +1212,7 @@
                     }
 
                     <span class="kw">if</span> <span class="op">!</span><span class="ident">current</span>.<span class="ident">wild_child</span> {
-                        <span class="kw">if</span> <span class="ident">path</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;/&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">is_some</span>() {
+                        <span class="kw">if</span> <span class="ident">path</span> <span class="op">==</span> <span class="string">b&quot;/&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">is_some</span>() {
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::ExtraTrailingSlash</span>);
                         }
 
@@ -1229,14 +1229,14 @@
                     <span class="ident">current</span> <span class="op">=</span> <span class="ident">current</span>.<span class="ident">children</span>.<span class="ident">last</span>().<span class="ident">unwrap</span>();
 
                     <span class="kw">match</span> <span class="ident">current</span>.<span class="ident">node_type</span> {
-                        <span class="ident">NodeType::Param</span> <span class="op">=</span><span class="op">&gt;</span> {
-                            <span class="kw">match</span> <span class="ident">path</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;/&#39;</span>) {
-                                <span class="prelude-val">Some</span>(<span class="ident">param_idx</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="ident">NodeType::Param</span> =&gt; {
+                            <span class="kw">match</span> <span class="ident">path</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">b&#39;/&#39;</span>) {
+                                <span class="prelude-val">Some</span>(<span class="ident">param_idx</span>) =&gt; {
                                     <span class="kw">let</span> (<span class="ident">param</span>, <span class="ident">rest</span>) <span class="op">=</span> <span class="ident">path</span>.<span class="ident">split_at</span>(<span class="ident">param_idx</span>);
                                     <span class="ident">params</span>.<span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">prefix</span>[<span class="number">1</span>..], <span class="ident">param</span>);
 
                                     <span class="kw">if</span> <span class="ident">current</span>.<span class="ident">children</span>.<span class="ident">is_empty</span>() {
-                                        <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">param_idx</span> <span class="op">+</span> <span class="number">1</span> {
+                                        <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="ident">param_idx</span> <span class="op">+</span> <span class="number">1</span> {
                                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::ExtraTrailingSlash</span>);
                                         }
 
@@ -1249,7 +1249,7 @@
                                     <span class="ident">backtracking</span> <span class="op">=</span> <span class="bool-val">false</span>;
                                     <span class="kw">continue</span> <span class="lifetime">&#39;walk</span>;
                                 }
-                                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                                <span class="prelude-val">None</span> =&gt; {
                                     <span class="ident">params</span>.<span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">prefix</span>[<span class="number">1</span>..], <span class="ident">path</span>);
                                 }
                             }
@@ -1261,8 +1261,8 @@
                             <span class="kw">if</span> <span class="kw">let</span> [<span class="ident">only_child</span>] <span class="op">=</span> <span class="ident">current</span>.<span class="ident">children</span>.<span class="ident">as_slice</span>() {
                                 <span class="ident">current</span> <span class="op">=</span> <span class="ident">only_child</span>;
 
-                                <span class="kw">if</span> (<span class="ident">current</span>.<span class="ident">prefix</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;/&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">is_some</span>())
-                                    <span class="op">|</span><span class="op">|</span> (<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">indices</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;/&quot;</span>)
+                                <span class="kw">if</span> (<span class="ident">current</span>.<span class="ident">prefix</span> <span class="op">==</span> <span class="string">b&quot;/&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">is_some</span>())
+                                    <span class="op">|</span><span class="op">|</span> (<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">indices</span> <span class="op">==</span> <span class="string">b&quot;/&quot;</span>)
                                 {
                                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::MissingTrailingSlash</span>);
                                 }
@@ -1274,20 +1274,20 @@
 
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::NotFound</span>);
                         }
-                        <span class="ident">NodeType::CatchAll</span> <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="ident">NodeType::CatchAll</span> =&gt; {
                             <span class="ident">params</span>.<span class="ident">push</span>(<span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">prefix</span>[<span class="number">2</span>..], <span class="ident">path</span>);
 
                             <span class="kw">return</span> <span class="kw">match</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">as_ref</span>() {
-                                <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>((<span class="ident">value</span>, <span class="ident">params</span>)),
-                                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::NotFound</span>),
+                                <span class="prelude-val">Some</span>(<span class="ident">value</span>) =&gt; <span class="prelude-val">Ok</span>((<span class="ident">value</span>, <span class="ident">params</span>)),
+                                <span class="prelude-val">None</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">MatchError::NotFound</span>),
                             };
                         }
-                        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(),
+                        <span class="kw">_</span> =&gt; <span class="macro">unreachable!</span>(),
                     }
                 }
             }
 
-            <span class="kw">if</span> <span class="ident">path</span> <span class="op">=</span><span class="op">=</span> <span class="ident">current</span>.<span class="ident">prefix</span> {
+            <span class="kw">if</span> <span class="ident">path</span> <span class="op">==</span> <span class="ident">current</span>.<span class="ident">prefix</span> {
                 <span class="comment">// We should have reached the node containing the value.</span>
                 <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">value</span>) <span class="op">=</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">as_ref</span>() {
                     <span class="kw">return</span> <span class="prelude-val">Ok</span>((<span class="ident">value</span>, <span class="ident">params</span>));
@@ -1301,7 +1301,7 @@
                 <span class="comment">// If there is no value for this route, but this route has a</span>
                 <span class="comment">// wildcard child, there must be a handle for this path with an</span>
                 <span class="comment">// additional trailing slash</span>
-                <span class="kw">if</span> <span class="ident">path</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;/&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">wild_child</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">node_type</span> <span class="op">!</span><span class="op">=</span> <span class="ident">NodeType::Root</span> {
+                <span class="kw">if</span> <span class="ident">path</span> <span class="op">==</span> <span class="string">b&quot;/&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">wild_child</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">node_type</span> <span class="op">!</span><span class="op">=</span> <span class="ident">NodeType::Root</span> {
                     <span class="comment">// TODO: This case is also being triggered when there is an overlap</span>
                     <span class="comment">// of dynamic and static route segments and an *extra* trailing slash.</span>
                     <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::unsure</span>(<span class="ident">full_path</span>));
@@ -1309,11 +1309,11 @@
 
                 <span class="comment">// Check if the path is missing a trailing &#39;/&#39;.</span>
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">backtracking</span> {
-                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">current</span>.<span class="ident">indices</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;/&#39;</span>) {
+                    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">i</span>) <span class="op">=</span> <span class="ident">current</span>.<span class="ident">indices</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">b&#39;/&#39;</span>) {
                         <span class="ident">current</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">current</span>.<span class="ident">children</span>[<span class="ident">i</span>];
 
-                        <span class="kw">if</span> (<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">is_some</span>())
-                            <span class="op">|</span><span class="op">|</span> (<span class="ident">current</span>.<span class="ident">node_type</span> <span class="op">=</span><span class="op">=</span> <span class="ident">NodeType::CatchAll</span>
+                        <span class="kw">if</span> (<span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">is_some</span>())
+                            <span class="op">|</span><span class="op">|</span> (<span class="ident">current</span>.<span class="ident">node_type</span> <span class="op">==</span> <span class="ident">NodeType::CatchAll</span>
                                 <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">children</span>[<span class="number">0</span>].<span class="ident">value</span>.<span class="ident">is_some</span>())
                         {
                             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::MissingTrailingSlash</span>);
@@ -1324,11 +1324,11 @@
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::NotFound</span>);
             }
 
-            <span class="kw">if</span> <span class="ident">path</span> <span class="op">=</span><span class="op">=</span> <span class="string">b&quot;/&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">full_path</span> <span class="op">!</span><span class="op">=</span> <span class="string">b&quot;/&quot;</span> {
+            <span class="kw">if</span> <span class="ident">path</span> <span class="op">==</span> <span class="string">b&quot;/&quot;</span> <span class="op">&amp;&amp;</span> <span class="ident">full_path</span> <span class="op">!</span><span class="op">=</span> <span class="string">b&quot;/&quot;</span> {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::ExtraTrailingSlash</span>);
             }
 
-            <span class="kw">if</span> <span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">split_last</span>() <span class="op">=</span><span class="op">=</span> <span class="prelude-val">Some</span>((<span class="kw-2">&amp;</span><span class="string">b&#39;/&#39;</span>, <span class="ident">path</span>)) <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">is_some</span>() {
+            <span class="kw">if</span> <span class="ident">current</span>.<span class="ident">prefix</span>.<span class="ident">split_last</span>() <span class="op">==</span> <span class="prelude-val">Some</span>((<span class="kw-2">&amp;</span><span class="string">b&#39;/&#39;</span>, <span class="ident">path</span>)) <span class="op">&amp;&amp;</span> <span class="ident">current</span>.<span class="ident">value</span>.<span class="ident">is_some</span>() {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">MatchError::MissingTrailingSlash</span>);
             }
 
@@ -1341,7 +1341,7 @@
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fix_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fix_path</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">path</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">insensitive_path</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">path</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span>);
         <span class="kw">let</span> <span class="ident">found</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">fix_path_helper</span>(<span class="ident">path</span>.<span class="ident">as_bytes</span>(), <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">insensitive_path</span>, [<span class="number">0</span>; <span class="number">4</span>]);
         <span class="kw">if</span> <span class="ident">found</span> {
@@ -1356,7 +1356,7 @@
         <span class="kw-2">mut</span> <span class="ident">path</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
         <span class="ident">insensitive_path</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
         <span class="kw-2">mut</span> <span class="ident">buf</span>: [<span class="ident">u8</span>; <span class="number">4</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    ) -&gt; <span class="ident">bool</span> {
         <span class="kw">let</span> <span class="ident">lower_path</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">path</span>.<span class="ident">to_ascii_lowercase</span>();
         <span class="kw">if</span> <span class="ident">lower_path</span>.<span class="ident">len</span>() <span class="op">&gt;</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">prefix</span>.<span class="ident">len</span>()
             <span class="op">&amp;&amp;</span> (<span class="self">self</span>.<span class="ident">prefix</span>.<span class="ident">is_empty</span>()
@@ -1376,7 +1376,7 @@
                     <span class="comment">// skip char bytes already processed</span>
                     <span class="ident">buf</span> <span class="op">=</span> <span class="ident">shift_n_bytes</span>(<span class="ident">buf</span>, <span class="self">self</span>.<span class="ident">prefix</span>.<span class="ident">len</span>());
 
-                    <span class="kw">if</span> <span class="ident">buf</span>[<span class="number">0</span>] <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                    <span class="kw">if</span> <span class="ident">buf</span>[<span class="number">0</span>] <span class="op">==</span> <span class="number">0</span> {
                         <span class="comment">// process a new char</span>
                         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">current_char</span> <span class="op">=</span> <span class="number">0</span> <span class="kw">as</span> <span class="ident">char</span>;
 
@@ -1405,7 +1405,7 @@
 
                         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">indices</span>.<span class="ident">len</span>() {
                             <span class="comment">// lowercase matches</span>
-                            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">indices</span>[<span class="ident">i</span>] <span class="op">=</span><span class="op">=</span> <span class="ident">buf</span>[<span class="number">0</span>] {
+                            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">indices</span>[<span class="ident">i</span>] <span class="op">==</span> <span class="ident">buf</span>[<span class="number">0</span>] {
                                 <span class="comment">// must use a recursive approach since both the</span>
                                 <span class="comment">// uppercase byte and the lowercase byte might exist</span>
                                 <span class="comment">// as an index</span>
@@ -1430,7 +1430,7 @@
                             <span class="ident">buf</span> <span class="op">=</span> <span class="ident">shift_n_bytes</span>(<span class="ident">buf</span>, <span class="ident">off</span>);
 
                             <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">indices</span>.<span class="ident">len</span>() {
-                                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">indices</span>[<span class="ident">i</span>] <span class="op">=</span><span class="op">=</span> <span class="ident">buf</span>[<span class="number">0</span>] {
+                                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">indices</span>[<span class="ident">i</span>] <span class="op">==</span> <span class="ident">buf</span>[<span class="number">0</span>] {
                                     <span class="kw">return</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">fix_path_helper</span>(
                                         <span class="ident">path</span>,
                                         <span class="ident">insensitive_path</span>,
@@ -1442,7 +1442,7 @@
                     } <span class="kw">else</span> {
                         <span class="comment">// old char not finished</span>
                         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">indices</span>.<span class="ident">len</span>() {
-                            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">indices</span>[<span class="ident">i</span>] <span class="op">=</span><span class="op">=</span> <span class="ident">buf</span>[<span class="number">0</span>] {
+                            <span class="kw">if</span> <span class="self">self</span>.<span class="ident">indices</span>[<span class="ident">i</span>] <span class="op">==</span> <span class="ident">buf</span>[<span class="number">0</span>] {
                                 <span class="comment">// continue with child node</span>
                                 <span class="kw">return</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">fix_path_helper</span>(
                                     <span class="ident">path</span>,
@@ -1455,7 +1455,7 @@
 
                     <span class="comment">// Nothing found. We can recommend to redirect to the same URL</span>
                     <span class="comment">// without a trailing slash if a leaf exists for that path</span>
-                    <span class="kw">return</span> <span class="ident">path</span> <span class="op">=</span><span class="op">=</span> [<span class="string">b&#39;/&#39;</span>] <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">is_some</span>();
+                    <span class="kw">return</span> <span class="ident">path</span> <span class="op">==</span> [<span class="string">b&#39;/&#39;</span>] <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">is_some</span>();
                 }
 
                 <span class="kw">return</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="number">0</span>].<span class="ident">fix_path_match_helper</span>(<span class="ident">path</span>, <span class="ident">insensitive_path</span>, <span class="ident">buf</span>);
@@ -1470,9 +1470,9 @@
             <span class="comment">// No value found.</span>
             <span class="comment">// Try to fix the path by adding a trailing slash</span>
             <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="self">self</span>.<span class="ident">indices</span>.<span class="ident">len</span>() {
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">indices</span>[<span class="ident">i</span>] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;/&#39;</span> {
-                    <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">prefix</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">value</span>.<span class="ident">is_some</span>())
-                        <span class="op">|</span><span class="op">|</span> (<span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">node_type</span> <span class="op">=</span><span class="op">=</span> <span class="ident">NodeType::CatchAll</span>
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">indices</span>[<span class="ident">i</span>] <span class="op">==</span> <span class="string">b&#39;/&#39;</span> {
+                    <span class="kw">if</span> (<span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">prefix</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">value</span>.<span class="ident">is_some</span>())
+                        <span class="op">|</span><span class="op">|</span> (<span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">node_type</span> <span class="op">==</span> <span class="ident">NodeType::CatchAll</span>
                             <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="ident">i</span>].<span class="ident">children</span>[<span class="number">0</span>].<span class="ident">value</span>.<span class="ident">is_some</span>())
                     {
                         <span class="ident">insensitive_path</span>.<span class="ident">push</span>(<span class="string">b&#39;/&#39;</span>);
@@ -1487,11 +1487,11 @@
 
         <span class="comment">// Nothing found.</span>
         <span class="comment">// Try to fix the path by adding / removing a trailing slash</span>
-        <span class="kw">if</span> <span class="ident">path</span> <span class="op">=</span><span class="op">=</span> [<span class="string">b&#39;/&#39;</span>] {
+        <span class="kw">if</span> <span class="ident">path</span> <span class="op">==</span> [<span class="string">b&#39;/&#39;</span>] {
             <span class="kw">return</span> <span class="bool-val">true</span>;
         }
-        <span class="kw">if</span> <span class="ident">lower_path</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span> <span class="op">=</span><span class="op">=</span> <span class="self">self</span>.<span class="ident">prefix</span>.<span class="ident">len</span>()
-            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">prefix</span>[<span class="ident">lower_path</span>.<span class="ident">len</span>()] <span class="op">=</span><span class="op">=</span> <span class="string">b&#39;/&#39;</span>
+        <span class="kw">if</span> <span class="ident">lower_path</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="number">1</span> <span class="op">==</span> <span class="self">self</span>.<span class="ident">prefix</span>.<span class="ident">len</span>()
+            <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">prefix</span>[<span class="ident">lower_path</span>.<span class="ident">len</span>()] <span class="op">==</span> <span class="string">b&#39;/&#39;</span>
             <span class="op">&amp;&amp;</span> <span class="ident">lower_path</span>[<span class="number">1</span>..].<span class="ident">eq_ignore_ascii_case</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">prefix</span>[<span class="number">1</span>..<span class="ident">lower_path</span>.<span class="ident">len</span>()])
             <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">is_some</span>()
         {
@@ -1507,9 +1507,9 @@
         <span class="kw-2">mut</span> <span class="ident">path</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
         <span class="ident">insensitive_path</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
         <span class="ident">buf</span>: [<span class="ident">u8</span>; <span class="number">4</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    ) -&gt; <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">node_type</span> {
-            <span class="ident">NodeType::Param</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">NodeType::Param</span> =&gt; {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">end</span> <span class="op">=</span> <span class="number">0</span>;
 
                 <span class="kw">while</span> <span class="ident">end</span> <span class="op">&lt;</span> <span class="ident">path</span>.<span class="ident">len</span>() <span class="op">&amp;&amp;</span> <span class="ident">path</span>[<span class="ident">end</span>] <span class="op">!</span><span class="op">=</span> <span class="string">b&#39;/&#39;</span> {
@@ -1526,7 +1526,7 @@
                     }
 
                     <span class="comment">// ... but we can&#39;t</span>
-                    <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="ident">end</span> <span class="op">+</span> <span class="number">1</span> {
+                    <span class="kw">if</span> <span class="ident">path</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="ident">end</span> <span class="op">+</span> <span class="number">1</span> {
                         <span class="kw">return</span> <span class="bool-val">true</span>;
                     }
                     <span class="kw">return</span> <span class="bool-val">false</span>;
@@ -1534,8 +1534,8 @@
 
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">value</span>.<span class="ident">is_some</span>() {
                     <span class="kw">return</span> <span class="bool-val">true</span>;
-                } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">children</span>.<span class="ident">len</span>() <span class="op">=</span><span class="op">=</span> <span class="number">1</span>
-                    <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="number">0</span>].<span class="ident">prefix</span> <span class="op">=</span><span class="op">=</span> [<span class="string">b&#39;/&#39;</span>]
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="self">self</span>.<span class="ident">children</span>.<span class="ident">len</span>() <span class="op">==</span> <span class="number">1</span>
+                    <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="number">0</span>].<span class="ident">prefix</span> <span class="op">==</span> [<span class="string">b&#39;/&#39;</span>]
                     <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">children</span>[<span class="number">0</span>].<span class="ident">value</span>.<span class="ident">is_some</span>()
                 {
                     <span class="comment">// No value found. Check if a value for this path + a</span>
@@ -1546,16 +1546,16 @@
 
                 <span class="bool-val">false</span>
             }
-            <span class="ident">NodeType::CatchAll</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">NodeType::CatchAll</span> =&gt; {
                 <span class="ident">insensitive_path</span>.<span class="ident">extend_from_slice</span>(<span class="ident">path</span>);
                 <span class="bool-val">true</span>
             }
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="macro">unreachable!</span>(),
+            <span class="kw">_</span> =&gt; <span class="macro">unreachable!</span>(),
         }
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;__test_helpers&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_priorities</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, (<span class="ident">u32</span>, <span class="ident">u32</span>)<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">check_priorities</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">u32</span>, (<span class="ident">u32</span>, <span class="ident">u32</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">priority</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">0</span>;
         <span class="kw">for</span> <span class="ident">child</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">children</span> {
             <span class="ident">priority</span> <span class="op">+</span><span class="op">=</span> <span class="ident">child</span>.<span class="ident">check_priorities</span>()<span class="question-mark">?</span>;
@@ -1574,20 +1574,20 @@
 }
 
 <span class="comment">// Shift bytes in array by n bytes left</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">shift_n_bytes</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">4</span>], <span class="ident">n</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">u8</span>; <span class="number">4</span>] {
+<span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">shift_n_bytes</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">4</span>], <span class="ident">n</span>: <span class="ident">usize</span>) -&gt; [<span class="ident">u8</span>; <span class="number">4</span>] {
     <span class="kw">match</span> <span class="ident">u32::from_ne_bytes</span>(<span class="ident">bytes</span>).<span class="ident">overflowing_shr</span>((<span class="ident">n</span> <span class="op">*</span> <span class="number">8</span>) <span class="kw">as</span> <span class="ident">u32</span>) {
-        (<span class="kw">_</span>, <span class="bool-val">true</span>) <span class="op">=</span><span class="op">&gt;</span> [<span class="number">0</span>; <span class="number">4</span>],
-        (<span class="ident">shifted</span>, <span class="bool-val">false</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">shifted</span>.<span class="ident">to_ne_bytes</span>(),
+        (<span class="kw">_</span>, <span class="bool-val">true</span>) =&gt; [<span class="number">0</span>; <span class="number">4</span>],
+        (<span class="ident">shifted</span>, <span class="bool-val">false</span>) =&gt; <span class="ident">shifted</span>.<span class="ident">to_ne_bytes</span>(),
     }
 }
 
 <span class="comment">// Reports whether the byte could be the first byte of a `char`.</span>
-<span class="kw">const</span> <span class="kw">fn</span> <span class="ident">char_start</span>(<span class="ident">b</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">const</span> <span class="kw">fn</span> <span class="ident">char_start</span>(<span class="ident">b</span>: <span class="ident">u8</span>) -&gt; <span class="ident">bool</span> {
     <span class="ident">b</span> <span class="op">&amp;</span> <span class="number">0xC0</span> <span class="op">!</span><span class="op">=</span> <span class="number">0x80</span>
 }
 
 <span class="comment">// Search for a wildcard segment and check the name for invalid characters.</span>
-<span class="kw">fn</span> <span class="ident">find_wildcard</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">bool</span>) {
+<span class="kw">fn</span> <span class="ident">find_wildcard</span>(<span class="ident">path</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; (<span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>, <span class="ident">bool</span>) {
     <span class="comment">// Find start</span>
     <span class="kw">for</span> (<span class="ident">start</span>, <span class="kw-2">&amp;</span><span class="ident">c</span>) <span class="kw">in</span> <span class="ident">path</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
         <span class="comment">// A wildcard starts with &#39;:&#39; (param) or &#39;*&#39; (catch-all)</span>
@@ -1600,9 +1600,9 @@
 
         <span class="kw">for</span> (<span class="ident">end</span>, <span class="kw-2">&amp;</span><span class="ident">c</span>) <span class="kw">in</span> <span class="ident">path</span>[<span class="ident">start</span> <span class="op">+</span> <span class="number">1</span>..].<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
             <span class="kw">match</span> <span class="ident">c</span> {
-                <span class="string">b&#39;/&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> (<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>[<span class="ident">start</span>..<span class="ident">start</span> <span class="op">+</span> <span class="number">1</span> <span class="op">+</span> <span class="ident">end</span>]), <span class="prelude-val">Some</span>(<span class="ident">start</span>), <span class="ident">valid</span>),
-                <span class="string">b&#39;:&#39;</span> <span class="op">|</span> <span class="string">b&#39;*&#39;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">valid</span> <span class="op">=</span> <span class="bool-val">false</span>,
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> (),
+                <span class="string">b&#39;/&#39;</span> =&gt; <span class="kw">return</span> (<span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">path</span>[<span class="ident">start</span>..<span class="ident">start</span> <span class="op">+</span> <span class="number">1</span> <span class="op">+</span> <span class="ident">end</span>]), <span class="prelude-val">Some</span>(<span class="ident">start</span>), <span class="ident">valid</span>),
+                <span class="string">b&#39;:&#39;</span> <span class="op">|</span> <span class="string">b&#39;*&#39;</span> =&gt; <span class="ident">valid</span> <span class="op">=</span> <span class="bool-val">false</span>,
+                <span class="kw">_</span> =&gt; (),
             };
         }
 

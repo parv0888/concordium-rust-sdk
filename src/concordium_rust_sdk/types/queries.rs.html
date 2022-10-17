@@ -228,10 +228,70 @@
 <span id="228">228</span>
 <span id="229">229</span>
 <span id="230">230</span>
+<span id="231">231</span>
+<span id="232">232</span>
+<span id="233">233</span>
+<span id="234">234</span>
+<span id="235">235</span>
+<span id="236">236</span>
+<span id="237">237</span>
+<span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
+<span id="260">260</span>
+<span id="261">261</span>
+<span id="262">262</span>
+<span id="263">263</span>
+<span id="264">264</span>
+<span id="265">265</span>
+<span id="266">266</span>
+<span id="267">267</span>
+<span id="268">268</span>
+<span id="269">269</span>
+<span id="270">270</span>
+<span id="271">271</span>
+<span id="272">272</span>
+<span id="273">273</span>
+<span id="274">274</span>
+<span id="275">275</span>
+<span id="276">276</span>
+<span id="277">277</span>
+<span id="278">278</span>
+<span id="279">279</span>
+<span id="280">280</span>
+<span id="281">281</span>
+<span id="282">282</span>
+<span id="283">283</span>
+<span id="284">284</span>
+<span id="285">285</span>
+<span id="286">286</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Types that appear in various queries of the node.</span>
 
-<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">basic</span>::<span class="kw-2">*</span>, <span class="ident">hashes</span>::<span class="kw-2">*</span>, <span class="ident">network::RemotePeerId</span>};
-<span class="kw">use</span> <span class="ident">crypto_common</span>::{<span class="ident">SerdeDeserialize</span>, <span class="ident">SerdeSerialize</span>};
+<span class="kw">use</span> <span class="kw">super</span>::{<span class="ident">hashes</span>::<span class="kw-2">*</span>, <span class="ident">network::RemotePeerId</span>, <span class="kw-2">*</span>};
+<span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::id</span>;
+<span class="kw">use</span> <span class="ident">concordium_base</span>::{
+    <span class="ident">base</span>::<span class="kw-2">*</span>,
+    <span class="ident">common</span>::{<span class="ident">types::TransactionTime</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">SerdeSerialize</span>},
+};
 <span class="kw">use</span> <span class="ident">std::net::IpAddr</span>;
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeDeserialize</span>, <span class="ident">Debug</span>, <span class="ident">SerdeSerialize</span>)]</span>
@@ -377,7 +437,7 @@
     <span class="kw">pub</span> <span class="ident">current_era_genesis_time</span>:       <span class="ident">chrono::DateTime</span><span class="op">&lt;</span><span class="ident">chrono::Utc</span><span class="op">&gt;</span>,
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
 <span class="doccomment">/// Branches of the tree. This is the part of the tree above the last finalized</span>
 <span class="doccomment">/// block.</span>
@@ -457,6 +517,58 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">BanMethod</span> {
     <span class="ident">Ip</span>(<span class="ident">IpAddr</span>),
     <span class="ident">Id</span>(<span class="ident">RemotePeerId</span>),
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+<span class="doccomment">/// A scheduled pending update.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PendingUpdate</span> {
+    <span class="doccomment">/// Time when it will become effective.</span>
+    <span class="kw">pub</span> <span class="ident">effective_time</span>: <span class="ident">TransactionTime</span>,
+    <span class="doccomment">/// The effect the udpate will have.</span>
+    <span class="kw">pub</span> <span class="ident">effect</span>:         <span class="ident">PendingUpdateEffect</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">PendingUpdateEffect</span> {
+    <span class="ident">RootKeys</span>(<span class="ident">HigherLevelAccessStructure</span><span class="op">&lt;</span><span class="ident">RootKeysKind</span><span class="op">&gt;</span>),
+    <span class="ident">Level1Keys</span>(<span class="ident">HigherLevelAccessStructure</span><span class="op">&lt;</span><span class="ident">Level1KeysKind</span><span class="op">&gt;</span>),
+    <span class="ident">Level2KeysCPV0</span>(<span class="ident">Authorizations</span><span class="op">&lt;</span><span class="ident">ChainParameterVersion0</span><span class="op">&gt;</span>),
+    <span class="ident">Level2KeysCPV1</span>(<span class="ident">Authorizations</span><span class="op">&lt;</span><span class="ident">ChainParameterVersion1</span><span class="op">&gt;</span>),
+    <span class="ident">Protocol</span>(<span class="ident">ProtocolUpdate</span>),
+    <span class="ident">ElectionDifficulty</span>(<span class="ident">ElectionDifficulty</span>),
+    <span class="ident">EuroPerEnergy</span>(<span class="ident">ExchangeRate</span>),
+    <span class="ident">MicroCcdPerEnergy</span>(<span class="ident">ExchangeRate</span>),
+    <span class="ident">FoundationAccount</span>(<span class="ident">AccountAddress</span>),
+    <span class="ident">MintDistributionV0</span>(<span class="ident">MintDistribution</span><span class="op">&lt;</span><span class="ident">ChainParameterVersion0</span><span class="op">&gt;</span>),
+    <span class="ident">MintDistributionV1</span>(<span class="ident">MintDistribution</span><span class="op">&lt;</span><span class="ident">ChainParameterVersion1</span><span class="op">&gt;</span>),
+    <span class="ident">TransactionFeeDistribution</span>(<span class="ident">TransactionFeeDistribution</span>),
+    <span class="ident">GasRewards</span>(<span class="ident">GASRewards</span>),
+    <span class="ident">PoolParametersV0</span>(<span class="ident">BakerParameters</span>),
+    <span class="ident">PoolParametersV1</span>(<span class="ident">PoolParameters</span>),
+    <span class="ident">AddAnonymityRevoker</span>(<span class="ident">id::types::ArInfo</span><span class="op">&lt;</span><span class="ident">id::constants::ArCurve</span><span class="op">&gt;</span>),
+    <span class="ident">AddIdentityProvider</span>(<span class="ident">Box</span><span class="op">&lt;</span><span class="ident">id::types::IpInfo</span><span class="op">&lt;</span><span class="ident">id::constants::IpPairing</span><span class="op">&gt;</span><span class="op">&gt;</span>),
+    <span class="ident">CooldownParameters</span>(<span class="ident">CooldownParameters</span>),
+    <span class="ident">TimeParameters</span>(<span class="ident">TimeParameters</span>),
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NextUpdateSequenceNumbers</span> {
+    <span class="kw">pub</span> <span class="ident">root_keys</span>:                    <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">level_1_keys</span>:                 <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">level_2_keys</span>:                 <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">protocol</span>:                     <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">election_difficulty</span>:          <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">euro_per_energy</span>:              <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">micro_ccd_per_euro</span>:           <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">foundation_account</span>:           <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">mint_distribution</span>:            <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">transaction_fee_distribution</span>: <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">gas_rewards</span>:                  <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">pool_parameters</span>:              <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">add_anonymity_revoker</span>:        <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">add_identity_provider</span>:        <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">cooldown_parameters</span>:          <span class="ident">UpdateSequenceNumber</span>,
+    <span class="kw">pub</span> <span class="ident">time_parameters</span>:              <span class="ident">UpdateSequenceNumber</span>,
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="concordium_rust_sdk" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>

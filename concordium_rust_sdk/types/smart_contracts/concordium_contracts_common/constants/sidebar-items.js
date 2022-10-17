@@ -1,0 +1,1 @@
+initSidebarItems({"constant":[["MAX_FUNC_NAME_SIZE","Maximum size of function names. A contract name is defined by its init name, so this also limits the size of contract names."]]});

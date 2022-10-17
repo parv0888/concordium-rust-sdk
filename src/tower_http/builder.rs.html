@@ -633,7 +633,7 @@
     <span class="kw">fn</span> <span class="ident">propagate_header</span>(
         <span class="self">self</span>,
         <span class="ident">header</span>: <span class="ident">HeaderName</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::propagate_header::PropagateHeaderLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::propagate_header::PropagateHeaderLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Add some shareable value to [request extensions].</span>
     <span class="doccomment">///</span>
@@ -645,7 +645,7 @@
     <span class="kw">fn</span> <span class="ident">add_extension</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">value</span>: <span class="ident">T</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::add_extension::AddExtensionLayer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::add_extension::AddExtensionLayer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Apply a transformation to the request body.</span>
     <span class="doccomment">///</span>
@@ -656,7 +656,7 @@
     <span class="kw">fn</span> <span class="ident">map_request_body</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">f</span>: <span class="ident">F</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::map_request_body::MapRequestBodyLayer</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::map_request_body::MapRequestBodyLayer</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Apply a transformation to the response body.</span>
     <span class="doccomment">///</span>
@@ -667,7 +667,7 @@
     <span class="kw">fn</span> <span class="ident">map_response_body</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">f</span>: <span class="ident">F</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::map_response_body::MapResponseBodyLayer</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::map_response_body::MapResponseBodyLayer</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Compresses response bodies.</span>
     <span class="doccomment">///</span>
@@ -679,7 +679,7 @@
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compression-deflate&quot;</span>,
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compression-gzip&quot;</span>
     ))]</span>
-    <span class="kw">fn</span> <span class="ident">compression</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::compression::CompressionLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">compression</span>(<span class="self">self</span>) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::compression::CompressionLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Decompress response bodies.</span>
     <span class="doccomment">///</span>
@@ -691,7 +691,7 @@
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;decompression-deflate&quot;</span>,
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;decompression-gzip&quot;</span>
     ))]</span>
-    <span class="kw">fn</span> <span class="ident">decompression</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::decompression::DecompressionLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">decompression</span>(<span class="self">self</span>) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::decompression::DecompressionLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// High level tracing that classifies responses using HTTP status codes.</span>
     <span class="doccomment">///</span>
@@ -705,7 +705,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;trace&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">trace_for_http</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::trace::TraceLayer</span><span class="op">&lt;</span><span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">ServerErrorsAsFailures</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::trace::TraceLayer</span><span class="op">&lt;</span><span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">ServerErrorsAsFailures</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// High level tracing that classifies responses using gRPC headers.</span>
     <span class="doccomment">///</span>
@@ -719,7 +719,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;trace&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">trace_for_grpc</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::trace::TraceLayer</span><span class="op">&lt;</span><span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">GrpcErrorsAsFailures</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::trace::TraceLayer</span><span class="op">&lt;</span><span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">GrpcErrorsAsFailures</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Follow redirect resposes using the [`Standard`] policy.</span>
     <span class="doccomment">///</span>
@@ -730,7 +730,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;follow-redirect&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">follow_redirects</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span>
         <span class="ident">Stack</span><span class="op">&lt;</span>
             <span class="ident"><span class="kw">crate</span>::follow_redirect::FollowRedirectLayer</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::follow_redirect::policy::Standard</span><span class="op">&gt;</span>,
             <span class="ident">L</span>,
@@ -747,7 +747,7 @@
     <span class="kw">fn</span> <span class="ident">sensitive_headers</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">headers</span>: <span class="ident">I</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">HeaderName</span><span class="op">&gt;</span>;
 
@@ -761,7 +761,7 @@
     <span class="kw">fn</span> <span class="ident">sensitive_request_headers</span>(
         <span class="self">self</span>,
         <span class="ident">headers</span>: <span class="ident">std::sync::Arc</span><span class="op">&lt;</span>[<span class="ident">HeaderName</span>]<span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveRequestHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveRequestHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Mark headers as [sensitive] on both responses.</span>
     <span class="doccomment">///</span>
@@ -773,7 +773,7 @@
     <span class="kw">fn</span> <span class="ident">sensitive_response_headers</span>(
         <span class="self">self</span>,
         <span class="ident">headers</span>: <span class="ident">std::sync::Arc</span><span class="op">&lt;</span>[<span class="ident">HeaderName</span>]<span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveResponseHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveResponseHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Insert a header into the request.</span>
     <span class="doccomment">///</span>
@@ -788,7 +788,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Append a header into the request.</span>
     <span class="doccomment">///</span>
@@ -802,7 +802,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Insert a header into the request, if the header is not already present.</span>
     <span class="doccomment">///</span>
@@ -814,7 +814,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Insert a header into the response.</span>
     <span class="doccomment">///</span>
@@ -829,7 +829,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Append a header into the response.</span>
     <span class="doccomment">///</span>
@@ -843,7 +843,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Insert a header into the response, if the header is not already present.</span>
     <span class="doccomment">///</span>
@@ -855,7 +855,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Add request id header and extension.</span>
     <span class="doccomment">///</span>
@@ -867,7 +867,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make_request_id</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::SetRequestIdLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::SetRequestIdLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">M</span>: <span class="ident"><span class="kw">crate</span>::request_id::MakeRequestId</span>;
 
@@ -880,7 +880,7 @@
     <span class="kw">fn</span> <span class="ident">set_x_request_id</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">make_request_id</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::SetRequestIdLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::SetRequestIdLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">M</span>: <span class="ident"><span class="kw">crate</span>::request_id::MakeRequestId</span>,
     {
@@ -899,7 +899,7 @@
     <span class="kw">fn</span> <span class="ident">propagate_request_id</span>(
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::PropagateRequestIdLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::PropagateRequestIdLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Propgate request ids from requests to responses, using `x-request-id` as the header name.</span>
     <span class="doccomment">///</span>
@@ -909,7 +909,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;request-id&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">propagate_x_request_id</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::PropagateRequestIdLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::PropagateRequestIdLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">propagate_request_id</span>(<span class="ident">HeaderName::from_static</span>(<span class="ident"><span class="kw">crate</span>::request_id::X_REQUEST_ID</span>))
     }
 
@@ -921,7 +921,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;catch-panic&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">catch_panic</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span>
         <span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::catch_panic::CatchPanicLayer</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::catch_panic::DefaultResponseForPanic</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span>,
     <span class="op">&gt;</span>;
 
@@ -935,7 +935,7 @@
     <span class="kw">fn</span> <span class="ident">request_body_limit</span>(
         <span class="self">self</span>,
         <span class="ident">limit</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::limit::RequestBodyLimitLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::limit::RequestBodyLimitLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">L</span><span class="op">&gt;</span> <span class="ident"><span class="kw">crate</span>::sealed::Sealed</span><span class="op">&lt;</span><span class="ident">L</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">L</span><span class="op">&gt;</span> {}
@@ -945,7 +945,7 @@
     <span class="kw">fn</span> <span class="ident">propagate_header</span>(
         <span class="self">self</span>,
         <span class="ident">header</span>: <span class="ident">HeaderName</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::propagate_header::PropagateHeaderLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::propagate_header::PropagateHeaderLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::propagate_header::PropagateHeaderLayer::new</span>(<span class="ident">header</span>))
     }
 
@@ -953,7 +953,7 @@
     <span class="kw">fn</span> <span class="ident">add_extension</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">value</span>: <span class="ident">T</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::add_extension::AddExtensionLayer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::add_extension::AddExtensionLayer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::add_extension::AddExtensionLayer::new</span>(<span class="ident">value</span>))
     }
 
@@ -961,7 +961,7 @@
     <span class="kw">fn</span> <span class="ident">map_request_body</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">f</span>: <span class="ident">F</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::map_request_body::MapRequestBodyLayer</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::map_request_body::MapRequestBodyLayer</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::map_request_body::MapRequestBodyLayer::new</span>(<span class="ident">f</span>))
     }
 
@@ -969,7 +969,7 @@
     <span class="kw">fn</span> <span class="ident">map_response_body</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">f</span>: <span class="ident">F</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::map_response_body::MapResponseBodyLayer</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::map_response_body::MapResponseBodyLayer</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::map_response_body::MapResponseBodyLayer::new</span>(<span class="ident">f</span>))
     }
 
@@ -978,7 +978,7 @@
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compression-deflate&quot;</span>,
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;compression-gzip&quot;</span>
     ))]</span>
-    <span class="kw">fn</span> <span class="ident">compression</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::compression::CompressionLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">compression</span>(<span class="self">self</span>) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::compression::CompressionLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::compression::CompressionLayer::new</span>())
     }
 
@@ -987,14 +987,14 @@
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;decompression-deflate&quot;</span>,
         <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;decompression-gzip&quot;</span>
     ))]</span>
-    <span class="kw">fn</span> <span class="ident">decompression</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::decompression::DecompressionLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">decompression</span>(<span class="self">self</span>) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::decompression::DecompressionLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::decompression::DecompressionLayer::new</span>())
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;trace&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">trace_for_http</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::trace::TraceLayer</span><span class="op">&lt;</span><span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">ServerErrorsAsFailures</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::trace::TraceLayer</span><span class="op">&lt;</span><span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">ServerErrorsAsFailures</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
     {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::trace::TraceLayer::new_for_http</span>())
     }
@@ -1002,7 +1002,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;trace&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">trace_for_grpc</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::trace::TraceLayer</span><span class="op">&lt;</span><span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">GrpcErrorsAsFailures</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::trace::TraceLayer</span><span class="op">&lt;</span><span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">GrpcErrorsAsFailures</span><span class="op">&gt;</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
     {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::trace::TraceLayer::new_for_grpc</span>())
     }
@@ -1010,7 +1010,7 @@
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;follow-redirect&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">follow_redirects</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span>
         <span class="ident">Stack</span><span class="op">&lt;</span>
             <span class="ident"><span class="kw">crate</span>::follow_redirect::FollowRedirectLayer</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::follow_redirect::policy::Standard</span><span class="op">&gt;</span>,
             <span class="ident">L</span>,
@@ -1023,7 +1023,7 @@
     <span class="kw">fn</span> <span class="ident">sensitive_headers</span><span class="op">&lt;</span><span class="ident">I</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">headers</span>: <span class="ident">I</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">I</span>: <span class="ident">IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">HeaderName</span><span class="op">&gt;</span>,
     {
@@ -1036,7 +1036,7 @@
     <span class="kw">fn</span> <span class="ident">sensitive_request_headers</span>(
         <span class="self">self</span>,
         <span class="ident">headers</span>: <span class="ident">std::sync::Arc</span><span class="op">&lt;</span>[<span class="ident">HeaderName</span>]<span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveRequestHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveRequestHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveRequestHeadersLayer::from_shared</span>(<span class="ident">headers</span>))
     }
 
@@ -1044,7 +1044,7 @@
     <span class="kw">fn</span> <span class="ident">sensitive_response_headers</span>(
         <span class="self">self</span>,
         <span class="ident">headers</span>: <span class="ident">std::sync::Arc</span><span class="op">&lt;</span>[<span class="ident">HeaderName</span>]<span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveResponseHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveResponseHeadersLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::sensitive_headers::SetSensitiveResponseHeadersLayer::from_shared</span>(<span class="ident">headers</span>))
     }
 
@@ -1053,7 +1053,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer::overriding</span>(
             <span class="ident">header_name</span>,
             <span class="ident">make</span>,
@@ -1065,7 +1065,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer::appending</span>(
             <span class="ident">header_name</span>,
             <span class="ident">make</span>,
@@ -1077,7 +1077,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::set_header::SetRequestHeaderLayer::if_not_present</span>(
             <span class="ident">header_name</span>,
             <span class="ident">make</span>,
@@ -1089,7 +1089,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer::overriding</span>(
             <span class="ident">header_name</span>,
             <span class="ident">make</span>,
@@ -1101,7 +1101,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer::appending</span>(
             <span class="ident">header_name</span>,
             <span class="ident">make</span>,
@@ -1113,7 +1113,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::set_header::SetResponseHeaderLayer::if_not_present</span>(
             <span class="ident">header_name</span>,
             <span class="ident">make</span>,
@@ -1125,7 +1125,7 @@
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
         <span class="ident">make_request_id</span>: <span class="ident">M</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::SetRequestIdLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::SetRequestIdLayer</span><span class="op">&lt;</span><span class="ident">M</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">M</span>: <span class="ident"><span class="kw">crate</span>::request_id::MakeRequestId</span>,
     {
@@ -1139,14 +1139,14 @@
     <span class="kw">fn</span> <span class="ident">propagate_request_id</span>(
         <span class="self">self</span>,
         <span class="ident">header_name</span>: <span class="ident">HeaderName</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::PropagateRequestIdLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::request_id::PropagateRequestIdLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::request_id::PropagateRequestIdLayer::new</span>(<span class="ident">header_name</span>))
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;catch-panic&quot;</span>)]</span>
     <span class="kw">fn</span> <span class="ident">catch_panic</span>(
         <span class="self">self</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span>
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span>
         <span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::catch_panic::CatchPanicLayer</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::catch_panic::DefaultResponseForPanic</span><span class="op">&gt;</span>, <span class="ident">L</span><span class="op">&gt;</span>,
     <span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::catch_panic::CatchPanicLayer::new</span>())
@@ -1156,7 +1156,7 @@
     <span class="kw">fn</span> <span class="ident">request_body_limit</span>(
         <span class="self">self</span>,
         <span class="ident">limit</span>: <span class="ident">usize</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::limit::RequestBodyLimitLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ServiceBuilder</span><span class="op">&lt;</span><span class="ident">Stack</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::limit::RequestBodyLimitLayer</span>, <span class="ident">L</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">layer</span>(<span class="ident"><span class="kw">crate</span>::limit::RequestBodyLimitLayer::new</span>(<span class="ident">limit</span>))
     }
 }

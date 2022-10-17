@@ -35,6 +35,10 @@
 <span id="35">35</span>
 <span id="36">36</span>
 <span id="37">37</span>
+<span id="38">38</span>
+<span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
 </pre><pre class="rust"><code><span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">itertools</span>;
 
@@ -66,6 +70,10 @@
 
 <span class="doccomment">/// Re-export the PRF key generation functionality.</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">dodis_yampolskiy_prf</span>;
+
+<span class="doccomment">/// Re-export the Pointcheval-Sanders signature scheme used by identity</span>
+<span class="doccomment">/// providers.</span>
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">ps_sig</span>;
 
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">crypto_common_derive</span>;

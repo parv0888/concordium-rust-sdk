@@ -631,7 +631,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.count_ones(), 3);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">count_ones</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
+    <span class="kw">fn</span> <span class="ident">count_ones</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span>;
 
     <span class="doccomment">/// Returns the number of zeros in the binary representation of `self`.</span>
     <span class="doccomment">///</span>
@@ -644,7 +644,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.count_zeros(), 5);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">count_zeros</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
+    <span class="kw">fn</span> <span class="ident">count_zeros</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span>;
 
     <span class="doccomment">/// Returns the number of leading ones in the binary representation</span>
     <span class="doccomment">/// of `self`.</span>
@@ -658,7 +658,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.leading_ones(), 4);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">leading_ones</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">leading_ones</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         (<span class="op">!</span><span class="self">self</span>).<span class="ident">leading_zeros</span>()
     }
 
@@ -674,7 +674,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.leading_zeros(), 10);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">leading_zeros</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
+    <span class="kw">fn</span> <span class="ident">leading_zeros</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span>;
 
     <span class="doccomment">/// Returns the number of trailing ones in the binary representation</span>
     <span class="doccomment">/// of `self`.</span>
@@ -688,7 +688,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.trailing_ones(), 4);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">trailing_ones</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">fn</span> <span class="ident">trailing_ones</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         (<span class="op">!</span><span class="self">self</span>).<span class="ident">trailing_zeros</span>()
     }
 
@@ -704,7 +704,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.trailing_zeros(), 3);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">trailing_zeros</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
+    <span class="kw">fn</span> <span class="ident">trailing_zeros</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span>;
 
     <span class="doccomment">/// Shifts the bits to the left by a specified amount, `n`, wrapping</span>
     <span class="doccomment">/// the truncated bits to the end of the resulting integer.</span>
@@ -719,7 +719,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.rotate_left(12), m);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">rotate_left</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">rotate_left</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Shifts the bits to the right by a specified amount, `n`, wrapping</span>
     <span class="doccomment">/// the truncated bits to the beginning of the resulting integer.</span>
@@ -734,7 +734,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.rotate_right(12), m);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">rotate_right</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">rotate_right</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Shifts the bits to the left by a specified amount, `n`, filling</span>
     <span class="doccomment">/// zeros in the least significant bits.</span>
@@ -751,7 +751,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.signed_shl(12), m);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">signed_shl</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">signed_shl</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Shifts the bits to the right by a specified amount, `n`, copying</span>
     <span class="doccomment">/// the &quot;sign bit&quot; in the most significant bits even for unsigned types.</span>
@@ -768,7 +768,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.signed_shr(12), m);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">signed_shr</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">signed_shr</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Shifts the bits to the left by a specified amount, `n`, filling</span>
     <span class="doccomment">/// zeros in the least significant bits.</span>
@@ -785,7 +785,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.unsigned_shl(12), m);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">unsigned_shl</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">unsigned_shl</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Shifts the bits to the right by a specified amount, `n`, filling</span>
     <span class="doccomment">/// zeros in the most significant bits.</span>
@@ -802,7 +802,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.unsigned_shr(2), m);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">unsigned_shr</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">unsigned_shr</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Reverses the byte order of the integer.</span>
     <span class="doccomment">///</span>
@@ -816,7 +816,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(n.swap_bytes(), m);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">swap_bytes</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">swap_bytes</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Reverses the order of bits in the integer.</span>
     <span class="doccomment">///</span>
@@ -834,7 +834,7 @@
     <span class="doccomment">/// assert_eq!(n.reverse_bits(), m);</span>
     <span class="doccomment">/// assert_eq!(0u32.reverse_bits(), 0);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">reverse_bits</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">reverse_bits</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">reverse_bits_fallback</span>(<span class="self">self</span>)
     }
 
@@ -855,7 +855,7 @@
     <span class="doccomment">///     assert_eq!(u64::from_be(n), n.swap_bytes())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from_be</span>(<span class="ident">x</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">from_be</span>(<span class="ident">x</span>: <span class="self">Self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Convert an integer from little endian to the target&#39;s endianness.</span>
     <span class="doccomment">///</span>
@@ -874,7 +874,7 @@
     <span class="doccomment">///     assert_eq!(u64::from_le(n), n.swap_bytes())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from_le</span>(<span class="ident">x</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">from_le</span>(<span class="ident">x</span>: <span class="self">Self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Convert `self` to big endian from the target&#39;s endianness.</span>
     <span class="doccomment">///</span>
@@ -893,7 +893,7 @@
     <span class="doccomment">///     assert_eq!(n.to_be(), n.swap_bytes())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">to_be</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">to_be</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Convert `self` to little endian from the target&#39;s endianness.</span>
     <span class="doccomment">///</span>
@@ -912,7 +912,7 @@
     <span class="doccomment">///     assert_eq!(n.to_le(), n.swap_bytes())</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">to_le</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">to_le</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Raises self to the power of `exp`, using exponentiation by squaring.</span>
     <span class="doccomment">///</span>
@@ -923,10 +923,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(2i32.pow(4), 16);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">pow</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">pow</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span>;
 }
 
-<span class="kw">fn</span> <span class="ident">one_per_byte</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">PrimInt</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">P</span> {
+<span class="kw">fn</span> <span class="ident">one_per_byte</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">PrimInt</span><span class="op">&gt;</span>() -&gt; <span class="ident">P</span> {
     <span class="comment">// i8, u8: return 0x01</span>
     <span class="comment">// i16, u16: return 0x0101 = (0x01 &lt;&lt; 8) | 0x01</span>
     <span class="comment">// i32, u32: return 0x01010101 = (0x0101 &lt;&lt; 16) | 0x0101</span>
@@ -942,7 +942,7 @@
     <span class="ident">ret</span>
 }
 
-<span class="kw">fn</span> <span class="ident">reverse_bits_fallback</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">PrimInt</span><span class="op">&gt;</span>(<span class="ident">i</span>: <span class="ident">P</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">P</span> {
+<span class="kw">fn</span> <span class="ident">reverse_bits_fallback</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">PrimInt</span><span class="op">&gt;</span>(<span class="ident">i</span>: <span class="ident">P</span>) -&gt; <span class="ident">P</span> {
     <span class="kw">let</span> <span class="ident">rep_01</span>: <span class="ident">P</span> <span class="op">=</span> <span class="ident">one_per_byte</span>();
     <span class="kw">let</span> <span class="ident">rep_03</span> <span class="op">=</span> (<span class="ident">rep_01</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">1</span>) <span class="op">|</span> <span class="ident">rep_01</span>;
     <span class="kw">let</span> <span class="ident">rep_05</span> <span class="op">=</span> (<span class="ident">rep_01</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">2</span>) <span class="op">|</span> <span class="ident">rep_01</span>;
@@ -960,103 +960,103 @@
 }
 
 <span class="macro">macro_rules!</span> <span class="ident">prim_int_impl</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">S</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">U</span>:<span class="ident">ty</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">S</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">U</span>:<span class="ident">ty</span>) =&gt; {
         <span class="kw">impl</span> <span class="ident">PrimInt</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span> {
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">count_ones</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+            <span class="kw">fn</span> <span class="ident">count_ones</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::count_ones</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">count_zeros</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+            <span class="kw">fn</span> <span class="ident">count_zeros</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::count_zeros</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">has_leading_trailing_ones</span>)]</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">leading_ones</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+            <span class="kw">fn</span> <span class="ident">leading_ones</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::leading_ones</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">leading_zeros</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+            <span class="kw">fn</span> <span class="ident">leading_zeros</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::leading_zeros</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">has_leading_trailing_ones</span>)]</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">trailing_ones</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+            <span class="kw">fn</span> <span class="ident">trailing_ones</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::trailing_ones</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">trailing_zeros</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+            <span class="kw">fn</span> <span class="ident">trailing_zeros</span>(<span class="self">self</span>) -&gt; <span class="ident">u32</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::trailing_zeros</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">rotate_left</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">rotate_left</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::rotate_left</span>(<span class="self">self</span>, <span class="ident">n</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">rotate_right</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">rotate_right</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::rotate_right</span>(<span class="self">self</span>, <span class="ident">n</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">signed_shl</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">signed_shl</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
                 ((<span class="self">self</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">S</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">signed_shr</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">signed_shr</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
                 ((<span class="self">self</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">S</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">unsigned_shl</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">unsigned_shl</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
                 ((<span class="self">self</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">U</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">unsigned_shr</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">unsigned_shr</span>(<span class="self">self</span>, <span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
                 ((<span class="self">self</span> <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">U</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">n</span>) <span class="kw">as</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">swap_bytes</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">swap_bytes</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::swap_bytes</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">has_reverse_bits</span>)]</span>
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">reverse_bits</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">reverse_bits</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::reverse_bits</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">from_be</span>(<span class="ident">x</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">from_be</span>(<span class="ident">x</span>: <span class="self">Self</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::from_be</span>(<span class="ident">x</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">from_le</span>(<span class="ident">x</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">from_le</span>(<span class="ident">x</span>: <span class="self">Self</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::from_le</span>(<span class="ident">x</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">to_be</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">to_be</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::to_be</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">to_le</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">to_le</span>(<span class="self">self</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::to_le</span>(<span class="self">self</span>)
             }
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">pow</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">pow</span>(<span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> {
                 <span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span><span class="ident">::pow</span>(<span class="self">self</span>, <span class="ident">exp</span>)
             }
         }

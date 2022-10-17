@@ -807,7 +807,7 @@
     <span class="ident">cmm_key</span>: <span class="kw-2">&amp;</span><span class="ident">CommitmentKey</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">pk</span>: <span class="kw-2">&amp;</span><span class="ident">PublicKey</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">ciphers</span>: <span class="kw-2">&amp;</span>[<span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>],
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ComEq</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ComEq</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">pk_eg</span> <span class="op">=</span> <span class="ident">pk</span>.<span class="ident">key</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sigma_protocols</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">ciphers</span>.<span class="ident">len</span>());
     <span class="kw">for</span> <span class="ident">cipher</span> <span class="kw">in</span> <span class="ident">ciphers</span> {
@@ -857,7 +857,7 @@
     <span class="ident">A</span>: <span class="kw-2">&amp;</span>[<span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>],
     <span class="ident">S_prime</span>: <span class="kw-2">&amp;</span>[<span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>],
     <span class="ident">h</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">EncTrans</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">EncTrans</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
     <span class="comment">// Sigma protocol for prooving knowledge of sk</span>
     <span class="comment">// such that</span>
     <span class="comment">// pk_sender = g^sk</span>
@@ -949,7 +949,7 @@
     <span class="ident">s</span>: <span class="ident">Amount</span>,
     <span class="ident">a</span>: <span class="ident">Amount</span>,
     <span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EncryptedAmountTransferData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EncryptedAmountTransferData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">s</span> <span class="op">&lt;</span> <span class="ident">a</span> {
         <span class="kw">return</span> <span class="prelude-val">None</span>;
     }
@@ -960,9 +960,9 @@
     <span class="kw">let</span> <span class="ident">gens</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">bulletproof_generators</span>().<span class="ident">take</span>(<span class="number">64</span>);
     <span class="kw">let</span> <span class="ident">generator</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">encryption_in_exponent_generator</span>();
 
-    <span class="kw">let</span> <span class="ident">s_prime</span> <span class="op">=</span> <span class="ident">u64::from</span>(<span class="ident">s</span>) <span class="op">-</span> <span class="ident">u64::from</span>(<span class="ident">a</span>);
+    <span class="kw">let</span> <span class="ident">s_prime</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">micro_ccd</span>() <span class="op">-</span> <span class="ident">a</span>.<span class="ident">micro_ccd</span>();
     <span class="kw">let</span> <span class="ident">s_prime_chunks</span> <span class="op">=</span> <span class="ident">CHUNK_SIZE</span>.<span class="ident">u64_to_chunks</span>(<span class="ident">s_prime</span>);
-    <span class="kw">let</span> <span class="ident">a_chunks</span> <span class="op">=</span> <span class="ident">CHUNK_SIZE</span>.<span class="ident">u64_to_chunks</span>(<span class="ident">u64::from</span>(<span class="ident">a</span>));
+    <span class="kw">let</span> <span class="ident">a_chunks</span> <span class="op">=</span> <span class="ident">CHUNK_SIZE</span>.<span class="ident">u64_to_chunks</span>(<span class="ident">a</span>.<span class="ident">micro_ccd</span>());
     <span class="kw">let</span> <span class="ident">A_enc_randomness</span> <span class="op">=</span> <span class="ident">a_chunks</span>
         .<span class="ident">iter</span>()
         .<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">x</span><span class="op">|</span> {
@@ -1131,21 +1131,21 @@
     <span class="ident">s</span>: <span class="ident">Amount</span>, <span class="comment">// input amount</span>
     <span class="ident">a</span>: <span class="ident">Amount</span>, <span class="comment">// amount to send</span>
     <span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SecToPubAmountTransferData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">SecToPubAmountTransferData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="ident">s</span> <span class="op">&lt;</span> <span class="ident">a</span> {
         <span class="kw">return</span> <span class="prelude-val">None</span>;
     }
 
     <span class="kw">let</span> <span class="ident">gens</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">bulletproof_generators</span>();
     <span class="kw">let</span> <span class="ident">generator</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">encryption_in_exponent_generator</span>();
-    <span class="kw">let</span> <span class="ident">s_prime</span> <span class="op">=</span> <span class="ident">u64::from</span>(<span class="ident">s</span>) <span class="op">-</span> <span class="ident">u64::from</span>(<span class="ident">a</span>);
+    <span class="kw">let</span> <span class="ident">s_prime</span> <span class="op">=</span> <span class="ident">s</span>.<span class="ident">micro_ccd</span>() <span class="op">-</span> <span class="ident">a</span>.<span class="ident">micro_ccd</span>();
     <span class="kw">let</span> <span class="ident">s_prime_chunks</span> <span class="op">=</span> <span class="ident">CHUNK_SIZE</span>.<span class="ident">u64_to_chunks</span>(<span class="ident">s_prime</span>);
     <span class="kw">let</span> <span class="ident">S_prime_enc_randomness</span> <span class="op">=</span> <span class="ident">s_prime_chunks</span>
         .<span class="ident">iter</span>()
         .<span class="ident">map</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">x</span><span class="op">|</span> <span class="ident">pk</span>.<span class="ident">encrypt_exponent_rand_given_generator</span>(<span class="kw-2">&amp;</span><span class="ident">Value</span>::<span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="ident">::from</span>(<span class="ident">x</span>), <span class="ident">generator</span>, <span class="ident">csprng</span>))
         .<span class="ident">collect</span>::<span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span><span class="op">&gt;</span>();
     <span class="kw">let</span> <span class="ident">A_dummy_encryption</span> <span class="op">=</span> {
-        <span class="kw">let</span> <span class="ident">ha</span> <span class="op">=</span> <span class="ident">generator</span>.<span class="ident">mul_by_scalar</span>(<span class="kw-2">&amp;</span><span class="ident">C::scalar_from_u64</span>(<span class="ident">u64::from</span>(<span class="ident">a</span>)));
+        <span class="kw">let</span> <span class="ident">ha</span> <span class="op">=</span> <span class="ident">generator</span>.<span class="ident">mul_by_scalar</span>(<span class="kw-2">&amp;</span><span class="ident">C::scalar_from_u64</span>(<span class="ident">a</span>.<span class="ident">micro_ccd</span>()));
         <span class="ident">Cipher</span>(<span class="ident">C::zero_point</span>(), <span class="ident">ha</span>)
     };
     <span class="kw">let</span> <span class="ident">A</span> <span class="op">=</span> [<span class="ident">A_dummy_encryption</span>];
@@ -1162,7 +1162,7 @@
     <span class="kw">let</span> <span class="ident">secret</span> <span class="op">=</span> <span class="ident">EncTransSecret</span> {
         <span class="ident">dlog_secret</span>:     <span class="ident">Rc::new</span>(<span class="ident">sk</span>.<span class="ident">scalar</span>),
         <span class="ident">encexp1_secrets</span>: <span class="macro">vec!</span>[<span class="ident">ComEqSecret</span>::<span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
-            <span class="ident">r</span>: <span class="ident">PedersenRandomness::from_u64</span>(<span class="ident">u64::from</span>(<span class="ident">a</span>)),
+            <span class="ident">r</span>: <span class="ident">PedersenRandomness::from_u64</span>(<span class="ident">a</span>.<span class="ident">micro_ccd</span>()),
             <span class="ident">a</span>: <span class="ident">Value::from</span>(<span class="number">0u64</span>),
         }],
         <span class="ident">encexp2_secrets</span>: <span class="ident">s_prime_secrets</span>,
@@ -1253,7 +1253,7 @@
     <span class="ident">pk_sender</span>: <span class="kw-2">&amp;</span><span class="ident">PublicKey</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">pk_receiver</span>: <span class="kw-2">&amp;</span><span class="ident">PublicKey</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">S</span>: <span class="kw-2">&amp;</span><span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">VerificationError</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">VerificationError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">generator</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">encryption_in_exponent_generator</span>();
     <span class="comment">// For Bulletproofs</span>
     <span class="kw">let</span> <span class="ident">gens</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">bulletproof_generators</span>();
@@ -1350,12 +1350,12 @@
     <span class="ident">transaction</span>: <span class="kw-2">&amp;</span><span class="ident">SecToPubAmountTransferData</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">pk</span>: <span class="kw-2">&amp;</span><span class="ident">PublicKey</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">S</span>: <span class="kw-2">&amp;</span><span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">VerificationError</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">VerificationError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">generator</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">encryption_in_exponent_generator</span>();
     <span class="kw">let</span> <span class="ident">gens</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">bulletproof_generators</span>();
     <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">transaction</span>.<span class="ident">transfer_amount</span>;
     <span class="kw">let</span> <span class="ident">A_dummy_encryption</span> <span class="op">=</span> {
-        <span class="kw">let</span> <span class="ident">ha</span> <span class="op">=</span> <span class="ident">generator</span>.<span class="ident">mul_by_scalar</span>(<span class="kw-2">&amp;</span><span class="ident">C::scalar_from_u64</span>(<span class="ident">u64::from</span>(<span class="ident">a</span>)));
+        <span class="kw">let</span> <span class="ident">ha</span> <span class="op">=</span> <span class="ident">generator</span>.<span class="ident">mul_by_scalar</span>(<span class="kw-2">&amp;</span><span class="ident">C::scalar_from_u64</span>(<span class="ident">a</span>.<span class="ident">micro_ccd</span>()));
         <span class="ident">Cipher</span>(<span class="ident">C::zero_point</span>(), <span class="ident">ha</span>)
     };
     <span class="kw">let</span> <span class="ident">A</span> <span class="op">=</span> [<span class="ident">A_dummy_encryption</span>];
@@ -1414,7 +1414,7 @@
 
     <span class="kw">type</span> <span class="ident">SomeCurve</span> <span class="op">=</span> <span class="ident">G1</span>;
     <span class="comment">// Copied from common.rs in sigma_protocols since apparently it is not available</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_challenge_prefix</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">rand::Rng</span><span class="op">&gt;</span>(<span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_challenge_prefix</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">rand::Rng</span><span class="op">&gt;</span>(<span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
         <span class="comment">// length of the challenge</span>
         <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="ident">csprng</span>.<span class="ident">gen_range</span>(<span class="number">0</span>, <span class="number">1000</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">challenge_prefix</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="number">0</span>; <span class="ident">l</span>];
@@ -1457,8 +1457,8 @@
             <span class="kw-2">&amp;</span><span class="ident">pk_receiver</span>,
             <span class="ident">index</span>,
             <span class="kw-2">&amp;</span><span class="ident">S</span>,
-            <span class="ident">Amount::from</span>(<span class="ident">s</span>),
-            <span class="ident">Amount::from</span>(<span class="ident">a</span>),
+            <span class="ident">Amount::from_micro_ccd</span>(<span class="ident">s</span>),
+            <span class="ident">Amount::from_micro_ccd</span>(<span class="ident">a</span>),
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>,
         )
         .<span class="ident">expect</span>(<span class="string">&quot;Could not produce proof.&quot;</span>);
@@ -1506,8 +1506,8 @@
             <span class="kw-2">&amp;</span><span class="ident">sk</span>,
             <span class="ident">index</span>,
             <span class="kw-2">&amp;</span><span class="ident">S</span>,
-            <span class="ident">Amount::from</span>(<span class="ident">s</span>),
-            <span class="ident">Amount::from</span>(<span class="ident">a</span>),
+            <span class="ident">Amount::from_micro_ccd</span>(<span class="ident">s</span>),
+            <span class="ident">Amount::from_micro_ccd</span>(<span class="ident">a</span>),
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>,
         )
         .<span class="ident">expect</span>(<span class="string">&quot;Proving failed, but that is extremely unlikely, which indicates a bug.&quot;</span>);

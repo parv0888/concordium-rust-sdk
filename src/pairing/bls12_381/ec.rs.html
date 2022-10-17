@@ -2088,7 +2088,7 @@
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">uncompressed</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">compressed</span>:<span class="ident">ident</span>,
         <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pairing</span>:<span class="ident">ident</span>
-    ) <span class="op">=</span><span class="op">&gt;</span> {
+    ) =&gt; {
         <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
         <span class="kw">pub</span> <span class="kw">struct</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
             <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield</span>,
@@ -2097,7 +2097,7 @@
         }
 
         <span class="kw">impl</span> <span class="ident">::std::fmt::Display</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
-            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::fmt::Result</span> {
+            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">infinity</span> {
                     <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}(Infinity)&quot;</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">name</span>)
                 } <span class="kw">else</span> {
@@ -2114,13 +2114,13 @@
         }
 
         <span class="kw">impl</span> <span class="ident">::std::fmt::Display</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
-            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::std::fmt::Result</span> {
+            <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">::std::fmt::Result</span> {
                 <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="self">self</span>.<span class="ident">into_affine</span>())
             }
         }
 
         <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
-            <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span>) -&gt; <span class="ident">bool</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
                     <span class="kw">return</span> <span class="ident">other</span>.<span class="ident">is_zero</span>();
                 }
@@ -2162,7 +2162,7 @@
         }
 
         <span class="kw">impl</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
-            <span class="kw">fn</span> <span class="ident">mul_bits</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u64</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bits</span>: <span class="ident">BitIterator</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
+            <span class="kw">fn</span> <span class="ident">mul_bits</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u64</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bits</span>: <span class="ident">BitIterator</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective::zero</span>();
                 <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">bits</span> {
                     <span class="ident">res</span>.<span class="ident">double</span>();
@@ -2178,7 +2178,7 @@
             <span class="doccomment">///</span>
             <span class="doccomment">/// If and only if `greatest` is set will the lexicographically</span>
             <span class="doccomment">/// largest y-coordinate be selected.</span>
-            <span class="kw">fn</span> <span class="ident">get_point_from_x</span>(<span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield</span>, <span class="ident">greatest</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">get_point_from_x</span>(<span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield</span>, <span class="ident">greatest</span>: <span class="ident">bool</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span><span class="op">&gt;</span> {
                 <span class="comment">// Compute x^3 + b</span>
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">x3b</span> <span class="op">=</span> <span class="ident">x</span>;
                 <span class="ident">x3b</span>.<span class="ident">square</span>();
@@ -2197,7 +2197,7 @@
                 })
             }
 
-            <span class="kw">fn</span> <span class="ident">is_on_curve</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_on_curve</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
                 <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
                     <span class="bool-val">true</span>
                 } <span class="kw">else</span> {
@@ -2210,11 +2210,11 @@
                     <span class="ident">x3b</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">x</span>);
                     <span class="ident">x3b</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::get_coeff_b</span>());
 
-                    <span class="ident">y2</span> <span class="op">=</span><span class="op">=</span> <span class="ident">x3b</span>
+                    <span class="ident">y2</span> <span class="op">==</span> <span class="ident">x3b</span>
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">is_in_correct_subgroup_assuming_on_curve</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_in_correct_subgroup_assuming_on_curve</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
                 <span class="self">self</span>.<span class="ident">mul</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">scalarfield::char</span>()).<span class="ident">is_zero</span>()
             }
         }
@@ -2227,7 +2227,7 @@
             <span class="kw">type</span> <span class="ident">Uncompressed</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">uncompressed</span>;
             <span class="kw">type</span> <span class="ident">Compressed</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">compressed</span>;
 
-            <span class="kw">fn</span> <span class="ident">zero</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">zero</span>() -&gt; <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
                     <span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::zero</span>(),
                     <span class="ident">y</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::one</span>(),
@@ -2235,15 +2235,15 @@
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">one</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">one</span>() -&gt; <span class="self">Self</span> {
                 <span class="ident"><span class="self">Self</span>::get_generator</span>()
             }
 
-            <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
                 <span class="self">self</span>.<span class="ident">infinity</span>
             }
 
-            <span class="kw">fn</span> <span class="ident">mul</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Scalar</span> <span class="kw">as</span> <span class="ident">PrimeField</span><span class="op">&gt;</span><span class="ident">::Repr</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">by</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
+            <span class="kw">fn</span> <span class="ident">mul</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Scalar</span> <span class="kw">as</span> <span class="ident">PrimeField</span><span class="op">&gt;</span><span class="ident">::Repr</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">by</span>: <span class="ident">S</span>) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
                 <span class="kw">let</span> <span class="ident">bits</span> <span class="op">=</span> <span class="ident">BitIterator::new</span>(<span class="ident">by</span>.<span class="ident">into</span>());
                 <span class="self">self</span>.<span class="ident">mul_bits</span>(<span class="ident">bits</span>)
             }
@@ -2254,7 +2254,7 @@
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">into_projective</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
+            <span class="kw">fn</span> <span class="ident">into_projective</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
                 (<span class="kw-2">*</span><span class="self">self</span>).<span class="ident">into</span>()
             }
         }
@@ -2264,11 +2264,11 @@
             <span class="kw">type</span> <span class="ident">Pair</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">pairing</span>;
             <span class="kw">type</span> <span class="ident">PairingResult</span> <span class="op">=</span> <span class="ident">Fq12</span>;
 
-            <span class="kw">fn</span> <span class="ident">prepare</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Prepared</span> {
+            <span class="kw">fn</span> <span class="ident">prepare</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Prepared</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">prepared::from_affine</span>(<span class="kw-2">*</span><span class="self">self</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">pairing_with</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Pair</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::PairingResult</span> {
+            <span class="kw">fn</span> <span class="ident">pairing_with</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::Pair</span>) -&gt; <span class="ident"><span class="self">Self</span>::PairingResult</span> {
                 <span class="self">self</span>.<span class="ident">perform_pairing</span>(<span class="ident">other</span>)
             }
         }
@@ -2279,7 +2279,7 @@
             <span class="kw">type</span> <span class="ident">Base</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield</span>;
             <span class="kw">type</span> <span class="ident">Affine</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span>;
 
-            <span class="kw">fn</span> <span class="ident">random</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RngCore</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">std::marker::Sized</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">random</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RngCore</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">std::marker::Sized</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="self">Self</span> {
                 <span class="kw">loop</span> {
                     <span class="kw">let</span> <span class="ident">x</span> <span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::random</span>(<span class="ident">rng</span>);
                     <span class="kw">let</span> <span class="ident">greatest</span> <span class="op">=</span> <span class="ident">rng</span>.<span class="ident">next_u32</span>() <span class="op">%</span> <span class="number">2</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>;
@@ -2296,7 +2296,7 @@
 
             <span class="comment">// The point at infinity is always represented by</span>
             <span class="comment">// Z = 0.</span>
-            <span class="kw">fn</span> <span class="ident">zero</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">zero</span>() -&gt; <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
                     <span class="ident">x</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::zero</span>(),
                     <span class="ident">y</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::one</span>(),
@@ -2304,18 +2304,18 @@
                 }
             }
 
-            <span class="kw">fn</span> <span class="ident">one</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">one</span>() -&gt; <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine::one</span>().<span class="ident">into</span>()
             }
 
             <span class="comment">// The point at infinity is always represented by</span>
             <span class="comment">// Z = 0.</span>
-            <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+            <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
                 <span class="self">self</span>.<span class="ident">z</span>.<span class="ident">is_zero</span>()
             }
 
-            <span class="kw">fn</span> <span class="ident">is_normalized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-                <span class="self">self</span>.<span class="ident">is_zero</span>() <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">z</span> <span class="op">=</span><span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::one</span>()
+            <span class="kw">fn</span> <span class="ident">is_normalized</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
+                <span class="self">self</span>.<span class="ident">is_zero</span>() <span class="op">|</span><span class="op">|</span> <span class="self">self</span>.<span class="ident">z</span> <span class="op">==</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::one</span>()
             }
 
             <span class="kw">fn</span> <span class="ident">batch_normalization</span>(<span class="ident">v</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="self">Self</span>]) {
@@ -2470,7 +2470,7 @@
                 <span class="ident">s2</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">z</span>);
                 <span class="ident">s2</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="ident">z1z1</span>);
 
-                <span class="kw">if</span> <span class="ident">u1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">u2</span> <span class="op">&amp;&amp;</span> <span class="ident">s1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">s2</span> {
+                <span class="kw">if</span> <span class="ident">u1</span> <span class="op">==</span> <span class="ident">u2</span> <span class="op">&amp;&amp;</span> <span class="ident">s1</span> <span class="op">==</span> <span class="ident">s2</span> {
                     <span class="comment">// The two points are equal, so we double.</span>
                     <span class="self">self</span>.<span class="ident">double</span>();
                 } <span class="kw">else</span> {
@@ -2549,7 +2549,7 @@
                 <span class="ident">s2</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">z</span>);
                 <span class="ident">s2</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="ident">z1z1</span>);
 
-                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">x</span> <span class="op">=</span><span class="op">=</span> <span class="ident">u2</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">y</span> <span class="op">=</span><span class="op">=</span> <span class="ident">s2</span> {
+                <span class="kw">if</span> <span class="self">self</span>.<span class="ident">x</span> <span class="op">==</span> <span class="ident">u2</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">y</span> <span class="op">==</span> <span class="ident">s2</span> {
                     <span class="comment">// The two points are equal, so we double.</span>
                     <span class="self">self</span>.<span class="ident">double</span>();
                 } <span class="kw">else</span> {
@@ -2630,15 +2630,15 @@
                 <span class="kw-2">*</span><span class="self">self</span> <span class="op">=</span> <span class="ident">res</span>;
             }
 
-            <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
+            <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
                 (<span class="kw-2">*</span><span class="self">self</span>).<span class="ident">into</span>()
             }
 
-            <span class="kw">fn</span> <span class="ident">recommended_wnaf_for_scalar</span>(<span class="ident">scalar</span>: <span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Scalar</span> <span class="kw">as</span> <span class="ident">PrimeField</span><span class="op">&gt;</span><span class="ident">::Repr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+            <span class="kw">fn</span> <span class="ident">recommended_wnaf_for_scalar</span>(<span class="ident">scalar</span>: <span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Scalar</span> <span class="kw">as</span> <span class="ident">PrimeField</span><span class="op">&gt;</span><span class="ident">::Repr</span>) -&gt; <span class="ident">usize</span> {
                 <span class="ident"><span class="self">Self</span>::empirical_recommended_wnaf_for_scalar</span>(<span class="ident">scalar</span>)
             }
 
-            <span class="kw">fn</span> <span class="ident">recommended_wnaf_for_num_scalars</span>(<span class="ident">num_scalars</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+            <span class="kw">fn</span> <span class="ident">recommended_wnaf_for_num_scalars</span>(<span class="ident">num_scalars</span>: <span class="ident">usize</span>) -&gt; <span class="ident">usize</span> {
                 <span class="ident"><span class="self">Self</span>::empirical_recommended_wnaf_for_num_scalars</span>(<span class="ident">num_scalars</span>)
             }
         }
@@ -2646,7 +2646,7 @@
         <span class="comment">// The affine point X, Y is represented in the jacobian</span>
         <span class="comment">// coordinates with Z = 1.</span>
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
-            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">p</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">p</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span>) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span> {
                 <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">is_zero</span>() {
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective::zero</span>()
                 } <span class="kw">else</span> {
@@ -2662,10 +2662,10 @@
         <span class="comment">// The projective point X, Y, Z is represented in the affine</span>
         <span class="comment">// coordinates as X/Z^2, Y/Z^3.</span>
         <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
-            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">p</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">p</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">projective</span>) -&gt; <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
                 <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">is_zero</span>() {
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine::zero</span>()
-                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">z</span> <span class="op">=</span><span class="op">=</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::one</span>() {
+                } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">p</span>.<span class="ident">z</span> <span class="op">==</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">basefield::one</span>() {
                     <span class="comment">// If Z is one, the point is already normalized.</span>
                     <span class="macro-nonterminal">$</span><span class="macro-nonterminal">affine</span> {
                         <span class="ident">x</span>: <span class="ident">p</span>.<span class="ident">x</span>,
@@ -2723,19 +2723,19 @@
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">G1Uncompressed</span>([<span class="ident">u8</span>; <span class="number">96</span>]);
 
     <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">G1Uncompressed</span> {
-        <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
         }
     }
 
     <span class="kw">impl</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">G1Uncompressed</span> {
-        <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
+        <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>
         }
     }
 
     <span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">G1Uncompressed</span> {
-        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
             <span class="self">self</span>.<span class="number">0</span>[..].<span class="ident">fmt</span>(<span class="ident">formatter</span>)
         }
     }
@@ -2743,13 +2743,13 @@
     <span class="kw">impl</span> <span class="ident">EncodedPoint</span> <span class="kw">for</span> <span class="ident">G1Uncompressed</span> {
         <span class="kw">type</span> <span class="ident">Affine</span> <span class="op">=</span> <span class="ident">G1Affine</span>;
 
-        <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">empty</span>() -&gt; <span class="self">Self</span> {
             <span class="ident">G1Uncompressed</span>([<span class="number">0</span>; <span class="number">96</span>])
         }
-        <span class="kw">fn</span> <span class="ident">size</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">fn</span> <span class="ident">size</span>() -&gt; <span class="ident">usize</span> {
             <span class="number">96</span>
         }
-        <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G1Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G1Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">affine</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_affine_unchecked</span>()<span class="question-mark">?</span>;
 
             <span class="kw">if</span> <span class="op">!</span><span class="ident">affine</span>.<span class="ident">is_on_curve</span>() {
@@ -2760,7 +2760,7 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">affine</span>)
             }
         }
-        <span class="kw">fn</span> <span class="ident">into_affine_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G1Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_affine_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G1Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
             <span class="comment">// Create a copy of this representation.</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">copy</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
 
@@ -2775,7 +2775,7 @@
                 <span class="comment">// of zeroes.</span>
                 <span class="ident">copy</span>[<span class="number">0</span>] <span class="op">&amp;=</span> <span class="number">0x3f</span>;
 
-                <span class="kw">if</span> <span class="ident">copy</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>) {
+                <span class="kw">if</span> <span class="ident">copy</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="number">0</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">G1Affine::zero</span>())
                 } <span class="kw">else</span> {
                     <span class="prelude-val">Err</span>(<span class="ident">GroupDecodingError::UnexpectedInformation</span>)
@@ -2811,7 +2811,7 @@
                 })
             }
         }
-        <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">affine</span>: <span class="ident">G1Affine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">affine</span>: <span class="ident">G1Affine</span>) -&gt; <span class="self">Self</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::empty</span>();
 
             <span class="kw">if</span> <span class="ident">affine</span>.<span class="ident">is_zero</span>() {
@@ -2833,19 +2833,19 @@
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">G1Compressed</span>([<span class="ident">u8</span>; <span class="number">48</span>]);
 
     <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">G1Compressed</span> {
-        <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
         }
     }
 
     <span class="kw">impl</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">G1Compressed</span> {
-        <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
+        <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>
         }
     }
 
     <span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">G1Compressed</span> {
-        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
             <span class="self">self</span>.<span class="number">0</span>[..].<span class="ident">fmt</span>(<span class="ident">formatter</span>)
         }
     }
@@ -2853,13 +2853,13 @@
     <span class="kw">impl</span> <span class="ident">EncodedPoint</span> <span class="kw">for</span> <span class="ident">G1Compressed</span> {
         <span class="kw">type</span> <span class="ident">Affine</span> <span class="op">=</span> <span class="ident">G1Affine</span>;
 
-        <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">empty</span>() -&gt; <span class="self">Self</span> {
             <span class="ident">G1Compressed</span>([<span class="number">0</span>; <span class="number">48</span>])
         }
-        <span class="kw">fn</span> <span class="ident">size</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">fn</span> <span class="ident">size</span>() -&gt; <span class="ident">usize</span> {
             <span class="number">48</span>
         }
-        <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G1Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G1Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">affine</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_affine_unchecked</span>()<span class="question-mark">?</span>;
 
             <span class="comment">// NB: Decompression guarantees that it is on the curve already.</span>
@@ -2870,11 +2870,11 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">affine</span>)
             }
         }
-        <span class="kw">fn</span> <span class="ident">into_affine_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G1Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_affine_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G1Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
             <span class="comment">// Create a copy of this representation.</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">copy</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
 
-            <span class="kw">if</span> <span class="ident">copy</span>[<span class="number">0</span>] <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">7</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">copy</span>[<span class="number">0</span>] <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">7</span>) <span class="op">==</span> <span class="number">0</span> {
                 <span class="comment">// Distinguisher bit isn&#39;t set.</span>
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">GroupDecodingError::UnexpectedCompressionMode</span>);
             }
@@ -2885,7 +2885,7 @@
                 <span class="comment">// of zeroes.</span>
                 <span class="ident">copy</span>[<span class="number">0</span>] <span class="op">&amp;=</span> <span class="number">0x3f</span>;
 
-                <span class="kw">if</span> <span class="ident">copy</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>) {
+                <span class="kw">if</span> <span class="ident">copy</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="number">0</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">G1Affine::zero</span>())
                 } <span class="kw">else</span> {
                     <span class="prelude-val">Err</span>(<span class="ident">GroupDecodingError::UnexpectedInformation</span>)
@@ -2913,7 +2913,7 @@
                 <span class="ident">G1Affine::get_point_from_x</span>(<span class="ident">x</span>, <span class="ident">greatest</span>).<span class="ident">ok_or</span>(<span class="ident">GroupDecodingError::NotOnCurve</span>)
             }
         }
-        <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">affine</span>: <span class="ident">G1Affine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">affine</span>: <span class="ident">G1Affine</span>) -&gt; <span class="self">Self</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::empty</span>();
 
             <span class="kw">if</span> <span class="ident">affine</span>.<span class="ident">is_zero</span>() {
@@ -2945,13 +2945,13 @@
     }
 
     <span class="kw">impl</span> <span class="ident">G1Affine</span> {
-        <span class="kw">fn</span> <span class="ident">scale_by_cofactor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">G1</span> {
+        <span class="kw">fn</span> <span class="ident">scale_by_cofactor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">G1</span> {
             <span class="comment">// G1 cofactor = (x - 1)^2 / 3  = 76329603384216526031706109802092473003</span>
             <span class="kw">let</span> <span class="ident">cofactor</span> <span class="op">=</span> <span class="ident">BitIterator::new</span>([<span class="number">0x8c00aaab0000aaab</span>, <span class="number">0x396c8c005555e156</span>]);
             <span class="self">self</span>.<span class="ident">mul_bits</span>(<span class="ident">cofactor</span>)
         }
 
-        <span class="kw">fn</span> <span class="ident">get_generator</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">get_generator</span>() -&gt; <span class="self">Self</span> {
             <span class="ident">G1Affine</span> {
                 <span class="ident">x</span>: <span class="ident"><span class="kw">super</span>::<span class="kw">super</span>::fq::G1_GENERATOR_X</span>,
                 <span class="ident">y</span>: <span class="ident"><span class="kw">super</span>::<span class="kw">super</span>::fq::G1_GENERATOR_Y</span>,
@@ -2959,17 +2959,17 @@
             }
         }
 
-        <span class="kw">fn</span> <span class="ident">get_coeff_b</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Fq</span> {
+        <span class="kw">fn</span> <span class="ident">get_coeff_b</span>() -&gt; <span class="ident">Fq</span> {
             <span class="ident"><span class="kw">super</span>::<span class="kw">super</span>::fq::B_COEFF</span>
         }
 
-        <span class="kw">fn</span> <span class="ident">perform_pairing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G2Affine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Fq12</span> {
+        <span class="kw">fn</span> <span class="ident">perform_pairing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G2Affine</span>) -&gt; <span class="ident">Fq12</span> {
             <span class="ident"><span class="kw">super</span>::<span class="kw">super</span>::Bls12::pairing</span>(<span class="kw-2">*</span><span class="self">self</span>, <span class="kw-2">*</span><span class="ident">other</span>)
         }
     }
 
     <span class="kw">impl</span> <span class="ident">G1</span> {
-        <span class="kw">fn</span> <span class="ident">empirical_recommended_wnaf_for_scalar</span>(<span class="ident">scalar</span>: <span class="ident">FrRepr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">fn</span> <span class="ident">empirical_recommended_wnaf_for_scalar</span>(<span class="ident">scalar</span>: <span class="ident">FrRepr</span>) -&gt; <span class="ident">usize</span> {
             <span class="kw">let</span> <span class="ident">num_bits</span> <span class="op">=</span> <span class="ident">scalar</span>.<span class="ident">num_bits</span>() <span class="kw">as</span> <span class="ident">usize</span>;
 
             <span class="kw">if</span> <span class="ident">num_bits</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">130</span> {
@@ -2981,7 +2981,7 @@
             }
         }
 
-        <span class="kw">fn</span> <span class="ident">empirical_recommended_wnaf_for_num_scalars</span>(<span class="ident">num_scalars</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">fn</span> <span class="ident">empirical_recommended_wnaf_for_num_scalars</span>(<span class="ident">num_scalars</span>: <span class="ident">usize</span>) -&gt; <span class="ident">usize</span> {
             <span class="kw">const</span> <span class="ident">RECOMMENDATIONS</span>: [<span class="ident">usize</span>; <span class="number">12</span>] <span class="op">=</span>
                 [<span class="number">1</span>, <span class="number">3</span>, <span class="number">7</span>, <span class="number">20</span>, <span class="number">43</span>, <span class="number">120</span>, <span class="number">273</span>, <span class="number">563</span>, <span class="number">1630</span>, <span class="number">3128</span>, <span class="number">7933</span>, <span class="number">62569</span>];
 
@@ -3002,11 +3002,11 @@
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">G1Prepared</span>(<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">G1Affine</span>);
 
     <span class="kw">impl</span> <span class="ident">G1Prepared</span> {
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
             <span class="self">self</span>.<span class="number">0</span>.<span class="ident">is_zero</span>()
         }
 
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">p</span>: <span class="ident">G1Affine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">p</span>: <span class="ident">G1Affine</span>) -&gt; <span class="self">Self</span> {
             <span class="ident">G1Prepared</span>(<span class="ident">p</span>)
         }
     }
@@ -3392,19 +3392,19 @@
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">G2Uncompressed</span>([<span class="ident">u8</span>; <span class="number">192</span>]);
 
     <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">G2Uncompressed</span> {
-        <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
         }
     }
 
     <span class="kw">impl</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">G2Uncompressed</span> {
-        <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
+        <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>
         }
     }
 
     <span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">G2Uncompressed</span> {
-        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
             <span class="self">self</span>.<span class="number">0</span>[..].<span class="ident">fmt</span>(<span class="ident">formatter</span>)
         }
     }
@@ -3412,13 +3412,13 @@
     <span class="kw">impl</span> <span class="ident">EncodedPoint</span> <span class="kw">for</span> <span class="ident">G2Uncompressed</span> {
         <span class="kw">type</span> <span class="ident">Affine</span> <span class="op">=</span> <span class="ident">G2Affine</span>;
 
-        <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">empty</span>() -&gt; <span class="self">Self</span> {
             <span class="ident">G2Uncompressed</span>([<span class="number">0</span>; <span class="number">192</span>])
         }
-        <span class="kw">fn</span> <span class="ident">size</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">fn</span> <span class="ident">size</span>() -&gt; <span class="ident">usize</span> {
             <span class="number">192</span>
         }
-        <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G2Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G2Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">affine</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_affine_unchecked</span>()<span class="question-mark">?</span>;
 
             <span class="kw">if</span> <span class="op">!</span><span class="ident">affine</span>.<span class="ident">is_on_curve</span>() {
@@ -3429,7 +3429,7 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">affine</span>)
             }
         }
-        <span class="kw">fn</span> <span class="ident">into_affine_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G2Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_affine_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G2Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
             <span class="comment">// Create a copy of this representation.</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">copy</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
 
@@ -3444,7 +3444,7 @@
                 <span class="comment">// of zeroes.</span>
                 <span class="ident">copy</span>[<span class="number">0</span>] <span class="op">&amp;=</span> <span class="number">0x3f</span>;
 
-                <span class="kw">if</span> <span class="ident">copy</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>) {
+                <span class="kw">if</span> <span class="ident">copy</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="number">0</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">G2Affine::zero</span>())
                 } <span class="kw">else</span> {
                     <span class="prelude-val">Err</span>(<span class="ident">GroupDecodingError::UnexpectedInformation</span>)
@@ -3494,7 +3494,7 @@
                 })
             }
         }
-        <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">affine</span>: <span class="ident">G2Affine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">affine</span>: <span class="ident">G2Affine</span>) -&gt; <span class="self">Self</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::empty</span>();
 
             <span class="kw">if</span> <span class="ident">affine</span>.<span class="ident">is_zero</span>() {
@@ -3518,19 +3518,19 @@
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">G2Compressed</span>([<span class="ident">u8</span>; <span class="number">96</span>]);
 
     <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">G2Compressed</span> {
-        <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
+        <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] {
             <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>
         }
     }
 
     <span class="kw">impl</span> <span class="ident">AsMut</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">G2Compressed</span> {
-        <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
+        <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>] {
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="number">0</span>
         }
     }
 
     <span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">G2Compressed</span> {
-        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">formatter</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
             <span class="self">self</span>.<span class="number">0</span>[..].<span class="ident">fmt</span>(<span class="ident">formatter</span>)
         }
     }
@@ -3538,13 +3538,13 @@
     <span class="kw">impl</span> <span class="ident">EncodedPoint</span> <span class="kw">for</span> <span class="ident">G2Compressed</span> {
         <span class="kw">type</span> <span class="ident">Affine</span> <span class="op">=</span> <span class="ident">G2Affine</span>;
 
-        <span class="kw">fn</span> <span class="ident">empty</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">empty</span>() -&gt; <span class="self">Self</span> {
             <span class="ident">G2Compressed</span>([<span class="number">0</span>; <span class="number">96</span>])
         }
-        <span class="kw">fn</span> <span class="ident">size</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">fn</span> <span class="ident">size</span>() -&gt; <span class="ident">usize</span> {
             <span class="number">96</span>
         }
-        <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G2Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_affine</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G2Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">affine</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_affine_unchecked</span>()<span class="question-mark">?</span>;
 
             <span class="comment">// NB: Decompression guarantees that it is on the curve already.</span>
@@ -3555,11 +3555,11 @@
                 <span class="prelude-val">Ok</span>(<span class="ident">affine</span>)
             }
         }
-        <span class="kw">fn</span> <span class="ident">into_affine_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G2Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">into_affine_unchecked</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">G2Affine</span>, <span class="ident">GroupDecodingError</span><span class="op">&gt;</span> {
             <span class="comment">// Create a copy of this representation.</span>
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">copy</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
 
-            <span class="kw">if</span> <span class="ident">copy</span>[<span class="number">0</span>] <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">7</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">copy</span>[<span class="number">0</span>] <span class="op">&amp;</span> (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">7</span>) <span class="op">==</span> <span class="number">0</span> {
                 <span class="comment">// Distinguisher bit isn&#39;t set.</span>
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">GroupDecodingError::UnexpectedCompressionMode</span>);
             }
@@ -3570,7 +3570,7 @@
                 <span class="comment">// of zeroes.</span>
                 <span class="ident">copy</span>[<span class="number">0</span>] <span class="op">&amp;=</span> <span class="number">0x3f</span>;
 
-                <span class="kw">if</span> <span class="ident">copy</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>) {
+                <span class="kw">if</span> <span class="ident">copy</span>.<span class="ident">iter</span>().<span class="ident">all</span>(<span class="op">|</span><span class="ident">b</span><span class="op">|</span> <span class="kw-2">*</span><span class="ident">b</span> <span class="op">==</span> <span class="number">0</span>) {
                     <span class="prelude-val">Ok</span>(<span class="ident">G2Affine::zero</span>())
                 } <span class="kw">else</span> {
                     <span class="prelude-val">Err</span>(<span class="ident">GroupDecodingError::UnexpectedInformation</span>)
@@ -3606,7 +3606,7 @@
                 <span class="ident">G2Affine::get_point_from_x</span>(<span class="ident">x</span>, <span class="ident">greatest</span>).<span class="ident">ok_or</span>(<span class="ident">GroupDecodingError::NotOnCurve</span>)
             }
         }
-        <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">affine</span>: <span class="ident">G2Affine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">from_affine</span>(<span class="ident">affine</span>: <span class="ident">G2Affine</span>) -&gt; <span class="self">Self</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::empty</span>();
 
             <span class="kw">if</span> <span class="ident">affine</span>.<span class="ident">is_zero</span>() {
@@ -3639,7 +3639,7 @@
     }
 
     <span class="kw">impl</span> <span class="ident">G2Affine</span> {
-        <span class="kw">fn</span> <span class="ident">get_generator</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+        <span class="kw">fn</span> <span class="ident">get_generator</span>() -&gt; <span class="self">Self</span> {
             <span class="ident">G2Affine</span> {
                 <span class="ident">x</span>: <span class="ident">Fq2</span> {
                     <span class="ident">c0</span>: <span class="ident"><span class="kw">super</span>::<span class="kw">super</span>::fq::G2_GENERATOR_X_C0</span>,
@@ -3653,14 +3653,14 @@
             }
         }
 
-        <span class="kw">fn</span> <span class="ident">get_coeff_b</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Fq2</span> {
+        <span class="kw">fn</span> <span class="ident">get_coeff_b</span>() -&gt; <span class="ident">Fq2</span> {
             <span class="ident">Fq2</span> {
                 <span class="ident">c0</span>: <span class="ident"><span class="kw">super</span>::<span class="kw">super</span>::fq::B_COEFF</span>,
                 <span class="ident">c1</span>: <span class="ident"><span class="kw">super</span>::<span class="kw">super</span>::fq::B_COEFF</span>,
             }
         }
 
-        <span class="kw">fn</span> <span class="ident">scale_by_cofactor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">G2</span> {
+        <span class="kw">fn</span> <span class="ident">scale_by_cofactor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">G2</span> {
             <span class="comment">// G2 cofactor = (x^8 - 4 x^7 + 5 x^6) - (4 x^4 + 6 x^3 - 4 x^2 - 4 x + 13) // 9</span>
             <span class="comment">// 0x5d543a95414e7f1091d50792876a202cd91de4547085abaa68a205b2e5a7ddfa628f1cb4d9e82ef21537e293a6691ae1616ec6e786f0c70cf1c38e31c7238e5</span>
             <span class="kw">let</span> <span class="ident">cofactor</span> <span class="op">=</span> <span class="ident">BitIterator::new</span>([
@@ -3676,13 +3676,13 @@
             <span class="self">self</span>.<span class="ident">mul_bits</span>(<span class="ident">cofactor</span>)
         }
 
-        <span class="kw">fn</span> <span class="ident">perform_pairing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G1Affine</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Fq12</span> {
+        <span class="kw">fn</span> <span class="ident">perform_pairing</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">G1Affine</span>) -&gt; <span class="ident">Fq12</span> {
             <span class="ident"><span class="kw">super</span>::<span class="kw">super</span>::Bls12::pairing</span>(<span class="kw-2">*</span><span class="ident">other</span>, <span class="kw-2">*</span><span class="self">self</span>)
         }
     }
 
     <span class="kw">impl</span> <span class="ident">G2</span> {
-        <span class="kw">fn</span> <span class="ident">empirical_recommended_wnaf_for_scalar</span>(<span class="ident">scalar</span>: <span class="ident">FrRepr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">fn</span> <span class="ident">empirical_recommended_wnaf_for_scalar</span>(<span class="ident">scalar</span>: <span class="ident">FrRepr</span>) -&gt; <span class="ident">usize</span> {
             <span class="kw">let</span> <span class="ident">num_bits</span> <span class="op">=</span> <span class="ident">scalar</span>.<span class="ident">num_bits</span>() <span class="kw">as</span> <span class="ident">usize</span>;
 
             <span class="kw">if</span> <span class="ident">num_bits</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">103</span> {
@@ -3694,7 +3694,7 @@
             }
         }
 
-        <span class="kw">fn</span> <span class="ident">empirical_recommended_wnaf_for_num_scalars</span>(<span class="ident">num_scalars</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+        <span class="kw">fn</span> <span class="ident">empirical_recommended_wnaf_for_num_scalars</span>(<span class="ident">num_scalars</span>: <span class="ident">usize</span>) -&gt; <span class="ident">usize</span> {
             <span class="kw">const</span> <span class="ident">RECOMMENDATIONS</span>: [<span class="ident">usize</span>; <span class="number">11</span>] <span class="op">=</span>
                 [<span class="number">1</span>, <span class="number">3</span>, <span class="number">8</span>, <span class="number">20</span>, <span class="number">47</span>, <span class="number">126</span>, <span class="number">260</span>, <span class="number">826</span>, <span class="number">1501</span>, <span class="number">4555</span>, <span class="number">84071</span>];
 

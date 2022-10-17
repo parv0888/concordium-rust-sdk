@@ -1019,6 +1019,7 @@
 <span id="1019">1019</span>
 <span id="1020">1020</span>
 <span id="1021">1021</span>
+<span id="1022">1022</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">constants::DEFAULT_NETWORK_ID</span>,
     <span class="ident">generated_types</span>::{
@@ -1034,12 +1035,14 @@
     },
 };
 <span class="kw">use</span> <span class="ident">anyhow::anyhow</span>;
-<span class="kw">use</span> <span class="ident">crypto_common</span>::{<span class="ident">types::TransactionSignature</span>, <span class="ident">Serial</span>, <span class="ident">Versioned</span>};
-<span class="kw">use</span> <span class="ident">derive_more::From</span>;
-<span class="kw">use</span> <span class="ident">id</span>::{
-    <span class="ident">constants</span>::{<span class="ident">ArCurve</span>, <span class="ident">IpPairing</span>},
-    <span class="ident">types</span>::{<span class="ident">ArInfo</span>, <span class="ident">GlobalContext</span>, <span class="ident">IpInfo</span>},
+<span class="kw">use</span> <span class="ident">concordium_base</span>::{
+    <span class="ident">common</span>::{<span class="ident">types::TransactionSignature</span>, <span class="ident">Serial</span>, <span class="ident">Versioned</span>},
+    <span class="ident">id</span>::{
+        <span class="ident">constants</span>::{<span class="ident">ArCurve</span>, <span class="ident">IpPairing</span>},
+        <span class="ident">types</span>::{<span class="ident">ArInfo</span>, <span class="ident">GlobalContext</span>, <span class="ident">IpInfo</span>},
+    },
 };
+<span class="kw">use</span> <span class="ident">derive_more::From</span>;
 <span class="kw">use</span> <span class="ident">sha2::Digest</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">borrow::Borrow</span>,
@@ -1069,11 +1072,11 @@
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">serde_json::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">RPCError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">x</span>: <span class="ident">serde_json::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::ParseError</span>(<span class="ident">x</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">x</span>: <span class="ident">serde_json::Error</span>) -&gt; <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::ParseError</span>(<span class="ident">x</span>.<span class="ident">into</span>()) }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">semver::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">RPCError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">x</span>: <span class="ident">semver::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::ParseError</span>(<span class="ident">x</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">x</span>: <span class="ident">semver::Error</span>) -&gt; <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::ParseError</span>(<span class="ident">x</span>.<span class="ident">into</span>()) }
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Error</span>, <span class="ident">Debug</span>)]</span>
@@ -1090,19 +1093,19 @@
 
 <span class="kw">impl</span> <span class="ident">QueryError</span> {
     <span class="doccomment">/// Whether this error is the NotFound variant.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_not_found</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> { <span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident"><span class="self">Self</span>::NotFound</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_not_found</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> { <span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident"><span class="self">Self</span>::NotFound</span>) }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">tonic::Status</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">QueryError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="ident">tonic::Status</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::RPCError</span>(<span class="ident">s</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="ident">tonic::Status</span>) -&gt; <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::RPCError</span>(<span class="ident">s</span>.<span class="ident">into</span>()) }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">InvalidMetadataValue</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">QueryError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="ident">InvalidMetadataValue</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::RPCError</span>(<span class="ident">s</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="ident">InvalidMetadataValue</span>) -&gt; <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::RPCError</span>(<span class="ident">s</span>.<span class="ident">into</span>()) }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">serde_json::Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">QueryError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="ident">serde_json::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::RPCError</span>(<span class="ident">s</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">s</span>: <span class="ident">serde_json::Error</span>) -&gt; <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::RPCError</span>(<span class="ident">s</span>.<span class="ident">into</span>()) }
 }
 
 <span class="doccomment">/// Result a GRPC query. This is a simple alias for [std::Result](https://doc.rust-lang.org/std/result/enum.Result.html)</span>
@@ -1110,10 +1113,10 @@
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">RPCError</span><span class="op">&gt;</span>;
 
 <span class="doccomment">/// Result a GRPC query where the item lookup might fail.</span>
-<span class="doccomment">/// This is a simple alias for [std::Result](https://doc.rust-lang.org/std/result/enum.Result.html) that fixes the error type to be [QueryResult].</span>
+<span class="doccomment">/// This is a simple alias for [std::Result](https://doc.rust-lang.org/std/result/enum.Result.html) that fixes the error type to be [`QueryError`].</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> <span class="op">=</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">A</span>, <span class="ident">QueryError</span><span class="op">&gt;</span>;
 
-<span class="doccomment">/// Input to the [Client::get_blocks_at_height] query.</span>
+<span class="doccomment">/// Input to the [`Client::get_blocks_at_height`] query.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Debug</span>, <span class="ident">From</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">BlocksAtHeightInput</span> {
     <span class="ident">Absolute</span> {
@@ -1147,7 +1150,7 @@
 <span class="kw">impl</span> <span class="ident">Client</span> {
     <span class="doccomment">/// Internal helper that attaches the authentication token to the given</span>
     <span class="doccomment">/// request.</span>
-    <span class="kw">fn</span> <span class="ident">construct_request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">message</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">tonic::Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">construct_request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">message</span>: <span class="ident">T</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">tonic::Request</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">req</span> <span class="op">=</span> <span class="ident">tonic::Request::new</span>(<span class="ident">message</span>);
         <span class="kw">let</span> <span class="ident">mv</span> <span class="op">=</span> <span class="ident">MetadataValue::try_from</span>(<span class="self">self</span>.<span class="ident">token</span>.<span class="ident">as_str</span>())<span class="question-mark">?</span>;
         <span class="ident">req</span>.<span class="ident">metadata_mut</span>().<span class="ident">insert</span>(<span class="string">&quot;authentication&quot;</span>, <span class="ident">mv</span>);
@@ -1160,7 +1163,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">connect</span><span class="op">&lt;</span><span class="ident">D</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">Endpoint</span><span class="op">&gt;</span><span class="op">&gt;</span>(
         <span class="ident">dst</span>: <span class="ident">D</span>,
         <span class="ident">token</span>: <span class="kw">impl</span> <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">tonic::transport::Error</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">tonic::transport::Error</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="op">&lt;</span><span class="ident">D</span> <span class="kw">as</span> <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">Endpoint</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="ident">::Error</span>: <span class="ident">std::error::Error</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>, {
         <span class="kw">let</span> <span class="ident">client</span> <span class="op">=</span> <span class="ident">p2p_client::P2pClient::connect</span>(<span class="ident">dst</span>).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1174,7 +1177,7 @@
     <span class="doccomment">/// This also adds the address to the list of trusted addresses.</span>
     <span class="doccomment">/// These are addresses to which the node will try to keep connected to at</span>
     <span class="doccomment">/// all times.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">peer_connect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ip</span>: <span class="kw-2">&amp;</span><span class="ident">IpAddr</span>, <span class="ident">port</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">peer_connect</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ip</span>: <span class="kw-2">&amp;</span><span class="ident">IpAddr</span>, <span class="ident">port</span>: <span class="ident">u16</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">PeerConnectRequest</span> {
             <span class="ident">ip</span>:   <span class="prelude-val">Some</span>(<span class="ident">ip</span>.<span class="ident">to_string</span>()),
             <span class="ident">port</span>: <span class="prelude-val">Some</span>(<span class="ident">port</span>.<span class="ident">into</span>()),
@@ -1184,7 +1187,7 @@
     }
 
     <span class="doccomment">/// Query for the node&#39;s uptime.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">uptime</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">chrono::Duration</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">uptime</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">chrono::Duration</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">peer_uptime</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="comment">// the `as i64` is really safe since uptimes larger than that are not going to</span>
@@ -1195,7 +1198,7 @@
     }
 
     <span class="doccomment">/// Query for the total number of packets that the node has sent thus far.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">total_sent</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">total_sent</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">peer_total_sent</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>)
@@ -1203,14 +1206,14 @@
 
     <span class="doccomment">/// Query for the total number of packets that the node has received thus</span>
     <span class="doccomment">/// far.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">total_received</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">total_received</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">peer_total_received</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>)
     }
 
     <span class="doccomment">/// Query for the node version.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">semver::Version</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">version</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">semver::Version</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">peer_version</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">version</span> <span class="op">=</span> <span class="ident">semver::Version::parse</span>(<span class="kw-2">&amp;</span><span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>)<span class="question-mark">?</span>;
@@ -1221,7 +1224,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">peer_statistics</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">include_bootstrappers</span>: <span class="ident">bool</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">types::PeerStatsResponse</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">types::PeerStatsResponse</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">PeersRequest</span> {
             <span class="ident">include_bootstrappers</span>,
         })<span class="question-mark">?</span>;
@@ -1234,7 +1237,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">peer_list</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">include_bootstrappers</span>: <span class="ident">bool</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">network::PeerElement</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">network::PeerElement</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">PeersRequest</span> {
             <span class="ident">include_bootstrappers</span>,
         })<span class="question-mark">?</span>;
@@ -1270,13 +1273,13 @@
     <span class="doccomment">/// Ban a specific node. See [Client::unban_node] for the dual.</span>
     <span class="doccomment">/// Note that this will also cause the node to drop any connections to a</span>
     <span class="doccomment">/// matching node.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">ban_node</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ban_method</span>: <span class="ident">queries::BanMethod</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">ban_node</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ban_method</span>: <span class="ident">queries::BanMethod</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pe</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">ban_method</span> {
-            <span class="ident">queries::BanMethod::Ip</span>(<span class="ident">ip</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">PeerElement</span> {
+            <span class="ident">queries::BanMethod::Ip</span>(<span class="ident">ip</span>) =&gt; <span class="ident">PeerElement</span> {
                 <span class="ident">ip</span>: <span class="prelude-val">Some</span>(<span class="ident">ip</span>.<span class="ident">to_string</span>()),
                 ..<span class="ident">Default::default</span>()
             },
-            <span class="ident">queries::BanMethod::Id</span>(<span class="ident">id</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">PeerElement</span> {
+            <span class="ident">queries::BanMethod::Id</span>(<span class="ident">id</span>) =&gt; <span class="ident">PeerElement</span> {
                 <span class="ident">node_id</span>: <span class="prelude-val">Some</span>(<span class="ident">id</span>.<span class="ident">to_string</span>()),
                 ..<span class="ident">Default::default</span>()
             },
@@ -1289,7 +1292,7 @@
     <span class="doccomment">/// Unban a specific node. See [Client::ban_node] for the dual.</span>
     <span class="doccomment">/// Note that this will only remove the ban, but it will not re-establish</span>
     <span class="doccomment">/// any connections. To connect use [Client::peer_connect].</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">unban_node</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ip</span>: <span class="ident">IpAddr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">unban_node</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">ip</span>: <span class="ident">IpAddr</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">pe</span> <span class="op">=</span> <span class="ident">PeerElement</span> {
             <span class="ident">ip</span>: <span class="prelude-val">Some</span>(<span class="ident">ip</span>.<span class="ident">to_string</span>()),
             ..<span class="ident">Default::default</span>()
@@ -1300,7 +1303,7 @@
     }
 
     <span class="doccomment">/// Ask the node to join the specified network.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">join_network</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">network_id</span>: <span class="ident">network::NetworkId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">join_network</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">network_id</span>: <span class="ident">network::NetworkId</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">generated_types::NetworkChangeRequest</span> {
             <span class="ident">network_id</span>: <span class="prelude-val">Some</span>(<span class="ident">u16::from</span>(<span class="ident">network_id</span>).<span class="ident">into</span>()),
         })<span class="question-mark">?</span>;
@@ -1309,7 +1312,7 @@
     }
 
     <span class="doccomment">/// Ask the node to leave the specified network.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">leave_network</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">network_id</span>: <span class="ident">network::NetworkId</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">leave_network</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">network_id</span>: <span class="ident">network::NetworkId</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">generated_types::NetworkChangeRequest</span> {
             <span class="ident">network_id</span>: <span class="prelude-val">Some</span>(<span class="ident">u16::from</span>(<span class="ident">network_id</span>).<span class="ident">into</span>()),
         })<span class="question-mark">?</span>;
@@ -1319,25 +1322,25 @@
 
     <span class="doccomment">/// Get some general information about a running node. See the return type</span>
     <span class="doccomment">/// for details of the data that is returned.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">node_info</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">queries::NodeInfo</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">node_info</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">queries::NodeInfo</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">node_info</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">ni</span> <span class="op">=</span> <span class="ident">response</span>.<span class="ident">into_inner</span>();
         <span class="kw">let</span> <span class="ident">local_time</span> <span class="op">=</span> <span class="ident">chrono::DateTime</span>::<span class="op">&lt;</span><span class="ident">chrono::Utc</span><span class="op">&gt;</span><span class="ident">::from</span>(<span class="ident">UNIX_EPOCH</span>)
             <span class="op">+</span> <span class="ident">chrono::Duration::seconds</span>(<span class="ident">ni</span>.<span class="ident">current_localtime</span> <span class="kw">as</span> <span class="ident">i64</span>);
         <span class="kw">let</span> <span class="ident">peer_details</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">ni</span>.<span class="ident">peer_type</span>.<span class="ident">as_str</span>() {
-            <span class="string">&quot;Bootstrapper&quot;</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">queries::PeerDetails::Bootstrapper</span>,
-            <span class="string">&quot;Node&quot;</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="string">&quot;Bootstrapper&quot;</span> =&gt; <span class="ident">queries::PeerDetails::Bootstrapper</span>,
+            <span class="string">&quot;Node&quot;</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">consensus_state</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">ni</span>.<span class="ident">consensus_running</span> {
                     <span class="kw">if</span> <span class="ident">ni</span>.<span class="ident">consensus_baker_running</span> {
                         <span class="kw">use</span> <span class="ident">node_info_response::IsInBakingCommittee</span>::<span class="kw-2">*</span>;
                         <span class="kw">let</span> <span class="ident">active_state</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">ni</span>.<span class="ident">consensus_baker_committee</span>() {
-                            <span class="ident">NotInCommittee</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">queries::ActiveConsensusState::NotInCommittee</span>,
-                            <span class="ident">AddedButNotActiveInCommittee</span> <span class="op">=</span><span class="op">&gt;</span> {
+                            <span class="ident">NotInCommittee</span> =&gt; <span class="ident">queries::ActiveConsensusState::NotInCommittee</span>,
+                            <span class="ident">AddedButNotActiveInCommittee</span> =&gt; {
                                 <span class="ident">queries::ActiveConsensusState::NotYetActive</span>
                             }
-                            <span class="ident">AddedButWrongKeys</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">queries::ActiveConsensusState::IncorrectKeys</span>,
-                            <span class="ident">ActiveInCommittee</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">queries::ActiveConsensusState::Active</span> {
+                            <span class="ident">AddedButWrongKeys</span> =&gt; <span class="ident">queries::ActiveConsensusState::IncorrectKeys</span>,
+                            <span class="ident">ActiveInCommittee</span> =&gt; <span class="ident">queries::ActiveConsensusState::Active</span> {
                                 <span class="ident">baker_id</span>:  <span class="ident">BakerId::from</span>(<span class="ident">AccountIndex::from</span>(
                                     <span class="ident">ni</span>.<span class="ident">consensus_baker_id</span>.<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> {
                                         <span class="macro">anyhow!</span>(<span class="string">&quot;Invalid response, active but no baker id.&quot;</span>)
@@ -1355,7 +1358,7 @@
                 };
                 <span class="ident">queries::PeerDetails::Node</span> { <span class="ident">consensus_state</span> }
             }
-            <span class="ident">e</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">e</span> =&gt; {
                 <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">RPCError::ParseError</span>(<span class="macro">anyhow!</span>(
                     <span class="string">&quot;Unrecognized peer type: {}&quot;</span>,
                     <span class="ident">e</span>
@@ -1372,7 +1375,7 @@
 
     <span class="doccomment">/// Get consensus information from the node. This is an overview of the</span>
     <span class="doccomment">/// node&#39;s view of the chain.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_consensus_status</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">queries::ConsensusInfo</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_consensus_status</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">queries::ConsensusInfo</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get_consensus_status</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">consensus_info</span> <span class="op">=</span>
@@ -1384,7 +1387,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_block_info</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">block_hash</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">queries::BlockInfo</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">queries::BlockInfo</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">block_hash</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1397,7 +1400,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">block</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
         <span class="ident">num</span>: <span class="ident">u64</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::hashes::BlockHash</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::hashes::BlockHash</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHashAndAmount</span> {
             <span class="ident">block_hash</span>: <span class="ident">block</span>.<span class="ident">to_string</span>(),
             <span class="ident">amount</span>:     <span class="ident">num</span>,
@@ -1410,7 +1413,7 @@
     <span class="doccomment">/// are successors of the last finalized block. In particular this means</span>
     <span class="doccomment">/// that blocks which do not have a parent are not included in this</span>
     <span class="doccomment">/// response.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_branches</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">queries::Branch</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_branches</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">queries::Branch</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get_branches</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">branches</span> <span class="op">=</span> <span class="ident">serde_json::from_str</span>::<span class="op">&lt;</span><span class="ident">queries::Branch</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>)<span class="question-mark">?</span>;
@@ -1422,9 +1425,9 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_blocks_at_height</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="ident">BlocksAtHeightInput</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::hashes::BlockHash</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::hashes::BlockHash</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">bh</span> {
-            <span class="ident">BlocksAtHeightInput::Absolute</span> { <span class="ident">height</span> } <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHeight</span> {
+            <span class="ident">BlocksAtHeightInput::Absolute</span> { <span class="ident">height</span> } =&gt; <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHeight</span> {
                 <span class="ident">block_height</span>:              <span class="ident">height</span>.<span class="ident">into</span>(),
                 <span class="ident">from_genesis_index</span>:        <span class="number">0</span>,
                 <span class="ident">restrict_to_genesis_index</span>: <span class="bool-val">false</span>,
@@ -1433,7 +1436,7 @@
                 <span class="ident">genesis_index</span>,
                 <span class="ident">height</span>,
                 <span class="ident">restrict</span>,
-            } <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHeight</span> {
+            } =&gt; <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHeight</span> {
                 <span class="ident">block_height</span>:              <span class="ident">height</span>.<span class="ident">into</span>(),
                 <span class="ident">from_genesis_index</span>:        <span class="ident">genesis_index</span>.<span class="ident">into</span>(),
                 <span class="ident">restrict_to_genesis_index</span>: <span class="ident">restrict</span>,
@@ -1445,7 +1448,7 @@
     }
 
     <span class="doccomment">/// FIXME: This currently does nothing on the node, hence it is private.</span>
-    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">_start_baker</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">_start_baker</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">start_baker</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>)
@@ -1453,7 +1456,7 @@
 
     <span class="doccomment">/// Stop the baker thread. The node will still keep running and responding</span>
     <span class="doccomment">/// to queries.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stop_baker</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">stop_baker</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">stop_baker</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>)
@@ -1462,7 +1465,7 @@
     <span class="doccomment">/// Get the list of ips that the node will currently not connect to, nor</span>
     <span class="doccomment">/// accept connections for. See [Client::ban_node] and</span>
     <span class="doccomment">/// [Client::unban_node] for functions to add and remove ips from the list.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_banned_ips</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">IpAddr</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_banned_ips</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">IpAddr</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get_banned_peers</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">response</span>
@@ -1484,7 +1487,7 @@
     }
 
     <span class="doccomment">/// Stop the node. After this is called the node will stop.</span>
-    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">shutdown</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">shutdown</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">Empty</span> {})<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">shutdown</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span>)
@@ -1495,7 +1498,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_account_list</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">id::types::AccountAddress</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::id::types::AccountAddress</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1508,7 +1511,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_instances</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::ContractAddress</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::ContractAddress</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1521,9 +1524,9 @@
     <span class="doccomment">/// returned.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_account_info</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">id::types::AccountAddress</span><span class="op">&gt;</span>,
+        <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::id::types::AccountAddress</span><span class="op">&gt;</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::AccountInfo</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::AccountInfo</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_account_info_raw</span>(<span class="ident">addr</span>, <span class="ident">bh</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">serde_json::from_value</span>(<span class="ident">res</span>)<span class="question-mark">?</span>)
     }
@@ -1538,9 +1541,9 @@
     <span class="doccomment">/// [AccountInfo](types::AccountInfo)</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_account_info_raw</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">id::types::AccountAddress</span><span class="op">&gt;</span>,
+        <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::id::types::AccountAddress</span><span class="op">&gt;</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">GetAddressInfoRequest</span> {
             <span class="ident">address</span>:    <span class="ident">addr</span>.<span class="ident">borrow</span>().<span class="ident">to_string</span>(),
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
@@ -1560,7 +1563,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::types::CredentialRegistrationID</span><span class="op">&gt;</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::AccountInfo</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::AccountInfo</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_account_info_by_cred_id_raw</span>(<span class="ident">addr</span>, <span class="ident">bh</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">serde_json::from_value</span>(<span class="ident">res</span>)<span class="question-mark">?</span>)
     }
@@ -1579,7 +1582,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">addr</span>: <span class="kw">impl</span> <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident"><span class="kw">crate</span>::types::CredentialRegistrationID</span><span class="op">&gt;</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">GetAddressInfoRequest</span> {
             <span class="ident">address</span>:    <span class="ident">addr</span>.<span class="ident">borrow</span>().<span class="ident">to_string</span>(),
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
@@ -1594,7 +1597,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">addr</span>: <span class="ident">types::ContractAddress</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::smart_contracts::InstanceInfo</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::smart_contracts::InstanceInfo</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">GetAddressInfoRequest</span> {
             <span class="ident">address</span>:    <span class="ident">serde_json::to_string</span>(<span class="kw-2">&amp;</span><span class="ident">addr</span>).<span class="ident">expect</span>(<span class="string">&quot;Never fails.&quot;</span>),
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
@@ -1608,7 +1611,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_reward_status</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::RewardsOverview</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::RewardsOverview</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1620,7 +1623,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_birk_parameters</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::BirkParameters</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::BirkParameters</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1636,7 +1639,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_baker_list</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BakerId</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BakerId</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1652,10 +1655,10 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">baker_id</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">BakerId</span><span class="op">&gt;</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::PoolStatus</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::PoolStatus</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">GetPoolStatusRequest</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
-            <span class="ident">l_pool</span>: <span class="ident">baker_id</span>.<span class="ident">is_none</span>(),
+            <span class="ident">passive_delegation</span>: <span class="ident">baker_id</span>.<span class="ident">is_none</span>(),
             <span class="ident">baker_id</span>: <span class="ident">baker_id</span>.<span class="ident">map_or</span>(<span class="number">0</span>, <span class="op">|</span><span class="ident">bi</span><span class="op">|</span> <span class="ident">u64::from</span>(<span class="ident">AccountIndex::from</span>(<span class="ident">bi</span>))), <span class="comment">// not used if baker_id is none.</span>
         })<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">get_pool_status</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
@@ -1666,7 +1669,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_module_list</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::smart_contracts::ModuleRef</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::smart_contracts::ModuleRef</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1679,7 +1682,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">mr</span>: <span class="kw-2">&amp;</span><span class="ident">types::smart_contracts::ModuleRef</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">GetModuleSourceRequest</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
             <span class="ident">module_ref</span>: <span class="ident">mr</span>.<span class="ident">to_string</span>(),
@@ -1698,7 +1701,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_identity_providers</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">IpInfo</span><span class="op">&lt;</span><span class="ident">IpPairing</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">IpInfo</span><span class="op">&lt;</span><span class="ident">IpPairing</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1711,7 +1714,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_anonymity_revokers</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ArInfo</span><span class="op">&lt;</span><span class="ident">ArCurve</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">ArInfo</span><span class="op">&lt;</span><span class="ident">ArCurve</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1724,7 +1727,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_cryptographic_parameters</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">GlobalContext</span><span class="op">&lt;</span><span class="ident">ArCurve</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">GlobalContext</span><span class="op">&lt;</span><span class="ident">ArCurve</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1741,8 +1744,8 @@
     <span class="doccomment">/// If the account does not exist an empty list will be returned.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_account_non_finalized_transactions</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">id::types::AccountAddress</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::hashes::TransactionHash</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="kw">crate</span>::id::types::AccountAddress</span>,
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::hashes::TransactionHash</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">AccountAddress</span> {
             <span class="ident">account_address</span>: <span class="ident">addr</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1762,7 +1765,7 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
         <span class="ident">th</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::TransactionHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::TransactionStatusInBlock</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::TransactionStatusInBlock</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">GetTransactionStatusInBlockRequest</span> {
             <span class="ident">transaction_hash</span>: <span class="ident">th</span>.<span class="ident">to_string</span>(),
             <span class="ident">block_hash</span>:       <span class="ident">bh</span>.<span class="ident">to_string</span>(),
@@ -1776,7 +1779,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_transaction_status</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">th</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::TransactionHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::TransactionStatus</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::TransactionStatus</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">TransactionHash</span> {
             <span class="ident">transaction_hash</span>: <span class="ident">th</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1791,7 +1794,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_block_summary</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::BlockSummary</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">types::BlockSummary</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">summary</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_block_summary_raw</span>(<span class="ident">bh</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">serde_json::from_value</span>(<span class="ident">summary</span>)<span class="question-mark">?</span>)
     }
@@ -1806,7 +1809,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_block_summary_raw</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">BlockHash</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1818,8 +1821,8 @@
     <span class="doccomment">/// information is.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_next_account_nonce</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
-        <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident">id::types::AccountAddress</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">queries::AccountNonceResponse</span><span class="op">&gt;</span> {
+        <span class="ident">addr</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="kw">crate</span>::id::types::AccountAddress</span>,
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">queries::AccountNonceResponse</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">AccountAddress</span> {
             <span class="ident">account_address</span>: <span class="ident">addr</span>.<span class="ident">to_string</span>(),
         })<span class="question-mark">?</span>;
@@ -1831,13 +1834,13 @@
     <span class="doccomment">/// Invoke a contract in the given context and get the response.</span>
     <span class="doccomment">/// Note that this is purely node-local transient operation and no</span>
     <span class="doccomment">/// transaction or payment is involved. Use</span>
-    <span class="doccomment">/// [`send_transaction`](Self::send_transaction) if you need to update</span>
+    <span class="doccomment">/// [`send_block_item`](Self::send_block_item) if you need to update</span>
     <span class="doccomment">/// the state of the contract on the chain.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">invoke_contract</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bh</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::BlockHash</span>,
         <span class="ident">context</span>: <span class="kw-2">&amp;</span><span class="ident">smart_contracts::ContractContext</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">smart_contracts::InvokeContractResult</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">smart_contracts::InvokeContractResult</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">InvokeContractRequest</span> {
             <span class="ident">block_hash</span>: <span class="ident">bh</span>.<span class="ident">to_string</span>(),
             <span class="ident">context</span>:    <span class="ident">serde_json::to_string</span>(<span class="ident">context</span>)
@@ -1853,13 +1856,12 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">send_block_item</span><span class="op">&lt;</span><span class="ident">PayloadType</span>: <span class="ident">PayloadLike</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">bi</span>: <span class="kw-2">&amp;</span><span class="ident">transactions::BlockItem</span><span class="op">&lt;</span><span class="ident">PayloadType</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">types::hashes::TransactionHash</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">types::hashes::TransactionHash</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">request</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">construct_request</span>(<span class="ident">SendTransactionRequest</span> {
             <span class="ident">network_id</span>: <span class="ident">u32::from</span>(<span class="ident">u16::from</span>(<span class="ident">DEFAULT_NETWORK_ID</span>)),
-            <span class="ident">payload</span>:    <span class="ident">crypto_common::to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">crypto_common::Versioned::new</span>(
-                <span class="ident">crypto_common::VERSION_0</span>,
-                <span class="ident">bi</span>,
-            )),
+            <span class="ident">payload</span>:    <span class="ident">concordium_base::common::to_bytes</span>(
+                <span class="kw-2">&amp;</span><span class="ident">concordium_base::common::Versioned::new</span>(<span class="ident">concordium_base::common::VERSION_0</span>, <span class="ident">bi</span>),
+            ),
         })<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">client</span>.<span class="ident">send_transaction</span>(<span class="ident">request</span>).<span class="kw">await</span><span class="question-mark">?</span>;
         <span class="kw">if</span> <span class="ident">response</span>.<span class="ident">into_inner</span>().<span class="ident">value</span> {
@@ -1881,11 +1883,11 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">signatures</span>: <span class="kw-2">&amp;</span><span class="ident">TransactionSignature</span>, <span class="comment">// signatures for the transaction.</span>
         <span class="ident">body</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],                       <span class="comment">// body of the transaction (header + payload)</span>
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">types::hashes::TransactionHash</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">types::hashes::TransactionHash</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(
             <span class="ident">body</span>.<span class="ident">len</span>() <span class="op">+</span> <span class="ident">transactions::construct::TRANSACTION_HEADER_SIZE</span> <span class="kw">as</span> <span class="ident">usize</span>,
         );
-        <span class="ident">crypto_common::VERSION_0</span>.<span class="ident">serial</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">data</span>); <span class="comment">// outer version number</span>
+        <span class="ident">concordium_base::common::VERSION_0</span>.<span class="ident">serial</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">data</span>); <span class="comment">// outer version number</span>
         <span class="number">0u8</span>.<span class="ident">serial</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">data</span>); <span class="comment">// tag for account transaction</span>
         <span class="ident">signatures</span>.<span class="ident">serial</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">data</span>); <span class="comment">// signatures</span>
         <span class="ident">data</span>.<span class="ident">extend_from_slice</span>(<span class="ident">body</span>); <span class="comment">// header + payload</span>
@@ -1918,7 +1920,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">wait_for_finalization</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">height</span>: <span class="ident">types::AbsoluteBlockHeight</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span>(<span class="ident">types::AbsoluteBlockHeight</span>, <span class="ident">types::hashes::BlockHash</span>)<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span>(<span class="ident">types::AbsoluteBlockHeight</span>, <span class="ident">types::hashes::BlockHash</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interval</span> <span class="op">=</span> <span class="ident">tokio::time::interval</span>(<span class="ident">tokio::time::Duration::from_millis</span>(<span class="number">250</span>));
         <span class="ident">interval</span>.<span class="ident">set_missed_tick_behavior</span>(<span class="ident">tokio::time::MissedTickBehavior::Delay</span>);
         <span class="kw">loop</span> {
@@ -1942,7 +1944,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">wait_for_blocks_at</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">height</span>: <span class="ident">types::AbsoluteBlockHeight</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::hashes::BlockHash</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">RPCResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">types::hashes::BlockHash</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interval</span> <span class="op">=</span> <span class="ident">tokio::time::interval</span>(<span class="ident">tokio::time::Duration::from_millis</span>(<span class="number">250</span>));
         <span class="ident">interval</span>.<span class="ident">set_missed_tick_behavior</span>(<span class="ident">tokio::time::MissedTickBehavior::Delay</span>);
         <span class="kw">let</span> <span class="ident">input</span>: <span class="ident">BlocksAtHeightInput</span> <span class="op">=</span> <span class="ident">height</span>.<span class="ident">into</span>();
@@ -1968,7 +1970,7 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">wait_until_finalized</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">hash</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::TransactionHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span>(<span class="ident">types::hashes::BlockHash</span>, <span class="ident">types::BlockItemSummary</span>)<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span>(<span class="ident">types::hashes::BlockHash</span>, <span class="ident">types::BlockItemSummary</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interval</span> <span class="op">=</span> <span class="ident">tokio::time::interval</span>(<span class="ident">tokio::time::Duration::from_millis</span>(<span class="number">250</span>));
         <span class="ident">interval</span>.<span class="ident">set_missed_tick_behavior</span>(<span class="ident">tokio::time::MissedTickBehavior::Delay</span>);
         <span class="kw">loop</span> {
@@ -2010,15 +2012,15 @@
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">wait_until_committed</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">hash</span>: <span class="kw-2">&amp;</span><span class="ident">types::hashes::TransactionHash</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">types::hashes::BlockHash</span>, <span class="ident">types::BlockItemSummary</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">types::hashes::BlockHash</span>, <span class="ident">types::BlockItemSummary</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">interval</span> <span class="op">=</span> <span class="ident">tokio::time::interval</span>(<span class="ident">tokio::time::Duration::from_millis</span>(<span class="number">250</span>));
         <span class="ident">interval</span>.<span class="ident">set_missed_tick_behavior</span>(<span class="ident">tokio::time::MissedTickBehavior::Delay</span>);
         <span class="kw">loop</span> {
             <span class="ident">interval</span>.<span class="ident">tick</span>().<span class="kw">await</span>;
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">get_transaction_status</span>(<span class="ident">hash</span>).<span class="kw">await</span><span class="question-mark">?</span> {
-                <span class="ident">types::TransactionStatus::Received</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">continue</span>,
-                <span class="ident">types::TransactionStatus::Finalized</span>(<span class="ident">blocks</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">blocks</span>),
-                <span class="ident">types::TransactionStatus::Committed</span>(<span class="ident">blocks</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">blocks</span>),
+                <span class="ident">types::TransactionStatus::Received</span> =&gt; <span class="kw">continue</span>,
+                <span class="ident">types::TransactionStatus::Finalized</span>(<span class="ident">blocks</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">blocks</span>),
+                <span class="ident">types::TransactionStatus::Committed</span>(<span class="ident">blocks</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">blocks</span>),
             }
         }
     }
@@ -2028,7 +2030,7 @@
 <span class="doccomment">/// value. `null` is mapped to [QueryError::NotFound].</span>
 <span class="kw">fn</span> <span class="ident">parse_json_response</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">serde::de::DeserializeOwned</span><span class="op">&gt;</span>(
     <span class="ident">r</span>: <span class="ident">Response</span><span class="op">&lt;</span><span class="ident">JsonResponse</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">QueryResult</span><span class="op">&lt;</span><span class="ident">A</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">into_inner</span>();
     <span class="comment">// We go through the intermediate Value to handle arbitrary precision floats</span>
     <span class="comment">// limitation of Serde.</span>

@@ -381,12 +381,11 @@
 <span id="381">381</span>
 <span id="382">382</span>
 <span id="383">383</span>
-<span id="384">384</span>
 </pre><pre class="rust"><code><span class="doccomment">//! This module contains types and functions for interacting with smart</span>
 <span class="doccomment">//! contracts following the [CIS-2](https://proposals.concordium.software/CIS/cis-2.html) specification.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! The type [Cis2Contract](Cis2Contract) act as a wrapper around the</span>
-<span class="doccomment">//! [Client](crate::endpoints::Client) and a contract address providing</span>
+<span class="doccomment">//! The type [`Cis2Contract`](crate::cis2::Cis2Contract) act as a wrapper around</span>
+<span class="doccomment">//! the [Client](crate::endpoints::Client) and a contract address providing</span>
 <span class="doccomment">//! functions for querying and making transactions to smart contract.</span>
 <span class="kw">mod</span> <span class="ident">types</span>;
 
@@ -437,7 +436,7 @@
 <span class="comment">// `concordium_contracts_common::NewReceiveNameError` to implement</span>
 <span class="comment">// std::error::Error.</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">concordium_contracts_common::NewReceiveNameError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Cis2TransactionError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">concordium_contracts_common::NewReceiveNameError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">concordium_contracts_common::NewReceiveNameError</span>) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::InvalidReceiveName</span>(<span class="ident">err</span>)
     }
 }
@@ -448,7 +447,7 @@
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Cis2QueryError</span> {
     <span class="doccomment">/// The smart contract receive name is invalid.</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Invalid receive name: {0}&quot;</span>)]</span>
-    <span class="ident">InvalidReceiveName</span>(<span class="ident">concordium_contracts_common::NewReceiveNameError</span>),
+    <span class="ident">InvalidReceiveName</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">concordium_contracts_common::NewReceiveNameError</span>),
 
     <span class="doccomment">/// The parameter for `balanceOf` is invalid.</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Invalid balanceOf parameter: {0}&quot;</span>)]</span>
@@ -468,7 +467,7 @@
 
     <span class="doccomment">/// The returned bytes from invoking the smart contract could not be parsed.</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Failed parsing the response.&quot;</span>)]</span>
-    <span class="ident">ResponseParseError</span>(<span class="ident">concordium_contracts_common::ParseError</span>),
+    <span class="ident">ResponseParseError</span>(<span class="attribute">#[<span class="ident">from</span>]</span> <span class="ident">concordium_contracts_common::ParseError</span>),
 
     <span class="doccomment">/// The node rejected the invocation.</span>
     <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Rejected by the node.&quot;</span>)]</span>
@@ -476,24 +475,9 @@
 }
 
 <span class="comment">// This is implemented manually, since deriving it using thiserror requires</span>
-<span class="comment">// `concordium_contracts_common::NewReceiveNameError` to implement</span>
-<span class="comment">// std::error::Error.</span>
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">concordium_contracts_common::NewReceiveNameError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Cis2QueryError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">concordium_contracts_common::NewReceiveNameError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident"><span class="self">Self</span>::InvalidReceiveName</span>(<span class="ident">err</span>)
-    }
-}
-
-<span class="comment">// This is implemented manually, since deriving it using thiserror requires</span>
-<span class="comment">// `concordium_contracts_common::ParseError` to implement std::error::Error.</span>
-<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">concordium_contracts_common::ParseError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Cis2QueryError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">concordium_contracts_common::ParseError</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::ResponseParseError</span>(<span class="ident">err</span>) }
-}
-
-<span class="comment">// This is implemented manually, since deriving it using thiserror requires</span>
 <span class="comment">// `RejectReason` to implement std::error::Error.</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">sdk_types::RejectReason</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Cis2QueryError</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">sdk_types::RejectReason</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::NodeRejected</span>(<span class="ident">err</span>) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">err</span>: <span class="ident">sdk_types::RejectReason</span>) -&gt; <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::NodeRejected</span>(<span class="ident">err</span>) }
 }
 
 <span class="doccomment">/// Transaction metadata for CIS-2</span>
@@ -525,7 +509,7 @@
         <span class="ident">client</span>: <span class="ident">Client</span>,
         <span class="ident">address</span>: <span class="ident">ContractAddress</span>,
         <span class="ident">contract_name</span>: <span class="ident">concordium_contracts_common::OwnedContractName</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Cis2Contract</span> {
+    ) -&gt; <span class="ident">Cis2Contract</span> {
         <span class="ident">Cis2Contract</span> {
             <span class="ident">client</span>,
             <span class="ident">address</span>,
@@ -548,19 +532,21 @@
         <span class="ident">signer</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">transactions::ExactSizeTransactionSigner</span>,
         <span class="ident">transaction_metadata</span>: <span class="ident">Cis2TransactionMetadata</span>,
         <span class="ident">transfers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Transfer</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">sdk_types::hashes::TransactionHash</span>, <span class="ident">Cis2TransactionError</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">sdk_types::hashes::TransactionHash</span>, <span class="ident">Cis2TransactionError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">parameter</span> <span class="op">=</span> <span class="ident">TransferParams::new</span>(<span class="ident">transfers</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">concordium_contracts_common::to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">parameter</span>);
         <span class="kw">let</span> <span class="ident">contract_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">contract_name</span>.<span class="ident">as_contract_name</span>().<span class="ident">contract_name</span>();
         <span class="kw">let</span> <span class="ident">receive_name</span> <span class="op">=</span>
-            <span class="ident">smart_contracts::ReceiveName::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;{}.transfer&quot;</span>, <span class="ident">contract_name</span>))<span class="question-mark">?</span>;
+            <span class="ident">smart_contracts::OwnedReceiveName::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;{}.transfer&quot;</span>, <span class="ident">contract_name</span>))<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">payload</span> <span class="op">=</span> <span class="ident">transactions::Payload::Update</span> {
             <span class="ident">payload</span>: <span class="ident">transactions::UpdateContractPayload</span> {
                 <span class="ident">amount</span>: <span class="ident">transaction_metadata</span>.<span class="ident">amount</span>,
                 <span class="ident">address</span>: <span class="self">self</span>.<span class="ident">address</span>,
                 <span class="ident">receive_name</span>,
-                <span class="ident">message</span>: <span class="ident">smart_contracts::Parameter::from</span>(<span class="ident">bytes</span>),
+                <span class="ident">message</span>: <span class="ident">smart_contracts::Parameter::try_from</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+                    <span class="ident">Cis2TransactionError::InvalidTransferParams</span>(<span class="ident">NewTransferParamsError</span>)
+                })<span class="question-mark">?</span>,
             },
         };
         <span class="kw">let</span> <span class="ident">tx</span> <span class="op">=</span> <span class="ident">transactions::send::make_and_sign_transaction</span>(
@@ -593,20 +579,24 @@
         <span class="ident">signer</span>: <span class="kw-2">&amp;</span><span class="kw">impl</span> <span class="ident">transactions::ExactSizeTransactionSigner</span>,
         <span class="ident">transaction_metadata</span>: <span class="ident">Cis2TransactionMetadata</span>,
         <span class="ident">updates</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UpdateOperator</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">sdk_types::hashes::TransactionHash</span>, <span class="ident">Cis2TransactionError</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">anyhow::Result</span><span class="op">&lt;</span><span class="ident">sdk_types::hashes::TransactionHash</span>, <span class="ident">Cis2TransactionError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">parameter</span> <span class="op">=</span> <span class="ident">UpdateOperatorParams::new</span>(<span class="ident">updates</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">concordium_contracts_common::to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">parameter</span>);
         <span class="kw">let</span> <span class="ident">contract_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">contract_name</span>.<span class="ident">as_contract_name</span>().<span class="ident">contract_name</span>();
 
-        <span class="kw">let</span> <span class="ident">receive_name</span> <span class="op">=</span>
-            <span class="ident">smart_contracts::ReceiveName::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;{}.updateOperator&quot;</span>, <span class="ident">contract_name</span>))<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">receive_name</span> <span class="op">=</span> <span class="ident">smart_contracts::OwnedReceiveName::try_from</span>(<span class="macro">format!</span>(
+            <span class="string">&quot;{}.updateOperator&quot;</span>,
+            <span class="ident">contract_name</span>
+        ))<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">payload</span> <span class="op">=</span> <span class="ident">transactions::Payload::Update</span> {
             <span class="ident">payload</span>: <span class="ident">transactions::UpdateContractPayload</span> {
                 <span class="ident">amount</span>: <span class="ident">transaction_metadata</span>.<span class="ident">amount</span>,
                 <span class="ident">address</span>: <span class="self">self</span>.<span class="ident">address</span>,
                 <span class="ident">receive_name</span>,
-                <span class="ident">message</span>: <span class="ident">smart_contracts::Parameter::from</span>(<span class="ident">bytes</span>),
+                <span class="ident">message</span>: <span class="ident">smart_contracts::Parameter::try_from</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+                    <span class="ident">Cis2TransactionError::InvalidUpdateOperatorParams</span>(<span class="ident">NewUpdateOperatorParamsError</span>)
+                })<span class="question-mark">?</span>,
             },
         };
         <span class="kw">let</span> <span class="ident">tx</span> <span class="op">=</span> <span class="ident">transactions::send::make_and_sign_transaction</span>(
@@ -636,19 +626,21 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">block_hash</span>: <span class="kw-2">&amp;</span><span class="ident">sdk_types::hashes::BlockHash</span>,
         <span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BalanceOfQuery</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BalanceOfQueryResponse</span>, <span class="ident">Cis2QueryError</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">BalanceOfQueryResponse</span>, <span class="ident">Cis2QueryError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">parameter</span> <span class="op">=</span> <span class="ident">BalanceOfQueryParams::new</span>(<span class="ident">queries</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">concordium_contracts_common::to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">parameter</span>);
         <span class="kw">let</span> <span class="ident">contract_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">contract_name</span>.<span class="ident">as_contract_name</span>().<span class="ident">contract_name</span>();
         <span class="kw">let</span> <span class="ident">receive_name</span> <span class="op">=</span>
-            <span class="ident">smart_contracts::ReceiveName::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;{}.balanceOf&quot;</span>, <span class="ident">contract_name</span>))<span class="question-mark">?</span>;
+            <span class="ident">smart_contracts::OwnedReceiveName::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;{}.balanceOf&quot;</span>, <span class="ident">contract_name</span>))<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">contract_context</span> <span class="op">=</span> <span class="ident">smart_contracts::ContractContext</span> {
             <span class="ident">invoker</span>:   <span class="prelude-val">None</span>,
             <span class="ident">contract</span>:  <span class="self">self</span>.<span class="ident">address</span>,
-            <span class="ident">amount</span>:    <span class="ident">common::types::Amount::from</span>(<span class="number">0</span>),
+            <span class="ident">amount</span>:    <span class="ident">common::types::Amount::from_micro_ccd</span>(<span class="number">0</span>),
             <span class="ident">method</span>:    <span class="ident">receive_name</span>,
-            <span class="ident">parameter</span>: <span class="ident">smart_contracts::Parameter::from</span>(<span class="ident">bytes</span>),
+            <span class="ident">parameter</span>: <span class="ident">smart_contracts::Parameter::try_from</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+                <span class="ident">Cis2QueryError::InvalidBalanceOfParams</span>(<span class="ident">NewBalanceOfQueryParamsError</span>)
+            })<span class="question-mark">?</span>,
             <span class="ident">energy</span>:    <span class="ident">smart_contracts::MAX_ALLOWED_INVOKE_ENERGY</span>,
         };
 
@@ -658,7 +650,7 @@
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">match</span> <span class="ident">invoke_result</span> {
-            <span class="ident">smart_contracts::InvokeContractResult::Success</span> { <span class="ident">return_value</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">smart_contracts::InvokeContractResult::Success</span> { <span class="ident">return_value</span>, .. } =&gt; {
                 <span class="kw">let</span> <span class="ident">bytes</span>: <span class="ident">smart_contracts::ReturnValue</span> <span class="op">=</span> <span class="ident">return_value</span>.<span class="ident">ok_or</span>(
                     <span class="ident">Cis2QueryError::ResponseParseError</span>(<span class="ident">concordium_contracts_common::ParseError</span> {}),
                 )<span class="question-mark">?</span>;
@@ -666,7 +658,7 @@
                     <span class="ident">concordium_contracts_common::from_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>.<span class="ident">value</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">response</span>)
             }
-            <span class="ident">smart_contracts::InvokeContractResult::Failure</span> { <span class="ident">reason</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">reason</span>.<span class="ident">into</span>()),
+            <span class="ident">smart_contracts::InvokeContractResult::Failure</span> { <span class="ident">reason</span>, .. } =&gt; <span class="prelude-val">Err</span>(<span class="ident">reason</span>.<span class="ident">into</span>()),
         }
     }
 
@@ -684,19 +676,21 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">block_hash</span>: <span class="kw-2">&amp;</span><span class="ident">sdk_types::hashes::BlockHash</span>,
         <span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OperatorOfQuery</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OperatorOfQueryResponse</span>, <span class="ident">Cis2QueryError</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">OperatorOfQueryResponse</span>, <span class="ident">Cis2QueryError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">parameter</span> <span class="op">=</span> <span class="ident">OperatorOfQueryParams::new</span>(<span class="ident">queries</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">concordium_contracts_common::to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">parameter</span>);
         <span class="kw">let</span> <span class="ident">contract_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">contract_name</span>.<span class="ident">as_contract_name</span>().<span class="ident">contract_name</span>();
         <span class="kw">let</span> <span class="ident">receive_name</span> <span class="op">=</span>
-            <span class="ident">smart_contracts::ReceiveName::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;{}.operatorOf&quot;</span>, <span class="ident">contract_name</span>))<span class="question-mark">?</span>;
+            <span class="ident">smart_contracts::OwnedReceiveName::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;{}.operatorOf&quot;</span>, <span class="ident">contract_name</span>))<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">contract_context</span> <span class="op">=</span> <span class="ident">smart_contracts::ContractContext</span> {
             <span class="ident">invoker</span>:   <span class="prelude-val">None</span>,
             <span class="ident">contract</span>:  <span class="self">self</span>.<span class="ident">address</span>,
-            <span class="ident">amount</span>:    <span class="ident">common::types::Amount::from</span>(<span class="number">0</span>),
+            <span class="ident">amount</span>:    <span class="ident">common::types::Amount::from_micro_ccd</span>(<span class="number">0</span>),
             <span class="ident">method</span>:    <span class="ident">receive_name</span>,
-            <span class="ident">parameter</span>: <span class="ident">smart_contracts::Parameter::from</span>(<span class="ident">bytes</span>),
+            <span class="ident">parameter</span>: <span class="ident">smart_contracts::Parameter::try_from</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+                <span class="ident">Cis2QueryError::InvalidOperatorOfParams</span>(<span class="ident">NewOperatorOfQueryParamsError</span>)
+            })<span class="question-mark">?</span>,
             <span class="ident">energy</span>:    <span class="ident">smart_contracts::MAX_ALLOWED_INVOKE_ENERGY</span>,
         };
 
@@ -706,7 +700,7 @@
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">match</span> <span class="ident">invoke_result</span> {
-            <span class="ident">smart_contracts::InvokeContractResult::Success</span> { <span class="ident">return_value</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">smart_contracts::InvokeContractResult::Success</span> { <span class="ident">return_value</span>, .. } =&gt; {
                 <span class="kw">let</span> <span class="ident">bytes</span>: <span class="ident">smart_contracts::ReturnValue</span> <span class="op">=</span> <span class="ident">return_value</span>.<span class="ident">ok_or</span>(
                     <span class="ident">Cis2QueryError::ResponseParseError</span>(<span class="ident">concordium_contracts_common::ParseError</span> {}),
                 )<span class="question-mark">?</span>;
@@ -714,7 +708,7 @@
                     <span class="ident">concordium_contracts_common::from_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>.<span class="ident">value</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">response</span>)
             }
-            <span class="ident">smart_contracts::InvokeContractResult::Failure</span> { <span class="ident">reason</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">reason</span>.<span class="ident">into</span>()),
+            <span class="ident">smart_contracts::InvokeContractResult::Failure</span> { <span class="ident">reason</span>, .. } =&gt; <span class="prelude-val">Err</span>(<span class="ident">reason</span>.<span class="ident">into</span>()),
         }
     }
 
@@ -732,19 +726,23 @@
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">block_hash</span>: <span class="kw-2">&amp;</span><span class="ident">sdk_types::hashes::BlockHash</span>,
         <span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenId</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TokenMetadataQueryResponse</span>, <span class="ident">Cis2QueryError</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">TokenMetadataQueryResponse</span>, <span class="ident">Cis2QueryError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">parameter</span> <span class="op">=</span> <span class="ident">TokenMetadataQueryParams::new</span>(<span class="ident">queries</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">concordium_contracts_common::to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">parameter</span>);
         <span class="kw">let</span> <span class="ident">contract_name</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">contract_name</span>.<span class="ident">as_contract_name</span>().<span class="ident">contract_name</span>();
-        <span class="kw">let</span> <span class="ident">receive_name</span> <span class="op">=</span>
-            <span class="ident">smart_contracts::ReceiveName::try_from</span>(<span class="macro">format!</span>(<span class="string">&quot;{}.tokenMetadata&quot;</span>, <span class="ident">contract_name</span>))<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">receive_name</span> <span class="op">=</span> <span class="ident">smart_contracts::OwnedReceiveName::try_from</span>(<span class="macro">format!</span>(
+            <span class="string">&quot;{}.tokenMetadata&quot;</span>,
+            <span class="ident">contract_name</span>
+        ))<span class="question-mark">?</span>;
 
         <span class="kw">let</span> <span class="ident">contract_context</span> <span class="op">=</span> <span class="ident">smart_contracts::ContractContext</span> {
             <span class="ident">invoker</span>:   <span class="prelude-val">None</span>,
             <span class="ident">contract</span>:  <span class="self">self</span>.<span class="ident">address</span>,
-            <span class="ident">amount</span>:    <span class="ident">common::types::Amount::from</span>(<span class="number">0</span>),
+            <span class="ident">amount</span>:    <span class="ident">common::types::Amount::from_micro_ccd</span>(<span class="number">0</span>),
             <span class="ident">method</span>:    <span class="ident">receive_name</span>,
-            <span class="ident">parameter</span>: <span class="ident">smart_contracts::Parameter::from</span>(<span class="ident">bytes</span>),
+            <span class="ident">parameter</span>: <span class="ident">smart_contracts::Parameter::try_from</span>(<span class="ident">bytes</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> {
+                <span class="ident">Cis2QueryError::InvalidTokenMetadataParams</span>(<span class="ident">NewTokenMetadataQueryParamsError</span>)
+            })<span class="question-mark">?</span>,
             <span class="ident">energy</span>:    <span class="ident">smart_contracts::MAX_ALLOWED_INVOKE_ENERGY</span>,
         };
 
@@ -754,7 +752,7 @@
             .<span class="kw">await</span><span class="question-mark">?</span>;
 
         <span class="kw">match</span> <span class="ident">invoke_result</span> {
-            <span class="ident">smart_contracts::InvokeContractResult::Success</span> { <span class="ident">return_value</span>, .. } <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">smart_contracts::InvokeContractResult::Success</span> { <span class="ident">return_value</span>, .. } =&gt; {
                 <span class="kw">let</span> <span class="ident">bytes</span>: <span class="ident">smart_contracts::ReturnValue</span> <span class="op">=</span> <span class="ident">return_value</span>.<span class="ident">ok_or</span>(
                     <span class="ident">Cis2QueryError::ResponseParseError</span>(<span class="ident">concordium_contracts_common::ParseError</span> {}),
                 )<span class="question-mark">?</span>;
@@ -762,7 +760,7 @@
                     <span class="ident">concordium_contracts_common::from_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">bytes</span>.<span class="ident">value</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">response</span>)
             }
-            <span class="ident">smart_contracts::InvokeContractResult::Failure</span> { <span class="ident">reason</span>, .. } <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">reason</span>.<span class="ident">into</span>()),
+            <span class="ident">smart_contracts::InvokeContractResult::Failure</span> { <span class="ident">reason</span>, .. } =&gt; <span class="prelude-val">Err</span>(<span class="ident">reason</span>.<span class="ident">into</span>()),
         }
     }
 }

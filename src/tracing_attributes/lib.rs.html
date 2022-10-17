@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tracing-attributes-0.1.21&#x2F;src&#x2F;lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../tracing_attributes/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;tracing&#x2F;master&#x2F;assets&#x2F;logo-type.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tracing-attributes-0.1.23&#x2F;src&#x2F;lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../tracing_attributes/index.html'><div class='logo-container rust-logo'><img src='https:&#x2F;&#x2F;raw.githubusercontent.com&#x2F;tokio-rs&#x2F;tracing&#x2F;master&#x2F;assets&#x2F;logo-type.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -654,6 +654,27 @@
 <span id="654">654</span>
 <span id="655">655</span>
 <span id="656">656</span>
+<span id="657">657</span>
+<span id="658">658</span>
+<span id="659">659</span>
+<span id="660">660</span>
+<span id="661">661</span>
+<span id="662">662</span>
+<span id="663">663</span>
+<span id="664">664</span>
+<span id="665">665</span>
+<span id="666">666</span>
+<span id="667">667</span>
+<span id="668">668</span>
+<span id="669">669</span>
+<span id="670">670</span>
+<span id="671">671</span>
+<span id="672">672</span>
+<span id="673">673</span>
+<span id="674">674</span>
+<span id="675">675</span>
+<span id="676">676</span>
+<span id="677">677</span>
 </pre><pre class="rust"><code><span class="doccomment">//! A procedural macro attribute for instrumenting functions with [`tracing`].</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! [`tracing`] is a framework for instrumenting Rust programs to collect</span>
@@ -672,7 +693,7 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ```toml</span>
 <span class="doccomment">//! [dependencies]</span>
-<span class="doccomment">//! tracing-attributes = &quot;0.1.21&quot;</span>
+<span class="doccomment">//! tracing-attributes = &quot;0.1.23&quot;</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! The [`#[instrument]`][instrument] attribute can now be added to a function</span>
@@ -708,7 +729,7 @@
 <span class="doccomment">//! supported compiler version is not considered a semver breaking change as</span>
 <span class="doccomment">//! long as doing so complies with this policy.</span>
 <span class="doccomment">//!</span>
-<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/tracing-attributes/0.1.21&quot;</span>)]</span>
+<span class="attribute">#![<span class="ident">doc</span>(<span class="ident">html_root_url</span> <span class="op">=</span> <span class="string">&quot;https://docs.rs/tracing-attributes/0.1.23&quot;</span>)]</span>
 <span class="attribute">#![<span class="ident">doc</span>(
     <span class="ident">html_logo_url</span> <span class="op">=</span> <span class="string">&quot;https://raw.githubusercontent.com/tokio-rs/tracing/master/assets/logo-type.png&quot;</span>,
     <span class="ident">issue_tracker_base_url</span> <span class="op">=</span> <span class="string">&quot;https://github.com/tokio-rs/tracing/issues/&quot;</span>
@@ -742,14 +763,14 @@
 <span class="kw">use</span> <span class="ident">proc_macro2::TokenStream</span>;
 <span class="kw">use</span> <span class="ident">quote::ToTokens</span>;
 <span class="kw">use</span> <span class="ident">syn::parse</span>::{<span class="ident">Parse</span>, <span class="ident">ParseStream</span>};
-<span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">Attribute</span>, <span class="ident">Block</span>, <span class="ident">ItemFn</span>, <span class="ident">Signature</span>, <span class="ident">Visibility</span>};
+<span class="kw">use</span> <span class="ident">syn</span>::{<span class="ident">Attribute</span>, <span class="ident">ItemFn</span>, <span class="ident">Signature</span>, <span class="ident">Visibility</span>};
 
 <span class="kw">mod</span> <span class="ident">attr</span>;
 <span class="kw">mod</span> <span class="ident">expand</span>;
 <span class="doccomment">/// Instruments a function to create and enter a `tracing` [span] every time</span>
 <span class="doccomment">/// the function is called.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// Unless overriden, a span with `info` level will be generated.</span>
+<span class="doccomment">/// Unless overriden, a span with the [`INFO`] [level] will be generated.</span>
 <span class="doccomment">/// The generated span&#39;s name will be the name of the function.</span>
 <span class="doccomment">/// By default, all arguments to the function are included as fields on the</span>
 <span class="doccomment">/// span. Arguments that are `tracing` [primitive types] implementing the</span>
@@ -1076,7 +1097,7 @@
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
 <span class="doccomment">/// The return value event will have the same level as the span generated by `#[instrument]`.</span>
-<span class="doccomment">/// By default, this will be `TRACE`, but if the level is overridden, the event will be at the same</span>
+<span class="doccomment">/// By default, this will be [`INFO`], but if the level is overridden, the event will be at the same</span>
 <span class="doccomment">/// level.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// **Note**:  if the function returns a `Result&lt;T, E&gt;`, `ret` will record returned values if and</span>
@@ -1116,6 +1137,9 @@
 <span class="doccomment">///     Ok(())</span>
 <span class="doccomment">/// }</span>
 <span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// If a `target` is specified, both the `ret` and `err` arguments will emit outputs to</span>
+<span class="doccomment">/// the declared target (or the default channel if `target` is not specified).</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The `ret` and `err` arguments can be combined in order to record an event if a</span>
 <span class="doccomment">/// function returns [`Result::Ok`] or [`Result::Err`]:</span>
@@ -1205,7 +1229,7 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">instrument</span>(
     <span class="ident">args</span>: <span class="ident">proc_macro::TokenStream</span>,
     <span class="ident">item</span>: <span class="ident">proc_macro::TokenStream</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro::TokenStream</span> {
+) -&gt; <span class="ident">proc_macro::TokenStream</span> {
     <span class="kw">let</span> <span class="ident">args</span> <span class="op">=</span> <span class="macro">syn::parse_macro_input!</span>(<span class="ident">args</span> <span class="kw">as</span> <span class="ident">attr::InstrumentArgs</span>);
     <span class="comment">// Cloning a `TokenStream` is cheap since it&#39;s reference counted internally.</span>
     <span class="ident">instrument_precise</span>(<span class="ident">args</span>.<span class="ident">clone</span>(), <span class="ident">item</span>.<span class="ident">clone</span>())
@@ -1216,7 +1240,7 @@
 <span class="kw">fn</span> <span class="ident">instrument_speculative</span>(
     <span class="ident">args</span>: <span class="ident">attr::InstrumentArgs</span>,
     <span class="ident">item</span>: <span class="ident">proc_macro::TokenStream</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">proc_macro::TokenStream</span> {
+) -&gt; <span class="ident">proc_macro::TokenStream</span> {
     <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="macro">syn::parse_macro_input!</span>(<span class="ident">item</span> <span class="kw">as</span> <span class="ident">MaybeItemFn</span>);
     <span class="kw">let</span> <span class="ident">instrumented_function_name</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">sig</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>();
     <span class="ident">expand::gen_function</span>(
@@ -1233,18 +1257,20 @@
 <span class="kw">fn</span> <span class="ident">instrument_precise</span>(
     <span class="ident">args</span>: <span class="ident">attr::InstrumentArgs</span>,
     <span class="ident">item</span>: <span class="ident">proc_macro::TokenStream</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">proc_macro::TokenStream</span>, <span class="ident">syn::Error</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">proc_macro::TokenStream</span>, <span class="ident">syn::Error</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">syn::parse</span>::<span class="op">&lt;</span><span class="ident">ItemFn</span><span class="op">&gt;</span>(<span class="ident">item</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="ident">instrumented_function_name</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">sig</span>.<span class="ident">ident</span>.<span class="ident">to_string</span>();
 
     <span class="comment">// check for async_trait-like patterns in the block, and instrument</span>
     <span class="comment">// the future instead of the wrapper</span>
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">async_like</span>) <span class="op">=</span> <span class="ident">expand::AsyncInfo::from_fn</span>(<span class="kw-2">&amp;</span><span class="ident">input</span>) {
-        <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">async_like</span>.<span class="ident">gen_async</span>(<span class="ident">args</span>, <span class="ident">instrumented_function_name</span>.<span class="ident">as_str</span>()));
+        <span class="kw">return</span> <span class="ident">async_like</span>.<span class="ident">gen_async</span>(<span class="ident">args</span>, <span class="ident">instrumented_function_name</span>.<span class="ident">as_str</span>());
     }
 
+    <span class="kw">let</span> <span class="ident">input</span> <span class="op">=</span> <span class="ident">MaybeItemFn::from</span>(<span class="ident">input</span>);
+
     <span class="prelude-val">Ok</span>(<span class="ident">expand::gen_function</span>(
-        (<span class="kw-2">&amp;</span><span class="ident">input</span>).<span class="ident">into</span>(),
+        <span class="ident">input</span>.<span class="ident">as_ref</span>(),
         <span class="ident">args</span>,
         <span class="ident">instrumented_function_name</span>.<span class="ident">as_str</span>(),
         <span class="prelude-val">None</span>,
@@ -1256,16 +1282,18 @@
 <span class="doccomment">/// which&#39;s block is just a `TokenStream` (it may contain invalid code).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">struct</span> <span class="ident">MaybeItemFn</span> {
-    <span class="ident">attrs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&gt;</span>,
+    <span class="ident">outer_attrs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&gt;</span>,
+    <span class="ident">inner_attrs</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&gt;</span>,
     <span class="ident">vis</span>: <span class="ident">Visibility</span>,
     <span class="ident">sig</span>: <span class="ident">Signature</span>,
     <span class="ident">block</span>: <span class="ident">TokenStream</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">MaybeItemFn</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MaybeItemFnRef</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">TokenStream</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">MaybeItemFnRef</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">TokenStream</span><span class="op">&gt;</span> {
         <span class="ident">MaybeItemFnRef</span> {
-            <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">attrs</span>,
+            <span class="ident">outer_attrs</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">outer_attrs</span>,
+            <span class="ident">inner_attrs</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner_attrs</span>,
             <span class="ident">vis</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">vis</span>,
             <span class="ident">sig</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">sig</span>,
             <span class="ident">block</span>: <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">block</span>,
@@ -1276,13 +1304,15 @@
 <span class="doccomment">/// This parses a `TokenStream` into a `MaybeItemFn`</span>
 <span class="doccomment">/// (just like `ItemFn`, but skips parsing the body).</span>
 <span class="kw">impl</span> <span class="ident">Parse</span> <span class="kw">for</span> <span class="ident">MaybeItemFn</span> {
-    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">ParseStream</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">syn::Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">attrs</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">call</span>(<span class="ident">syn::Attribute::parse_outer</span>)<span class="question-mark">?</span>;
+    <span class="kw">fn</span> <span class="ident">parse</span>(<span class="ident">input</span>: <span class="ident">ParseStream</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">syn::Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">outer_attrs</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">call</span>(<span class="ident">Attribute::parse_outer</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">vis</span>: <span class="ident">Visibility</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">sig</span>: <span class="ident">Signature</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">inner_attrs</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">call</span>(<span class="ident">Attribute::parse_inner</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">block</span>: <span class="ident">TokenStream</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">parse</span>()<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="self">Self</span> {
-            <span class="ident">attrs</span>,
+            <span class="ident">outer_attrs</span>,
+            <span class="ident">inner_attrs</span>,
             <span class="ident">vis</span>,
             <span class="ident">sig</span>,
             <span class="ident">block</span>,
@@ -1290,25 +1320,37 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ItemFn</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeItemFn</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(
+        <span class="ident">ItemFn</span> {
+            <span class="ident">attrs</span>,
+            <span class="ident">vis</span>,
+            <span class="ident">sig</span>,
+            <span class="ident">block</span>,
+        }: <span class="ident">ItemFn</span>,
+    ) -&gt; <span class="self">Self</span> {
+        <span class="kw">let</span> (<span class="ident">outer_attrs</span>, <span class="ident">inner_attrs</span>) <span class="op">=</span> <span class="ident">attrs</span>
+            .<span class="ident">into_iter</span>()
+            .<span class="ident">partition</span>(<span class="op">|</span><span class="ident">attr</span><span class="op">|</span> <span class="ident">attr</span>.<span class="ident">style</span> <span class="op">==</span> <span class="ident">syn::AttrStyle::Outer</span>);
+        <span class="self">Self</span> {
+            <span class="ident">outer_attrs</span>,
+            <span class="ident">inner_attrs</span>,
+            <span class="ident">vis</span>,
+            <span class="ident">sig</span>,
+            <span class="ident">block</span>: <span class="ident">block</span>.<span class="ident">to_token_stream</span>(),
+        }
+    }
+}
+
 <span class="doccomment">/// A generic reference type for `MaybeItemFn`,</span>
 <span class="doccomment">/// that takes a generic block type `B` that implements `ToTokens` (eg. `TokenStream`, `Block`).</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="kw">struct</span> <span class="ident">MaybeItemFnRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">B</span>: <span class="ident">ToTokens</span><span class="op">&gt;</span> {
-    <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&gt;</span>,
+    <span class="ident">outer_attrs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&gt;</span>,
+    <span class="ident">inner_attrs</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Attribute</span><span class="op">&gt;</span>,
     <span class="ident">vis</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Visibility</span>,
     <span class="ident">sig</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Signature</span>,
     <span class="ident">block</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">B</span>,
-}
-
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ItemFn</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MaybeItemFnRef</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">Block</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">val</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ItemFn</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
-        <span class="ident">MaybeItemFnRef</span> {
-            <span class="ident">attrs</span>: <span class="kw-2">&amp;</span><span class="ident">val</span>.<span class="ident">attrs</span>,
-            <span class="ident">vis</span>: <span class="kw-2">&amp;</span><span class="ident">val</span>.<span class="ident">vis</span>,
-            <span class="ident">sig</span>: <span class="kw-2">&amp;</span><span class="ident">val</span>.<span class="ident">sig</span>,
-            <span class="ident">block</span>: <span class="kw-2">&amp;</span><span class="ident">val</span>.<span class="ident">block</span>,
-        }
-    }
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="tracing_attributes" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>

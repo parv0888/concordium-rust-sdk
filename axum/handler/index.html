@@ -14,7 +14,7 @@ by routing between handlers.</p>
 
 <span class="comment">// Handler that immediately returns an empty `200 OK` response with a plain</span>
 <span class="comment">// text body.</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">string_handler</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">string_handler</span>() -&gt; <span class="ident">String</span> {
     <span class="string">&quot;Hello, World!&quot;</span>.<span class="ident">to_string</span>()
 }
 
@@ -25,14 +25,14 @@ by routing between handlers.</p>
 <span class="comment">//</span>
 <span class="comment">// `String` and `StatusCode` both implement `IntoResponse` and</span>
 <span class="comment">// therefore `Result&lt;String, StatusCode&gt;` also implements `IntoResponse`</span>
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">echo</span>(<span class="ident">body</span>: <span class="ident">Bytes</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">StatusCode</span><span class="op">&gt;</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">echo</span>(<span class="ident">body</span>: <span class="ident">Bytes</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">StatusCode</span><span class="op">&gt;</span> {
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">string</span>) <span class="op">=</span> <span class="ident">String::from_utf8</span>(<span class="ident">body</span>.<span class="ident">to_vec</span>()) {
         <span class="prelude-val">Ok</span>(<span class="ident">string</span>)
     } <span class="kw">else</span> {
         <span class="prelude-val">Err</span>(<span class="ident">StatusCode::BAD_REQUEST</span>)
     }
 }</code></pre></div>
-<h2 id="debugging-handler-type-errors" class="section-header"><a href="#debugging-handler-type-errors">Debugging handler type errors</a></h2>
+<h3 id="debugging-handler-type-errors" class="section-header"><a href="#debugging-handler-type-errors">Debugging handler type errors</a></h3>
 <p>For a function to be used as a handler it must implement the <a href="trait.Handler.html" title="Handler"><code>Handler</code></a> trait.
 axum provides blanket implementations for functions that:</p>
 <ul>
@@ -61,12 +61,12 @@ that doesn’t quite match what’s required by <a href="trait.Handler.html" tit
 <a href="trait.Handler.html" title="Handler"><code>Handler</code></a>. It’s possible to improve the error with the <a href="https://docs.rs/axum-macros/latest/axum_macros/attr.debug_handler.html"><code>debug_handler</code></a>
 proc-macro from the <a href="https://docs.rs/axum-macros">axum-macros</a> crate.</p>
 </div></details><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="mod" href="future/index.html" title="axum::handler::future mod">future</a></div><div class="item-right docblock-short"><p>Handler future types.</p>
-</div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="struct" href="struct.IntoService.html" title="axum::handler::IntoService struct">IntoService</a></div><div class="item-right docblock-short"><p>An adapter that makes a <a href="trait.Handler.html" title="Handler"><code>Handler</code></a> into a <a href="../../tower_service/trait.Service.html" title="Service"><code>Service</code></a>.</p>
-</div><div class="item-left module-item"><a class="struct" href="struct.Layered.html" title="axum::handler::Layered struct">Layered</a></div><div class="item-right docblock-short"><p>A <a href="../../tower_service/trait.Service.html" title="Service"><code>Service</code></a> created from a <a href="trait.Handler.html" title="Handler"><code>Handler</code></a> by applying a Tower middleware.</p>
-</div></div><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="trait" href="trait.Handler.html" title="axum::handler::Handler trait">Handler</a></div><div class="item-right docblock-short"><p>Trait for async functions that can be used to handle requests.</p>
-</div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="axum" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="future/index.html" title="axum::handler::future mod">future</a></div><div class="item-right docblock-short"><p>Handler future types.</p>
+</div></div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.IntoService.html" title="axum::handler::IntoService struct">IntoService</a></div><div class="item-right docblock-short"><p>An adapter that makes a <a href="trait.Handler.html" title="Handler"><code>Handler</code></a> into a <a href="../../tower_service/trait.Service.html" title="Service"><code>Service</code></a>.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Layered.html" title="axum::handler::Layered struct">Layered</a></div><div class="item-right docblock-short"><p>A <a href="../../tower_service/trait.Service.html" title="Service"><code>Service</code></a> created from a <a href="trait.Handler.html" title="Handler"><code>Handler</code></a> by applying a Tower middleware.</p>
+</div></div></div><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.Handler.html" title="axum::handler::Handler trait">Handler</a></div><div class="item-right docblock-short"><p>Trait for async functions that can be used to handle requests.</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="axum" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script>
 </body></html>

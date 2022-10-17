@@ -229,7 +229,7 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function must be provided a `table` and `wnaf` that were constructed with</span>
 <span class="doccomment">/// the same window size; otherwise, it may panic or produce invalid results.</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">wnaf_exp</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">CurveProjective</span><span class="op">&gt;</span>(<span class="ident">table</span>: <span class="kw-2">&amp;</span>[<span class="ident">G</span>], <span class="ident">wnaf</span>: <span class="kw-2">&amp;</span>[<span class="ident">i64</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">G</span> {
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">wnaf_exp</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">CurveProjective</span><span class="op">&gt;</span>(<span class="ident">table</span>: <span class="kw-2">&amp;</span>[<span class="ident">G</span>], <span class="ident">wnaf</span>: <span class="kw-2">&amp;</span>[<span class="ident">i64</span>]) -&gt; <span class="ident">G</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">G::zero</span>();
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_one</span> <span class="op">=</span> <span class="bool-val">false</span>;
@@ -263,7 +263,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">CurveProjective</span><span class="op">&gt;</span> <span class="ident">Wnaf</span><span class="op">&lt;</span>(), <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Construct a new wNAF context without allocating.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">Wnaf</span> {
             <span class="ident">base</span>: <span class="macro">vec!</span>[],
             <span class="ident">scalar</span>: <span class="macro">vec!</span>[],
@@ -273,7 +273,7 @@
 
     <span class="doccomment">/// Given a base and a number of scalars, compute a window table and return a `Wnaf` object that</span>
     <span class="doccomment">/// can perform exponentiations with `.scalar(..)`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="ident">G</span>, <span class="ident">num_scalars</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="kw-2">&amp;</span>[<span class="ident">G</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="ident">G</span>, <span class="ident">num_scalars</span>: <span class="ident">usize</span>) -&gt; <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="kw-2">&amp;</span>[<span class="ident">G</span>], <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="comment">// Compute the appropriate window size based on the number of scalars.</span>
         <span class="kw">let</span> <span class="ident">window_size</span> <span class="op">=</span> <span class="ident">G::recommended_wnaf_for_num_scalars</span>(<span class="ident">num_scalars</span>);
 
@@ -294,7 +294,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalar</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">scalar</span>: <span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">G</span> <span class="kw">as</span> <span class="ident">CurveProjective</span><span class="op">&gt;</span><span class="ident">::Scalar</span> <span class="kw">as</span> <span class="ident">PrimeField</span><span class="op">&gt;</span><span class="ident">::Repr</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span>[<span class="ident">i64</span>]<span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span>[<span class="ident">i64</span>]<span class="op">&gt;</span> {
         <span class="comment">// Compute the appropriate window size for the scalar.</span>
         <span class="kw">let</span> <span class="ident">window_size</span> <span class="op">=</span> <span class="ident">G::recommended_wnaf_for_scalar</span>(<span class="ident">scalar</span>);
 
@@ -314,7 +314,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">G</span>: <span class="ident">CurveProjective</span><span class="op">&gt;</span> <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">G</span>], <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Constructs new space for the scalar representation while borrowing</span>
     <span class="doccomment">/// the computed window table, for sending the window table across threads.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">G</span>], <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">G</span>], <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">Wnaf</span> {
             <span class="ident">base</span>: <span class="self">self</span>.<span class="ident">base</span>,
             <span class="ident">scalar</span>: <span class="macro">vec!</span>[],
@@ -327,7 +327,7 @@
     <span class="doccomment">/// Constructs new space for the window table while borrowing</span>
     <span class="doccomment">/// the computed scalar representation, for sending the scalar representation</span>
     <span class="doccomment">/// across threads.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">i64</span>]<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shared</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> [<span class="ident">i64</span>]<span class="op">&gt;</span> {
         <span class="ident">Wnaf</span> {
             <span class="ident">base</span>: <span class="macro">vec!</span>[],
             <span class="ident">scalar</span>: <span class="self">self</span>.<span class="ident">scalar</span>,
@@ -338,7 +338,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">i64</span>]<span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Wnaf</span><span class="op">&lt;</span><span class="ident">usize</span>, <span class="ident">B</span>, <span class="ident">S</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Performs exponentiation given a base.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">CurveProjective</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="ident">G</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">G</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">base</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">CurveProjective</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">base</span>: <span class="ident">G</span>) -&gt; <span class="ident">G</span>
     <span class="kw">where</span>
         <span class="ident">B</span>: <span class="ident">AsMut</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">G</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
@@ -352,7 +352,7 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">scalar</span><span class="op">&lt;</span><span class="ident">G</span>: <span class="ident">CurveProjective</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">scalar</span>: <span class="op">&lt;</span><span class="op">&lt;</span><span class="ident">G</span> <span class="kw">as</span> <span class="ident">CurveProjective</span><span class="op">&gt;</span><span class="ident">::Scalar</span> <span class="kw">as</span> <span class="ident">PrimeField</span><span class="op">&gt;</span><span class="ident">::Repr</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">G</span>
+    ) -&gt; <span class="ident">G</span>
     <span class="kw">where</span>
         <span class="ident">B</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">G</span>]<span class="op">&gt;</span>,
     {

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;crossbeam-epoch-0.9.9&#x2F;src&#x2F;atomic.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>atomic.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../crossbeam_epoch/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;crossbeam-epoch-0.9.11&#x2F;src&#x2F;atomic.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>atomic.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../crossbeam_epoch/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -1616,6 +1616,106 @@
 <span id="1616">1616</span>
 <span id="1617">1617</span>
 <span id="1618">1618</span>
+<span id="1619">1619</span>
+<span id="1620">1620</span>
+<span id="1621">1621</span>
+<span id="1622">1622</span>
+<span id="1623">1623</span>
+<span id="1624">1624</span>
+<span id="1625">1625</span>
+<span id="1626">1626</span>
+<span id="1627">1627</span>
+<span id="1628">1628</span>
+<span id="1629">1629</span>
+<span id="1630">1630</span>
+<span id="1631">1631</span>
+<span id="1632">1632</span>
+<span id="1633">1633</span>
+<span id="1634">1634</span>
+<span id="1635">1635</span>
+<span id="1636">1636</span>
+<span id="1637">1637</span>
+<span id="1638">1638</span>
+<span id="1639">1639</span>
+<span id="1640">1640</span>
+<span id="1641">1641</span>
+<span id="1642">1642</span>
+<span id="1643">1643</span>
+<span id="1644">1644</span>
+<span id="1645">1645</span>
+<span id="1646">1646</span>
+<span id="1647">1647</span>
+<span id="1648">1648</span>
+<span id="1649">1649</span>
+<span id="1650">1650</span>
+<span id="1651">1651</span>
+<span id="1652">1652</span>
+<span id="1653">1653</span>
+<span id="1654">1654</span>
+<span id="1655">1655</span>
+<span id="1656">1656</span>
+<span id="1657">1657</span>
+<span id="1658">1658</span>
+<span id="1659">1659</span>
+<span id="1660">1660</span>
+<span id="1661">1661</span>
+<span id="1662">1662</span>
+<span id="1663">1663</span>
+<span id="1664">1664</span>
+<span id="1665">1665</span>
+<span id="1666">1666</span>
+<span id="1667">1667</span>
+<span id="1668">1668</span>
+<span id="1669">1669</span>
+<span id="1670">1670</span>
+<span id="1671">1671</span>
+<span id="1672">1672</span>
+<span id="1673">1673</span>
+<span id="1674">1674</span>
+<span id="1675">1675</span>
+<span id="1676">1676</span>
+<span id="1677">1677</span>
+<span id="1678">1678</span>
+<span id="1679">1679</span>
+<span id="1680">1680</span>
+<span id="1681">1681</span>
+<span id="1682">1682</span>
+<span id="1683">1683</span>
+<span id="1684">1684</span>
+<span id="1685">1685</span>
+<span id="1686">1686</span>
+<span id="1687">1687</span>
+<span id="1688">1688</span>
+<span id="1689">1689</span>
+<span id="1690">1690</span>
+<span id="1691">1691</span>
+<span id="1692">1692</span>
+<span id="1693">1693</span>
+<span id="1694">1694</span>
+<span id="1695">1695</span>
+<span id="1696">1696</span>
+<span id="1697">1697</span>
+<span id="1698">1698</span>
+<span id="1699">1699</span>
+<span id="1700">1700</span>
+<span id="1701">1701</span>
+<span id="1702">1702</span>
+<span id="1703">1703</span>
+<span id="1704">1704</span>
+<span id="1705">1705</span>
+<span id="1706">1706</span>
+<span id="1707">1707</span>
+<span id="1708">1708</span>
+<span id="1709">1709</span>
+<span id="1710">1710</span>
+<span id="1711">1711</span>
+<span id="1712">1712</span>
+<span id="1713">1713</span>
+<span id="1714">1714</span>
+<span id="1715">1715</span>
+<span id="1716">1716</span>
+<span id="1717">1717</span>
+<span id="1718">1718</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">core::borrow</span>::{<span class="ident">Borrow</span>, <span class="ident">BorrowMut</span>};
 <span class="kw">use</span> <span class="ident">core::cmp</span>;
 <span class="kw">use</span> <span class="ident">core::fmt</span>;
@@ -1634,12 +1734,12 @@
 <span class="doccomment">/// Given ordering for the success case in a compare-exchange operation, returns the strongest</span>
 <span class="doccomment">/// appropriate ordering for the failure case.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">strongest_failure_ordering</span>(<span class="ident">ord</span>: <span class="ident">Ordering</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+<span class="kw">fn</span> <span class="ident">strongest_failure_ordering</span>(<span class="ident">ord</span>: <span class="ident">Ordering</span>) -&gt; <span class="ident">Ordering</span> {
     <span class="kw">use</span> <span class="ident"><span class="self">self</span>::Ordering</span>::<span class="kw-2">*</span>;
     <span class="kw">match</span> <span class="ident">ord</span> {
-        <span class="ident">Relaxed</span> <span class="op">|</span> <span class="ident">Release</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Relaxed</span>,
-        <span class="ident">Acquire</span> <span class="op">|</span> <span class="ident">AcqRel</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Acquire</span>,
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SeqCst</span>,
+        <span class="ident">Relaxed</span> <span class="op">|</span> <span class="ident">Release</span> =&gt; <span class="ident">Relaxed</span>,
+        <span class="ident">Acquire</span> <span class="op">|</span> <span class="ident">AcqRel</span> =&gt; <span class="ident">Acquire</span>,
+        <span class="kw">_</span> =&gt; <span class="ident">SeqCst</span>,
     }
 }
 
@@ -1658,7 +1758,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>, <span class="ident">P</span>: <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">fmt::Debug</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">CompareExchangeError</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;CompareExchangeError&quot;</span>)
             .<span class="ident">field</span>(<span class="string">&quot;current&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">current</span>)
             .<span class="ident">field</span>(<span class="string">&quot;new&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">new</span>)
@@ -1684,24 +1784,24 @@
 )]</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">CompareAndSetOrdering</span> {
     <span class="doccomment">/// The ordering of the operation when it succeeds.</span>
-    <span class="kw">fn</span> <span class="ident">success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span>;
+    <span class="kw">fn</span> <span class="ident">success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Ordering</span>;
 
     <span class="doccomment">/// The ordering of the operation when it fails.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The failure ordering can&#39;t be `Release` or `AcqRel` and must be equivalent or weaker than</span>
     <span class="doccomment">/// the success ordering.</span>
-    <span class="kw">fn</span> <span class="ident">failure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span>;
+    <span class="kw">fn</span> <span class="ident">failure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Ordering</span>;
 }
 
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
 <span class="kw">impl</span> <span class="ident">CompareAndSetOrdering</span> <span class="kw">for</span> <span class="ident">Ordering</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="kw-2">*</span><span class="self">self</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">failure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">failure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="ident">strongest_failure_ordering</span>(<span class="kw-2">*</span><span class="self">self</span>)
     }
 }
@@ -1709,19 +1809,19 @@
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
 <span class="kw">impl</span> <span class="ident">CompareAndSetOrdering</span> <span class="kw">for</span> (<span class="ident">Ordering</span>, <span class="ident">Ordering</span>) {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">success</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="self">self</span>.<span class="number">0</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">failure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">failure</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="self">self</span>.<span class="number">1</span>
     }
 }
 
 <span class="doccomment">/// Returns a bitmask containing the unused least significant bits of an aligned pointer to `T`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">low_bits</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+<span class="kw">fn</span> <span class="ident">low_bits</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span>() -&gt; <span class="ident">usize</span> {
     (<span class="number">1</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">T::ALIGN</span>.<span class="ident">trailing_zeros</span>()) <span class="op">-</span> <span class="number">1</span>
 }
 
@@ -1735,13 +1835,13 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// `tag` is truncated to fit into the unused bits of the pointer to `T`.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">compose_tag</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">usize</span>, <span class="ident">tag</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+<span class="kw">fn</span> <span class="ident">compose_tag</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">usize</span>, <span class="ident">tag</span>: <span class="ident">usize</span>) -&gt; <span class="ident">usize</span> {
     (<span class="ident">data</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">low_bits</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>()) <span class="op">|</span> (<span class="ident">tag</span> <span class="op">&amp;</span> <span class="ident">low_bits</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>())
 }
 
 <span class="doccomment">/// Decomposes a tagged pointer `data` into the pointer and the tag.</span>
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">decompose_tag</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> (<span class="ident">usize</span>, <span class="ident">usize</span>) {
+<span class="kw">fn</span> <span class="ident">decompose_tag</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span>(<span class="ident">data</span>: <span class="ident">usize</span>) -&gt; (<span class="ident">usize</span>, <span class="ident">usize</span>) {
     (<span class="ident">data</span> <span class="op">&amp;</span> <span class="op">!</span><span class="ident">low_bits</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(), <span class="ident">data</span> <span class="op">&amp;</span> <span class="ident">low_bits</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>())
 }
 
@@ -1777,7 +1877,7 @@
     <span class="doccomment">/// # Safety</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// The result should be a multiple of `ALIGN`.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">init</span>: <span class="ident"><span class="self">Self</span>::Init</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">init</span>: <span class="ident"><span class="self">Self</span>::Init</span>) -&gt; <span class="ident">usize</span>;
 
     <span class="doccomment">/// Dereferences the given pointer.</span>
     <span class="doccomment">///</span>
@@ -1786,7 +1886,7 @@
     <span class="doccomment">/// - The given `ptr` should have been initialized with [`Pointable::init`].</span>
     <span class="doccomment">/// - `ptr` should not have yet been dropped by [`Pointable::drop`].</span>
     <span class="doccomment">/// - `ptr` should not be mutably dereferenced by [`Pointable::deref_mut`] concurrently.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">Self</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">Self</span>;
 
     <span class="doccomment">/// Mutably dereferences the given pointer.</span>
     <span class="doccomment">///</span>
@@ -1796,7 +1896,7 @@
     <span class="doccomment">/// - `ptr` should not have yet been dropped by [`Pointable::drop`].</span>
     <span class="doccomment">/// - `ptr` should not be dereferenced by [`Pointable::deref`] or [`Pointable::deref_mut`]</span>
     <span class="doccomment">///   concurrently.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">Self</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">Self</span>;
 
     <span class="doccomment">/// Drops the object pointed to by the given pointer.</span>
     <span class="doccomment">///</span>
@@ -1814,15 +1914,15 @@
 
     <span class="kw">type</span> <span class="ident">Init</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">init</span>: <span class="ident"><span class="self">Self</span>::Init</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">init</span>: <span class="ident"><span class="self">Self</span>::Init</span>) -&gt; <span class="ident">usize</span> {
         <span class="ident">Box::into_raw</span>(<span class="ident">Box::new</span>(<span class="ident">init</span>)) <span class="kw">as</span> <span class="ident">usize</span>
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">Self</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>)
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">Self</span> {
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw-2">*</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>)
     }
 
@@ -1866,11 +1966,11 @@
 
     <span class="kw">type</span> <span class="ident">Init</span> <span class="op">=</span> <span class="ident">usize</span>;
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">len</span>: <span class="ident"><span class="self">Self</span>::Init</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">len</span>: <span class="ident"><span class="self">Self</span>::Init</span>) -&gt; <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="ident">mem::size_of</span>::<span class="op">&lt;</span><span class="ident">Array</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>() <span class="op">+</span> <span class="ident">mem::size_of</span>::<span class="op">&lt;</span><span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>() <span class="op">*</span> <span class="ident">len</span>;
         <span class="kw">let</span> <span class="ident">align</span> <span class="op">=</span> <span class="ident">mem::align_of</span>::<span class="op">&lt;</span><span class="ident">Array</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>();
         <span class="kw">let</span> <span class="ident">layout</span> <span class="op">=</span> <span class="ident">alloc::Layout::from_size_align</span>(<span class="ident">size</span>, <span class="ident">align</span>).<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">alloc::alloc</span>(<span class="ident">layout</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>;
+        <span class="kw">let</span> <span class="ident">ptr</span> <span class="op">=</span> <span class="ident">alloc::alloc</span>(<span class="ident">layout</span>).<span class="ident">cast</span>::<span class="op">&lt;</span><span class="ident">Array</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>();
         <span class="kw">if</span> <span class="ident">ptr</span>.<span class="ident">is_null</span>() {
             <span class="ident">alloc::handle_alloc_error</span>(<span class="ident">layout</span>);
         }
@@ -1878,12 +1978,12 @@
         <span class="ident">ptr</span> <span class="kw">as</span> <span class="ident">usize</span>
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
         <span class="ident">slice::from_raw_parts</span>(<span class="ident">array</span>.<span class="ident">elements</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>, <span class="ident">array</span>.<span class="ident">len</span>)
     }
 
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref_mut</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>(<span class="ident">ptr</span>: <span class="ident">usize</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="kw-2">mut</span> <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">array</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span>(<span class="ident">ptr</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">Array</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>);
         <span class="ident">slice::from_raw_parts_mut</span>(<span class="ident">array</span>.<span class="ident">elements</span>.<span class="ident">as_ptr</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>, <span class="ident">array</span>.<span class="ident">len</span>)
     }
@@ -1923,8 +2023,9 @@
     <span class="doccomment">/// use crossbeam_epoch::Atomic;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Atomic::new(1234);</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">init</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">init</span>: <span class="ident">T</span>) -&gt; <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::init</span>(<span class="ident">init</span>)
     }
 }
@@ -1938,13 +2039,14 @@
     <span class="doccomment">/// use crossbeam_epoch::Atomic;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Atomic::&lt;i32&gt;::init(1234);</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">init</span>: <span class="ident">T::Init</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">init</span>: <span class="ident">T::Init</span>) -&gt; <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::from</span>(<span class="ident">Owned::init</span>(<span class="ident">init</span>))
     }
 
     <span class="doccomment">/// Returns a new atomic pointer pointing to the tagged pointer `data`.</span>
-    <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">data</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">data</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">data</span>: <span class="ident">AtomicUsize::new</span>(<span class="ident">data</span>),
             <span class="ident">_marker</span>: <span class="ident">PhantomData</span>,
@@ -1960,8 +2062,8 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Atomic::&lt;i32&gt;::null();</span>
     <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">crossbeam_const_fn_trait_bound</span>, <span class="ident">not</span>(<span class="ident">crossbeam_loom</span>)))]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">null</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">not</span>(<span class="ident">crossbeam_no_const_fn_trait_bound</span>), <span class="ident">not</span>(<span class="ident">crossbeam_loom</span>)))]</span>
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">null</span>() -&gt; <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">Self</span> {
             <span class="ident">data</span>: <span class="ident">AtomicUsize::new</span>(<span class="number">0</span>),
             <span class="ident">_marker</span>: <span class="ident">PhantomData</span>,
@@ -1969,8 +2071,8 @@
     }
 
     <span class="doccomment">/// Returns a new null atomic pointer.</span>
-    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">crossbeam_const_fn_trait_bound</span>, <span class="ident">not</span>(<span class="ident">crossbeam_loom</span>))))]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">null</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">all</span>(<span class="ident">not</span>(<span class="ident">crossbeam_no_const_fn_trait_bound</span>), <span class="ident">not</span>(<span class="ident">crossbeam_loom</span>))))]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">null</span>() -&gt; <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="self">Self</span> {
             <span class="ident">data</span>: <span class="ident">AtomicUsize::new</span>(<span class="number">0</span>),
             <span class="ident">_marker</span>: <span class="ident">PhantomData</span>,
@@ -1991,8 +2093,9 @@
     <span class="doccomment">/// let a = Atomic::new(1234);</span>
     <span class="doccomment">/// let guard = &amp;epoch::pin();</span>
     <span class="doccomment">/// let p = a.load(SeqCst, guard);</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">Shared::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">load</span>(<span class="ident">ord</span>)) }
     }
 
@@ -2016,8 +2119,9 @@
     <span class="doccomment">/// let a = Atomic::new(1234);</span>
     <span class="doccomment">/// let guard = &amp;epoch::pin();</span>
     <span class="doccomment">/// let p = a.load_consume(guard);</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_consume</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">load_consume</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">Shared::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">load_consume</span>()) }
     }
 
@@ -2033,8 +2137,10 @@
     <span class="doccomment">/// use std::sync::atomic::Ordering::SeqCst;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Atomic::new(1234);</span>
+    <span class="doccomment">/// # unsafe { drop(a.load(SeqCst, &amp;crossbeam_epoch::pin()).into_owned()); } // avoid leak</span>
     <span class="doccomment">/// a.store(Shared::null(), SeqCst);</span>
     <span class="doccomment">/// a.store(Owned::new(1234), SeqCst);</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">store</span><span class="op">&lt;</span><span class="ident">P</span>: <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">new</span>: <span class="ident">P</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>) {
         <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">store</span>(<span class="ident">new</span>.<span class="ident">into_usize</span>(), <span class="ident">ord</span>);
@@ -2055,8 +2161,9 @@
     <span class="doccomment">/// let a = Atomic::new(1234);</span>
     <span class="doccomment">/// let guard = &amp;epoch::pin();</span>
     <span class="doccomment">/// let p = a.swap(Shared::null(), SeqCst, guard);</span>
+    <span class="doccomment">/// # unsafe { drop(p.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">swap</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">P</span>: <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">new</span>: <span class="ident">P</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">swap</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">P</span>: <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">new</span>: <span class="ident">P</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">Shared::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">swap</span>(<span class="ident">new</span>.<span class="ident">into_usize</span>(), <span class="ident">ord</span>)) }
     }
 
@@ -2089,6 +2196,7 @@
     <span class="doccomment">/// let curr = a.load(SeqCst, guard);</span>
     <span class="doccomment">/// let res1 = a.compare_exchange(curr, Shared::null(), SeqCst, SeqCst, guard);</span>
     <span class="doccomment">/// let res2 = a.compare_exchange(curr, Owned::new(5678), SeqCst, SeqCst, guard);</span>
+    <span class="doccomment">/// # unsafe { drop(curr.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_exchange</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">P</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -2097,7 +2205,7 @@
         <span class="ident">success</span>: <span class="ident">Ordering</span>,
         <span class="ident">failure</span>: <span class="ident">Ordering</span>,
         <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">CompareExchangeError</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">CompareExchangeError</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">P</span>: <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
     {
@@ -2144,6 +2252,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut new = Owned::new(5678);</span>
     <span class="doccomment">/// let mut ptr = a.load(SeqCst, guard);</span>
+    <span class="doccomment">/// # unsafe { drop(a.load(SeqCst, guard).into_owned()); } // avoid leak</span>
     <span class="doccomment">/// loop {</span>
     <span class="doccomment">///     match a.compare_exchange_weak(ptr, new, SeqCst, SeqCst, guard) {</span>
     <span class="doccomment">///         Ok(p) =&gt; {</span>
@@ -2164,6 +2273,7 @@
     <span class="doccomment">///         Err(err) =&gt; curr = err.current,</span>
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
+    <span class="doccomment">/// # unsafe { drop(curr.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compare_exchange_weak</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">P</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -2172,7 +2282,7 @@
         <span class="ident">success</span>: <span class="ident">Ordering</span>,
         <span class="ident">failure</span>: <span class="ident">Ordering</span>,
         <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">CompareExchangeError</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">CompareExchangeError</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">P</span>: <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
     {
@@ -2226,6 +2336,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let res2 = a.fetch_update(SeqCst, SeqCst, guard, |x| None);</span>
     <span class="doccomment">/// assert!(res2.is_err());</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fetch_update</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">F</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
@@ -2233,15 +2344,15 @@
         <span class="ident">fail_order</span>: <span class="ident">Ordering</span>,
         <span class="ident">guard</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>,
         <span class="kw-2">mut</span> <span class="ident">func</span>: <span class="ident">F</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>,
+        <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span>,
     {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">prev</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">load</span>(<span class="ident">fail_order</span>, <span class="ident">guard</span>);
         <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">next</span>) <span class="op">=</span> <span class="ident">func</span>(<span class="ident">prev</span>) {
             <span class="kw">match</span> <span class="self">self</span>.<span class="ident">compare_exchange_weak</span>(<span class="ident">prev</span>, <span class="ident">next</span>, <span class="ident">set_order</span>, <span class="ident">fail_order</span>, <span class="ident">guard</span>) {
-                <span class="prelude-val">Ok</span>(<span class="ident">shared</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">shared</span>),
-                <span class="prelude-val">Err</span>(<span class="ident">next_prev</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">prev</span> <span class="op">=</span> <span class="ident">next_prev</span>.<span class="ident">current</span>,
+                <span class="prelude-val">Ok</span>(<span class="ident">shared</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">shared</span>),
+                <span class="prelude-val">Err</span>(<span class="ident">next_prev</span>) =&gt; <span class="ident">prev</span> <span class="op">=</span> <span class="ident">next_prev</span>.<span class="ident">current</span>,
             }
         }
         <span class="prelude-val">Err</span>(<span class="ident">prev</span>)
@@ -2284,6 +2395,7 @@
     <span class="doccomment">/// let curr = a.load(SeqCst, guard);</span>
     <span class="doccomment">/// let res1 = a.compare_and_set(curr, Shared::null(), SeqCst, guard);</span>
     <span class="doccomment">/// let res2 = a.compare_and_set(curr, Owned::new(5678), SeqCst, guard);</span>
+    <span class="doccomment">/// # unsafe { drop(curr.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
     <span class="comment">// TODO: remove in the next major version.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
@@ -2294,7 +2406,7 @@
         <span class="ident">new</span>: <span class="ident">P</span>,
         <span class="ident">ord</span>: <span class="ident">O</span>,
         <span class="ident">guard</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">CompareAndSetError</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">CompareAndSetError</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">O</span>: <span class="ident">CompareAndSetOrdering</span>,
         <span class="ident">P</span>: <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
@@ -2341,6 +2453,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let mut new = Owned::new(5678);</span>
     <span class="doccomment">/// let mut ptr = a.load(SeqCst, guard);</span>
+    <span class="doccomment">/// # unsafe { drop(a.load(SeqCst, guard).into_owned()); } // avoid leak</span>
     <span class="doccomment">/// loop {</span>
     <span class="doccomment">///     match a.compare_and_set_weak(ptr, new, SeqCst, guard) {</span>
     <span class="doccomment">///         Ok(p) =&gt; {</span>
@@ -2361,6 +2474,7 @@
     <span class="doccomment">///         Err(err) =&gt; curr = err.current,</span>
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
+    <span class="doccomment">/// # unsafe { drop(curr.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
     <span class="comment">// TODO: remove in the next major version.</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
@@ -2371,7 +2485,7 @@
         <span class="ident">new</span>: <span class="ident">P</span>,
         <span class="ident">ord</span>: <span class="ident">O</span>,
         <span class="ident">guard</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">CompareAndSetError</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span>
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>, <span class="ident">CompareAndSetError</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>, <span class="ident">P</span><span class="op">&gt;</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="ident">O</span>: <span class="ident">CompareAndSetOrdering</span>,
         <span class="ident">P</span>: <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>,
@@ -2398,7 +2512,7 @@
     <span class="doccomment">/// assert_eq!(a.fetch_and(2, SeqCst, guard).tag(), 3);</span>
     <span class="doccomment">/// assert_eq!(a.load(SeqCst, guard).tag(), 2);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fetch_and</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">val</span>: <span class="ident">usize</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fetch_and</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">val</span>: <span class="ident">usize</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">Shared::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">fetch_and</span>(<span class="ident">val</span> <span class="op">|</span> <span class="op">!</span><span class="ident">low_bits</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(), <span class="ident">ord</span>)) }
     }
 
@@ -2421,7 +2535,7 @@
     <span class="doccomment">/// assert_eq!(a.fetch_or(2, SeqCst, guard).tag(), 1);</span>
     <span class="doccomment">/// assert_eq!(a.load(SeqCst, guard).tag(), 3);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fetch_or</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">val</span>: <span class="ident">usize</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fetch_or</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">val</span>: <span class="ident">usize</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">Shared::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">fetch_or</span>(<span class="ident">val</span> <span class="op">&amp;</span> <span class="ident">low_bits</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(), <span class="ident">ord</span>)) }
     }
 
@@ -2444,7 +2558,7 @@
     <span class="doccomment">/// assert_eq!(a.fetch_xor(3, SeqCst, guard).tag(), 1);</span>
     <span class="doccomment">/// assert_eq!(a.load(SeqCst, guard).tag(), 2);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fetch_xor</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">val</span>: <span class="ident">usize</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fetch_xor</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">val</span>: <span class="ident">usize</span>, <span class="ident">ord</span>: <span class="ident">Ordering</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">Shared::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">fetch_xor</span>(<span class="ident">val</span> <span class="op">&amp;</span> <span class="ident">low_bits</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(), <span class="ident">ord</span>)) }
     }
 
@@ -2482,7 +2596,7 @@
     <span class="doccomment">///     }</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) -&gt; <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">crossbeam_loom</span>)]</span>
         {
             <span class="comment">// FIXME: loom does not yet support into_inner, so we use unsync_load for now,</span>
@@ -2495,10 +2609,56 @@
             <span class="ident">Owned::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">into_inner</span>())
         }
     }
+
+    <span class="doccomment">/// Takes ownership of the pointee if it is non-null.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This consumes the atomic and converts it into [`Owned`]. As [`Atomic`] doesn&#39;t have a</span>
+    <span class="doccomment">/// destructor and doesn&#39;t drop the pointee while [`Owned`] does, this is suitable for</span>
+    <span class="doccomment">/// destructors of data structures.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method may be called only if the pointer is valid and nobody else is holding a</span>
+    <span class="doccomment">/// reference to the same object, or the pointer is null.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```rust</span>
+    <span class="doccomment">/// # use std::mem;</span>
+    <span class="doccomment">/// # use crossbeam_epoch::Atomic;</span>
+    <span class="doccomment">/// struct DataStructure {</span>
+    <span class="doccomment">///     ptr: Atomic&lt;usize&gt;,</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// impl Drop for DataStructure {</span>
+    <span class="doccomment">///     fn drop(&amp;mut self) {</span>
+    <span class="doccomment">///         // By now the DataStructure lives only in our thread and we are sure we don&#39;t hold</span>
+    <span class="doccomment">///         // any Shared or &amp; to it ourselves, but it may be null, so we have to be careful.</span>
+    <span class="doccomment">///         let old = mem::replace(&amp;mut self.ptr, Atomic::null());</span>
+    <span class="doccomment">///         unsafe {</span>
+    <span class="doccomment">///             if let Some(x) = old.try_into_owned() {</span>
+    <span class="doccomment">///                 drop(x)</span>
+    <span class="doccomment">///             }</span>
+    <span class="doccomment">///         }</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">try_into_owned</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="comment">// FIXME: See self.into_owned()</span>
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">crossbeam_loom</span>)]</span>
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">unsync_load</span>();
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">crossbeam_loom</span>))]</span>
+        <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">into_inner</span>();
+        <span class="kw">if</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">data</span>).<span class="number">0</span> <span class="op">==</span> <span class="number">0</span> {
+            <span class="prelude-val">None</span>
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">Owned::from_usize</span>(<span class="ident">data</span>))
+        }
+    }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">load</span>(<span class="ident">Ordering::SeqCst</span>);
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="ident">tag</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">data</span>);
 
@@ -2510,7 +2670,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">fmt::Pointer</span> <span class="kw">for</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">load</span>(<span class="ident">Ordering::SeqCst</span>);
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">data</span>);
         <span class="ident">fmt::Pointer::fmt</span>(<span class="kw-2">&amp;</span>(<span class="kw">unsafe</span> { <span class="ident">T::deref</span>(<span class="ident">raw</span>) <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> }), <span class="ident">f</span>)
@@ -2522,14 +2682,14 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Note that a `Relaxed` load is used here. If you need synchronization, use it with other</span>
     <span class="doccomment">/// atomics or fences.</span>
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">load</span>(<span class="ident">Ordering::Relaxed</span>);
         <span class="ident">Atomic::from_usize</span>(<span class="ident">data</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">Atomic::null</span>()
     }
 }
@@ -2543,8 +2703,9 @@
     <span class="doccomment">/// use crossbeam_epoch::{Atomic, Owned};</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Atomic::&lt;i32&gt;::from(Owned::new(1234));</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">owned</span>: <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">owned</span>: <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">owned</span>.<span class="ident">data</span>;
         <span class="ident">mem::forget</span>(<span class="ident">owned</span>);
         <span class="ident"><span class="self">Self</span>::from_usize</span>(<span class="ident">data</span>)
@@ -2552,13 +2713,13 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">b</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">b</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::from</span>(<span class="ident">Owned::from</span>(<span class="ident">b</span>))
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Atomic</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">t</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">t</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">t</span>)
     }
 }
@@ -2573,7 +2734,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Atomic::&lt;i32&gt;::from(Shared::&lt;i32&gt;::null());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">ptr</span>: <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">ptr</span>: <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::from_usize</span>(<span class="ident">ptr</span>.<span class="ident">data</span>)
     }
 }
@@ -2589,7 +2750,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let a = Atomic::&lt;i32&gt;::from(ptr::null::&lt;i32&gt;());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::from_usize</span>(<span class="ident">raw</span> <span class="kw">as</span> <span class="ident">usize</span>)
     }
 }
@@ -2597,7 +2758,7 @@
 <span class="doccomment">/// A trait for either `Owned` or `Shared` pointers.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Returns the machine representation of the pointer.</span>
-    <span class="kw">fn</span> <span class="ident">into_usize</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span>;
+    <span class="kw">fn</span> <span class="ident">into_usize</span>(<span class="self">self</span>) -&gt; <span class="ident">usize</span>;
 
     <span class="doccomment">/// Returns a new pointer pointing to the tagged pointer `data`.</span>
     <span class="doccomment">///</span>
@@ -2605,7 +2766,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// The given `data` should have been created by `Pointer::into_usize()`, and one `data` should</span>
     <span class="doccomment">/// not be converted back by `Pointer::from_usize()` multiple times.</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">data</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">data</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span>;
 }
 
 <span class="doccomment">/// An owned heap-allocated object.</span>
@@ -2621,7 +2782,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_usize</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">into_usize</span>(<span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">data</span>;
         <span class="ident">mem::forget</span>(<span class="self">self</span>);
         <span class="ident">data</span>
@@ -2633,7 +2794,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Panics if the data is zero in debug mode.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">data</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">data</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
         <span class="macro">debug_assert!</span>(<span class="ident">data</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span>, <span class="string">&quot;converting zero into `Owned`&quot;</span>);
         <span class="ident">Owned</span> {
             <span class="ident">data</span>,
@@ -2665,7 +2826,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let o = unsafe { Owned::from_raw(Box::into_raw(Box::new(1234))) };</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_raw</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">T</span>) -&gt; <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">raw</span> <span class="kw">as</span> <span class="ident">usize</span>;
         <span class="ident">ensure_aligned</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">raw</span>);
         <span class="ident"><span class="self">Self</span>::from_usize</span>(<span class="ident">raw</span>)
@@ -2682,7 +2843,7 @@
     <span class="doccomment">/// let b: Box&lt;i32&gt; = o.into_box();</span>
     <span class="doccomment">/// assert_eq!(*b, 1234);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_box</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_box</span>(<span class="self">self</span>) -&gt; <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
         <span class="ident">mem::forget</span>(<span class="self">self</span>);
         <span class="kw">unsafe</span> { <span class="ident">Box::from_raw</span>(<span class="ident">raw</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="kw">_</span>) }
@@ -2697,7 +2858,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let o = Owned::new(1234);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">init</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">init</span>: <span class="ident">T</span>) -&gt; <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident"><span class="self">Self</span>::init</span>(<span class="ident">init</span>)
     }
 }
@@ -2712,7 +2873,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let o = Owned::&lt;i32&gt;::init(1234);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">init</span>: <span class="ident">T::Init</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">init</span>(<span class="ident">init</span>: <span class="ident">T::Init</span>) -&gt; <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident"><span class="self">Self</span>::from_usize</span>(<span class="ident">T::init</span>(<span class="ident">init</span>)) }
     }
 
@@ -2726,9 +2887,10 @@
     <span class="doccomment">/// let o = Owned::new(1234);</span>
     <span class="doccomment">/// let guard = &amp;epoch::pin();</span>
     <span class="doccomment">/// let p = o.into_shared(guard);</span>
+    <span class="doccomment">/// # unsafe { drop(p.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::needless_lifetimes</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">into_shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="kw">_</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">Guard</span>) -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident">Shared::from_usize</span>(<span class="self">self</span>.<span class="ident">into_usize</span>()) }
     }
 
@@ -2741,7 +2903,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// assert_eq!(Owned::new(1234).tag(), 0);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">tag</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
         <span class="ident">tag</span>
     }
@@ -2759,7 +2921,7 @@
     <span class="doccomment">/// let o = o.with_tag(2);</span>
     <span class="doccomment">/// assert_eq!(o.tag(), 2);</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_tag</span>(<span class="self">self</span>, <span class="ident">tag</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_tag</span>(<span class="self">self</span>, <span class="ident">tag</span>: <span class="ident">usize</span>) -&gt; <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_usize</span>();
         <span class="kw">unsafe</span> { <span class="ident"><span class="self">Self</span>::from_usize</span>(<span class="ident">compose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">data</span>, <span class="ident">tag</span>)) }
     }
@@ -2775,7 +2937,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="ident">tag</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
 
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Owned&quot;</span>)
@@ -2786,7 +2948,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Clone</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Owned::new</span>((<span class="kw-2">*</span><span class="kw-2">*</span><span class="self">self</span>).<span class="ident">clone</span>()).<span class="ident">with_tag</span>(<span class="self">self</span>.<span class="ident">tag</span>())
     }
 }
@@ -2794,21 +2956,21 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Deref</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Target</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">T</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
         <span class="kw">unsafe</span> { <span class="ident">T::deref</span>(<span class="ident">raw</span>) }
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">DerefMut</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
         <span class="kw">unsafe</span> { <span class="ident">T::deref_mut</span>(<span class="ident">raw</span>) }
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">t</span>: <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">t</span>: <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Owned::new</span>(<span class="ident">t</span>)
     }
 }
@@ -2827,31 +2989,31 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let o = unsafe { Owned::from_raw(Box::into_raw(Box::new(1234))) };</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">b</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">b</span>: <span class="ident">Box</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">unsafe</span> { <span class="ident"><span class="self">Self</span>::from_raw</span>(<span class="ident">Box::into_raw</span>(<span class="ident">b</span>)) }
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Borrow</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">borrow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">borrow</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">T</span> {
         <span class="self">self</span>.<span class="ident">deref</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">BorrowMut</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">borrow_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">borrow_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
         <span class="self">self</span>.<span class="ident">deref_mut</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">T</span> {
         <span class="self">self</span>.<span class="ident">deref</span>()
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">AsMut</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
+    <span class="kw">fn</span> <span class="ident">as_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">T</span> {
         <span class="self">self</span>.<span class="ident">deref_mut</span>()
     }
 }
@@ -2868,7 +3030,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Clone</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">clone</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">Self</span> {
             <span class="ident">data</span>: <span class="self">self</span>.<span class="ident">data</span>,
             <span class="ident">_marker</span>: <span class="ident">PhantomData</span>,
@@ -2880,12 +3042,12 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Pointer</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">into_usize</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">fn</span> <span class="ident">into_usize</span>(<span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="self">self</span>.<span class="ident">data</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">data</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">from_usize</span>(<span class="ident">data</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
         <span class="ident">Shared</span> {
             <span class="ident">data</span>,
             <span class="ident">_marker</span>: <span class="ident">PhantomData</span>,
@@ -2909,8 +3071,9 @@
     <span class="doccomment">/// let guard = &amp;epoch::pin();</span>
     <span class="doccomment">/// let p = a.load(SeqCst, guard);</span>
     <span class="doccomment">/// assert_eq!(p.as_raw(), raw);</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_raw</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
         <span class="ident">raw</span> <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span>
     }
@@ -2927,7 +3090,7 @@
     <span class="doccomment">/// let p = Shared::&lt;i32&gt;::null();</span>
     <span class="doccomment">/// assert!(p.is_null());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">null</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">null</span>() -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="ident">Shared</span> {
             <span class="ident">data</span>: <span class="number">0</span>,
             <span class="ident">_marker</span>: <span class="ident">PhantomData</span>,
@@ -2947,10 +3110,11 @@
     <span class="doccomment">/// assert!(a.load(SeqCst, guard).is_null());</span>
     <span class="doccomment">/// a.store(Owned::new(1234), SeqCst);</span>
     <span class="doccomment">/// assert!(!a.load(SeqCst, guard).is_null());</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_null</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_null</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
-        <span class="ident">raw</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
+        <span class="ident">raw</span> <span class="op">==</span> <span class="number">0</span>
     }
 
     <span class="doccomment">/// Dereferences the pointer.</span>
@@ -2983,8 +3147,9 @@
     <span class="doccomment">/// unsafe {</span>
     <span class="doccomment">///     assert_eq!(p.deref(), &amp;1234);</span>
     <span class="doccomment">/// }</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">T</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">T</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
         <span class="ident">T::deref</span>(<span class="ident">raw</span>)
     }
@@ -3024,8 +3189,9 @@
     <span class="doccomment">/// unsafe {</span>
     <span class="doccomment">///     assert_eq!(p.deref(), &amp;vec![1, 2, 3, 4, 5]);</span>
     <span class="doccomment">/// }</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="ident">T</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">deref_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="kw-2">mut</span> <span class="ident">T</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
         <span class="ident">T::deref_mut</span>(<span class="ident">raw</span>)
     }
@@ -3060,10 +3226,11 @@
     <span class="doccomment">/// unsafe {</span>
     <span class="doccomment">///     assert_eq!(p.as_ref(), Some(&amp;1234));</span>
     <span class="doccomment">/// }</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;g</span> <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="kw">_</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
-        <span class="kw">if</span> <span class="ident">raw</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">raw</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="prelude-val">Some</span>(<span class="ident">T::deref</span>(<span class="ident">raw</span>))
@@ -3094,9 +3261,39 @@
     <span class="doccomment">///     drop(p.into_owned());</span>
     <span class="doccomment">/// }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">into_owned</span>(<span class="self">self</span>) -&gt; <span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
         <span class="macro">debug_assert!</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_null</span>(), <span class="string">&quot;converting a null `Shared` into `Owned`&quot;</span>);
         <span class="ident">Owned::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>)
+    }
+
+    <span class="doccomment">/// Takes ownership of the pointee if it is not null.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Safety</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// This method may be called only if the pointer is valid and nobody else is holding a</span>
+    <span class="doccomment">/// reference to the same object, or if the pointer is null.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Examples</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use crossbeam_epoch::{self as epoch, Atomic};</span>
+    <span class="doccomment">/// use std::sync::atomic::Ordering::SeqCst;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let a = Atomic::new(1234);</span>
+    <span class="doccomment">/// unsafe {</span>
+    <span class="doccomment">///     let guard = &amp;epoch::unprotected();</span>
+    <span class="doccomment">///     let p = a.load(SeqCst, guard);</span>
+    <span class="doccomment">///     if let Some(x) = p.try_into_owned() {</span>
+    <span class="doccomment">///         drop(x);</span>
+    <span class="doccomment">///     }</span>
+    <span class="doccomment">/// }</span>
+    <span class="doccomment">/// ```</span>
+    <span class="kw">pub</span> <span class="kw">unsafe</span> <span class="kw">fn</span> <span class="ident">try_into_owned</span>(<span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Owned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_null</span>() {
+            <span class="prelude-val">None</span>
+        } <span class="kw">else</span> {
+            <span class="prelude-val">Some</span>(<span class="ident">Owned::from_usize</span>(<span class="self">self</span>.<span class="ident">data</span>))
+        }
     }
 
     <span class="doccomment">/// Returns the tag stored within the pointer.</span>
@@ -3111,8 +3308,9 @@
     <span class="doccomment">/// let guard = &amp;epoch::pin();</span>
     <span class="doccomment">/// let p = a.load(SeqCst, guard);</span>
     <span class="doccomment">/// assert_eq!(p.tag(), 2);</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">tag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">usize</span> {
         <span class="kw">let</span> (<span class="kw">_</span>, <span class="ident">tag</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
         <span class="ident">tag</span>
     }
@@ -3134,8 +3332,9 @@
     <span class="doccomment">/// assert_eq!(p1.tag(), 0);</span>
     <span class="doccomment">/// assert_eq!(p2.tag(), 2);</span>
     <span class="doccomment">/// assert_eq!(p1.as_raw(), p2.as_raw());</span>
+    <span class="doccomment">/// # unsafe { drop(a.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_tag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tag</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">with_tag</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">tag</span>: <span class="ident">usize</span>) -&gt; <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
         <span class="kw">unsafe</span> { <span class="ident"><span class="self">Self</span>::from_usize</span>(<span class="ident">compose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>, <span class="ident">tag</span>)) }
     }
 }
@@ -3154,8 +3353,9 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// let p = Shared::from(Box::into_raw(Box::new(1234)) as *const _);</span>
     <span class="doccomment">/// assert!(!p.is_null());</span>
+    <span class="doccomment">/// # unsafe { drop(p.into_owned()); } // avoid leak</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">raw</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">T</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">raw</span> <span class="kw">as</span> <span class="ident">usize</span>;
         <span class="ident">ensure_aligned</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">raw</span>);
         <span class="kw">unsafe</span> { <span class="ident"><span class="self">Self</span>::from_usize</span>(<span class="ident">raw</span>) }
@@ -3163,27 +3363,27 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">PartialEq</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">data</span> <span class="op">=</span><span class="op">=</span> <span class="ident">other</span>.<span class="ident">data</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">data</span> <span class="op">==</span> <span class="ident">other</span>.<span class="ident">data</span>
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Eq</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span> {}
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">PartialOrd</span><span class="op">&lt;</span><span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;g</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">cmp::Ordering</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">data</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Ord</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">cmp::Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="ident">cmp::Ordering</span> {
         <span class="self">self</span>.<span class="ident">data</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">other</span>.<span class="ident">data</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">let</span> (<span class="ident">raw</span>, <span class="ident">tag</span>) <span class="op">=</span> <span class="ident">decompose_tag</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="self">self</span>.<span class="ident">data</span>);
 
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;Shared&quot;</span>)
@@ -3194,13 +3394,13 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">fmt::Pointer</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">fmt::Pointer::fmt</span>(<span class="kw-2">&amp;</span>(<span class="kw">unsafe</span> { <span class="self">self</span>.<span class="ident">deref</span>() <span class="kw">as</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="kw">_</span> }), <span class="ident">f</span>)
     }
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="question-mark">?</span><span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Pointable</span><span class="op">&gt;</span> <span class="ident">Default</span> <span class="kw">for</span> <span class="ident">Shared</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span>, <span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">Shared::null</span>()
     }
 }
@@ -3230,7 +3430,7 @@
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">array_init</span>() {
         <span class="kw">let</span> <span class="ident">owned</span> <span class="op">=</span> <span class="ident">Owned</span>::<span class="op">&lt;</span>[<span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>]<span class="op">&gt;</span><span class="ident">::init</span>(<span class="number">10</span>);
-        <span class="kw">let</span> <span class="ident">arr</span>: <span class="kw-2">&amp;</span>[<span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">*</span><span class="ident">owned</span>;
+        <span class="kw">let</span> <span class="ident">arr</span>: <span class="kw-2">&amp;</span>[<span class="ident">MaybeUninit</span><span class="op">&lt;</span><span class="ident">usize</span><span class="op">&gt;</span>] <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">owned</span>;
         <span class="macro">assert_eq!</span>(<span class="ident">arr</span>.<span class="ident">len</span>(), <span class="number">10</span>);
     }
 }

@@ -3468,7 +3468,7 @@
 
     <span class="kw">fn</span> <span class="ident">assert_equality</span>(<span class="ident">a</span>: <span class="ident">FqRepr</span>, <span class="ident">b</span>: <span class="ident">FqRepr</span>) {
         <span class="macro">assert_eq!</span>(<span class="ident">a</span>, <span class="ident">b</span>);
-        <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">Ordering::Equal</span>);
+        <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>) <span class="op">==</span> <span class="ident">Ordering::Equal</span>);
     }
 
     <span class="kw">fn</span> <span class="ident">assert_lt</span>(<span class="ident">a</span>: <span class="ident">FqRepr</span>, <span class="ident">b</span>: <span class="ident">FqRepr</span>) {
@@ -3705,7 +3705,7 @@
         <span class="number">0x7c0577a26f59d5</span>,
     ]));
     <span class="macro">assert!</span>(
-        <span class="ident">t</span> <span class="op">=</span><span class="op">=</span> <span class="ident">FqRepr</span>([
+        <span class="ident">t</span> <span class="op">==</span> <span class="ident">FqRepr</span>([
             <span class="number">0x40a12b8967c54bae</span>,
             <span class="number">0xdeae37a0837d0d7b</span>,
             <span class="number">0xe592c487bae374e</span>,
@@ -3795,7 +3795,7 @@
         <span class="number">0x7c0577a26f59d5</span>,
     ]));
     <span class="macro">assert!</span>(
-        <span class="ident">t</span> <span class="op">=</span><span class="op">=</span> <span class="ident">FqRepr</span>([
+        <span class="ident">t</span> <span class="op">==</span> <span class="ident">FqRepr</span>([
             <span class="number">0xcfae1db798be8c04</span>,
             <span class="number">0x999906db15a10d5a</span>,
             <span class="number">0x270fa8d9defc6f79</span>,
@@ -4155,7 +4155,7 @@
         <span class="number">0x1162b680fb8e9566</span>,
     ])));
     <span class="macro">assert!</span>(
-        <span class="ident">tmp</span> <span class="op">=</span><span class="op">=</span> <span class="ident">Fq</span>(<span class="ident">FqRepr</span>([
+        <span class="ident">tmp</span> <span class="op">==</span> <span class="ident">Fq</span>(<span class="ident">FqRepr</span>([
             <span class="number">0x9dc4000001ebfe14</span>,
             <span class="number">0x2850078997b00193</span>,
             <span class="number">0xa8197f1abb4d7bf</span>,
@@ -4365,7 +4365,7 @@
 
         <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">b</span>.<span class="ident">sqrt</span>().<span class="ident">unwrap</span>();
 
-        <span class="macro">assert!</span>(<span class="ident">a</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b</span> <span class="op">|</span><span class="op">|</span> <span class="ident">nega</span> <span class="op">=</span><span class="op">=</span> <span class="ident">b</span>);
+        <span class="macro">assert!</span>(<span class="ident">a</span> <span class="op">==</span> <span class="ident">b</span> <span class="op">|</span><span class="op">|</span> <span class="ident">nega</span> <span class="op">==</span> <span class="ident">b</span>);
     }
 
     <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">1000</span> {

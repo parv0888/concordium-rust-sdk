@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;axum-core-0.2.6&#x2F;src&#x2F;response&#x2F;into_response.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>into_response.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../axum_core/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;axum-core-0.2.8&#x2F;src&#x2F;response&#x2F;into_response.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>into_response.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../axum_core/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -644,11 +644,11 @@
 <span class="doccomment">/// ```</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">IntoResponse</span> {
     <span class="doccomment">/// Create a response.</span>
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span>;
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span>;
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">StatusCode</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> ().<span class="ident">into_response</span>();
         <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">status_mut</span>() <span class="op">=</span> <span class="self">self</span>;
         <span class="ident">res</span>
@@ -656,13 +656,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> () {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Empty::new</span>().<span class="ident">into_response</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">Infallible</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">match</span> <span class="self">self</span> {}
     }
 }
@@ -672,10 +672,10 @@
     <span class="ident">T</span>: <span class="ident">IntoResponse</span>,
     <span class="ident">E</span>: <span class="ident">IntoResponse</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="prelude-val">Ok</span>(<span class="ident">value</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">value</span>.<span class="ident">into_response</span>(),
-            <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">err</span>.<span class="ident">into_response</span>(),
+            <span class="prelude-val">Ok</span>(<span class="ident">value</span>) =&gt; <span class="ident">value</span>.<span class="ident">into_response</span>(),
+            <span class="prelude-val">Err</span>(<span class="ident">err</span>) =&gt; <span class="ident">err</span>.<span class="ident">into_response</span>(),
         }
     }
 }
@@ -685,25 +685,25 @@
     <span class="ident">B</span>: <span class="ident">http_body::Body</span><span class="op">&lt;</span><span class="ident">Data</span> <span class="op">=</span> <span class="ident">Bytes</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     <span class="ident">B::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">BoxError</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="self">self</span>.<span class="ident">map</span>(<span class="ident">body::boxed</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">http::response::Parts</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Response::from_parts</span>(<span class="self">self</span>, <span class="ident">body::boxed</span>(<span class="ident">Empty::new</span>()))
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">Full</span><span class="op">&lt;</span><span class="ident">Bytes</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Response::new</span>(<span class="ident">body::boxed</span>(<span class="self">self</span>))
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">Empty</span><span class="op">&lt;</span><span class="ident">Bytes</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Response::new</span>(<span class="ident">body::boxed</span>(<span class="self">self</span>))
     }
 }
@@ -712,7 +712,7 @@
 <span class="kw">where</span>
     <span class="ident">E</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">BoxError</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Response::new</span>(<span class="ident">body::boxed</span>(<span class="self">self</span>))
     }
 }
@@ -721,7 +721,7 @@
 <span class="kw">where</span>
     <span class="ident">E</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">BoxError</span><span class="op">&gt;</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Response::new</span>(<span class="ident">body::boxed</span>(<span class="self">self</span>))
     }
 }
@@ -729,10 +729,10 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">MapData</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">B</span>: <span class="ident">http_body::Body</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-    <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">B::Data</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Bytes</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+    <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">B::Data</span>) -&gt; <span class="ident">Bytes</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     <span class="ident">B::Error</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">BoxError</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Response::new</span>(<span class="ident">body::boxed</span>(<span class="self">self</span>))
     }
 }
@@ -740,28 +740,28 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">F</span>, <span class="ident">E</span><span class="op">&gt;</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">MapErr</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">F</span><span class="op">&gt;</span>
 <span class="kw">where</span>
     <span class="ident">B</span>: <span class="ident">http_body::Body</span><span class="op">&lt;</span><span class="ident">Data</span> <span class="op">=</span> <span class="ident">Bytes</span><span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-    <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">B::Error</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">E</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+    <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">B::Error</span>) -&gt; <span class="ident">E</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     <span class="ident">E</span>: <span class="ident">Into</span><span class="op">&lt;</span><span class="ident">BoxError</span><span class="op">&gt;</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Response::new</span>(<span class="ident">body::boxed</span>(<span class="self">self</span>))
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> <span class="ident">str</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Cow::Borrowed</span>(<span class="self">self</span>).<span class="ident">into_response</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">String</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Cow</span>::<span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span><span class="ident">::Owned</span>(<span class="self">self</span>).<span class="ident">into_response</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="ident">str</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Full::from</span>(<span class="self">self</span>).<span class="ident">into_response</span>();
         <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(
             <span class="ident">header::CONTENT_TYPE</span>,
@@ -772,7 +772,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">Bytes</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Full::from</span>(<span class="self">self</span>).<span class="ident">into_response</span>();
         <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(
             <span class="ident">header::CONTENT_TYPE</span>,
@@ -783,7 +783,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">BytesMut</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="self">self</span>.<span class="ident">freeze</span>().<span class="ident">into_response</span>()
     }
 }
@@ -793,7 +793,7 @@
     <span class="ident">T</span>: <span class="ident">Buf</span> <span class="op">+</span> <span class="ident">Unpin</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     <span class="ident">U</span>: <span class="ident">Buf</span> <span class="op">+</span> <span class="ident">Unpin</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> (<span class="ident">first</span>, <span class="ident">second</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">into_inner</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Response::new</span>(<span class="ident">body::boxed</span>(<span class="ident">BytesChainBody</span> {
             <span class="ident">first</span>: <span class="prelude-val">Some</span>(<span class="ident">first</span>),
@@ -823,7 +823,7 @@
     <span class="kw">fn</span> <span class="ident">poll_data</span>(
         <span class="kw-2">mut</span> <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>,
         <span class="ident">_cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Data</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Data</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">mut</span> <span class="ident">buf</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">first</span>.<span class="ident">take</span>() {
             <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">buf</span>.<span class="ident">copy_to_bytes</span>(<span class="ident">buf</span>.<span class="ident">remaining</span>());
             <span class="kw">return</span> <span class="ident">Poll::Ready</span>(<span class="prelude-val">Some</span>(<span class="prelude-val">Ok</span>(<span class="ident">bytes</span>)));
@@ -840,41 +840,41 @@
     <span class="kw">fn</span> <span class="ident">poll_trailers</span>(
         <span class="self">self</span>: <span class="ident">Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span><span class="op">&gt;</span>,
         <span class="ident">_cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HeaderMap</span><span class="op">&gt;</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">HeaderMap</span><span class="op">&gt;</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="ident">Poll::Ready</span>(<span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">is_end_stream</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_end_stream</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">first</span>.<span class="ident">is_none</span>() <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">second</span>.<span class="ident">is_none</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SizeHint</span> {
+    <span class="kw">fn</span> <span class="ident">size_hint</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">SizeHint</span> {
         <span class="kw">match</span> (<span class="self">self</span>.<span class="ident">first</span>.<span class="ident">as_ref</span>(), <span class="self">self</span>.<span class="ident">second</span>.<span class="ident">as_ref</span>()) {
-            (<span class="prelude-val">Some</span>(<span class="ident">first</span>), <span class="prelude-val">Some</span>(<span class="ident">second</span>)) <span class="op">=</span><span class="op">&gt;</span> {
+            (<span class="prelude-val">Some</span>(<span class="ident">first</span>), <span class="prelude-val">Some</span>(<span class="ident">second</span>)) =&gt; {
                 <span class="kw">let</span> <span class="ident">total_size</span> <span class="op">=</span> <span class="ident">first</span>.<span class="ident">remaining</span>() <span class="op">+</span> <span class="ident">second</span>.<span class="ident">remaining</span>();
                 <span class="ident">SizeHint::with_exact</span>(<span class="ident">total_size</span> <span class="kw">as</span> <span class="ident">u64</span>)
             }
-            (<span class="prelude-val">Some</span>(<span class="ident">buf</span>), <span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SizeHint::with_exact</span>(<span class="ident">buf</span>.<span class="ident">remaining</span>() <span class="kw">as</span> <span class="ident">u64</span>),
-            (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="ident">buf</span>)) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SizeHint::with_exact</span>(<span class="ident">buf</span>.<span class="ident">remaining</span>() <span class="kw">as</span> <span class="ident">u64</span>),
-            (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">SizeHint::with_exact</span>(<span class="number">0</span>),
+            (<span class="prelude-val">Some</span>(<span class="ident">buf</span>), <span class="prelude-val">None</span>) =&gt; <span class="ident">SizeHint::with_exact</span>(<span class="ident">buf</span>.<span class="ident">remaining</span>() <span class="kw">as</span> <span class="ident">u64</span>),
+            (<span class="prelude-val">None</span>, <span class="prelude-val">Some</span>(<span class="ident">buf</span>)) =&gt; <span class="ident">SizeHint::with_exact</span>(<span class="ident">buf</span>.<span class="ident">remaining</span>() <span class="kw">as</span> <span class="ident">u64</span>),
+            (<span class="prelude-val">None</span>, <span class="prelude-val">None</span>) =&gt; <span class="ident">SizeHint::with_exact</span>(<span class="number">0</span>),
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">u8</span>] {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Cow::Borrowed</span>(<span class="self">self</span>).<span class="ident">into_response</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="ident">Cow</span>::<span class="op">&lt;</span><span class="lifetime">&#39;static</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span><span class="ident">::Owned</span>(<span class="self">self</span>).<span class="ident">into_response</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">Cow</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, [<span class="ident">u8</span>]<span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">Full::from</span>(<span class="self">self</span>).<span class="ident">into_response</span>();
         <span class="ident">res</span>.<span class="ident">headers_mut</span>().<span class="ident">insert</span>(
             <span class="ident">header::CONTENT_TYPE</span>,
@@ -888,7 +888,7 @@
 <span class="kw">where</span>
     <span class="ident">R</span>: <span class="ident">IntoResponse</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">1</span>.<span class="ident">into_response</span>();
         <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">status_mut</span>() <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>;
         <span class="ident">res</span>
@@ -896,7 +896,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">HeaderMap</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> ().<span class="ident">into_response</span>();
         <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">headers_mut</span>() <span class="op">=</span> <span class="self">self</span>;
         <span class="ident">res</span>
@@ -904,7 +904,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> <span class="ident">Extensions</span> {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> ().<span class="ident">into_response</span>();
         <span class="kw-2">*</span><span class="ident">res</span>.<span class="ident">extensions_mut</span>() <span class="op">=</span> <span class="self">self</span>;
         <span class="ident">res</span>
@@ -918,7 +918,7 @@
     <span class="ident">V</span>: <span class="ident">TryInto</span><span class="op">&lt;</span><span class="ident">HeaderValue</span><span class="op">&gt;</span>,
     <span class="ident">V::Error</span>: <span class="ident">fmt::Display</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         (<span class="self">self</span>, ()).<span class="ident">into_response</span>()
     }
 }
@@ -927,7 +927,7 @@
 <span class="kw">where</span>
     <span class="ident">R</span>: <span class="ident">IntoResponse</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> (<span class="ident">parts</span>, <span class="ident">res</span>) <span class="op">=</span> <span class="self">self</span>;
         (<span class="ident">parts</span>.<span class="ident">status</span>, <span class="ident">parts</span>.<span class="ident">headers</span>, <span class="ident">parts</span>.<span class="ident">extensions</span>, <span class="ident">res</span>).<span class="ident">into_response</span>()
     }
@@ -937,7 +937,7 @@
 <span class="kw">where</span>
     <span class="ident">R</span>: <span class="ident">IntoResponse</span>,
 {
-    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+    <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
         <span class="kw">let</span> (<span class="ident">template</span>, <span class="ident">res</span>) <span class="op">=</span> <span class="self">self</span>;
         <span class="kw">let</span> (<span class="ident">parts</span>, ()) <span class="op">=</span> <span class="ident">template</span>.<span class="ident">into_parts</span>();
         (<span class="ident">parts</span>, <span class="ident">res</span>).<span class="ident">into_response</span>()
@@ -945,14 +945,14 @@
 }
 
 <span class="macro">macro_rules!</span> <span class="ident">impl_into_response</span> {
-    ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span>),<span class="op">*</span> $(,)<span class="question-mark">?</span> ) <span class="op">=</span><span class="op">&gt;</span> {
+    ( $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>:<span class="ident">ident</span>),<span class="op">*</span> $(,)<span class="question-mark">?</span> ) =&gt; {
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>)]</span>
         <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>,)<span class="kw-2">*</span><span class="op">&gt;</span> <span class="ident">IntoResponse</span> <span class="kw">for</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>),<span class="kw-2">*</span>, <span class="ident">R</span>)
         <span class="kw">where</span>
             $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>: <span class="ident">IntoResponseParts</span>, )<span class="op">*</span>
             <span class="ident">R</span>: <span class="ident">IntoResponse</span>,
         {
-            <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+            <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
                 <span class="kw">let</span> ($(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>),<span class="kw-2">*</span>, <span class="ident">res</span>) <span class="op">=</span> <span class="self">self</span>;
 
                 <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">into_response</span>();
@@ -960,8 +960,8 @@
 
                 $(
                     <span class="kw">let</span> <span class="ident">parts</span> <span class="op">=</span> <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>.<span class="ident">into_response_parts</span>(<span class="ident">parts</span>) {
-                        <span class="prelude-val">Ok</span>(<span class="ident">parts</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">parts</span>,
-                        <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="prelude-val">Ok</span>(<span class="ident">parts</span>) =&gt; <span class="ident">parts</span>,
+                        <span class="prelude-val">Err</span>(<span class="ident">err</span>) =&gt; {
                             <span class="kw">return</span> <span class="ident">err</span>.<span class="ident">into_response</span>();
                         }
                     };
@@ -977,7 +977,7 @@
             $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>: <span class="ident">IntoResponseParts</span>, )<span class="op">*</span>
             <span class="ident">R</span>: <span class="ident">IntoResponse</span>,
         {
-            <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+            <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
                 <span class="kw">let</span> (<span class="ident">status</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>),<span class="kw-2">*</span>, <span class="ident">res</span>) <span class="op">=</span> <span class="self">self</span>;
 
                 <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">into_response</span>();
@@ -985,8 +985,8 @@
 
                 $(
                     <span class="kw">let</span> <span class="ident">parts</span> <span class="op">=</span> <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>.<span class="ident">into_response_parts</span>(<span class="ident">parts</span>) {
-                        <span class="prelude-val">Ok</span>(<span class="ident">parts</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">parts</span>,
-                        <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="prelude-val">Ok</span>(<span class="ident">parts</span>) =&gt; <span class="ident">parts</span>,
+                        <span class="prelude-val">Err</span>(<span class="ident">err</span>) =&gt; {
                             <span class="kw">return</span> <span class="ident">err</span>.<span class="ident">into_response</span>();
                         }
                     };
@@ -1002,15 +1002,15 @@
             $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>: <span class="ident">IntoResponseParts</span>, )<span class="op">*</span>
             <span class="ident">R</span>: <span class="ident">IntoResponse</span>,
         {
-            <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+            <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
                 <span class="kw">let</span> (<span class="ident">outer_parts</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>),<span class="kw-2">*</span>, <span class="ident">res</span>) <span class="op">=</span> <span class="self">self</span>;
 
                 <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">res</span>.<span class="ident">into_response</span>();
                 <span class="kw">let</span> <span class="ident">parts</span> <span class="op">=</span> <span class="ident">ResponseParts</span> { <span class="ident">res</span> };
                 $(
                     <span class="kw">let</span> <span class="ident">parts</span> <span class="op">=</span> <span class="kw">match</span> <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>.<span class="ident">into_response_parts</span>(<span class="ident">parts</span>) {
-                        <span class="prelude-val">Ok</span>(<span class="ident">parts</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">parts</span>,
-                        <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                        <span class="prelude-val">Ok</span>(<span class="ident">parts</span>) =&gt; <span class="ident">parts</span>,
+                        <span class="prelude-val">Err</span>(<span class="ident">err</span>) =&gt; {
                             <span class="kw">return</span> <span class="ident">err</span>.<span class="ident">into_response</span>();
                         }
                     };
@@ -1026,7 +1026,7 @@
             $( <span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>: <span class="ident">IntoResponseParts</span>, )<span class="op">*</span>
             <span class="ident">R</span>: <span class="ident">IntoResponse</span>,
         {
-            <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+            <span class="kw">fn</span> <span class="ident">into_response</span>(<span class="self">self</span>) -&gt; <span class="ident">Response</span> {
                 <span class="kw">let</span> (<span class="ident">template</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>),<span class="kw-2">*</span>, <span class="ident">res</span>) <span class="op">=</span> <span class="self">self</span>;
                 <span class="kw">let</span> (<span class="ident">parts</span>, ()) <span class="op">=</span> <span class="ident">template</span>.<span class="ident">into_parts</span>();
                 (<span class="ident">parts</span>, $(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">ty</span>),<span class="kw-2">*</span>, <span class="ident">res</span>).<span class="ident">into_response</span>()

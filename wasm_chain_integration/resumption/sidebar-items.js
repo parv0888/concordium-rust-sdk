@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["InterruptedState","Interrupted state of the computation that may be resumed."]]});

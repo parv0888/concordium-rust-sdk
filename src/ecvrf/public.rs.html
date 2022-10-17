@@ -161,18 +161,16 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
-<span id="164">164</span>
 </pre><pre class="rust"><code><span class="doccomment">//! ed25519 public keys.</span>
 
 <span class="kw">use</span> <span class="ident">core::fmt::Debug</span>;
 <span class="kw">use</span> <span class="ident">crypto_common</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">curve25519_dalek</span>::{
     <span class="ident">constants</span>,
-    <span class="ident">digest::Digest</span>,
     <span class="ident">edwards</span>::{<span class="ident">CompressedEdwardsY</span>, <span class="ident">EdwardsPoint</span>},
     <span class="ident">scalar::Scalar</span>,
 };
-<span class="kw">use</span> <span class="ident">sha2::Sha512</span>;
+<span class="kw">use</span> <span class="ident">sha2</span>::{<span class="ident">Digest</span>, <span class="ident">Sha512</span>};
 
 <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">constants</span>::<span class="kw-2">*</span>, <span class="ident">errors</span>::<span class="kw-2">*</span>, <span class="ident">proof</span>::<span class="kw-2">*</span>, <span class="ident">secret</span>::<span class="kw-2">*</span>};
 <span class="doccomment">/// An ed25519-like public key. This has a bit stricter requirements than the</span>
@@ -182,7 +180,7 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">PublicKey</span>(<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">CompressedEdwardsY</span>, <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">EdwardsPoint</span>);
 
 <span class="kw">impl</span> <span class="ident">Debug</span> <span class="kw">for</span> <span class="ident">PublicKey</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::core::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">::core::fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">::core::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">::core::fmt::Result</span> {
         <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;PublicKey({:?}), {:?})&quot;</span>, <span class="self">self</span>.<span class="number">0</span>, <span class="self">self</span>.<span class="number">1</span>)
     }
 }
@@ -200,7 +198,7 @@
 <span class="doccomment">/// small order (and hence also not a point at infinity).</span>
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">PublicKey</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="ident">PUBLIC_KEY_LENGTH</span>];
         <span class="ident">source</span>.<span class="ident">read_exact</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span>;
 
@@ -219,13 +217,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u8</span>]<span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PublicKey</span> {
-    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] { <span class="self">self</span>.<span class="ident">as_bytes</span>() }
+    <span class="kw">fn</span> <span class="ident">as_ref</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] { <span class="self">self</span>.<span class="ident">as_bytes</span>() }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">SecretKey</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PublicKey</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">SecretKey</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PublicKey</span> {
     <span class="doccomment">/// Derive this public key from its corresponding `SecretKey`.</span>
     <span class="doccomment">/// Implements &lt;https://tools.ietf.org/html/rfc8032#section-5.1.5&gt;</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">secret_key</span>: <span class="kw-2">&amp;</span><span class="ident">SecretKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PublicKey</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">secret_key</span>: <span class="kw-2">&amp;</span><span class="ident">SecretKey</span>) -&gt; <span class="ident">PublicKey</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">h</span>: <span class="ident">Sha512</span> <span class="op">=</span> <span class="ident">Sha512::new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hash</span>: [<span class="ident">u8</span>; <span class="number">64</span>] <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">64</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">digest</span>: [<span class="ident">u8</span>; <span class="number">32</span>] <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">32</span>];
@@ -239,9 +237,9 @@
     }
 }
 
-<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">ExpandedSecretKey</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PublicKey</span> {
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">ExpandedSecretKey</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">PublicKey</span> {
     <span class="doccomment">/// Derive this public key from its corresponding `ExpandedSecretKey`.</span>
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">expanded_secret_key</span>: <span class="kw-2">&amp;</span><span class="ident">ExpandedSecretKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PublicKey</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">expanded_secret_key</span>: <span class="kw-2">&amp;</span><span class="ident">ExpandedSecretKey</span>) -&gt; <span class="ident">PublicKey</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bits</span>: [<span class="ident">u8</span>; <span class="number">32</span>] <span class="op">=</span> <span class="ident">expanded_secret_key</span>.<span class="ident">key</span>.<span class="ident">to_bytes</span>();
 
         <span class="ident">PublicKey::mangle_scalar_bits_and_multiply_by_basepoint_to_produce_public_key</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bits</span>)
@@ -251,14 +249,14 @@
 <span class="kw">impl</span> <span class="ident">PublicKey</span> {
     <span class="doccomment">/// View this public key as a byte array.</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;_</span> [<span class="ident">u8</span>; <span class="ident">PUBLIC_KEY_LENGTH</span>] { <span class="kw-2">&amp;</span>(<span class="self">self</span>.<span class="number">0</span>).<span class="number">0</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">as_bytes</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="lifetime">&#39;_</span> [<span class="ident">u8</span>; <span class="ident">PUBLIC_KEY_LENGTH</span>] { <span class="kw-2">&amp;</span>(<span class="self">self</span>.<span class="number">0</span>).<span class="number">0</span> }
 
     <span class="doccomment">/// Internal utility function for mangling the bits of a (formerly</span>
     <span class="doccomment">/// mathematically well-defined) &quot;scalar&quot; and multiplying it to produce a</span>
     <span class="doccomment">/// public key.</span>
     <span class="kw">fn</span> <span class="ident">mangle_scalar_bits_and_multiply_by_basepoint_to_produce_public_key</span>(
         <span class="ident">bits</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> [<span class="ident">u8</span>; <span class="number">32</span>],
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">PublicKey</span> {
+    ) -&gt; <span class="ident">PublicKey</span> {
         <span class="ident">bits</span>[<span class="number">0</span>] <span class="op">&amp;=</span> <span class="number">0b_1111_1000</span>;
         <span class="ident">bits</span>[<span class="number">31</span>] <span class="op">&amp;=</span> <span class="number">0b_0111_1111</span>;
         <span class="ident">bits</span>[<span class="number">31</span>] <span class="op">|</span><span class="op">=</span> <span class="number">0b_0100_0000</span>;
@@ -272,7 +270,7 @@
     <span class="doccomment">/// Implements &lt;https://tools.ietf.org/id/draft-irtf-cfrg-vrf-07.html#rfc.section.5.4.1.1&gt;</span>
     <span class="doccomment">/// The failure should not happen in practice, expected number of iterations</span>
     <span class="doccomment">/// is 2.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_to_curve</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">message</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EdwardsPoint</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash_to_curve</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">message</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">EdwardsPoint</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">p_candidate_bytes</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">32</span>];
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">h</span>: <span class="ident">Sha512</span> <span class="op">=</span> <span class="ident">Sha512::new</span>();
         <span class="ident">h</span>.<span class="ident">update</span>(<span class="ident">SUITE_STRING</span>);
@@ -300,11 +298,11 @@
         <span class="prelude-val">None</span>
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">verify_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> { <span class="op">!</span><span class="self">self</span>.<span class="number">1</span>.<span class="ident">is_small_order</span>() }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">verify_key</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> { <span class="op">!</span><span class="self">self</span>.<span class="number">1</span>.<span class="ident">is_small_order</span>() }
 
     <span class="doccomment">/// Implements &lt;https://tools.ietf.org/id/draft-irtf-cfrg-vrf-07.html#rfc.section.5.3&gt;</span>
     <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::many_single_char_names</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">verify</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pi</span>: <span class="kw-2">&amp;</span><span class="ident">Proof</span>, <span class="ident">message</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">verify</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">pi</span>: <span class="kw-2">&amp;</span><span class="ident">Proof</span>, <span class="ident">message</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">bool</span> {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">h</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">hash_to_curve</span>(<span class="ident">message</span>) {
             <span class="kw">let</span> <span class="ident">Proof</span>(<span class="ident">gamma</span>, <span class="ident">c</span>, <span class="ident">s</span>) <span class="op">=</span> <span class="ident">pi</span>; <span class="comment">// s should be equal k + cx, where k is a deterministically</span>
                                          <span class="comment">// generated nonce and x is the secret key</span>
@@ -320,7 +318,7 @@
 
             <span class="kw">let</span> <span class="ident">derivable_c</span> <span class="op">=</span>
                 <span class="ident">hash_points</span>(<span class="kw-2">&amp;</span>[<span class="ident">h</span>.<span class="ident">compress</span>(), <span class="ident">gamma</span>.<span class="ident">compress</span>(), <span class="ident">u</span>.<span class="ident">compress</span>(), <span class="ident">v</span>.<span class="ident">compress</span>()]);
-            <span class="kw-2">*</span><span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="ident">derivable_c</span>
+            <span class="kw-2">*</span><span class="ident">c</span> <span class="op">==</span> <span class="ident">derivable_c</span>
         } <span class="kw">else</span> {
             <span class="bool-val">false</span>
         }

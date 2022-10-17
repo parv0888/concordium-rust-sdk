@@ -387,9 +387,9 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">commitment_to_share</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">Curve</span><span class="op">&gt;</span>(
     <span class="ident">share_number</span>: <span class="kw-2">&amp;</span><span class="ident">C::Scalar</span>,
     <span class="ident">coeff_commitments</span>: <span class="kw-2">&amp;</span>[<span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>],
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">coeff_commitments</span>.<span class="ident">len</span>();
-    <span class="kw">if</span> <span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">n</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="kw">return</span> <span class="ident">Commitment</span>(<span class="ident">C::zero_point</span>());
     }
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">exponents</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">n</span>);
@@ -403,7 +403,7 @@
 
 <span class="doccomment">/// Interpret the array as coefficients of a polynomial starting at 0,</span>
 <span class="doccomment">/// and evaluate the polynomial at the given point.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">evaluate_poly</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Field</span>, <span class="ident">R</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">coeffs</span>: <span class="kw-2">&amp;</span>[<span class="ident">R</span>], <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">F</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">evaluate_poly</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Field</span>, <span class="ident">R</span>: <span class="ident">AsRef</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">coeffs</span>: <span class="kw-2">&amp;</span>[<span class="ident">R</span>], <span class="ident">point</span>: <span class="kw-2">&amp;</span><span class="ident">F</span>) -&gt; <span class="ident">F</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">eval</span>: <span class="ident">F</span> <span class="op">=</span> <span class="ident">F::zero</span>();
     <span class="comment">// Horner&#39;s scheme at point point</span>
     <span class="kw">for</span> <span class="ident">rand</span> <span class="kw">in</span> <span class="ident">coeffs</span>.<span class="ident">iter</span>().<span class="ident">rev</span>() {
@@ -430,7 +430,7 @@
     <span class="ident">pk</span>: <span class="kw-2">&amp;</span><span class="ident">PublicKey</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">share</span>: <span class="kw-2">&amp;</span><span class="ident">Value</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
-) <span class="op">-</span><span class="op">&gt;</span> ([<span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>; <span class="number">8</span>], [<span class="ident">Randomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>; <span class="number">8</span>], [<span class="ident">C::Scalar</span>; <span class="number">8</span>]) {
+) -&gt; ([<span class="ident">Cipher</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>; <span class="number">8</span>], [<span class="ident">Randomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>; <span class="number">8</span>], [<span class="ident">C::Scalar</span>; <span class="number">8</span>]) {
     <span class="comment">// The generator for encryption in the exponent is the second component of the</span>
     <span class="comment">// commitment key, the &#39;h&#39;.</span>
     <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">context</span>.<span class="ident">encryption_in_exponent_generator</span>();
@@ -484,7 +484,7 @@
 <span class="doccomment">/// - there are tags in the list which do not fit into the field capacity</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_tags</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span>, <span class="ident">F</span>: <span class="ident">PrimeField</span>, <span class="ident">I</span>: <span class="ident">std::iter::IntoIterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">AttributeTag</span><span class="op">&gt;</span><span class="op">&gt;</span>(
     <span class="ident">i</span>: <span class="ident">I</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
     <span class="comment">// Since F is supposed to be a field, its capacity must be at least 1, hence the</span>
     <span class="comment">// next line is safe. Maximum tag that can be stored.</span>
     <span class="kw">let</span> <span class="ident">max_tag</span> <span class="op">=</span> <span class="ident">F::CAPACITY</span> <span class="op">-</span> <span class="number">1</span>;
@@ -518,7 +518,7 @@
 <span class="doccomment">/// The field must be big enough to encode u64.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// This function will encode sorted identities</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_ars</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">PrimeField</span><span class="op">&gt;</span>(<span class="ident">ars</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeSet</span><span class="op">&lt;</span><span class="ident">ArIdentity</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">encode_ars</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">PrimeField</span><span class="op">&gt;</span>(<span class="ident">ars</span>: <span class="kw-2">&amp;</span><span class="ident">BTreeSet</span><span class="op">&lt;</span><span class="ident">ArIdentity</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">max_bit</span>: <span class="ident">usize</span> <span class="op">=</span> (<span class="ident">F::CAPACITY</span> <span class="op">-</span> <span class="number">1</span>) <span class="kw">as</span> <span class="ident">usize</span>;
 
     <span class="comment">// Collect into an __acending__ vector.</span>
@@ -537,7 +537,7 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">F::zero</span>().<span class="ident">into_repr</span>();
         <span class="kw">for</span> (<span class="ident">i</span>, <span class="kw-2">&amp;</span><span class="ident">ar_id</span>) <span class="kw">in</span> <span class="ident">chunk</span>.<span class="ident">iter</span>().<span class="ident">enumerate</span>() {
             <span class="kw">let</span> <span class="ident">ar_id</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">ar_id</span>.<span class="ident">into</span>();
-            <span class="kw">let</span> <span class="ident">x</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">%</span> <span class="number">2</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">let</span> <span class="ident">x</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">i</span> <span class="op">%</span> <span class="number">2</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="ident">u64::from</span>(<span class="ident">ar_id</span>)
             } <span class="kw">else</span> {
                 <span class="ident">u64::from</span>(<span class="ident">ar_id</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>
@@ -549,7 +549,7 @@
         <span class="ident">scalar</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="ident">two</span>);
         <span class="ident">scalars</span>.<span class="ident">push</span>(<span class="ident">scalar</span>)
     }
-    <span class="kw">if</span> <span class="ident">num_scalars</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">num_scalars</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="ident">scalars</span>.<span class="ident">push</span>(<span class="ident">F::zero</span>())
     }
     <span class="comment">// This should not fail since we&#39;ve explicitly added an element to</span>
@@ -568,7 +568,7 @@
     <span class="ident">created_at</span>: <span class="ident">YearMonth</span>,
     <span class="ident">valid_to</span>: <span class="ident">YearMonth</span>,
     <span class="ident">threshold</span>: <span class="ident">Threshold</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">f</span> <span class="op">=</span> <span class="ident">F::zero</span>().<span class="ident">into_repr</span>();
     <span class="kw">let</span> <span class="ident">ca</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">created_at</span>.<span class="ident">into</span>();
     <span class="kw">let</span> <span class="ident">vt</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">valid_to</span>.<span class="ident">into</span>();
@@ -592,7 +592,7 @@
     <span class="ident">threshold</span>: <span class="ident">SignatureThreshold</span>,
     <span class="ident">proof_acc_sk</span>: <span class="kw-2">&amp;</span><span class="ident">AccountOwnershipProof</span>,
     <span class="ident">msg</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) -&gt; <span class="ident">bool</span> {
     <span class="comment">// we check all the keys that were provided, and check enough were provided</span>
     <span class="comment">// compared to the threshold</span>
     <span class="comment">// We also make sure that no more than 255 keys are provided, as well as</span>
@@ -639,7 +639,7 @@
     <span class="ident">values</span>: <span class="kw-2">&amp;</span><span class="ident">CredentialDeploymentValues</span><span class="op">&lt;</span><span class="ident">C</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="ident">proofs</span>: <span class="kw-2">&amp;</span><span class="ident">IdOwnershipProofs</span><span class="op">&lt;</span><span class="ident">P</span>, <span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">new_or_existing</span>: <span class="kw-2">&amp;</span><span class="ident">Either</span><span class="op">&lt;</span><span class="ident">TransactionTime</span>, <span class="ident">AccountAddress</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
+) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hasher</span> <span class="op">=</span> <span class="ident">Sha256::new</span>();
     <span class="ident">hasher</span>.<span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="ident">to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">values</span>));
     <span class="ident">hasher</span>.<span class="ident">update</span>(<span class="kw-2">&amp;</span><span class="ident">to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">proofs</span>));

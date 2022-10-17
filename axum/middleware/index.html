@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Utilities for writing middleware"><meta name="keywords" content="rust, rustlang, rust-lang, middleware"><title>axum::middleware - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../axum/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a><h2 class="location">Module middleware</h2><div class="sidebar-elems"><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><div id="sidebar-vars" data-name="middleware" data-ty="mod" data-relpath="./"></div><script defer src="./sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../index.html">axum</a>::<wbr><a class="mod" href="#">middleware</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../src/axum/middleware/mod.rs.html#1-17" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>Utilities for writing middleware</p>
-<h1 id="table-of-contents" class="section-header"><a href="#table-of-contents">Table of contents</a></h1>
+<h2 id="table-of-contents" class="section-header"><a href="#table-of-contents">Table of contents</a></h2>
 <ul>
 <li><a href="#intro">Intro</a></li>
 <li><a href="#applying-middleware">Applying middleware</a></li>
@@ -8,7 +8,7 @@
 <li><a href="#routing-to-servicesmiddleware-and-backpressure">Routing to services/middleware and backpressure</a></li>
 <li><a href="#sharing-state-between-handlers-and-middleware">Sharing state between handlers and middleware</a></li>
 </ul>
-<h1 id="intro" class="section-header"><a href="#intro">Intro</a></h1>
+<h2 id="intro" class="section-header"><a href="#intro">Intro</a></h2>
 <p>axum is unique in that it doesn’t have its own bespoke middleware system and
 instead integrates with <a href="https://crates.io/crates/tower"><code>tower</code></a>. This means the ecosystem of <a href="https://crates.io/crates/tower"><code>tower</code></a> and
 <a href="https://crates.io/crates/tower-http"><code>tower-http</code></a> middleware all work with axum.</p>
@@ -16,14 +16,14 @@ instead integrates with <a href="https://crates.io/crates/tower"><code>tower</co
 with axum, having at least a basic understanding of tower’s concepts is
 recommended. See <a href="https://github.com/tower-rs/tower/tree/master/guides">tower’s guides</a> for a general introduction.
 Reading the documentation for <a href="../../tower/builder/struct.ServiceBuilder.html" title="tower::ServiceBuilder"><code>tower::ServiceBuilder</code></a> is also recommended.</p>
-<h1 id="applying-middleware" class="section-header"><a href="#applying-middleware">Applying middleware</a></h1>
+<h2 id="applying-middleware" class="section-header"><a href="#applying-middleware">Applying middleware</a></h2>
 <p>axum allows you to add middleware just about anywhere</p>
 <ul>
 <li>To entire routers with <a href="../struct.Router.html#method.layer"><code>Router::layer</code></a> and <a href="../struct.Router.html#method.route_layer"><code>Router::route_layer</code></a>.</li>
 <li>To method routers with <a href="../routing/struct.MethodRouter.html#method.layer"><code>MethodRouter::layer</code></a> and <a href="../routing/struct.MethodRouter.html#method.route_layer"><code>MethodRouter::route_layer</code></a>.</li>
 <li>To individual handlers with <a href="../handler/trait.Handler.html#method.layer"><code>Handler::layer</code></a>.</li>
 </ul>
-<h2 id="applying-multiple-middleware" class="section-header"><a href="#applying-multiple-middleware">Applying multiple middleware</a></h2>
+<h3 id="applying-multiple-middleware" class="section-header"><a href="#applying-multiple-middleware">Applying multiple middleware</a></h3>
 <p>Its recommended to use <a href="../../tower/builder/struct.ServiceBuilder.html" title="tower::ServiceBuilder"><code>tower::ServiceBuilder</code></a> to apply multiple middleware at
 once, instead of calling <code>layer</code> (or <code>route_layer</code>) repeatedly:</p>
 
@@ -47,7 +47,7 @@ once, instead of calling <code>layer</code> (or <code>route_layer</code>) repeat
             .<span class="ident">layer</span>(<span class="ident">TraceLayer::new_for_http</span>())
             .<span class="ident">layer</span>(<span class="ident">Extension</span>(<span class="ident">State</span> {}))
     );</code></pre></div>
-<h1 id="commonly-used-middleware" class="section-header"><a href="#commonly-used-middleware">Commonly used middleware</a></h1>
+<h2 id="commonly-used-middleware" class="section-header"><a href="#commonly-used-middleware">Commonly used middleware</a></h2>
 <p>Some commonly used middleware are:</p>
 <ul>
 <li><a href="tower_http::trace"><code>TraceLayer</code></a> for high level tracing/logging.</li>
@@ -61,7 +61,7 @@ ids.</li>
 requires using <a href="../error_handling/struct.HandleErrorLayer.html"><code>HandleErrorLayer</code></a>
 to convert timeouts to responses.</li>
 </ul>
-<h1 id="ordering" class="section-header"><a href="#ordering">Ordering</a></h1>
+<h2 id="ordering" class="section-header"><a href="#ordering">Ordering</a></h2>
 <p>When you add middleware with <a href="../struct.Router.html#method.layer"><code>Router::layer</code></a> (or similar) all previously added
 routes will be wrapped in the middleware. Generally speaking, this results in
 middleware being executed from bottom to top.</p>
@@ -129,10 +129,10 @@ response would bubble back up through <code>layer_three</code>, then <code>layer
 finally <code>layer_one</code>.</p>
 <p>Executing middleware top to bottom is generally easier to understand and follow
 mentally which is one of the reasons <code>ServiceBuilder</code> is recommended.</p>
-<h1 id="writing-middleware" class="section-header"><a href="#writing-middleware">Writing middleware</a></h1>
+<h2 id="writing-middleware" class="section-header"><a href="#writing-middleware">Writing middleware</a></h2>
 <p>axum offers many ways of writing middleware, at different levels of abstraction
 and with different pros and cons.</p>
-<h2 id="axummiddlewarefrom_fn" class="section-header"><a href="#axummiddlewarefrom_fn"><code>axum::middleware::from_fn</code></a></h2>
+<h3 id="axummiddlewarefrom_fn" class="section-header"><a href="#axummiddlewarefrom_fn"><code>axum::middleware::from_fn</code></a></h3>
 <p>Use <a href="fn.from_fn.html"><code>axum::middleware::from_fn</code></a> to write your middleware when:</p>
 <ul>
 <li>You’re not comfortable with implementing your own futures and would rather use
@@ -140,14 +140,14 @@ the familiar <code>async</code>/<code>await</code> syntax.</li>
 <li>You don’t intend to publish your middleware as a crate for others to use.
 Middleware written like this are only compatible with axum.</li>
 </ul>
-<h2 id="axummiddlewarefrom_extractor" class="section-header"><a href="#axummiddlewarefrom_extractor"><code>axum::middleware::from_extractor</code></a></h2>
+<h3 id="axummiddlewarefrom_extractor" class="section-header"><a href="#axummiddlewarefrom_extractor"><code>axum::middleware::from_extractor</code></a></h3>
 <p>Use <a href="fn.from_extractor.html"><code>axum::middleware::from_extractor</code></a> to write your middleware when:</p>
 <ul>
 <li>You have a type that you sometimes want to use as an extractor and sometimes
 as a middleware. If you only need your type as a middleware prefer
 <a href="fn.from_fn.html"><code>middleware::from_fn</code></a>.</li>
 </ul>
-<h2 id="towers-combinators" class="section-header"><a href="#towers-combinators">tower’s combinators</a></h2>
+<h3 id="towers-combinators" class="section-header"><a href="#towers-combinators">tower’s combinators</a></h3>
 <p>tower has several utility combinators that can be used to perform simple
 modifications to requests or responses. The most commonly used ones are</p>
 <ul>
@@ -161,7 +161,7 @@ modifications to requests or responses. The most commonly used ones are</p>
 <li>You want to perform a small ad hoc operation, such as adding a header.</li>
 <li>You don’t intend to publish your middleware as a crate for others to use.</li>
 </ul>
-<h2 id="towerservice-and-pinboxdyn-future" class="section-header"><a href="#towerservice-and-pinboxdyn-future"><code>tower::Service</code> and <code>Pin&lt;Box&lt;dyn Future&gt;&gt;</code></a></h2>
+<h3 id="towerservice-and-pinboxdyn-future" class="section-header"><a href="#towerservice-and-pinboxdyn-future"><code>tower::Service</code> and <code>Pin&lt;Box&lt;dyn Future&gt;&gt;</code></a></h3>
 <p>For maximum control (and a more low level API) you can write you own middleware
 by implementing <a href="../../tower_service/trait.Service.html" title="tower::Service"><code>tower::Service</code></a>:</p>
 <p>Use <a href="../../tower_service/trait.Service.html" title="tower::Service"><code>tower::Service</code></a> with <code>Pin&lt;Box&lt;dyn Future&gt;&gt;</code> to write your middleware when:</p>
@@ -187,7 +187,7 @@ your <a href="../../tower_layer/trait.Layer.html" title="tower::Layer"><code>tow
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Layer</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">MyLayer</span> {
     <span class="kw">type</span> <span class="ident">Service</span> <span class="op">=</span> <span class="ident">MyMiddleware</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">inner</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Service</span> {
+    <span class="kw">fn</span> <span class="ident">layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">inner</span>: <span class="ident">S</span>) -&gt; <span class="ident"><span class="self">Self</span>::Service</span> {
         <span class="ident">MyMiddleware</span> { <span class="ident">inner</span> }
     }
 }
@@ -207,11 +207,11 @@ your <a href="../../tower_layer/trait.Layer.html" title="tower::Layer"><code>tow
     <span class="comment">// `BoxFuture` is a type alias for `Pin&lt;Box&lt;dyn Future + Send + &#39;a&gt;&gt;`</span>
     <span class="kw">type</span> <span class="ident">Future</span> <span class="op">=</span> <span class="ident">BoxFuture</span><span class="op">&lt;</span><span class="lifetime">&#39;static</span>, <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Response</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span>;
 
-    <span class="kw">fn</span> <span class="ident">poll_ready</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">poll_ready</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Context</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">Poll</span><span class="op">&lt;</span><span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">poll_ready</span>(<span class="ident">cx</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">call</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">request</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Body</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Future</span> {
+    <span class="kw">fn</span> <span class="ident">call</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">request</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">Body</span><span class="op">&gt;</span>) -&gt; <span class="ident"><span class="self">Self</span>::Future</span> {
         <span class="kw">let</span> <span class="ident">future</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">call</span>(<span class="ident">request</span>);
         <span class="ident">Box::pin</span>(<span class="kw">async</span> <span class="kw">move</span> {
             <span class="kw">let</span> <span class="ident">response</span>: <span class="ident">Response</span> <span class="op">=</span> <span class="ident">future</span>.<span class="kw">await</span><span class="question-mark">?</span>;
@@ -219,7 +219,7 @@ your <a href="../../tower_layer/trait.Layer.html" title="tower::Layer"><code>tow
         })
     }
 }</code></pre></div>
-<h2 id="towerservice-and-custom-futures" class="section-header"><a href="#towerservice-and-custom-futures"><code>tower::Service</code> and custom futures</a></h2>
+<h3 id="towerservice-and-custom-futures" class="section-header"><a href="#towerservice-and-custom-futures"><code>tower::Service</code> and custom futures</a></h3>
 <p>If you’re comfortable implementing your own futures (or want to learn it) and
 need as much control as possible then using <code>tower::Service</code> without boxed
 futures is the way to go.</p>
@@ -235,7 +235,7 @@ the lower levels of async Rust works.</li>
 </ul>
 <p>tower’s <a href="https://github.com/tower-rs/tower/blob/master/guides/building-a-middleware-from-scratch.md">“Building a middleware from scratch”</a>
 guide is a good place to learn how to do this.</p>
-<h1 id="error-handling-for-middleware" class="section-header"><a href="#error-handling-for-middleware">Error handling for middleware</a></h1>
+<h2 id="error-handling-for-middleware" class="section-header"><a href="#error-handling-for-middleware">Error handling for middleware</a></h2>
 <p>axum’s error handling model requires handlers to always return a response.
 However middleware is one possible way to introduce errors into an application.
 If hyper receives an error the connection will be closed without sending a
@@ -266,7 +266,7 @@ response. Thus axum requires those errors to be handled gracefully:</p>
     );</code></pre></div>
 <p>See <a href="../error_handling/index.html"><code>error_handling</code></a> for more details on axum’s error
 handling model.</p>
-<h1 id="routing-to-servicesmiddleware-and-backpressure" class="section-header"><a href="#routing-to-servicesmiddleware-and-backpressure">Routing to services/middleware and backpressure</a></h1>
+<h2 id="routing-to-servicesmiddleware-and-backpressure" class="section-header"><a href="#routing-to-servicesmiddleware-and-backpressure">Routing to services/middleware and backpressure</a></h2>
 <p>Generally routing to one of multiple services and backpressure doesn’t mix
 well. Ideally you would want ensure a service is ready to receive a request
 before calling it. However, in order to know which service to call, you need
@@ -312,7 +312,7 @@ appropriately.</p>
 <p>Also note that handlers created from async functions don’t care about
 backpressure and are always ready. So if you’re not using any Tower
 middleware you don’t have to worry about any of this.</p>
-<h1 id="sharing-state-between-handlers-and-middleware" class="section-header"><a href="#sharing-state-between-handlers-and-middleware">Sharing state between handlers and middleware</a></h1>
+<h2 id="sharing-state-between-handlers-and-middleware" class="section-header"><a href="#sharing-state-between-handlers-and-middleware">Sharing state between handlers and middleware</a></h2>
 <p>State can be shared between middleware and handlers using <a href="https://docs.rs/http/latest/http/request/struct.Request.html#method.extensions">request extensions</a>:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">axum</span>::{
@@ -327,7 +327,7 @@ middleware you don’t have to worry about any of this.</p>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
 <span class="kw">struct</span> <span class="ident">CurrentUser</span> { <span class="comment">/* ... */</span> }
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">auth</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">req</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>, <span class="ident">next</span>: <span class="ident">Next</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Response</span>, <span class="ident">StatusCode</span><span class="op">&gt;</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">auth</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="ident">req</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>, <span class="ident">next</span>: <span class="ident">Next</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Response</span>, <span class="ident">StatusCode</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">auth_header</span> <span class="op">=</span> <span class="ident">req</span>.<span class="ident">headers</span>()
         .<span class="ident">get</span>(<span class="ident">http::header::AUTHORIZATION</span>)
         .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">header</span><span class="op">|</span> <span class="ident">header</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>());
@@ -346,7 +346,7 @@ middleware you don’t have to worry about any of this.</p>
     }
 }
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">authorize_current_user</span>(<span class="ident">auth_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CurrentUser</span><span class="op">&gt;</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">authorize_current_user</span>(<span class="ident">auth_token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">CurrentUser</span><span class="op">&gt;</span> {
     <span class="comment">// ...</span>
 }
 
@@ -364,18 +364,18 @@ middleware you don’t have to worry about any of this.</p>
 automatically moved to response extensions. You need to manually do that for the
 extensions you need.</p>
 </div></details><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="mod" href="future/index.html" title="axum::middleware::future mod">future</a></div><div class="item-right docblock-short"><p>Future types.</p>
-</div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="struct" href="struct.AddExtension.html" title="axum::middleware::AddExtension struct">AddExtension</a></div><div class="item-right docblock-short"><p>Middleware for adding some shareable value to <a href="https://docs.rs/http/latest/http/struct.Extensions.html">request extensions</a>.</p>
-</div><div class="item-left module-item"><a class="struct" href="struct.FromExtractor.html" title="axum::middleware::FromExtractor struct">FromExtractor</a></div><div class="item-right docblock-short"><p>Middleware that runs an extractor and discards the value.</p>
-</div><div class="item-left module-item"><a class="struct" href="struct.FromExtractorLayer.html" title="axum::middleware::FromExtractorLayer struct">FromExtractorLayer</a></div><div class="item-right docblock-short"><p><a href="../../tower_layer/trait.Layer.html"><code>Layer</code></a> that applies <a href="../extract/extractor_middleware/struct.ExtractorMiddleware.html" title="FromExtractor"><code>FromExtractor</code></a> that runs an extractor and
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="future/index.html" title="axum::middleware::future mod">future</a></div><div class="item-right docblock-short"><p>Future types.</p>
+</div></div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.AddExtension.html" title="axum::middleware::AddExtension struct">AddExtension</a></div><div class="item-right docblock-short"><p>Middleware for adding some shareable value to <a href="https://docs.rs/http/latest/http/struct.Extensions.html">request extensions</a>.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.FromExtractor.html" title="axum::middleware::FromExtractor struct">FromExtractor</a></div><div class="item-right docblock-short"><p>Middleware that runs an extractor and discards the value.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.FromExtractorLayer.html" title="axum::middleware::FromExtractorLayer struct">FromExtractorLayer</a></div><div class="item-right docblock-short"><p><a href="../../tower_layer/trait.Layer.html"><code>Layer</code></a> that applies <a href="../extract/extractor_middleware/struct.ExtractorMiddleware.html" title="FromExtractor"><code>FromExtractor</code></a> that runs an extractor and
 discards the value.</p>
-</div><div class="item-left module-item"><a class="struct" href="struct.FromFn.html" title="axum::middleware::FromFn struct">FromFn</a></div><div class="item-right docblock-short"><p>A middleware created from an async function.</p>
-</div><div class="item-left module-item"><a class="struct" href="struct.FromFnLayer.html" title="axum::middleware::FromFnLayer struct">FromFnLayer</a></div><div class="item-right docblock-short"><p>A <a href="../../tower_layer/trait.Layer.html" title="tower::Layer"><code>tower::Layer</code></a> from an async function.</p>
-</div><div class="item-left module-item"><a class="struct" href="struct.Next.html" title="axum::middleware::Next struct">Next</a></div><div class="item-right docblock-short"><p>The remainder of a middleware stack, including the handler.</p>
-</div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
-<div class="item-table"><div class="item-left module-item"><a class="fn" href="fn.from_extractor.html" title="axum::middleware::from_extractor fn">from_extractor</a></div><div class="item-right docblock-short"><p>Create a middleware from an extractor.</p>
-</div><div class="item-left module-item"><a class="fn" href="fn.from_fn.html" title="axum::middleware::from_fn fn">from_fn</a></div><div class="item-right docblock-short"><p>Create a middleware from an async function.</p>
-</div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="axum" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.FromFn.html" title="axum::middleware::FromFn struct">FromFn</a></div><div class="item-right docblock-short"><p>A middleware created from an async function.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.FromFnLayer.html" title="axum::middleware::FromFnLayer struct">FromFnLayer</a></div><div class="item-right docblock-short"><p>A <a href="../../tower_layer/trait.Layer.html" title="tower::Layer"><code>tower::Layer</code></a> from an async function.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Next.html" title="axum::middleware::Next struct">Next</a></div><div class="item-right docblock-short"><p>The remainder of a middleware stack, including the handler.</p>
+</div></div></div><h2 id="functions" class="section-header"><a href="#functions">Functions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.from_extractor.html" title="axum::middleware::from_extractor fn">from_extractor</a></div><div class="item-right docblock-short"><p>Create a middleware from an extractor.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="fn" href="fn.from_fn.html" title="axum::middleware::from_fn fn">from_fn</a></div><div class="item-right docblock-short"><p>Create a middleware from an async function.</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="axum" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
     <script src="../../main.js"></script>
 </body></html>

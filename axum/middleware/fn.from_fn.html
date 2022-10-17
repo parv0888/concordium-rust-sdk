@@ -6,7 +6,7 @@
 <li>Take <a href="struct.Next.html"><code>Next&lt;B&gt;</code></a> as the second argument.</li>
 <li>Return something that implements <a href="../response/trait.IntoResponse.html" title="IntoResponse"><code>IntoResponse</code></a>.</li>
 </ol>
-<h1 id="example" class="section-header"><a href="#example">Example</a></h1>
+<h2 id="example" class="section-header"><a href="#example">Example</a></h2>
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">axum</span>::{
     <span class="ident">Router</span>,
     <span class="ident">http</span>::{<span class="ident">Request</span>, <span class="ident">StatusCode</span>},
@@ -15,27 +15,27 @@
     <span class="ident">middleware</span>::{<span class="self">self</span>, <span class="ident">Next</span>},
 };
 
-<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">auth</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="ident">req</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>, <span class="ident">next</span>: <span class="ident">Next</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Response</span>, <span class="ident">StatusCode</span><span class="op">&gt;</span> {
+<span class="kw">async</span> <span class="kw">fn</span> <span class="ident">auth</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="ident">req</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>, <span class="ident">next</span>: <span class="ident">Next</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Response</span>, <span class="ident">StatusCode</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">auth_header</span> <span class="op">=</span> <span class="ident">req</span>.<span class="ident">headers</span>()
         .<span class="ident">get</span>(<span class="ident">http::header::AUTHORIZATION</span>)
         .<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">header</span><span class="op">|</span> <span class="ident">header</span>.<span class="ident">to_str</span>().<span class="ident">ok</span>());
 
     <span class="kw">match</span> <span class="ident">auth_header</span> {
-        <span class="prelude-val">Some</span>(<span class="ident">auth_header</span>) <span class="kw">if</span> <span class="ident">token_is_valid</span>(<span class="ident">auth_header</span>) <span class="op">=</span><span class="op">&gt;</span> {
+        <span class="prelude-val">Some</span>(<span class="ident">auth_header</span>) <span class="kw">if</span> <span class="ident">token_is_valid</span>(<span class="ident">auth_header</span>) =&gt; {
             <span class="prelude-val">Ok</span>(<span class="ident">next</span>.<span class="ident">run</span>(<span class="ident">req</span>).<span class="kw">await</span>)
         }
-        <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">StatusCode::UNAUTHORIZED</span>),
+        <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">StatusCode::UNAUTHORIZED</span>),
     }
 }
 
-<span class="kw">fn</span> <span class="ident">token_is_valid</span>(<span class="ident">token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+<span class="kw">fn</span> <span class="ident">token_is_valid</span>(<span class="ident">token</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="ident">bool</span> {
     <span class="comment">// ...</span>
 }
 
 <span class="kw">let</span> <span class="ident">app</span> <span class="op">=</span> <span class="ident">Router::new</span>()
     .<span class="ident">route</span>(<span class="string">&quot;/&quot;</span>, <span class="ident">get</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">async</span> { <span class="comment">/* ... */</span> }))
     .<span class="ident">route_layer</span>(<span class="ident">middleware::from_fn</span>(<span class="ident">auth</span>));</code></pre></div>
-<h1 id="passing-state" class="section-header"><a href="#passing-state">Passing state</a></h1>
+<h2 id="passing-state" class="section-header"><a href="#passing-state">Passing state</a></h2>
 <p>State can be passed to the function like so:</p>
 
 <div class="example-wrap"><pre class="rust rust-example-rendered"><code><span class="kw">use</span> <span class="ident">axum</span>::{
@@ -53,7 +53,7 @@
     <span class="ident">req</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
     <span class="ident">next</span>: <span class="ident">Next</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
     <span class="ident">state</span>: <span class="ident">State</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+) -&gt; <span class="ident">Response</span> {
     <span class="comment">// ...</span>
 }
 
@@ -82,7 +82,7 @@
 <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">my_middleware</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(
     <span class="ident">req</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
     <span class="ident">next</span>: <span class="ident">Next</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Response</span> {
+) -&gt; <span class="ident">Response</span> {
     <span class="kw">let</span> <span class="ident">state</span>: <span class="kw-2">&amp;</span><span class="ident">State</span> <span class="op">=</span> <span class="ident">req</span>.<span class="ident">extensions</span>().<span class="ident">get</span>().<span class="ident">unwrap</span>();
 
     <span class="comment">// ...</span>

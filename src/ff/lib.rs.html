@@ -418,16 +418,16 @@
     <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Eq</span> <span class="op">+</span> <span class="ident">Copy</span> <span class="op">+</span> <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">fmt::Debug</span> <span class="op">+</span> <span class="ident">fmt::Display</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>
 {
     <span class="doccomment">/// Returns an element chosen uniformly at random using a user-provided RNG.</span>
-    <span class="kw">fn</span> <span class="ident">random</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RngCore</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">std::marker::Sized</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">random</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RngCore</span> <span class="op">+</span> <span class="question-mark">?</span><span class="ident">std::marker::Sized</span><span class="op">&gt;</span>(<span class="ident">rng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns the zero element of the field, the additive identity.</span>
-    <span class="kw">fn</span> <span class="ident">zero</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">zero</span>() -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns the one element of the field, the multiplicative identity.</span>
-    <span class="kw">fn</span> <span class="ident">one</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">one</span>() -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// Returns true iff this element is zero.</span>
-    <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="doccomment">/// Squares this element.</span>
     <span class="kw">fn</span> <span class="ident">square</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>);
@@ -448,7 +448,7 @@
     <span class="kw">fn</span> <span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>);
 
     <span class="doccomment">/// Computes the multiplicative inverse of this element, if nonzero.</span>
-    <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">inverse</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Exponentiates this element by a power of the base prime modulus via</span>
     <span class="doccomment">/// the Frobenius automorphism.</span>
@@ -456,7 +456,7 @@
 
     <span class="doccomment">/// Exponentiates this element by a number represented with `u64` limbs,</span>
     <span class="doccomment">/// least significant digit first.</span>
-    <span class="kw">fn</span> <span class="ident">pow</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u64</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">S</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">pow</span><span class="op">&lt;</span><span class="ident">S</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u64</span>]<span class="op">&gt;</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">exp</span>: <span class="ident">S</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::one</span>();
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">found_one</span> <span class="op">=</span> <span class="bool-val">false</span>;
@@ -480,11 +480,11 @@
 <span class="doccomment">/// This trait represents an element of a field that has a square root operation described for it.</span>
 <span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">SqrtField</span>: <span class="ident">Field</span> {
     <span class="doccomment">/// Returns the Legendre symbol of the field element.</span>
-    <span class="kw">fn</span> <span class="ident">legendre</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">LegendreSymbol</span>;
+    <span class="kw">fn</span> <span class="ident">legendre</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">LegendreSymbol</span>;
 
     <span class="doccomment">/// Returns the square root of the field element, if it is</span>
     <span class="doccomment">/// quadratic residue.</span>
-    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">sqrt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// This trait represents a wrapper around a biginteger which can encode any element of a particular</span>
@@ -514,16 +514,16 @@
 
     <span class="doccomment">/// Compute the number of bits needed to encode this number. Always a</span>
     <span class="doccomment">/// multiple of 64.</span>
-    <span class="kw">fn</span> <span class="ident">num_bits</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span>;
+    <span class="kw">fn</span> <span class="ident">num_bits</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span>;
 
     <span class="doccomment">/// Returns true iff this number is zero.</span>
-    <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="doccomment">/// Returns true iff this number is odd.</span>
-    <span class="kw">fn</span> <span class="ident">is_odd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_odd</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="doccomment">/// Returns true iff this number is even.</span>
-    <span class="kw">fn</span> <span class="ident">is_even</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+    <span class="kw">fn</span> <span class="ident">is_even</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
 
     <span class="doccomment">/// Performs a rightwise bitshift of this number, effectively dividing</span>
     <span class="doccomment">/// it by 2.</span>
@@ -540,7 +540,7 @@
     <span class="kw">fn</span> <span class="ident">shl</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">amt</span>: <span class="ident">u32</span>);
 
     <span class="doccomment">/// Writes this `PrimeFieldRepr` as a big endian integer.</span>
-    <span class="kw">fn</span> <span class="ident">write_be</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">write_be</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">W</span>) -&gt; <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">BigEndian</span>, <span class="ident">WriteBytesExt</span>};
 
         <span class="kw">for</span> <span class="ident">digit</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">iter</span>().<span class="ident">rev</span>() {
@@ -551,7 +551,7 @@
     }
 
     <span class="doccomment">/// Reads a big endian integer into this representation.</span>
-    <span class="kw">fn</span> <span class="ident">read_be</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">reader</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read_be</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">reader</span>: <span class="ident">R</span>) -&gt; <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">BigEndian</span>, <span class="ident">ReadBytesExt</span>};
 
         <span class="kw">for</span> <span class="ident">digit</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">iter_mut</span>().<span class="ident">rev</span>() {
@@ -562,7 +562,7 @@
     }
 
     <span class="doccomment">/// Writes this `PrimeFieldRepr` as a little endian integer.</span>
-    <span class="kw">fn</span> <span class="ident">write_le</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">write_le</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">writer</span>: <span class="ident">W</span>) -&gt; <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">LittleEndian</span>, <span class="ident">WriteBytesExt</span>};
 
         <span class="kw">for</span> <span class="ident">digit</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">as_ref</span>().<span class="ident">iter</span>() {
@@ -573,7 +573,7 @@
     }
 
     <span class="doccomment">/// Reads a little endian integer into this representation.</span>
-    <span class="kw">fn</span> <span class="ident">read_le</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">reader</span>: <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">read_le</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">reader</span>: <span class="ident">R</span>) -&gt; <span class="ident">io::Result</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">LittleEndian</span>, <span class="ident">ReadBytesExt</span>};
 
         <span class="kw">for</span> <span class="ident">digit</span> <span class="kw">in</span> <span class="self">self</span>.<span class="ident">as_mut</span>().<span class="ident">iter_mut</span>() {
@@ -600,17 +600,17 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Error</span> <span class="kw">for</span> <span class="ident">PrimeFieldDecodingError</span> {
-    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> {
+    <span class="kw">fn</span> <span class="ident">description</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">PrimeFieldDecodingError::NotInField</span>(..) <span class="op">=</span><span class="op">&gt;</span> <span class="string">&quot;not an element of the field&quot;</span>,
+            <span class="ident">PrimeFieldDecodingError::NotInField</span>(..) =&gt; <span class="string">&quot;not an element of the field&quot;</span>,
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">PrimeFieldDecodingError</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">PrimeFieldDecodingError::NotInField</span>(<span class="kw-2">ref</span> <span class="ident">repr</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">PrimeFieldDecodingError::NotInField</span>(<span class="kw-2">ref</span> <span class="ident">repr</span>) =&gt; {
                 <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{} is not an element of the field&quot;</span>, <span class="ident">repr</span>)
             }
         }
@@ -625,12 +625,12 @@
 
     <span class="doccomment">/// Interpret a string of numbers as a (congruent) prime field element.</span>
     <span class="doccomment">/// Does not accept unnecessary leading zeroes or a blank string.</span>
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">s</span>.<span class="ident">is_empty</span>() {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
 
-        <span class="kw">if</span> <span class="ident">s</span> <span class="op">=</span><span class="op">=</span> <span class="string">&quot;0&quot;</span> {
+        <span class="kw">if</span> <span class="ident">s</span> <span class="op">==</span> <span class="string">&quot;0&quot;</span> {
             <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident"><span class="self">Self</span>::zero</span>());
         }
 
@@ -642,9 +642,9 @@
 
         <span class="kw">for</span> <span class="ident">c</span> <span class="kw">in</span> <span class="ident">s</span>.<span class="ident">chars</span>() {
             <span class="kw">match</span> <span class="ident">c</span>.<span class="ident">to_digit</span>(<span class="number">10</span>) {
-                <span class="prelude-val">Some</span>(<span class="ident">c</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Some</span>(<span class="ident">c</span>) =&gt; {
                     <span class="kw">if</span> <span class="ident">first_digit</span> {
-                        <span class="kw">if</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                        <span class="kw">if</span> <span class="ident">c</span> <span class="op">==</span> <span class="number">0</span> {
                             <span class="kw">return</span> <span class="prelude-val">None</span>;
                         }
 
@@ -654,7 +654,7 @@
                     <span class="ident">res</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="ident">ten</span>);
                     <span class="ident">res</span>.<span class="ident">add_assign</span>(<span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::from_repr</span>(<span class="ident"><span class="self">Self</span>::Repr::from</span>(<span class="ident">u64::from</span>(<span class="ident">c</span>))).<span class="ident">unwrap</span>());
                 }
-                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">None</span> =&gt; {
                     <span class="kw">return</span> <span class="prelude-val">None</span>;
                 }
             }
@@ -664,14 +664,14 @@
     }
 
     <span class="doccomment">/// Convert this prime field element into a biginteger representation.</span>
-    <span class="kw">fn</span> <span class="ident">from_repr</span>(<span class="kw">_</span>: <span class="ident"><span class="self">Self</span>::Repr</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">PrimeFieldDecodingError</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">from_repr</span>(<span class="kw">_</span>: <span class="ident"><span class="self">Self</span>::Repr</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">PrimeFieldDecodingError</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Convert a biginteger representation into a prime field element, if</span>
     <span class="doccomment">/// the number is an element of the field.</span>
-    <span class="kw">fn</span> <span class="ident">into_repr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Repr</span>;
+    <span class="kw">fn</span> <span class="ident">into_repr</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Repr</span>;
 
     <span class="doccomment">/// Returns the field characteristic; the modulus.</span>
-    <span class="kw">fn</span> <span class="ident">char</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Repr</span>;
+    <span class="kw">fn</span> <span class="ident">char</span>() -&gt; <span class="ident"><span class="self">Self</span>::Repr</span>;
 
     <span class="doccomment">/// How many bits are needed to represent an element of this field.</span>
     <span class="kw">const</span> <span class="ident">NUM_BITS</span>: <span class="ident">u32</span>;
@@ -681,14 +681,14 @@
 
     <span class="doccomment">/// Returns the multiplicative generator of `char()` - 1 order. This element</span>
     <span class="doccomment">/// must also be quadratic nonresidue.</span>
-    <span class="kw">fn</span> <span class="ident">multiplicative_generator</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">multiplicative_generator</span>() -&gt; <span class="self">Self</span>;
 
     <span class="doccomment">/// 2^s * t = `char()` - 1 with t odd.</span>
     <span class="kw">const</span> <span class="ident">S</span>: <span class="ident">u32</span>;
 
     <span class="doccomment">/// Returns the 2^s root of unity computed by exponentiating the `multiplicative_generator()`</span>
     <span class="doccomment">/// by t.</span>
-    <span class="kw">fn</span> <span class="ident">root_of_unity</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>;
+    <span class="kw">fn</span> <span class="ident">root_of_unity</span>() -&gt; <span class="self">Self</span>;
 }
 
 <span class="doccomment">/// An &quot;engine&quot; is a collection of types (fields, elliptic curve groups, etc.)</span>
@@ -706,7 +706,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u64</span>]<span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">BitIterator</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">t</span>: <span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">t</span>: <span class="ident">E</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">t</span>.<span class="ident">as_ref</span>().<span class="ident">len</span>() <span class="op">*</span> <span class="number">64</span>;
 
         <span class="ident">BitIterator</span> { <span class="ident">t</span>, <span class="ident">n</span> }
@@ -716,8 +716,8 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">E</span>: <span class="ident">AsRef</span><span class="op">&lt;</span>[<span class="ident">u64</span>]<span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">Iterator</span> <span class="kw">for</span> <span class="ident">BitIterator</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Item</span> <span class="op">=</span> <span class="ident">bool</span>;
 
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">n</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">n</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="prelude-val">None</span>
         } <span class="kw">else</span> {
             <span class="self">self</span>.<span class="ident">n</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
@@ -735,7 +735,7 @@
     <span class="kw">let</span> <span class="ident">expected</span> <span class="op">=</span> <span class="string">&quot;01101101111010100010000001011001111000100000000010111101001110011010100101010011110101111001101110000011111101101010101101011001&quot;</span>;
 
     <span class="kw">for</span> <span class="ident">e</span> <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">chars</span>() {
-        <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>() <span class="op">=</span><span class="op">=</span> (<span class="ident">e</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;1&#39;</span>));
+        <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>() <span class="op">==</span> (<span class="ident">e</span> <span class="op">==</span> <span class="string">&#39;1&#39;</span>));
     }
 
     <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">next</span>().<span class="ident">is_none</span>());
@@ -750,7 +750,7 @@
     ]);
 
     <span class="kw">for</span> <span class="ident">e</span> <span class="kw">in</span> <span class="ident">expected</span>.<span class="ident">chars</span>() {
-        <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>() <span class="op">=</span><span class="op">=</span> (<span class="ident">e</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;1&#39;</span>));
+        <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">next</span>().<span class="ident">unwrap</span>() <span class="op">==</span> (<span class="ident">e</span> <span class="op">==</span> <span class="string">&#39;1&#39;</span>));
     }
 
     <span class="macro">assert!</span>(<span class="ident">a</span>.<span class="ident">next</span>().<span class="ident">is_none</span>());
@@ -762,10 +762,10 @@
     <span class="doccomment">/// Calculate a - b - borrow, returning the result and modifying</span>
     <span class="doccomment">/// the borrow value.</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sbb</span>(<span class="ident">a</span>: <span class="ident">u64</span>, <span class="ident">b</span>: <span class="ident">u64</span>, <span class="ident">borrow</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">sbb</span>(<span class="ident">a</span>: <span class="ident">u64</span>, <span class="ident">b</span>: <span class="ident">u64</span>, <span class="ident">borrow</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u64</span>) -&gt; <span class="ident">u64</span> {
         <span class="kw">let</span> <span class="ident">tmp</span> <span class="op">=</span> (<span class="number">1u128</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">64</span>) <span class="op">+</span> <span class="ident">u128::from</span>(<span class="ident">a</span>) <span class="op">-</span> <span class="ident">u128::from</span>(<span class="ident">b</span>) <span class="op">-</span> <span class="ident">u128::from</span>(<span class="kw-2">*</span><span class="ident">borrow</span>);
 
-        <span class="kw-2">*</span><span class="ident">borrow</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">tmp</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">64</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="number">0</span> };
+        <span class="kw-2">*</span><span class="ident">borrow</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">tmp</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">64</span> <span class="op">==</span> <span class="number">0</span> { <span class="number">1</span> } <span class="kw">else</span> { <span class="number">0</span> };
 
         <span class="ident">tmp</span> <span class="kw">as</span> <span class="ident">u64</span>
     }
@@ -773,7 +773,7 @@
     <span class="doccomment">/// Calculate a + b + carry, returning the sum and modifying the</span>
     <span class="doccomment">/// carry value.</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">adc</span>(<span class="ident">a</span>: <span class="ident">u64</span>, <span class="ident">b</span>: <span class="ident">u64</span>, <span class="ident">carry</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">adc</span>(<span class="ident">a</span>: <span class="ident">u64</span>, <span class="ident">b</span>: <span class="ident">u64</span>, <span class="ident">carry</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u64</span>) -&gt; <span class="ident">u64</span> {
         <span class="kw">let</span> <span class="ident">tmp</span> <span class="op">=</span> <span class="ident">u128::from</span>(<span class="ident">a</span>) <span class="op">+</span> <span class="ident">u128::from</span>(<span class="ident">b</span>) <span class="op">+</span> <span class="ident">u128::from</span>(<span class="kw-2">*</span><span class="ident">carry</span>);
 
         <span class="kw-2">*</span><span class="ident">carry</span> <span class="op">=</span> (<span class="ident">tmp</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">64</span>) <span class="kw">as</span> <span class="ident">u64</span>;
@@ -784,7 +784,7 @@
     <span class="doccomment">/// Calculate a + (b * c) + carry, returning the least significant digit</span>
     <span class="doccomment">/// and setting carry to the most significant digit.</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mac_with_carry</span>(<span class="ident">a</span>: <span class="ident">u64</span>, <span class="ident">b</span>: <span class="ident">u64</span>, <span class="ident">c</span>: <span class="ident">u64</span>, <span class="ident">carry</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u64</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">mac_with_carry</span>(<span class="ident">a</span>: <span class="ident">u64</span>, <span class="ident">b</span>: <span class="ident">u64</span>, <span class="ident">c</span>: <span class="ident">u64</span>, <span class="ident">carry</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">u64</span>) -&gt; <span class="ident">u64</span> {
         <span class="kw">let</span> <span class="ident">tmp</span> <span class="op">=</span> (<span class="ident">u128::from</span>(<span class="ident">a</span>)) <span class="op">+</span> <span class="ident">u128::from</span>(<span class="ident">b</span>) <span class="op">*</span> <span class="ident">u128::from</span>(<span class="ident">c</span>) <span class="op">+</span> <span class="ident">u128::from</span>(<span class="kw-2">*</span><span class="ident">carry</span>);
 
         <span class="kw-2">*</span><span class="ident">carry</span> <span class="op">=</span> (<span class="ident">tmp</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">64</span>) <span class="kw">as</span> <span class="ident">u64</span>;

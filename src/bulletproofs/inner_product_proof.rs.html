@@ -459,7 +459,7 @@
     <span class="ident">Q</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>,
     <span class="ident">a_slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">C::Scalar</span>],
     <span class="ident">b_slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">C::Scalar</span>],
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">InnerProductProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">InnerProductProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">one</span> <span class="op">=</span> <span class="ident">C::Scalar::one</span>();
     <span class="kw">let</span> <span class="ident">H_scalars</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="ident">one</span>; <span class="ident">H_slice</span>.<span class="ident">len</span>()];
     <span class="ident">prove_inner_product_with_scalars</span>(
@@ -492,7 +492,7 @@
     <span class="ident">Q</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>,
     <span class="ident">a_slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">C::Scalar</span>],
     <span class="ident">b_slice</span>: <span class="kw-2">&amp;</span>[<span class="ident">C::Scalar</span>],
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">InnerProductProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">InnerProductProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">G_slice</span>.<span class="ident">len</span>();
     <span class="kw">if</span> <span class="op">!</span><span class="ident">n</span>.<span class="ident">is_power_of_two</span>() {
         <span class="kw">return</span> <span class="prelude-val">None</span>;
@@ -518,7 +518,7 @@
         <span class="kw">let</span> <span class="ident">a_hi_G_lo</span> <span class="op">=</span> <span class="ident">multiexp</span>(<span class="ident">G_lo</span>, <span class="ident">a_hi</span>);
         <span class="kw">let</span> <span class="ident">b_hi_H_lo</span>: <span class="ident">C</span>;
         <span class="kw">let</span> <span class="ident">b_lo_H_hi</span>: <span class="ident">C</span>;
-        <span class="kw">if</span> <span class="ident">j</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">j</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">let</span> <span class="ident">scalars_hi</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">H_prime_scalars</span>[<span class="ident">n</span> <span class="op">/</span> <span class="number">2</span>..];
             <span class="kw">let</span> <span class="ident">scalars_lo</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">H_prime_scalars</span>[..<span class="ident">n</span> <span class="op">/</span> <span class="number">2</span>];
             <span class="kw">let</span> <span class="ident">b_hi</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">C::Scalar</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">b_hi</span>
@@ -557,8 +557,8 @@
         <span class="kw">let</span> <span class="ident">u_j</span>: <span class="ident">C::Scalar</span> <span class="op">=</span> <span class="ident">transcript</span>.<span class="ident">challenge_scalar</span>::<span class="op">&lt;</span><span class="ident">C</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="string">b&quot;uj&quot;</span>);
         <span class="comment">// println!(&quot;Prover&#39;s u_{:?} = {:?}&quot;, j, u_j);</span>
         <span class="kw">let</span> <span class="ident">u_j_inv</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">u_j</span>.<span class="ident">inverse</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">inv</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inv</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">inv</span>) =&gt; <span class="ident">inv</span>,
+            <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">None</span>,
         };
 
         <span class="kw">let</span> <span class="ident">G_scalars</span> <span class="op">=</span> [<span class="ident">u_j_inv</span>, <span class="ident">u_j</span>];
@@ -603,7 +603,7 @@
 
             <span class="comment">// Calculating new H vector:</span>
             <span class="kw">let</span> <span class="ident">H_points</span> <span class="op">=</span> [<span class="ident">H_lo</span>[<span class="ident">i</span>], <span class="ident">H_hi</span>[<span class="ident">i</span>]];
-            <span class="kw">if</span> <span class="ident">j</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">j</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u_j</span> <span class="op">=</span> <span class="ident">u_j</span>;
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u_j_inv</span> <span class="op">=</span> <span class="ident">u_j_inv</span>;
                 <span class="ident">u_j</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="ident">H_prime_scalars</span>[<span class="ident">i</span>]);
@@ -644,7 +644,7 @@
     <span class="ident">transcript</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">RandomOracle</span>,
     <span class="ident">n</span>: <span class="ident">usize</span>,
     <span class="ident">proof</span>: <span class="kw-2">&amp;</span><span class="ident">InnerProductProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerificationScalars</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">VerificationScalars</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span><span class="op">&gt;</span> {
     <span class="comment">// let n = G_vec.len();</span>
     <span class="kw">let</span> <span class="ident">L_R</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">proof</span>.<span class="ident">lr_vec</span>;
     <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">proof</span>.<span class="ident">a</span>;
@@ -661,8 +661,8 @@
         <span class="ident">transcript</span>.<span class="ident">append_message</span>(<span class="string">b&quot;Rj&quot;</span>, <span class="ident">Rj</span>);
         <span class="kw">let</span> <span class="ident">u_j</span>: <span class="ident">C::Scalar</span> <span class="op">=</span> <span class="ident">transcript</span>.<span class="ident">challenge_scalar</span>::<span class="op">&lt;</span><span class="ident">C</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="string">b&quot;uj&quot;</span>);
         <span class="kw">let</span> <span class="ident">u_j_inv</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">u_j</span>.<span class="ident">inverse</span>() {
-            <span class="prelude-val">Some</span>(<span class="ident">inv</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">inv</span>,
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">None</span>,
+            <span class="prelude-val">Some</span>(<span class="ident">inv</span>) =&gt; <span class="ident">inv</span>,
+            <span class="kw">_</span> =&gt; <span class="kw">return</span> <span class="prelude-val">None</span>,
         };
         <span class="ident">s_0</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="ident">u_j_inv</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">u_j_sq</span> <span class="op">=</span> <span class="ident">u_j</span>;
@@ -713,7 +713,7 @@
     <span class="ident">P_prime</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>,
     <span class="ident">Q</span>: <span class="kw-2">&amp;</span><span class="ident">C</span>,
     <span class="ident">proof</span>: <span class="kw-2">&amp;</span><span class="ident">InnerProductProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) -&gt; <span class="ident">bool</span> {
     <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">G_vec</span>.<span class="ident">len</span>();
     <span class="kw">let</span> <span class="ident">L_R</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">proof</span>.<span class="ident">lr_vec</span>;
     <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">proof</span>.<span class="ident">a</span>;
@@ -722,8 +722,8 @@
     <span class="ident">ab</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="ident">b</span>);
 
     <span class="kw">let</span> <span class="ident">verification_scalars</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">verify_scalars</span>(<span class="ident">transcript</span>, <span class="ident">n</span>, <span class="ident">proof</span>) {
-        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="bool-val">false</span>,
-        <span class="prelude-val">Some</span>(<span class="ident">scalars</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">scalars</span>,
+        <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="bool-val">false</span>,
+        <span class="prelude-val">Some</span>(<span class="ident">scalars</span>) =&gt; <span class="ident">scalars</span>,
     };
     <span class="kw">let</span> (<span class="ident">u_sq</span>, <span class="ident">u_inv_sq</span>, <span class="ident">s</span>) <span class="op">=</span> (
         <span class="ident">verification_scalars</span>.<span class="ident">u_sq</span>,
@@ -764,7 +764,7 @@
 <span class="doccomment">/// the result is the inner product of the initial segments determined by the</span>
 <span class="doccomment">/// length of the shorter vector.</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">non_snake_case</span>)]</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_product</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Field</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span>[<span class="ident">F</span>], <span class="ident">b</span>: <span class="kw-2">&amp;</span>[<span class="ident">F</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">F</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">inner_product</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Field</span><span class="op">&gt;</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span>[<span class="ident">F</span>], <span class="ident">b</span>: <span class="kw-2">&amp;</span>[<span class="ident">F</span>]) -&gt; <span class="ident">F</span> {
     <span class="macro">debug_assert_eq!</span>(
         <span class="ident">a</span>.<span class="ident">len</span>(),
         <span class="ident">b</span>.<span class="ident">len</span>(),
@@ -798,7 +798,7 @@
         <span class="kw">let</span> <span class="ident">u</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="ident">three</span>, <span class="ident">one</span>, <span class="ident">two</span>];
         <span class="kw">let</span> <span class="ident">ip</span> <span class="op">=</span> <span class="ident">inner_product</span>(<span class="kw-2">&amp;</span><span class="ident">v</span>, <span class="kw-2">&amp;</span><span class="ident">u</span>);
         <span class="comment">// Tests that &lt;[1,2,3],[3,1,2]&gt; = 11</span>
-        <span class="macro">assert!</span>(<span class="ident">ip</span> <span class="op">=</span><span class="op">=</span> <span class="ident">eleven</span>);
+        <span class="macro">assert!</span>(<span class="ident">ip</span> <span class="op">==</span> <span class="ident">eleven</span>);
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>

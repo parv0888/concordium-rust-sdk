@@ -939,6 +939,7 @@
 <span id="939">939</span>
 <span id="940">940</span>
 <span id="941">941</span>
+<span id="942">942</span>
 </pre><pre class="rust"><code><span class="doccomment">//! This module contains types and their implementations related to the CIS-2</span>
 <span class="doccomment">//! token standard.</span>
 
@@ -949,7 +950,7 @@
         <span class="ident">ContractAddress</span>, <span class="ident">Deserial</span>, <span class="ident">OwnedReceiveName</span>, <span class="ident">ParseError</span>, <span class="ident">Read</span>, <span class="ident">Serial</span>, <span class="ident">Write</span>,
     },
 };
-<span class="kw">use</span> <span class="ident">derive_more</span>::{<span class="ident">AsRef</span>, <span class="ident">Display</span>, <span class="ident">From</span>};
+<span class="kw">use</span> <span class="ident">derive_more</span>::{<span class="ident">AsRef</span>, <span class="ident">Display</span>, <span class="ident">From</span>, <span class="ident">Into</span>};
 <span class="kw">use</span> <span class="ident">num::ToPrimitive</span>;
 <span class="kw">use</span> <span class="ident">num_bigint::BigUint</span>;
 <span class="kw">use</span> <span class="ident">num_traits::Zero</span>;
@@ -961,32 +962,33 @@
 <span class="doccomment">/// According to the CIS-2 specification, a token amount can be in the range</span>
 <span class="doccomment">/// from 0 to 2^256 - 1.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">From</span>, <span class="ident">Display</span>)]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TokenAmount</span>(<span class="ident">BigUint</span>);
+<span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TokenAmount</span>(<span class="kw">pub</span> <span class="ident">BigUint</span>);
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">TokenAmount</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">BigUint</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">TokenAmount</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">BigUint</span> { <span class="ident">v</span>.<span class="number">0</span> }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">TokenAmount</span>) -&gt; <span class="ident">BigUint</span> { <span class="ident">v</span>.<span class="number">0</span> }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u8</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenAmount</span> { <span class="ident">TokenAmount</span>(<span class="ident">v</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u8</span>) -&gt; <span class="ident">TokenAmount</span> { <span class="ident">TokenAmount</span>(<span class="ident">v</span>.<span class="ident">into</span>()) }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u16</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u16</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenAmount</span> { <span class="ident">TokenAmount</span>(<span class="ident">v</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u16</span>) -&gt; <span class="ident">TokenAmount</span> { <span class="ident">TokenAmount</span>(<span class="ident">v</span>.<span class="ident">into</span>()) }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenAmount</span> { <span class="ident">TokenAmount</span>(<span class="ident">v</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u32</span>) -&gt; <span class="ident">TokenAmount</span> { <span class="ident">TokenAmount</span>(<span class="ident">v</span>.<span class="ident">into</span>()) }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">TokenAmount</span> { <span class="ident">TokenAmount</span>(<span class="ident">v</span>.<span class="ident">into</span>()) }
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">v</span>: <span class="ident">u64</span>) -&gt; <span class="ident">TokenAmount</span> { <span class="ident">TokenAmount</span>(<span class="ident">v</span>.<span class="ident">into</span>()) }
 }
 
 <span class="kw">impl</span> <span class="ident">ops::Add</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
 
-    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Output</span> { <span class="ident">TokenAmount</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">+</span> <span class="ident">rhs</span>.<span class="number">0</span>) }
+    <span class="kw">fn</span> <span class="ident">add</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> { <span class="ident">TokenAmount</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">+</span> <span class="ident">rhs</span>.<span class="number">0</span>) }
 }
 
 <span class="kw">impl</span> <span class="ident">ops::AddAssign</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
@@ -996,7 +998,7 @@
 <span class="kw">impl</span> <span class="ident">ops::Sub</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
 
-    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Output</span> { <span class="ident">TokenAmount</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">-</span> <span class="ident">rhs</span>.<span class="number">0</span>) }
+    <span class="kw">fn</span> <span class="ident">sub</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> { <span class="ident">TokenAmount</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">-</span> <span class="ident">rhs</span>.<span class="number">0</span>) }
 }
 
 <span class="kw">impl</span> <span class="ident">ops::SubAssign</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
@@ -1006,7 +1008,7 @@
 <span class="kw">impl</span> <span class="ident">ops::Mul</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
 
-    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Output</span> { <span class="ident">TokenAmount</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">*</span> <span class="ident">rhs</span>.<span class="number">0</span>) }
+    <span class="kw">fn</span> <span class="ident">mul</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> { <span class="ident">TokenAmount</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">*</span> <span class="ident">rhs</span>.<span class="number">0</span>) }
 }
 
 <span class="kw">impl</span> <span class="ident">ops::MulAssign</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
@@ -1016,7 +1018,7 @@
 <span class="kw">impl</span> <span class="ident">ops::Div</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="self">Self</span>;
 
-    <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Output</span> { <span class="ident">TokenAmount</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">/</span> <span class="ident">rhs</span>.<span class="number">0</span>) }
+    <span class="kw">fn</span> <span class="ident">div</span>(<span class="self">self</span>, <span class="ident">rhs</span>: <span class="self">Self</span>) -&gt; <span class="ident"><span class="self">Self</span>::Output</span> { <span class="ident">TokenAmount</span>(<span class="self">self</span>.<span class="number">0</span> <span class="op">/</span> <span class="ident">rhs</span>.<span class="number">0</span>) }
 }
 
 <span class="kw">impl</span> <span class="ident">ops::DivAssign</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
@@ -1024,7 +1026,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value</span> <span class="op">=</span> <span class="self">self</span>.<span class="number">0</span>.<span class="ident">clone</span>();
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">37</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">byte</span> <span class="op">=</span> (<span class="ident">value</span>.<span class="ident">clone</span>() <span class="op">%</span> <span class="ident">BigUint::from</span>(<span class="number">128u8</span>)).<span class="ident">to_u8</span>().<span class="ident">unwrap</span>(); <span class="comment">// Safe to unwrap since we have truncated</span>
@@ -1043,23 +1045,23 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">TokenAmount</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">concordium_contracts_common::ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">concordium_base::contracts_common::ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">BigUint::zero</span>();
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">37</span> {
             <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
             <span class="kw">let</span> <span class="ident">value_byte</span> <span class="op">=</span> <span class="ident">BigUint::from</span>(<span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b0111_1111</span>);
             <span class="ident">result</span> <span class="op">+</span><span class="op">=</span> <span class="ident">value_byte</span> <span class="op">&lt;</span><span class="op">&lt;</span> (<span class="ident">i</span> <span class="op">*</span> <span class="number">7</span>);
 
-            <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b1000_0000</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b1000_0000</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">TokenAmount::from</span>(<span class="ident">result</span>));
             }
         }
-        <span class="prelude-val">Err</span>(<span class="ident">concordium_contracts_common::ParseError</span> {})
+        <span class="prelude-val">Err</span>(<span class="ident">concordium_base::contracts_common::ParseError</span> {})
     }
 }
 
 <span class="doccomment">/// CIS2 Token ID can be up to 255 bytes in size.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Clone</span>, <span class="ident">Into</span>, <span class="ident">AsRef</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TokenId</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Error for constructing a new [`TokenId`](TokenId).</span>
@@ -1070,7 +1072,7 @@
 <span class="kw">impl</span> <span class="ident">TokenId</span> {
     <span class="doccomment">/// Construct a new TokenId.</span>
     <span class="doccomment">/// Ensures the length of the provided bytes are within `u8::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewTokenIdError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewTokenIdError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">bytes</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u8::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewTokenIdError</span>(<span class="ident">bytes</span>.<span class="ident">len</span>()));
         }
@@ -1079,7 +1081,7 @@
 
     <span class="doccomment">/// Construct a new TokenId.</span>
     <span class="doccomment">/// Without ensuring the length of the provided bytes are within `u8::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident">TokenId</span>(<span class="ident">bytes</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="ident">TokenId</span>(<span class="ident">bytes</span>) }
 }
 
 <span class="doccomment">/// Error from parsing a token ID bytes from a hex encoded string.</span>
@@ -1095,7 +1097,7 @@
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">TokenId</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">ParseTokenIdVecError</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">hex::decode</span>(<span class="ident">s</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">token_id</span> <span class="op">=</span> <span class="ident">TokenId::new</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">token_id</span>)
@@ -1104,7 +1106,7 @@
 
 <span class="doccomment">/// Display the token ID as a hex string.</span>
 <span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">TokenId</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">std::fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span>) -&gt; <span class="ident">std::fmt::Result</span> {
         <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span> {
             <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{:02x}&quot;</span>, <span class="ident">b</span>)<span class="question-mark">?</span>;
         }
@@ -1114,7 +1116,7 @@
 
 <span class="doccomment">/// Serialize the token ID according to CIS2 specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">TokenId</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u8::try_from</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">W::Err::default</span>())<span class="question-mark">?</span>;
         <span class="ident">len</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="ident">serial_vector_no_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">out</span>)
@@ -1123,7 +1125,7 @@
 
 <span class="doccomment">/// Deserialize bytes to a Token ID according to CIS2 specification.</span>
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">TokenId</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">tokens_id_length</span> <span class="op">=</span> <span class="ident">u8::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">deserial_vector_no_length</span>(<span class="ident">source</span>, <span class="ident">tokens_id_length</span>.<span class="ident">into</span>())<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">TokenId</span>(<span class="ident">bytes</span>))
@@ -1154,12 +1156,12 @@
 <span class="doccomment">///   `-42000002`</span>
 <span class="doccomment">/// - [`Unauthorized`](Cis2ErrorRejectReason::Unauthorized): `-42000003`</span>
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">i32</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Cis2ErrorRejectReason</span> {
-    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error_code</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">error_code</span>: <span class="ident">i32</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">match</span> <span class="ident">error_code</span> {
-            <span class="op">-</span><span class="number">42000001</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Cis2ErrorRejectReason::InvalidTokenId</span>,
-            <span class="op">-</span><span class="number">42000002</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Cis2ErrorRejectReason::InsufficientFunds</span>,
-            <span class="op">-</span><span class="number">42000003</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Cis2ErrorRejectReason::Unauthorized</span>,
-            <span class="ident">other</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">Cis2ErrorRejectReason::Other</span>(<span class="ident">other</span>),
+            <span class="op">-</span><span class="number">42000001</span> =&gt; <span class="ident">Cis2ErrorRejectReason::InvalidTokenId</span>,
+            <span class="op">-</span><span class="number">42000002</span> =&gt; <span class="ident">Cis2ErrorRejectReason::InsufficientFunds</span>,
+            <span class="op">-</span><span class="number">42000003</span> =&gt; <span class="ident">Cis2ErrorRejectReason::Unauthorized</span>,
+            <span class="ident">other</span> =&gt; <span class="ident">Cis2ErrorRejectReason::Other</span>(<span class="ident">other</span>),
         }
     }
 }
@@ -1167,7 +1169,7 @@
 <span class="doccomment">/// Additional data which can be included for each transfer in the</span>
 <span class="doccomment">/// transfer parameter for the CIS2 contract function `transfer`.</span>
 <span class="doccomment">/// Allows up to `u16::MAX` number of bytes.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AdditionalData</span> {
     <span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
 }
@@ -1180,7 +1182,7 @@
 <span class="kw">impl</span> <span class="ident">AdditionalData</span> {
     <span class="doccomment">/// Construct a new AdditionalData.</span>
     <span class="doccomment">/// Ensures the length of the provided bytes are within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewAdditionalDataError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewAdditionalDataError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">data</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewAdditionalDataError</span>);
         }
@@ -1189,13 +1191,13 @@
 
     <span class="doccomment">/// Construct a new AdditionalData.</span>
     <span class="doccomment">/// Without ensuring the length of the provided bytes are within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="ident">AdditionalData</span> { <span class="ident">data</span> } }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">data</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="ident">AdditionalData</span> { <span class="ident">data</span> } }
 }
 
 <span class="doccomment">/// Serialization for the additional data, serialized as according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">AdditionalData</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u16::try_from</span>(<span class="self">self</span>.<span class="ident">data</span>.<span class="ident">len</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">W::Err::default</span>())<span class="question-mark">?</span>;
         <span class="ident">len</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="ident">serial_vector_no_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">data</span>, <span class="ident">out</span>)
@@ -1217,7 +1219,7 @@
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">AdditionalData</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">FromStrAdditionalDataError</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">s</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">data</span> <span class="op">=</span> <span class="ident">hex::decode</span>(<span class="ident">s</span>)<span class="question-mark">?</span>.<span class="ident">to_vec</span>();
         <span class="prelude-val">Ok</span>(<span class="ident">AdditionalData::new</span>(<span class="ident">data</span>)<span class="question-mark">?</span>)
     }
@@ -1233,13 +1235,13 @@
 }
 
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">Receiver</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">Receiver::Account</span>(<span class="ident">address</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">Receiver::Account</span>(<span class="ident">address</span>) =&gt; {
                 <span class="number">0u8</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
                 <span class="ident">address</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
             }
-            <span class="ident">Receiver::Contract</span>(<span class="ident">address</span>, <span class="ident">owned_receive_name</span>) <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">Receiver::Contract</span>(<span class="ident">address</span>, <span class="ident">owned_receive_name</span>) =&gt; {
                 <span class="number">1u8</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
                 <span class="ident">address</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
                 <span class="ident">owned_receive_name</span>.<span class="ident">as_receive_name</span>().<span class="ident">serial</span>(<span class="ident">out</span>)
@@ -1265,7 +1267,7 @@
 
 <span class="doccomment">/// Serialization of a transfer, according to the CIS2 specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">Transfer</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">token_id</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">amount</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">from</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
@@ -1281,13 +1283,13 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NewTransferParamsError</span>;
 
 <span class="doccomment">/// The parameter type for the NFT contract function `CIS2-NFT.transfer`.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">AsRef</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">AsRef</span>, <span class="ident">Clone</span>, <span class="ident">Into</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TransferParams</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Transfer</span><span class="op">&gt;</span>);
 
 <span class="kw">impl</span> <span class="ident">TransferParams</span> {
     <span class="doccomment">/// Construct a new TransferParams.</span>
     <span class="doccomment">/// Ensures the length of the provided transfers are within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">transfers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Transfer</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewTransferParamsError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">transfers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Transfer</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewTransferParamsError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">transfers</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewTransferParamsError</span>);
         }
@@ -1297,13 +1299,13 @@
     <span class="doccomment">/// Construct a new TransferParams.</span>
     <span class="doccomment">/// Without ensuring the length of the provided tranfers are within</span>
     <span class="doccomment">/// `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">transfers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Transfer</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">transfers</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">transfers</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">Transfer</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">transfers</span>) }
 }
 
 <span class="doccomment">/// Serialization of the transfer parameter, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">TransferParams</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u16::try_from</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">W::Err::default</span>())<span class="question-mark">?</span>;
         <span class="ident">len</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="ident">serial_vector_no_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">out</span>)
@@ -1322,10 +1324,10 @@
 <span class="doccomment">/// Serialization of the transfer parameter, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">OperatorUpdate</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">OperatorUpdate::Remove</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">0</span>),
-            <span class="ident">OperatorUpdate::Add</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">1</span>),
+            <span class="ident">OperatorUpdate::Remove</span> =&gt; <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">0</span>),
+            <span class="ident">OperatorUpdate::Add</span> =&gt; <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">1</span>),
         }
     }
 }
@@ -1333,12 +1335,12 @@
 <span class="doccomment">/// The deserialization of an operator update, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">OperatorUpdate</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">discriminant</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="ident">discriminant</span> {
-            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">OperatorUpdate::Remove</span>),
-            <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">OperatorUpdate::Add</span>),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::default</span>()),
+            <span class="number">0</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">OperatorUpdate::Remove</span>),
+            <span class="number">1</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">OperatorUpdate::Add</span>),
+            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">ParseError::default</span>()),
         }
     }
 }
@@ -1356,14 +1358,14 @@
 <span class="doccomment">/// Serialization of the update operator parameter item, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">UpdateOperator</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">update</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">operator</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
     }
 }
 
 <span class="doccomment">/// The parameter type for the NFT contract function `CIS2-NFT.updateOperator`.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">AsRef</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">AsRef</span>, <span class="ident">Clone</span>, <span class="ident">Into</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">UpdateOperatorParams</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UpdateOperator</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Error for constructing a new [`UpdateOperatorParams`](UpdateOperatorParams).</span>
@@ -1374,7 +1376,7 @@
 <span class="kw">impl</span> <span class="ident">UpdateOperatorParams</span> {
     <span class="doccomment">/// Construct a new UpdateOperatorParams.</span>
     <span class="doccomment">/// Ensures the length of the provided updates are within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">updates</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UpdateOperator</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewUpdateOperatorParamsError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">updates</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UpdateOperator</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewUpdateOperatorParamsError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">updates</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewUpdateOperatorParamsError</span>);
         }
@@ -1384,13 +1386,13 @@
     <span class="doccomment">/// Construct a new UpdateOperatorParams.</span>
     <span class="doccomment">/// Without ensuring the length of the provided updates are within</span>
     <span class="doccomment">/// `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">updates</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UpdateOperator</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">updates</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">updates</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">UpdateOperator</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">updates</span>) }
 }
 
 <span class="doccomment">/// Serialization of the updateOperator parameter, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">UpdateOperatorParams</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u16::try_from</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">W::Err::default</span>())<span class="question-mark">?</span>;
         <span class="ident">len</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="ident">serial_vector_no_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">out</span>)
@@ -1409,7 +1411,7 @@
 <span class="doccomment">/// Serialization of a balanceOf query, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">BalanceOfQuery</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">token_id</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">address</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
@@ -1417,7 +1419,7 @@
 }
 
 <span class="doccomment">/// The parameter type for the NFT contract function `CIS2-NFT.balanceOf`.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>, <span class="ident">Into</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BalanceOfQueryParams</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BalanceOfQuery</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Error for constructing a new [`BalanceOfQueryParams`](BalanceOfQueryParams).</span>
@@ -1428,7 +1430,7 @@
 <span class="kw">impl</span> <span class="ident">BalanceOfQueryParams</span> {
     <span class="doccomment">/// Construct a new BalanceOfQueryParams.</span>
     <span class="doccomment">/// Ensures the length of the provided queries are within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BalanceOfQuery</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewBalanceOfQueryParamsError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BalanceOfQuery</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewBalanceOfQueryParamsError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">queries</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewBalanceOfQueryParamsError</span>);
         }
@@ -1438,13 +1440,13 @@
     <span class="doccomment">/// Construct a new BalanceOfQueryParams.</span>
     <span class="doccomment">/// Without ensuring the length of the provided queries are within</span>
     <span class="doccomment">/// `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BalanceOfQuery</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">queries</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">BalanceOfQuery</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">queries</span>) }
 }
 
 <span class="doccomment">/// Serialization of the balanceOf parameter, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">BalanceOfQueryParams</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u16::try_from</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">W::Err::default</span>())<span class="question-mark">?</span>;
         <span class="ident">len</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="ident">serial_vector_no_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">out</span>)
@@ -1454,7 +1456,7 @@
 <span class="doccomment">/// The response which is sent back when calling the contract function</span>
 <span class="doccomment">/// `balanceOf`.</span>
 <span class="doccomment">/// It consists of the list of token amounts in the same order as the queries.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">AsRef</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">AsRef</span>, <span class="ident">Clone</span>, <span class="ident">Into</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BalanceOfQueryResponse</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenAmount</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Error for constructing a new</span>
@@ -1466,7 +1468,7 @@
 <span class="kw">impl</span> <span class="ident">BalanceOfQueryResponse</span> {
     <span class="doccomment">/// Construct a new BalanceOfQueryResponse.</span>
     <span class="doccomment">/// Ensures the length of the provided results is within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenAmount</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewBalanceOfQueryResponseError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenAmount</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewBalanceOfQueryResponseError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">results</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewBalanceOfQueryResponseError</span>);
         }
@@ -1476,13 +1478,13 @@
     <span class="doccomment">/// Construct a new BalanceOfQueryResponse.</span>
     <span class="doccomment">/// Without ensuring the length of the provided results is within</span>
     <span class="doccomment">/// `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenAmount</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">results</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenAmount</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">results</span>) }
 }
 
 <span class="doccomment">/// Deserialization for BalanceOfQueryResponse according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">BalanceOfQueryResponse</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u16</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">results</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">len</span>.<span class="ident">into</span>());
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
@@ -1504,7 +1506,7 @@
 <span class="doccomment">/// Serialization of a operatorOf query, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">OperatorOfQuery</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">owner</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">address</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
@@ -1512,7 +1514,7 @@
 }
 
 <span class="doccomment">/// The parameter type for the NFT contract function `CIS2-NFT.operatorOf`.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>, <span class="ident">Into</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OperatorOfQueryParams</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OperatorOfQuery</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Error for constructing a new</span>
@@ -1524,7 +1526,7 @@
 <span class="kw">impl</span> <span class="ident">OperatorOfQueryParams</span> {
     <span class="doccomment">/// Construct a new OperatorOfQueryParams.</span>
     <span class="doccomment">/// Ensures the length of the provided queries are within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OperatorOfQuery</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewOperatorOfQueryParamsError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OperatorOfQuery</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewOperatorOfQueryParamsError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">queries</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewOperatorOfQueryParamsError</span>);
         }
@@ -1534,13 +1536,13 @@
     <span class="doccomment">/// Construct a new OperatorOfQueryParams.</span>
     <span class="doccomment">/// Without ensuring the length of the provided queries are within</span>
     <span class="doccomment">/// `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OperatorOfQuery</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">queries</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">OperatorOfQuery</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">queries</span>) }
 }
 
 <span class="doccomment">/// Serialization of the operatorOf parameter, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">OperatorOfQueryParams</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u16::try_from</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">W::Err::default</span>())<span class="question-mark">?</span>;
         <span class="ident">len</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="ident">serial_vector_no_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">out</span>)
@@ -1551,7 +1553,7 @@
 <span class="doccomment">/// `operatorOf`.</span>
 <span class="doccomment">/// It consists of the list of results in the same order and length as the</span>
 <span class="doccomment">/// queries in the parameter.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>, <span class="ident">Into</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">OperatorOfQueryResponse</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Error for constructing a new</span>
@@ -1563,7 +1565,7 @@
 <span class="kw">impl</span> <span class="ident">OperatorOfQueryResponse</span> {
     <span class="doccomment">/// Construct a new OperatorOfQueryResponse.</span>
     <span class="doccomment">/// Ensures the length of the provided results is within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewOperatorOfQueryResponseError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewOperatorOfQueryResponseError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">results</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewOperatorOfQueryResponseError</span>);
         }
@@ -1573,13 +1575,13 @@
     <span class="doccomment">/// Construct a new OperatorOfQueryResponse.</span>
     <span class="doccomment">/// Without ensuring the length of the provided results is within</span>
     <span class="doccomment">/// `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">results</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">results</span>) }
 }
 
 <span class="doccomment">/// Deserialization for OperatorOfQueryResponse according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">OperatorOfQueryResponse</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u16</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">results</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">len</span>.<span class="ident">into</span>());
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
@@ -1593,7 +1595,7 @@
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">TokenMetadataQuery</span> <span class="op">=</span> <span class="ident">TokenId</span>;
 
 <span class="doccomment">/// The parameter type for the NFT contract function `CIS2-NFT.operatorOf`.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">From</span>, <span class="ident">AsRef</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">From</span>, <span class="ident">AsRef</span>, <span class="ident">Into</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TokenMetadataQueryParams</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenMetadataQuery</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Error for constructing a new</span>
@@ -1605,7 +1607,7 @@
 <span class="kw">impl</span> <span class="ident">TokenMetadataQueryParams</span> {
     <span class="doccomment">/// Construct a new TokenMetadataQueryParams.</span>
     <span class="doccomment">/// Ensures the length of the provided queries are within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenMetadataQuery</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewTokenMetadataQueryParamsError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenMetadataQuery</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewTokenMetadataQueryParamsError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">queries</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewTokenMetadataQueryParamsError</span>);
         }
@@ -1615,13 +1617,13 @@
     <span class="doccomment">/// Construct a new TokenMetadataQueryParams.</span>
     <span class="doccomment">/// Without ensuring the length of the provided queries are within</span>
     <span class="doccomment">/// `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenMetadataQuery</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">queries</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">queries</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TokenMetadataQuery</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">queries</span>) }
 }
 
 <span class="doccomment">/// Serialization of the operatorOf parameter, according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">TokenMetadataQueryParams</span> {
-    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u16::try_from</span>(<span class="self">self</span>.<span class="number">0</span>.<span class="ident">len</span>()).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">W::Err::default</span>())<span class="question-mark">?</span>;
         <span class="ident">len</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="ident">serial_vector_no_length</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="number">0</span>, <span class="ident">out</span>)
@@ -1631,7 +1633,7 @@
 <span class="doccomment">/// The response which is sent back when calling the contract function</span>
 <span class="doccomment">/// `tokenMetadata`.</span>
 <span class="doccomment">/// It consists of the list of queries paired with their corresponding result.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">AsRef</span>, <span class="ident">Into</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TokenMetadataQueryResponse</span>(<span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MetadataUrl</span><span class="op">&gt;</span>);
 
 <span class="doccomment">/// Error for constructing a new</span>
@@ -1643,7 +1645,7 @@
 <span class="kw">impl</span> <span class="ident">TokenMetadataQueryResponse</span> {
     <span class="doccomment">/// Construct a new TokenMetadataQueryResponse.</span>
     <span class="doccomment">/// Ensures the length of the provided results is within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MetadataUrl</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewTokenMetadataQueryResponseError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MetadataUrl</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewTokenMetadataQueryResponseError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">results</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewTokenMetadataQueryResponseError</span>);
         }
@@ -1653,13 +1655,13 @@
     <span class="doccomment">/// Construct a new TokenMetadataQueryResponse.</span>
     <span class="doccomment">/// Without ensuring the length of the provided results is within</span>
     <span class="doccomment">/// `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MetadataUrl</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">results</span>) }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">results</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">MetadataUrl</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">results</span>) }
 }
 
 <span class="doccomment">/// Deserialization for TokenMetadataQueryResponse according to the CIS2</span>
 <span class="doccomment">/// specification.</span>
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">TokenMetadataQueryResponse</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u16</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">results</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">len</span>.<span class="ident">into</span>());
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
@@ -1687,7 +1689,7 @@
 <span class="kw">impl</span> <span class="ident">MetadataUrl</span> {
     <span class="doccomment">/// Construct a new MetadataUrl.</span>
     <span class="doccomment">/// Ensures the length of the url is within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">url</span>: <span class="ident">String</span>, <span class="ident">hash</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hash</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewMetadataUrlError</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">url</span>: <span class="ident">String</span>, <span class="ident">hash</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hash</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">NewMetadataUrlError</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">url</span>.<span class="ident">len</span>() <span class="op">&gt;</span> <span class="ident">u16::MAX</span>.<span class="ident">into</span>() {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">NewMetadataUrlError</span>);
         }
@@ -1696,18 +1698,18 @@
 
     <span class="doccomment">/// Construct a new MetadataUrl.</span>
     <span class="doccomment">/// Without ensuring the length of the url is within `u16::MAX`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">url</span>: <span class="ident">String</span>, <span class="ident">hash</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hash</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> { <span class="self">Self</span> { <span class="ident">url</span>, <span class="ident">hash</span> } }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">url</span>: <span class="ident">String</span>, <span class="ident">hash</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hash</span><span class="op">&gt;</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span> { <span class="ident">url</span>, <span class="ident">hash</span> } }
 
     <span class="doccomment">/// Get the metadata content url.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">str</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">url</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">url</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="kw-2">&amp;</span><span class="ident">str</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">url</span> }
 
     <span class="doccomment">/// Get the metadata content hash.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hash</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">hash</span> }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">hash</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hash</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">hash</span> }
 }
 
 <span class="doccomment">/// Deserialization for MetadataUrl according to the CIS2 specification.</span>
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">MetadataUrl</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u16</span>()<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">len</span>.<span class="ident">into</span>());
         <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
@@ -1785,7 +1787,7 @@
     <span class="ident">Unknown</span>,
 }
 
-<span class="kw">fn</span> <span class="ident">display_hash</span>(<span class="ident">hash_opt</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hash</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">fn</span> <span class="ident">display_hash</span>(<span class="ident">hash_opt</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Hash</span><span class="op">&gt;</span>) -&gt; <span class="ident">String</span> {
     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">hash</span>) <span class="op">=</span> <span class="ident">hash_opt</span> {
         <span class="macro">format!</span>(<span class="string">&quot;with hash {}&quot;</span>, <span class="ident">hash</span>)
     } <span class="kw">else</span> {
@@ -1795,45 +1797,45 @@
 
 <span class="doccomment">/// Deserialize the contract events as according to the CIS2 specification.</span>
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">Event</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">ParseError</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">discriminant</span> <span class="op">=</span> <span class="ident">u8::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
         <span class="kw">match</span> <span class="ident">discriminant</span> {
-            <span class="number">0</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Transfer</span> {
+            <span class="number">0</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::Transfer</span> {
                 <span class="ident">token_id</span>: <span class="ident">TokenId::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">amount</span>:   <span class="ident">TokenAmount::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">from</span>:     <span class="ident">Address::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">to</span>:       <span class="ident">Address::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
             }),
-            <span class="number">1</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Mint</span> {
+            <span class="number">1</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::Mint</span> {
                 <span class="ident">token_id</span>: <span class="ident">TokenId::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">amount</span>:   <span class="ident">TokenAmount::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">owner</span>:    <span class="ident">Address::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
             }),
-            <span class="number">2</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Burn</span> {
+            <span class="number">2</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::Burn</span> {
                 <span class="ident">token_id</span>: <span class="ident">TokenId::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">amount</span>:   <span class="ident">TokenAmount::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">owner</span>:    <span class="ident">Address::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
             }),
-            <span class="number">3</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::UpdateOperator</span> {
+            <span class="number">3</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::UpdateOperator</span> {
                 <span class="ident">update</span>:   <span class="ident">OperatorUpdate::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">owner</span>:    <span class="ident">Address::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">operator</span>: <span class="ident">Address::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
             }),
-            <span class="number">4</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::TokenMetadata</span> {
+            <span class="number">4</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::TokenMetadata</span> {
                 <span class="ident">token_id</span>:     <span class="ident">TokenId::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
                 <span class="ident">metadata_url</span>: <span class="ident">MetadataUrl::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
             }),
-            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(<span class="ident">Event::Unknown</span>),
+            <span class="kw">_</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Event::Unknown</span>),
         }
     }
 }
 
 <span class="doccomment">/// Display the Address using either the display for account address or contract</span>
 <span class="doccomment">/// address.</span>
-<span class="kw">fn</span> <span class="ident">display_address</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Address</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">String</span> {
+<span class="kw">fn</span> <span class="ident">display_address</span>(<span class="ident">a</span>: <span class="kw-2">&amp;</span><span class="ident">Address</span>) -&gt; <span class="ident">String</span> {
     <span class="kw">match</span> <span class="ident">a</span> {
-        <span class="ident">Address::Account</span>(<span class="ident">addr</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">addr</span>),
-        <span class="ident">Address::Contract</span>(<span class="ident">addr</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">addr</span>),
+        <span class="ident">Address::Account</span>(<span class="ident">addr</span>) =&gt; <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">addr</span>),
+        <span class="ident">Address::Contract</span>(<span class="ident">addr</span>) =&gt; <span class="macro">format!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">addr</span>),
     }
 }
 

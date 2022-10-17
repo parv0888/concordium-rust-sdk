@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;rust_decimal-1.25.0&#x2F;src&#x2F;decimal.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>decimal.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../rust_decimal/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;rust_decimal-1.26.1&#x2F;src&#x2F;decimal.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>decimal.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../rust_decimal/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">   1</span>
 <span id="2">   2</span>
 <span id="3">   3</span>
 <span id="4">   4</span>
@@ -2544,6 +2544,40 @@
 <span id="2544">2544</span>
 <span id="2545">2545</span>
 <span id="2546">2546</span>
+<span id="2547">2547</span>
+<span id="2548">2548</span>
+<span id="2549">2549</span>
+<span id="2550">2550</span>
+<span id="2551">2551</span>
+<span id="2552">2552</span>
+<span id="2553">2553</span>
+<span id="2554">2554</span>
+<span id="2555">2555</span>
+<span id="2556">2556</span>
+<span id="2557">2557</span>
+<span id="2558">2558</span>
+<span id="2559">2559</span>
+<span id="2560">2560</span>
+<span id="2561">2561</span>
+<span id="2562">2562</span>
+<span id="2563">2563</span>
+<span id="2564">2564</span>
+<span id="2565">2565</span>
+<span id="2566">2566</span>
+<span id="2567">2567</span>
+<span id="2568">2568</span>
+<span id="2569">2569</span>
+<span id="2570">2570</span>
+<span id="2571">2571</span>
+<span id="2572">2572</span>
+<span id="2573">2573</span>
+<span id="2574">2574</span>
+<span id="2575">2575</span>
+<span id="2576">2576</span>
+<span id="2577">2577</span>
+<span id="2578">2578</span>
+<span id="2579">2579</span>
+<span id="2580">2580</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::constants</span>::{
     <span class="ident">MAX_I128_REPR</span>, <span class="ident">MAX_PRECISION_U32</span>, <span class="ident">POWERS_10</span>, <span class="ident">SCALE_MASK</span>, <span class="ident">SCALE_SHIFT</span>, <span class="ident">SIGN_MASK</span>, <span class="ident">SIGN_SHIFT</span>, <span class="ident">U32_MASK</span>, <span class="ident">U8_MASK</span>,
     <span class="ident">UNSIGN_MASK</span>,
@@ -2557,12 +2591,19 @@
     <span class="ident">cmp</span>::{<span class="ident">Ordering::Equal</span>, <span class="kw-2">*</span>},
     <span class="ident">fmt</span>,
     <span class="ident">hash</span>::{<span class="ident">Hash</span>, <span class="ident">Hasher</span>},
-    <span class="ident">iter::Sum</span>,
+    <span class="ident">iter</span>::{<span class="ident">Product</span>, <span class="ident">Sum</span>},
     <span class="ident">ops</span>::{<span class="ident">Add</span>, <span class="ident">AddAssign</span>, <span class="ident">Div</span>, <span class="ident">DivAssign</span>, <span class="ident">Mul</span>, <span class="ident">MulAssign</span>, <span class="ident">Neg</span>, <span class="ident">Rem</span>, <span class="ident">RemAssign</span>, <span class="ident">Sub</span>, <span class="ident">SubAssign</span>},
     <span class="ident">str::FromStr</span>,
 };
-<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel&quot;</span>)]</span>
+
+<span class="comment">// Diesel configuration</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel2&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">diesel::deserialize::FromSqlRow</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel2&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">diesel::expression::AsExpression</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">any</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel1&quot;</span>, <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel2&quot;</span>))]</span>
 <span class="kw">use</span> <span class="ident">diesel::sql_types::Numeric</span>;
+
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unused_imports</span>)]</span> <span class="comment">// It&#39;s not actually dead code below, but the compiler thinks it is.</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
 <span class="kw">use</span> <span class="ident">num_traits::float::FloatCore</span>;
@@ -2645,7 +2686,12 @@
 <span class="doccomment">/// where m is an integer such that -2&lt;sup&gt;96&lt;/sup&gt; &lt; m &lt; 2&lt;sup&gt;96&lt;/sup&gt;, and e is an integer</span>
 <span class="doccomment">/// between 0 and 28 inclusive.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel&quot;</span>, <span class="ident">derive</span>(<span class="ident">FromSqlRow</span>, <span class="ident">AsExpression</span>), <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;Numeric&quot;</span>)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(
+    <span class="ident">all</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel1&quot;</span>, <span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel2&quot;</span>)),
+    <span class="ident">derive</span>(<span class="ident">FromSqlRow</span>, <span class="ident">AsExpression</span>),
+    <span class="ident">sql_type</span> <span class="op">=</span> <span class="string">&quot;Numeric&quot;</span>
+)]</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;diesel2&quot;</span>, <span class="ident">derive</span>(<span class="ident">FromSqlRow</span>, <span class="ident">AsExpression</span>), <span class="ident">diesel</span>(<span class="ident">sql_type</span> <span class="op">=</span> <span class="ident">Numeric</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;c-repr&quot;</span>, <span class="ident">repr</span>(<span class="ident">C</span>))]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(
     <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;borsh&quot;</span>,
@@ -2939,10 +2985,10 @@
     <span class="doccomment">/// assert_eq!(pi.to_string(), &quot;3.141&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">num</span>: <span class="ident">i64</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">num</span>: <span class="ident">i64</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">match</span> <span class="ident"><span class="self">Self</span>::try_new</span>(<span class="ident">num</span>, <span class="ident">scale</span>) {
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
-            <span class="prelude-val">Ok</span>(<span class="ident">d</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">d</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">d</span>) =&gt; <span class="ident">d</span>,
         }
     }
 
@@ -2956,7 +3002,7 @@
     <span class="doccomment">/// let max = Decimal::try_new(i64::MAX, u32::MAX);</span>
     <span class="doccomment">/// assert!(max.is_err());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">try_new</span>(<span class="ident">num</span>: <span class="ident">i64</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="kw">crate</span>::Result</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">try_new</span>(<span class="ident">num</span>: <span class="ident">i64</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) -&gt; <span class="ident"><span class="kw">crate</span>::Result</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">scale</span> <span class="op">&gt;</span> <span class="ident">MAX_PRECISION_U32</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::ScaleExceedsMaximumPrecision</span>(<span class="ident">scale</span>));
         }
@@ -2998,10 +3044,10 @@
     <span class="doccomment">/// assert_eq!(pi.to_string(), &quot;3.141&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_i128_with_scale</span>(<span class="ident">num</span>: <span class="ident">i128</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_i128_with_scale</span>(<span class="ident">num</span>: <span class="ident">i128</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">match</span> <span class="ident"><span class="self">Self</span>::try_from_i128_with_scale</span>(<span class="ident">num</span>, <span class="ident">scale</span>) {
-            <span class="prelude-val">Ok</span>(<span class="ident">d</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">d</span>,
-            <span class="prelude-val">Err</span>(<span class="ident">e</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
+            <span class="prelude-val">Ok</span>(<span class="ident">d</span>) =&gt; <span class="ident">d</span>,
+            <span class="prelude-val">Err</span>(<span class="ident">e</span>) =&gt; <span class="macro">panic!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">e</span>),
         }
     }
 
@@ -3016,7 +3062,7 @@
     <span class="doccomment">/// let max = Decimal::try_from_i128_with_scale(i128::MAX, u32::MAX);</span>
     <span class="doccomment">/// assert!(max.is_err());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">try_from_i128_with_scale</span>(<span class="ident">num</span>: <span class="ident">i128</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="kw">crate</span>::Result</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">try_from_i128_with_scale</span>(<span class="ident">num</span>: <span class="ident">i128</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) -&gt; <span class="ident"><span class="kw">crate</span>::Result</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">scale</span> <span class="op">&gt;</span> <span class="ident">MAX_PRECISION_U32</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::ScaleExceedsMaximumPrecision</span>(<span class="ident">scale</span>));
         }
@@ -3065,13 +3111,13 @@
     <span class="doccomment">/// assert_eq!(pi.to_string(), &quot;3.1415926535897932384626433832&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_parts</span>(<span class="ident">lo</span>: <span class="ident">u32</span>, <span class="ident">mid</span>: <span class="ident">u32</span>, <span class="ident">hi</span>: <span class="ident">u32</span>, <span class="ident">negative</span>: <span class="ident">bool</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_parts</span>(<span class="ident">lo</span>: <span class="ident">u32</span>, <span class="ident">mid</span>: <span class="ident">u32</span>, <span class="ident">hi</span>: <span class="ident">u32</span>, <span class="ident">negative</span>: <span class="ident">bool</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="ident">Decimal</span> {
             <span class="ident">lo</span>,
             <span class="ident">mid</span>,
             <span class="ident">hi</span>,
             <span class="ident">flags</span>: <span class="ident">flags</span>(
-                <span class="kw">if</span> <span class="ident">lo</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mid</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">hi</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+                <span class="kw">if</span> <span class="ident">lo</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mid</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">hi</span> <span class="op">==</span> <span class="number">0</span> {
                     <span class="bool-val">false</span>
                 } <span class="kw">else</span> {
                     <span class="ident">negative</span>
@@ -3082,8 +3128,8 @@
     }
 
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_parts_raw</span>(<span class="ident">lo</span>: <span class="ident">u32</span>, <span class="ident">mid</span>: <span class="ident">u32</span>, <span class="ident">hi</span>: <span class="ident">u32</span>, <span class="ident">flags</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
-        <span class="kw">if</span> <span class="ident">lo</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mid</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">hi</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">from_parts_raw</span>(<span class="ident">lo</span>: <span class="ident">u32</span>, <span class="ident">mid</span>: <span class="ident">u32</span>, <span class="ident">hi</span>: <span class="ident">u32</span>, <span class="ident">flags</span>: <span class="ident">u32</span>) -&gt; <span class="ident">Decimal</span> {
+        <span class="kw">if</span> <span class="ident">lo</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mid</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">hi</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="ident">Decimal</span> {
                 <span class="ident">lo</span>,
                 <span class="ident">mid</span>,
@@ -3113,10 +3159,10 @@
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scientific</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decimal</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_scientific</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decimal</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">const</span> <span class="ident">ERROR_MESSAGE</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;Failed to parse&quot;</span>;
 
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">split</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;e&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">=</span><span class="op">=</span> <span class="string">&#39;E&#39;</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">split</span> <span class="op">=</span> <span class="ident">value</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;e&#39;</span> <span class="op">|</span><span class="op">|</span> <span class="ident">c</span> <span class="op">==</span> <span class="string">&#39;E&#39;</span>);
 
         <span class="kw">let</span> <span class="ident">base</span> <span class="op">=</span> <span class="ident">split</span>.<span class="ident">next</span>().<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Error::from</span>(<span class="ident">ERROR_MESSAGE</span>))<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">exp</span> <span class="op">=</span> <span class="ident">split</span>.<span class="ident">next</span>().<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Error::from</span>(<span class="ident">ERROR_MESSAGE</span>))<span class="question-mark">?</span>;
@@ -3161,8 +3207,8 @@
                         <span class="ident">hi</span>: <span class="number">0</span>,
                     };
                     <span class="kw">match</span> <span class="ident">ret</span>.<span class="ident">checked_mul</span>(<span class="ident">pow</span>) {
-                        <span class="prelude-val">Some</span>(<span class="ident">r</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">r</span>,
-                        <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::ExceedsMaximumPossibleValue</span>),
+                        <span class="prelude-val">Some</span>(<span class="ident">r</span>) =&gt; <span class="ident">ret</span> <span class="op">=</span> <span class="ident">r</span>,
+                        <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::ExceedsMaximumPossibleValue</span>),
                     };
                 }
                 <span class="ident">ret</span>.<span class="ident">normalize_assign</span>();
@@ -3193,8 +3239,8 @@
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str_radix</span>(<span class="ident">str</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">radix</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">radix</span> <span class="op">=</span><span class="op">=</span> <span class="number">10</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str_radix</span>(<span class="ident">str</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">radix</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="ident">radix</span> <span class="op">==</span> <span class="number">10</span> {
             <span class="ident"><span class="kw">crate</span>::str::parse_str_radix_10</span>(<span class="ident">str</span>)
         } <span class="kw">else</span> {
             <span class="ident"><span class="kw">crate</span>::str::parse_str_radix_n</span>(<span class="ident">str</span>, <span class="ident">radix</span>)
@@ -3219,7 +3265,7 @@
     <span class="doccomment">/// #     Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str_exact</span>(<span class="ident">str</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_str_exact</span>(<span class="ident">str</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="kw">crate</span>::Error</span><span class="op">&gt;</span> {
         <span class="ident"><span class="kw">crate</span>::str::parse_str_radix_10_exact</span>(<span class="ident">str</span>)
     }
 
@@ -3235,7 +3281,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">scale</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         ((<span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="ident">SCALE_MASK</span>) <span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">SCALE_SHIFT</span>) <span class="kw">as</span> <span class="ident">u32</span>
     }
 
@@ -3252,7 +3298,7 @@
     <span class="doccomment">/// assert_eq!(num.scale(), 7);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">mantissa</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i128</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">mantissa</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">i128</span> {
         <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> (<span class="self">self</span>.<span class="ident">lo</span> <span class="kw">as</span> <span class="ident">i128</span>) <span class="op">|</span> ((<span class="self">self</span>.<span class="ident">mid</span> <span class="kw">as</span> <span class="ident">i128</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>) <span class="op">|</span> ((<span class="self">self</span>.<span class="ident">hi</span> <span class="kw">as</span> <span class="ident">i128</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">64</span>);
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_sign_negative</span>() {
             <span class="op">-</span><span class="ident">raw</span>
@@ -3272,8 +3318,8 @@
     <span class="doccomment">/// assert!(num.is_zero());</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">lo</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">mid</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">hi</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">lo</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">mid</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="self">self</span>.<span class="ident">hi</span> <span class="op">==</span> <span class="number">0</span>
     }
 
     <span class="doccomment">/// An optimized method for changing the sign of a decimal number.</span>
@@ -3358,7 +3404,7 @@
     <span class="doccomment">/// #    Ok(())</span>
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_scale</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">set_scale</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">scale</span> <span class="op">&gt;</span> <span class="ident">MAX_PRECISION_U32</span> {
             <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">Error::ScaleExceedsMaximumPrecision</span>(<span class="ident">scale</span>));
         }
@@ -3427,7 +3473,7 @@
     <span class="doccomment">/// * Bytes 9-12: mid portion of `m`</span>
     <span class="doccomment">/// * Bytes 13-16: high portion of `m`</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">u8</span>; <span class="number">16</span>] {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">serialize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [<span class="ident">u8</span>; <span class="number">16</span>] {
         [
             (<span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="ident">U8_MASK</span>) <span class="kw">as</span> <span class="ident">u8</span>,
             ((<span class="self">self</span>.<span class="ident">flags</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">8</span>) <span class="op">&amp;</span> <span class="ident">U8_MASK</span>) <span class="kw">as</span> <span class="ident">u8</span>,
@@ -3456,7 +3502,7 @@
     <span class="doccomment">/// * Bytes 9-12: mid portion of `m`</span>
     <span class="doccomment">/// * Bytes 13-16: high portion of `m`</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deserialize</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">16</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">deserialize</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">16</span>]) -&gt; <span class="ident">Decimal</span> {
         <span class="comment">// We can bound flags by a bitwise mask to correspond to:</span>
         <span class="comment">//   Bits 0-15: unused</span>
         <span class="comment">//   Bits 16-23: Contains &quot;e&quot;, a value between 0-28 that indicates the scale</span>
@@ -3473,10 +3519,10 @@
         <span class="kw">if</span> <span class="ident">raw</span>.<span class="ident">scale</span>() <span class="op">&gt;</span> <span class="ident">MAX_PRECISION_U32</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bits</span> <span class="op">=</span> <span class="ident">raw</span>.<span class="ident">mantissa_array3</span>();
             <span class="kw">let</span> <span class="ident">remainder</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">raw</span>.<span class="ident">scale</span>() {
-                <span class="number">29</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident"><span class="kw">crate</span>::ops::array::div_by_1x</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bits</span>, <span class="number">1</span>),
-                <span class="number">30</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident"><span class="kw">crate</span>::ops::array::div_by_1x</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bits</span>, <span class="number">2</span>),
-                <span class="number">31</span> <span class="op">=</span><span class="op">&gt;</span> <span class="ident"><span class="kw">crate</span>::ops::array::div_by_1x</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bits</span>, <span class="number">3</span>),
-                <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
+                <span class="number">29</span> =&gt; <span class="ident"><span class="kw">crate</span>::ops::array::div_by_1x</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bits</span>, <span class="number">1</span>),
+                <span class="number">30</span> =&gt; <span class="ident"><span class="kw">crate</span>::ops::array::div_by_1x</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bits</span>, <span class="number">2</span>),
+                <span class="number">31</span> =&gt; <span class="ident"><span class="kw">crate</span>::ops::array::div_by_1x</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bits</span>, <span class="number">3</span>),
+                <span class="kw">_</span> =&gt; <span class="number">0</span>,
             };
             <span class="kw">if</span> <span class="ident">remainder</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">5</span> {
                 <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bits</span>);
@@ -3492,14 +3538,14 @@
     <span class="doccomment">/// Returns `true` if the decimal is negative.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.6.3&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;please use `is_sign_negative` instead&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_negative</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_negative</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">is_sign_negative</span>()
     }
 
     <span class="doccomment">/// Returns `true` if the decimal is positive.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.6.3&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;please use `is_sign_positive` instead&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_positive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_positive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">is_sign_positive</span>()
     }
 
@@ -3514,7 +3560,7 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_sign_negative</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_sign_negative</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="ident">SIGN_MASK</span> <span class="op">&gt;</span> <span class="number">0</span>
     }
 
@@ -3529,21 +3575,21 @@
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_sign_positive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="ident">SIGN_MASK</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">is_sign_positive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">flags</span> <span class="op">&amp;</span> <span class="ident">SIGN_MASK</span> <span class="op">==</span> <span class="number">0</span>
     }
 
     <span class="doccomment">/// Returns the minimum possible number that `Decimal` can represent.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.12.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Use the associated constant Decimal::MIN&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">min_value</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">min_value</span>() -&gt; <span class="ident">Decimal</span> {
         <span class="ident">MIN</span>
     }
 
     <span class="doccomment">/// Returns the maximum possible number that `Decimal` can represent.</span>
     <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;1.12.0&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;Use the associated constant Decimal::MAX&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">max_value</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">max_value</span>() -&gt; <span class="ident">Decimal</span> {
         <span class="ident">MAX</span>
     }
 
@@ -3561,9 +3607,9 @@
     <span class="doccomment">/// assert_eq!(pi.trunc(), trunc);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">trunc</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">scale</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scale</span>();
-        <span class="kw">if</span> <span class="ident">scale</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">scale</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="comment">// Nothing to do</span>
             <span class="kw">return</span> <span class="kw-2">*</span><span class="self">self</span>;
         }
@@ -3600,7 +3646,7 @@
     <span class="doccomment">/// assert_eq!(pi.fract(), fract);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">fract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="comment">// This is essentially the original number minus the integral.</span>
         <span class="comment">// Could possibly be optimized in the future</span>
         <span class="kw-2">*</span><span class="self">self</span> <span class="op">-</span> <span class="self">self</span>.<span class="ident">trunc</span>()
@@ -3617,7 +3663,7 @@
     <span class="doccomment">/// assert_eq!(num.abs().to_string(), &quot;3.141&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">abs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">me</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
         <span class="ident">me</span>.<span class="ident">set_sign_positive</span>(<span class="bool-val">true</span>);
         <span class="ident">me</span>
@@ -3634,9 +3680,9 @@
     <span class="doccomment">/// assert_eq!(num.floor().to_string(), &quot;3&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">floor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">floor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">let</span> <span class="ident">scale</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scale</span>();
-        <span class="kw">if</span> <span class="ident">scale</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">scale</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="comment">// Nothing to do</span>
             <span class="kw">return</span> <span class="kw-2">*</span><span class="self">self</span>;
         }
@@ -3663,9 +3709,9 @@
     <span class="doccomment">/// assert_eq!(num.ceil().to_string(), &quot;3&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ceil</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">let</span> <span class="ident">scale</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scale</span>();
-        <span class="kw">if</span> <span class="ident">scale</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">scale</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="comment">// Nothing to do</span>
             <span class="kw">return</span> <span class="kw-2">*</span><span class="self">self</span>;
         }
@@ -3688,7 +3734,7 @@
     <span class="doccomment">/// assert_eq!(y, x.max(y));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Decimal</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Decimal</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">if</span> <span class="self">self</span> <span class="op">&lt;</span> <span class="ident">other</span> {
             <span class="ident">other</span>
         } <span class="kw">else</span> {
@@ -3706,7 +3752,7 @@
     <span class="doccomment">/// assert_eq!(x, x.min(y));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Decimal</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">min</span>(<span class="self">self</span>, <span class="ident">other</span>: <span class="ident">Decimal</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">if</span> <span class="self">self</span> <span class="op">&gt;</span> <span class="ident">other</span> {
             <span class="ident">other</span>
         } <span class="kw">else</span> {
@@ -3727,7 +3773,7 @@
     <span class="doccomment">/// # }</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">normalize</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="kw-2">*</span><span class="self">self</span>;
         <span class="ident">result</span>.<span class="ident">normalize_assign</span>();
         <span class="ident">result</span>
@@ -3754,7 +3800,7 @@
         }
 
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">scale</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scale</span>();
-        <span class="kw">if</span> <span class="ident">scale</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">scale</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span>;
         }
 
@@ -3788,7 +3834,7 @@
     <span class="doccomment">/// assert_eq!(number_up.round().to_string(), &quot;8&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="self">self</span>.<span class="ident">round_dp</span>(<span class="number">0</span>)
     }
 
@@ -3810,7 +3856,7 @@
     <span class="doccomment">/// assert_eq!(tax.round_dp_with_strategy(2, RoundingStrategy::MidpointAwayFromZero).to_string(), &quot;3.44&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_dp_with_strategy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dp</span>: <span class="ident">u32</span>, <span class="ident">strategy</span>: <span class="ident">RoundingStrategy</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_dp_with_strategy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dp</span>: <span class="ident">u32</span>, <span class="ident">strategy</span>: <span class="ident">RoundingStrategy</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="comment">// Short circuit for zero</span>
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
             <span class="kw">return</span> <span class="ident">Decimal</span> {
@@ -3893,55 +3939,55 @@
 
         <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
         <span class="kw">match</span> <span class="ident">strategy</span> {
-            <span class="ident">RoundingStrategy::BankersRounding</span> <span class="op">|</span> <span class="ident">RoundingStrategy::MidpointNearestEven</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">RoundingStrategy::BankersRounding</span> <span class="op">|</span> <span class="ident">RoundingStrategy::MidpointNearestEven</span> =&gt; {
                 <span class="kw">match</span> <span class="ident">order</span> {
-                    <span class="ident">Ordering::Equal</span> <span class="op">=</span><span class="op">&gt;</span> {
-                        <span class="kw">if</span> (<span class="ident">value</span>[<span class="number">0</span>] <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+                    <span class="ident">Ordering::Equal</span> =&gt; {
+                        <span class="kw">if</span> (<span class="ident">value</span>[<span class="number">0</span>] <span class="op">&amp;</span> <span class="number">1</span>) <span class="op">==</span> <span class="number">1</span> {
                             <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>);
                         }
                     }
-                    <span class="ident">Ordering::Greater</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Ordering::Greater</span> =&gt; {
                         <span class="comment">// Doesn&#39;t matter about the decimal portion</span>
                         <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>);
                     }
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                    <span class="kw">_</span> =&gt; {}
                 }
             }
-            <span class="ident">RoundingStrategy::RoundHalfDown</span> <span class="op">|</span> <span class="ident">RoundingStrategy::MidpointTowardZero</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">RoundingStrategy::RoundHalfDown</span> <span class="op">|</span> <span class="ident">RoundingStrategy::MidpointTowardZero</span> =&gt; {
                 <span class="kw">if</span> <span class="kw">let</span> <span class="ident">Ordering::Greater</span> <span class="op">=</span> <span class="ident">order</span> {
                     <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>);
                 }
             }
-            <span class="ident">RoundingStrategy::RoundHalfUp</span> <span class="op">|</span> <span class="ident">RoundingStrategy::MidpointAwayFromZero</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">RoundingStrategy::RoundHalfUp</span> <span class="op">|</span> <span class="ident">RoundingStrategy::MidpointAwayFromZero</span> =&gt; {
                 <span class="comment">// when Ordering::Equal, decimal_portion is 0.5 exactly</span>
                 <span class="comment">// when Ordering::Greater, decimal_portion is &gt; 0.5</span>
                 <span class="kw">match</span> <span class="ident">order</span> {
-                    <span class="ident">Ordering::Equal</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Ordering::Equal</span> =&gt; {
                         <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>);
                     }
-                    <span class="ident">Ordering::Greater</span> <span class="op">=</span><span class="op">&gt;</span> {
+                    <span class="ident">Ordering::Greater</span> =&gt; {
                         <span class="comment">// Doesn&#39;t matter about the decimal portion</span>
                         <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>);
                     }
-                    <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
+                    <span class="kw">_</span> =&gt; {}
                 }
             }
-            <span class="ident">RoundingStrategy::RoundUp</span> <span class="op">|</span> <span class="ident">RoundingStrategy::AwayFromZero</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">RoundingStrategy::RoundUp</span> <span class="op">|</span> <span class="ident">RoundingStrategy::AwayFromZero</span> =&gt; {
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">ops::array::is_all_zero</span>(<span class="kw-2">&amp;</span><span class="ident">decimal_portion</span>) {
                     <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>);
                 }
             }
-            <span class="ident">RoundingStrategy::ToPositiveInfinity</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">RoundingStrategy::ToPositiveInfinity</span> =&gt; {
                 <span class="kw">if</span> <span class="op">!</span><span class="ident">negative</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">ops::array::is_all_zero</span>(<span class="kw-2">&amp;</span><span class="ident">decimal_portion</span>) {
                     <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>);
                 }
             }
-            <span class="ident">RoundingStrategy::ToNegativeInfinity</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">RoundingStrategy::ToNegativeInfinity</span> =&gt; {
                 <span class="kw">if</span> <span class="ident">negative</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="ident">ops::array::is_all_zero</span>(<span class="kw-2">&amp;</span><span class="ident">decimal_portion</span>) {
                     <span class="ident">ops::array::add_one_internal</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">value</span>);
                 }
             }
-            <span class="ident">RoundingStrategy::RoundDown</span> <span class="op">|</span> <span class="ident">RoundingStrategy::ToZero</span> <span class="op">=</span><span class="op">&gt;</span> (),
+            <span class="ident">RoundingStrategy::RoundDown</span> <span class="op">|</span> <span class="ident">RoundingStrategy::ToZero</span> =&gt; (),
         }
 
         <span class="ident">Decimal::from_parts</span>(<span class="ident">value</span>[<span class="number">0</span>], <span class="ident">value</span>[<span class="number">1</span>], <span class="ident">value</span>[<span class="number">2</span>], <span class="ident">negative</span>, <span class="ident">dp</span>)
@@ -3963,7 +4009,7 @@
     <span class="doccomment">/// assert_eq!(pi.round_dp(2).to_string(), &quot;3.14&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_dp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dp</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_dp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">dp</span>: <span class="ident">u32</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="self">self</span>.<span class="ident">round_dp_with_strategy</span>(<span class="ident">dp</span>, <span class="ident">RoundingStrategy::MidpointNearestEven</span>)
     }
 
@@ -4004,7 +4050,7 @@
     <span class="doccomment">/// assert_eq!(value.round_sf(3), Some(dec!(0.0123)));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_sf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">digits</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_sf</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">digits</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">round_sf_with_strategy</span>(<span class="ident">digits</span>, <span class="ident">RoundingStrategy::MidpointNearestEven</span>)
     }
 
@@ -4046,8 +4092,8 @@
     <span class="doccomment">/// assert_eq!(value.round_sf_with_strategy(3, RoundingStrategy::AwayFromZero), Some(dec!(0.0124)));</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_sf_with_strategy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">digits</span>: <span class="ident">u32</span>, <span class="ident">strategy</span>: <span class="ident">RoundingStrategy</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">digits</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">round_sf_with_strategy</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">digits</span>: <span class="ident">u32</span>, <span class="ident">strategy</span>: <span class="ident">RoundingStrategy</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() <span class="op">|</span><span class="op">|</span> <span class="ident">digits</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">Decimal::ZERO</span>);
         }
 
@@ -4059,7 +4105,7 @@
         <span class="kw">while</span> <span class="op">!</span><span class="ident">ops::array::is_all_zero</span>(<span class="kw-2">&amp;</span><span class="ident">working</span>) {
             <span class="kw">let</span> <span class="ident">_remainder</span> <span class="op">=</span> <span class="ident">ops::array::div_by_u32</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">working</span>, <span class="number">10u32</span>);
             <span class="ident">mantissa_sf</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">if</span> <span class="ident">working</span>[<span class="number">2</span>] <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">working</span>[<span class="number">1</span>] <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">working</span>[<span class="number">0</span>] <span class="op">=</span><span class="op">=</span> <span class="number">1</span> {
+            <span class="kw">if</span> <span class="ident">working</span>[<span class="number">2</span>] <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">working</span>[<span class="number">1</span>] <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">working</span>[<span class="number">0</span>] <span class="op">==</span> <span class="number">1</span> {
                 <span class="ident">mantissa_sf</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                 <span class="kw">break</span>;
             }
@@ -4067,7 +4113,7 @@
         <span class="kw">let</span> <span class="ident">scale</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">scale</span>();
 
         <span class="kw">match</span> <span class="ident">digits</span>.<span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="ident">mantissa_sf</span>) {
-            <span class="ident">Ordering::Greater</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">Ordering::Greater</span> =&gt; {
                 <span class="comment">// If we&#39;re requesting a higher number of significant figures, we rescale</span>
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">array</span> <span class="op">=</span> [<span class="self">self</span>.<span class="ident">lo</span>, <span class="self">self</span>.<span class="ident">mid</span>, <span class="self">self</span>.<span class="ident">hi</span>];
                 <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">value_scale</span> <span class="op">=</span> <span class="ident">scale</span>;
@@ -4079,7 +4125,7 @@
                     <span class="ident">flags</span>: <span class="ident">flags</span>(<span class="self">self</span>.<span class="ident">is_sign_negative</span>(), <span class="ident">value_scale</span>),
                 })
             }
-            <span class="ident">Ordering::Less</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">Ordering::Less</span> =&gt; {
                 <span class="comment">// We&#39;re requesting a lower number of significant digits.</span>
                 <span class="kw">let</span> <span class="ident">diff</span> <span class="op">=</span> <span class="ident">mantissa_sf</span> <span class="op">-</span> <span class="ident">digits</span>;
                 <span class="comment">// If the diff is greater than the scale we&#39;re focused on the integral. Otherwise, we can</span>
@@ -4123,7 +4169,7 @@
                     <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">round_dp_with_strategy</span>(<span class="ident">scale</span> <span class="op">-</span> <span class="ident">diff</span>, <span class="ident">strategy</span>))
                 }
             }
-            <span class="ident">Ordering::Equal</span> <span class="op">=</span><span class="op">&gt;</span> {
+            <span class="ident">Ordering::Equal</span> =&gt; {
                 <span class="comment">// Case where significant figures = requested significant digits.</span>
                 <span class="prelude-val">Some</span>(<span class="kw-2">*</span><span class="self">self</span>)
             }
@@ -4150,7 +4196,7 @@
     <span class="doccomment">/// }&quot;);</span>
     <span class="doccomment">/// ```</span>
     <span class="attribute">#[<span class="ident">must_use</span>]</span>
-    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">unpack</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">UnpackedDecimal</span> {
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">unpack</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">UnpackedDecimal</span> {
         <span class="ident">UnpackedDecimal</span> {
             <span class="ident">negative</span>: <span class="self">self</span>.<span class="ident">is_sign_negative</span>(),
             <span class="ident">scale</span>: <span class="self">self</span>.<span class="ident">scale</span>(),
@@ -4161,32 +4207,32 @@
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">lo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">lo</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">lo</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">mid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">mid</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">mid</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">hi</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">hi</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">hi</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">flags</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">flags</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> {
         <span class="self">self</span>.<span class="ident">flags</span>
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">mantissa_array3</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">u32</span>; <span class="number">3</span>] {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">mantissa_array3</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [<span class="ident">u32</span>; <span class="number">3</span>] {
         [<span class="self">self</span>.<span class="ident">lo</span>, <span class="self">self</span>.<span class="ident">mid</span>, <span class="self">self</span>.<span class="ident">hi</span>]
     }
 
     <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">mantissa_array4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> [<span class="ident">u32</span>; <span class="number">4</span>] {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">mantissa_array4</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; [<span class="ident">u32</span>; <span class="number">4</span>] {
         [<span class="self">self</span>.<span class="ident">lo</span>, <span class="self">self</span>.<span class="ident">mid</span>, <span class="self">self</span>.<span class="ident">hi</span>, <span class="number">0</span>]
     }
 
@@ -4207,7 +4253,7 @@
     <span class="doccomment">/// // Sometimes, we may want to represent the approximation exactly.</span>
     <span class="doccomment">/// assert_eq!(&quot;0.100000001490116119384765625&quot;, Decimal::from_f32_retain(0.1_f32).unwrap().to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_f32_retain</span>(<span class="ident">n</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_f32_retain</span>(<span class="ident">n</span>: <span class="ident">f32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">from_f32</span>(<span class="ident">n</span>, <span class="bool-val">false</span>)
     }
 
@@ -4228,7 +4274,7 @@
     <span class="doccomment">/// // Sometimes, we may want to represent the approximation exactly.</span>
     <span class="doccomment">/// assert_eq!(&quot;0.1000000000000000055511151231&quot;, Decimal::from_f64_retain(0.1_f64).unwrap().to_string());</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_f64_retain</span>(<span class="ident">n</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">from_f64_retain</span>(<span class="ident">n</span>: <span class="ident">f64</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">from_f64</span>(<span class="ident">n</span>, <span class="bool-val">false</span>)
     }
 }
@@ -4238,7 +4284,7 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// [Read more]: core::default::Default#tymethod.default</span>
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">default</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">default</span>() -&gt; <span class="self">Self</span> {
         <span class="ident">ZERO</span>
     }
 }
@@ -4250,15 +4296,15 @@
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">const</span> <span class="kw">fn</span> <span class="ident">flags</span>(<span class="ident">neg</span>: <span class="ident">bool</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">u32</span> {
+<span class="kw">const</span> <span class="kw">fn</span> <span class="ident">flags</span>(<span class="ident">neg</span>: <span class="ident">bool</span>, <span class="ident">scale</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u32</span> {
     (<span class="ident">scale</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">SCALE_SHIFT</span>) <span class="op">|</span> ((<span class="ident">neg</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">SIGN_SHIFT</span>)
 }
 
 <span class="macro">macro_rules!</span> <span class="ident">integer_docs</span> {
-    ( <span class="bool-val">true</span> ) <span class="op">=</span><span class="op">&gt;</span> {
+    ( <span class="bool-val">true</span> ) =&gt; {
         <span class="string">&quot; by truncating and returning the integer component&quot;</span>
     };
-    ( <span class="bool-val">false</span> ) <span class="op">=</span><span class="op">&gt;</span> {
+    ( <span class="bool-val">false</span> ) =&gt; {
         <span class="string">&quot;&quot;</span>
     };
 }
@@ -4267,7 +4313,7 @@
 <span class="comment">// See https://github.com/rust-lang/rustfmt/issues/5062 for more information.</span>
 <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
 <span class="macro">macro_rules!</span> <span class="ident">impl_try_from_decimal</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">TInto</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conversion_fn</span>:<span class="ident">path</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">additional_docs</span>:<span class="ident">expr</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">TInto</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conversion_fn</span>:<span class="ident">path</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">additional_docs</span>:<span class="ident">expr</span>) =&gt; {
         <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro">concat!</span>(
             <span class="string">&quot;Try to convert a `Decimal` to `&quot;</span>,
             <span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">TInto</span>),
@@ -4281,7 +4327,7 @@
             <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::Error</span>;
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">t</span>: <span class="ident">Decimal</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">t</span>: <span class="ident">Decimal</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conversion_fn</span>(<span class="kw-2">&amp;</span><span class="ident">t</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Error::ConversionTo</span>(<span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">TInto</span>).<span class="ident">into</span>()))
             }
         }
@@ -4307,7 +4353,7 @@
 <span class="comment">// See https://github.com/rust-lang/rustfmt/issues/5062 for more information.</span>
 <span class="attribute">#[<span class="ident">rustfmt::skip</span>]</span>
 <span class="macro">macro_rules!</span> <span class="ident">impl_try_from_primitive</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">TFrom</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conversion_fn</span>:<span class="ident">path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">TFrom</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conversion_fn</span>:<span class="ident">path</span>) =&gt; {
         <span class="attribute">#[<span class="ident">doc</span> <span class="op">=</span> <span class="macro">concat!</span>(
             <span class="string">&quot;Try to convert a `&quot;</span>,
             <span class="macro">stringify!</span>(<span class="macro-nonterminal">$</span><span class="macro-nonterminal">TFrom</span>),
@@ -4317,7 +4363,7 @@
             <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::Error</span>;
 
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">t</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">TFrom</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">t</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">TFrom</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">conversion_fn</span>(<span class="ident">t</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="ident">Error::ConversionTo</span>(<span class="string">&quot;Decimal&quot;</span>.<span class="ident">into</span>()))
             }
         }
@@ -4328,13 +4374,13 @@
 <span class="macro">impl_try_from_primitive!</span>(<span class="ident">f64</span>, <span class="ident"><span class="self">Self</span>::from_f64</span>);
 
 <span class="macro">macro_rules!</span> <span class="ident">impl_from</span> {
-    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">from_ty</span>:<span class="ident">path</span>) <span class="op">=</span><span class="op">&gt;</span> {
+    (<span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>:<span class="ident">ty</span>, <span class="macro-nonterminal">$</span><span class="macro-nonterminal">from_ty</span>:<span class="ident">path</span>) =&gt; {
         <span class="doccomment">///</span>
         <span class="doccomment">/// Conversion to `Decimal`.</span>
         <span class="doccomment">///</span>
         <span class="kw">impl</span> <span class="ident">core::convert::From</span><span class="op">&lt;</span><span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
             <span class="attribute">#[<span class="ident">inline</span>]</span>
-            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">t</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+            <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">t</span>: <span class="macro-nonterminal">$</span><span class="macro-nonterminal">T</span>) -&gt; <span class="self">Self</span> {
                 <span class="macro-nonterminal">$</span><span class="macro-nonterminal">from_ty</span>(<span class="ident">t</span>).<span class="ident">unwrap</span>()
             }
         }
@@ -4356,27 +4402,27 @@
 <span class="macro">impl_from!</span>(<span class="ident">u128</span>, <span class="ident">FromPrimitive::from_u128</span>);
 
 <span class="kw">impl</span> <span class="ident">Zero</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">zero</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">fn</span> <span class="ident">zero</span>() -&gt; <span class="ident">Decimal</span> {
         <span class="ident">ZERO</span>
     }
 
-    <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">is_zero</span>()
     }
 }
 
 <span class="kw">impl</span> <span class="ident">One</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">one</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">fn</span> <span class="ident">one</span>() -&gt; <span class="ident">Decimal</span> {
         <span class="ident">ONE</span>
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Signed</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">abs</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="self">self</span>.<span class="ident">abs</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">abs_sub</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">abs_sub</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="self">Self</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">if</span> <span class="self">self</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">other</span> {
             <span class="ident">ZERO</span>
         } <span class="kw">else</span> {
@@ -4384,7 +4430,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">signum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">signum</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_zero</span>() {
             <span class="ident">ZERO</span>
         } <span class="kw">else</span> {
@@ -4396,11 +4442,11 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">is_positive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_positive</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">is_sign_positive</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_negative</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_negative</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">is_sign_negative</span>()
     }
 }
@@ -4408,7 +4454,7 @@
 <span class="kw">impl</span> <span class="ident">Num</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
     <span class="kw">type</span> <span class="ident">FromStrRadixErr</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str_radix</span>(<span class="ident">str</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">radix</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::FromStrRadixErr</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str_radix</span>(<span class="ident">str</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>, <span class="ident">radix</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::FromStrRadixErr</span><span class="op">&gt;</span> {
         <span class="ident">Decimal::from_str_radix</span>(<span class="ident">str</span>, <span class="ident">radix</span>)
     }
 }
@@ -4416,13 +4462,13 @@
 <span class="kw">impl</span> <span class="ident">FromStr</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
     <span class="kw">type</span> <span class="prelude-val">Err</span> <span class="op">=</span> <span class="ident">Error</span>;
 
-    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decimal</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_str</span>(<span class="ident">value</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Decimal</span>, <span class="ident"><span class="self">Self</span>::Err</span><span class="op">&gt;</span> {
         <span class="ident"><span class="kw">crate</span>::str::parse_str_radix_10</span>(<span class="ident">value</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">FromPrimitive</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">from_i32</span>(<span class="ident">n</span>: <span class="ident">i32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_i32</span>(<span class="ident">n</span>: <span class="ident">i32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">flags</span>: <span class="ident">u32</span>;
         <span class="kw">let</span> <span class="ident">value_copy</span>: <span class="ident">i64</span>;
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> {
@@ -4440,7 +4486,7 @@
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">from_i64</span>(<span class="ident">n</span>: <span class="ident">i64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_i64</span>(<span class="ident">n</span>: <span class="ident">i64</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">flags</span>: <span class="ident">u32</span>;
         <span class="kw">let</span> <span class="ident">value_copy</span>: <span class="ident">i128</span>;
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> {
@@ -4458,7 +4504,7 @@
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">from_i128</span>(<span class="ident">n</span>: <span class="ident">i128</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_i128</span>(<span class="ident">n</span>: <span class="ident">i128</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">flags</span>;
         <span class="kw">let</span> <span class="ident">unsigned</span>;
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span><span class="op">=</span> <span class="number">0</span> {
@@ -4480,7 +4526,7 @@
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">from_u32</span>(<span class="ident">n</span>: <span class="ident">u32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_u32</span>(<span class="ident">n</span>: <span class="ident">u32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="ident">Decimal</span> {
             <span class="ident">flags</span>: <span class="number">0</span>,
             <span class="ident">lo</span>: <span class="ident">n</span>,
@@ -4489,7 +4535,7 @@
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_u64</span>(<span class="ident">n</span>: <span class="ident">u64</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="ident">Decimal</span> {
             <span class="ident">flags</span>: <span class="number">0</span>,
             <span class="ident">lo</span>: <span class="ident">n</span> <span class="kw">as</span> <span class="ident">u32</span>,
@@ -4498,7 +4544,7 @@
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">from_u128</span>(<span class="ident">n</span>: <span class="ident">u128</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_u128</span>(<span class="ident">n</span>: <span class="ident">u128</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="comment">// Check if we overflow</span>
         <span class="kw">if</span> <span class="ident">n</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">96</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
@@ -4511,19 +4557,19 @@
         })
     }
 
-    <span class="kw">fn</span> <span class="ident">from_f32</span>(<span class="ident">n</span>: <span class="ident">f32</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_f32</span>(<span class="ident">n</span>: <span class="ident">f32</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="comment">// By default, we remove excess bits. This allows 0.1_f64 == dec!(0.1).</span>
         <span class="ident">from_f32</span>(<span class="ident">n</span>, <span class="bool-val">true</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">from_f64</span>(<span class="ident">n</span>: <span class="ident">f64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">from_f64</span>(<span class="ident">n</span>: <span class="ident">f64</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
         <span class="comment">// By default, we remove excess bits. This allows 0.1_f64 == dec!(0.1).</span>
         <span class="ident">from_f64</span>(<span class="ident">n</span>, <span class="bool-val">true</span>)
     }
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">from_f64</span>(<span class="ident">n</span>: <span class="ident">f64</span>, <span class="ident">remove_excess_bits</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">from_f64</span>(<span class="ident">n</span>: <span class="ident">f64</span>, <span class="ident">remove_excess_bits</span>: <span class="ident">bool</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
     <span class="comment">// Handle the case if it is NaN, Infinity or -Infinity</span>
     <span class="kw">if</span> <span class="op">!</span><span class="ident">n</span>.<span class="ident">is_finite</span>() {
         <span class="kw">return</span> <span class="prelude-val">None</span>;
@@ -4535,12 +4581,12 @@
     <span class="comment">// n = (sign*-1) * 2^exp * mantissa</span>
     <span class="comment">// Decimal of course stores this differently... 10^-exp * significand</span>
     <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">n</span>.<span class="ident">to_bits</span>();
-    <span class="kw">let</span> <span class="ident">positive</span> <span class="op">=</span> (<span class="ident">raw</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">63</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span>;
+    <span class="kw">let</span> <span class="ident">positive</span> <span class="op">=</span> (<span class="ident">raw</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">63</span>) <span class="op">==</span> <span class="number">0</span>;
     <span class="kw">let</span> <span class="ident">biased_exponent</span> <span class="op">=</span> ((<span class="ident">raw</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">52</span>) <span class="op">&amp;</span> <span class="number">0x7FF</span>) <span class="kw">as</span> <span class="ident">i32</span>;
     <span class="kw">let</span> <span class="ident">mantissa</span> <span class="op">=</span> <span class="ident">raw</span> <span class="op">&amp;</span> <span class="number">0x000F_FFFF_FFFF_FFFF</span>;
 
     <span class="comment">// Handle the special zero case</span>
-    <span class="kw">if</span> <span class="ident">biased_exponent</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mantissa</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">biased_exponent</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mantissa</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">zero</span> <span class="op">=</span> <span class="ident">ZERO</span>;
         <span class="kw">if</span> <span class="op">!</span><span class="ident">positive</span> {
             <span class="ident">zero</span>.<span class="ident">set_sign_negative</span>(<span class="bool-val">true</span>);
@@ -4555,7 +4601,7 @@
         ((<span class="ident">mantissa</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">32</span>) <span class="op">&amp;</span> <span class="number">0xFFFF_FFFF</span>) <span class="kw">as</span> <span class="ident">u32</span>,
         <span class="number">0u32</span>,
     ];
-    <span class="kw">if</span> <span class="ident">biased_exponent</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">biased_exponent</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="comment">// Denormalized number - correct the exponent</span>
         <span class="ident">exponent2</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
     } <span class="kw">else</span> {
@@ -4572,7 +4618,7 @@
 }
 
 <span class="attribute">#[<span class="ident">inline</span>]</span>
-<span class="kw">fn</span> <span class="ident">from_f32</span>(<span class="ident">n</span>: <span class="ident">f32</span>, <span class="ident">remove_excess_bits</span>: <span class="ident">bool</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+<span class="kw">fn</span> <span class="ident">from_f32</span>(<span class="ident">n</span>: <span class="ident">f32</span>, <span class="ident">remove_excess_bits</span>: <span class="ident">bool</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
     <span class="comment">// Handle the case if it is NaN, Infinity or -Infinity</span>
     <span class="kw">if</span> <span class="op">!</span><span class="ident">n</span>.<span class="ident">is_finite</span>() {
         <span class="kw">return</span> <span class="prelude-val">None</span>;
@@ -4584,12 +4630,12 @@
     <span class="comment">// n = (sign*-1) * 2^exp * mantissa</span>
     <span class="comment">// Decimal of course stores this differently... 10^-exp * significand</span>
     <span class="kw">let</span> <span class="ident">raw</span> <span class="op">=</span> <span class="ident">n</span>.<span class="ident">to_bits</span>();
-    <span class="kw">let</span> <span class="ident">positive</span> <span class="op">=</span> (<span class="ident">raw</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span>;
+    <span class="kw">let</span> <span class="ident">positive</span> <span class="op">=</span> (<span class="ident">raw</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">31</span>) <span class="op">==</span> <span class="number">0</span>;
     <span class="kw">let</span> <span class="ident">biased_exponent</span> <span class="op">=</span> ((<span class="ident">raw</span> <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">23</span>) <span class="op">&amp;</span> <span class="number">0xFF</span>) <span class="kw">as</span> <span class="ident">i32</span>;
     <span class="kw">let</span> <span class="ident">mantissa</span> <span class="op">=</span> <span class="ident">raw</span> <span class="op">&amp;</span> <span class="number">0x007F_FFFF</span>;
 
     <span class="comment">// Handle the special zero case</span>
-    <span class="kw">if</span> <span class="ident">biased_exponent</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mantissa</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">biased_exponent</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">mantissa</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">zero</span> <span class="op">=</span> <span class="ident">ZERO</span>;
         <span class="kw">if</span> <span class="op">!</span><span class="ident">positive</span> {
             <span class="ident">zero</span>.<span class="ident">set_sign_negative</span>(<span class="bool-val">true</span>);
@@ -4600,7 +4646,7 @@
     <span class="comment">// Get the bits and exponent2</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">exponent2</span> <span class="op">=</span> <span class="ident">biased_exponent</span> <span class="op">-</span> <span class="number">127</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bits</span> <span class="op">=</span> [<span class="ident">mantissa</span>, <span class="number">0u32</span>, <span class="number">0u32</span>];
-    <span class="kw">if</span> <span class="ident">biased_exponent</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">if</span> <span class="ident">biased_exponent</span> <span class="op">==</span> <span class="number">0</span> {
         <span class="comment">// Denormalized number - correct the exponent</span>
         <span class="ident">exponent2</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
     } <span class="kw">else</span> {
@@ -4622,7 +4668,7 @@
     <span class="ident">positive</span>: <span class="ident">bool</span>,
     <span class="ident">is64</span>: <span class="ident">bool</span>,
     <span class="ident">remove_excess_bits</span>: <span class="ident">bool</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Decimal</span><span class="op">&gt;</span> {
     <span class="comment">// 2^exponent2 = (10^exponent2)/(5^exponent2)</span>
     <span class="comment">//             = (5^-exponent2)*(10^exponent2)</span>
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">exponent5</span> <span class="op">=</span> <span class="op">-</span><span class="ident">exponent2</span>;
@@ -4630,14 +4676,14 @@
 
     <span class="kw">while</span> <span class="ident">exponent5</span> <span class="op">&gt;</span> <span class="number">0</span> {
         <span class="comment">// Check to see if the mantissa is divisible by 2</span>
-        <span class="kw">if</span> <span class="ident">bits</span>[<span class="number">0</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">bits</span>[<span class="number">0</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="ident">exponent10</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
             <span class="ident">exponent5</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
 
             <span class="comment">// We can divide by 2 without losing precision</span>
-            <span class="kw">let</span> <span class="ident">hi_carry</span> <span class="op">=</span> <span class="ident">bits</span>[<span class="number">2</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="kw">let</span> <span class="ident">hi_carry</span> <span class="op">=</span> <span class="ident">bits</span>[<span class="number">2</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">==</span> <span class="number">1</span>;
             <span class="ident">bits</span>[<span class="number">2</span>] <span class="op">&gt;</span><span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>;
-            <span class="kw">let</span> <span class="ident">mid_carry</span> <span class="op">=</span> <span class="ident">bits</span>[<span class="number">1</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>;
+            <span class="kw">let</span> <span class="ident">mid_carry</span> <span class="op">=</span> <span class="ident">bits</span>[<span class="number">1</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">==</span> <span class="number">1</span>;
             <span class="ident">bits</span>[<span class="number">1</span>] <span class="op">=</span> (<span class="ident">bits</span>[<span class="number">1</span>] <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>) <span class="op">|</span> <span class="kw">if</span> <span class="ident">hi_carry</span> { <span class="ident">SIGN_MASK</span> } <span class="kw">else</span> { <span class="number">0</span> };
             <span class="ident">bits</span>[<span class="number">0</span>] <span class="op">=</span> (<span class="ident">bits</span>[<span class="number">0</span>] <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>) <span class="op">|</span> <span class="kw">if</span> <span class="ident">mid_carry</span> { <span class="ident">SIGN_MASK</span> } <span class="kw">else</span> { <span class="number">0</span> };
         } <span class="kw">else</span> {
@@ -4646,7 +4692,7 @@
             <span class="ident">exponent5</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
 
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">temp</span> <span class="op">=</span> [<span class="ident">bits</span>[<span class="number">0</span>], <span class="ident">bits</span>[<span class="number">1</span>], <span class="ident">bits</span>[<span class="number">2</span>]];
-            <span class="kw">if</span> <span class="ident">ops::array::mul_by_u32</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">temp</span>, <span class="number">5</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">ops::array::mul_by_u32</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">temp</span>, <span class="number">5</span>) <span class="op">==</span> <span class="number">0</span> {
                 <span class="comment">// Multiplication succeeded without overflow, so copy result back</span>
                 <span class="ident">bits</span>[<span class="number">0</span>] <span class="op">=</span> <span class="ident">temp</span>[<span class="number">0</span>];
                 <span class="ident">bits</span>[<span class="number">1</span>] <span class="op">=</span> <span class="ident">temp</span>[<span class="number">1</span>];
@@ -4657,9 +4703,9 @@
                 <span class="ident">exponent10</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
 
                 <span class="comment">// Shift right</span>
-                <span class="kw">let</span> <span class="ident">hi_carry</span> <span class="op">=</span> <span class="ident">bits</span>[<span class="number">2</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>;
+                <span class="kw">let</span> <span class="ident">hi_carry</span> <span class="op">=</span> <span class="ident">bits</span>[<span class="number">2</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">==</span> <span class="number">1</span>;
                 <span class="ident">bits</span>[<span class="number">2</span>] <span class="op">&gt;</span><span class="op">&gt;</span><span class="op">=</span> <span class="number">1</span>;
-                <span class="kw">let</span> <span class="ident">mid_carry</span> <span class="op">=</span> <span class="ident">bits</span>[<span class="number">1</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">=</span><span class="op">=</span> <span class="number">1</span>;
+                <span class="kw">let</span> <span class="ident">mid_carry</span> <span class="op">=</span> <span class="ident">bits</span>[<span class="number">1</span>] <span class="op">&amp;</span> <span class="number">0x1</span> <span class="op">==</span> <span class="number">1</span>;
                 <span class="ident">bits</span>[<span class="number">1</span>] <span class="op">=</span> (<span class="ident">bits</span>[<span class="number">1</span>] <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>) <span class="op">|</span> <span class="kw">if</span> <span class="ident">hi_carry</span> { <span class="ident">SIGN_MASK</span> } <span class="kw">else</span> { <span class="number">0</span> };
                 <span class="ident">bits</span>[<span class="number">0</span>] <span class="op">=</span> (<span class="ident">bits</span>[<span class="number">0</span>] <span class="op">&gt;</span><span class="op">&gt;</span> <span class="number">1</span>) <span class="op">|</span> <span class="kw">if</span> <span class="ident">mid_carry</span> { <span class="ident">SIGN_MASK</span> } <span class="kw">else</span> { <span class="number">0</span> };
             }
@@ -4669,7 +4715,7 @@
     <span class="comment">// In order to divide the value by 5, it is best to multiply by 2/10.</span>
     <span class="comment">// Therefore, exponent10 is decremented, and the mantissa should be multiplied by 2</span>
     <span class="kw">while</span> <span class="ident">exponent5</span> <span class="op">&lt;</span> <span class="number">0</span> {
-        <span class="kw">if</span> <span class="ident">bits</span>[<span class="number">2</span>] <span class="op">&amp;</span> <span class="ident">SIGN_MASK</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">bits</span>[<span class="number">2</span>] <span class="op">&amp;</span> <span class="ident">SIGN_MASK</span> <span class="op">==</span> <span class="number">0</span> {
             <span class="comment">// No far left bit, the mantissa can withstand a shift-left without overflowing</span>
             <span class="ident">exponent10</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
             <span class="ident">exponent5</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
@@ -4691,7 +4737,7 @@
         <span class="comment">// In order to bring exponent10 down to 0, the mantissa should be</span>
         <span class="comment">// multiplied by 10 to compensate. If the exponent10 is too big, this</span>
         <span class="comment">// will cause the mantissa to overflow.</span>
-        <span class="kw">if</span> <span class="ident">ops::array::mul_by_u32</span>(<span class="ident">bits</span>, <span class="number">10</span>) <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+        <span class="kw">if</span> <span class="ident">ops::array::mul_by_u32</span>(<span class="ident">bits</span>, <span class="number">10</span>) <span class="op">==</span> <span class="number">0</span> {
             <span class="ident">exponent10</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
         } <span class="kw">else</span> {
             <span class="comment">// Overflowed - return?</span>
@@ -4741,7 +4787,7 @@
         <span class="kw">while</span> <span class="ident">exponent10</span> <span class="op">&lt;</span> <span class="number">0</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">temp</span> <span class="op">=</span> [<span class="ident">bits</span>[<span class="number">0</span>], <span class="ident">bits</span>[<span class="number">1</span>], <span class="ident">bits</span>[<span class="number">2</span>]];
             <span class="kw">let</span> <span class="ident">remainder</span> <span class="op">=</span> <span class="ident">ops::array::div_by_u32</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">temp</span>, <span class="number">10</span>);
-            <span class="kw">if</span> <span class="ident">remainder</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">remainder</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="ident">exponent10</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
                 <span class="ident">bits</span>[<span class="number">0</span>] <span class="op">=</span> <span class="ident">temp</span>[<span class="number">0</span>];
                 <span class="ident">bits</span>[<span class="number">1</span>] <span class="op">=</span> <span class="ident">temp</span>[<span class="number">1</span>];
@@ -4761,7 +4807,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">ToPrimitive</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">to_i64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_i64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i64</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">trunc</span>();
         <span class="comment">// If it is in the hi bit then it is a clear overflow.</span>
         <span class="kw">if</span> <span class="ident">d</span>.<span class="ident">hi</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
@@ -4772,7 +4818,7 @@
 
         <span class="comment">// A bit more convoluted in terms of checking when it comes to the hi bit due to twos-complement</span>
         <span class="kw">if</span> <span class="ident">d</span>.<span class="ident">mid</span> <span class="op">&amp;</span> <span class="number">0x8000_0000</span> <span class="op">&gt;</span> <span class="number">0</span> {
-            <span class="kw">if</span> <span class="ident">negative</span> <span class="op">&amp;&amp;</span> <span class="ident">d</span>.<span class="ident">mid</span> <span class="op">=</span><span class="op">=</span> <span class="number">0x8000_0000</span> <span class="op">&amp;&amp;</span> <span class="ident">d</span>.<span class="ident">lo</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+            <span class="kw">if</span> <span class="ident">negative</span> <span class="op">&amp;&amp;</span> <span class="ident">d</span>.<span class="ident">mid</span> <span class="op">==</span> <span class="number">0x8000_0000</span> <span class="op">&amp;&amp;</span> <span class="ident">d</span>.<span class="ident">lo</span> <span class="op">==</span> <span class="number">0</span> {
                 <span class="comment">// We do this because below we try to convert the i64 to a positive first - of which</span>
                 <span class="comment">// doesn&#39;t fit into an i64.</span>
                 <span class="kw">return</span> <span class="prelude-val">Some</span>(<span class="ident">i64::MIN</span>);
@@ -4788,7 +4834,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">to_i128</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i128</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_i128</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">i128</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">d</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">trunc</span>();
         <span class="kw">let</span> <span class="ident">raw</span>: <span class="ident">i128</span> <span class="op">=</span> ((<span class="ident">i128::from</span>(<span class="ident">d</span>.<span class="ident">hi</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">64</span>) <span class="op">|</span> <span class="ident">i128::from</span>(<span class="ident">d</span>.<span class="ident">mid</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>) <span class="op">|</span> <span class="ident">i128::from</span>(<span class="ident">d</span>.<span class="ident">lo</span>);
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_sign_negative</span>() {
@@ -4798,7 +4844,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">to_u64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_u64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u64</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_sign_negative</span>() {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
@@ -4812,7 +4858,7 @@
         <span class="prelude-val">Some</span>((<span class="ident">u64::from</span>(<span class="ident">d</span>.<span class="ident">mid</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>) <span class="op">|</span> <span class="ident">u64::from</span>(<span class="ident">d</span>.<span class="ident">lo</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">to_u128</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">to_u128</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u128</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">is_sign_negative</span>() {
             <span class="kw">return</span> <span class="prelude-val">None</span>;
         }
@@ -4821,8 +4867,8 @@
         <span class="prelude-val">Some</span>((<span class="ident">u128::from</span>(<span class="ident">d</span>.<span class="ident">hi</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">64</span>) <span class="op">|</span> (<span class="ident">u128::from</span>(<span class="ident">d</span>.<span class="ident">mid</span>) <span class="op">&lt;</span><span class="op">&lt;</span> <span class="number">32</span>) <span class="op">|</span> <span class="ident">u128::from</span>(<span class="ident">d</span>.<span class="ident">lo</span>))
     }
 
-    <span class="kw">fn</span> <span class="ident">to_f64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">scale</span>() <span class="op">=</span><span class="op">=</span> <span class="number">0</span> {
+    <span class="kw">fn</span> <span class="ident">to_f64</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">f64</span><span class="op">&gt;</span> {
+        <span class="kw">if</span> <span class="self">self</span>.<span class="ident">scale</span>() <span class="op">==</span> <span class="number">0</span> {
             <span class="comment">// If scale is zero, we are storing a 96-bit integer value, that would</span>
             <span class="comment">// always fit into i128, which in turn is always representable as f64,</span>
             <span class="comment">// albeit with loss of precision for values outside of -2^53..2^53 range.</span>
@@ -4847,7 +4893,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">rep</span>, <span class="ident">additional</span>) <span class="op">=</span> <span class="ident"><span class="kw">crate</span>::str::to_str_internal</span>(<span class="self">self</span>, <span class="bool-val">false</span>, <span class="ident">f</span>.<span class="ident">precision</span>());
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">additional</span>) <span class="op">=</span> <span class="ident">additional</span> {
             <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> [<span class="ident">rep</span>.<span class="ident">as_str</span>(), <span class="string">&quot;0&quot;</span>.<span class="ident">repeat</span>(<span class="ident">additional</span>).<span class="ident">as_str</span>()].<span class="ident">concat</span>();
@@ -4859,19 +4905,19 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">fmt::Error</span><span class="op">&gt;</span> {
         <span class="ident">fmt::Display::fmt</span>(<span class="self">self</span>, <span class="ident">f</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::LowerExp</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident"><span class="kw">crate</span>::str::fmt_scientific_notation</span>(<span class="self">self</span>, <span class="string">&quot;e&quot;</span>, <span class="ident">f</span>)
     }
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::UpperExp</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident"><span class="kw">crate</span>::str::fmt_scientific_notation</span>(<span class="self">self</span>, <span class="string">&quot;E&quot;</span>, <span class="ident">f</span>)
     }
 }
@@ -4879,7 +4925,7 @@
 <span class="kw">impl</span> <span class="ident">Neg</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Decimal</span>;
 
-    <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">copy</span> <span class="op">=</span> <span class="self">self</span>;
         <span class="ident">copy</span>.<span class="ident">set_sign_negative</span>(<span class="self">self</span>.<span class="ident">is_sign_positive</span>());
         <span class="ident">copy</span>
@@ -4889,7 +4935,7 @@
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Neg</span> <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Decimal</span> {
     <span class="kw">type</span> <span class="ident">Output</span> <span class="op">=</span> <span class="ident">Decimal</span>;
 
-    <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Decimal</span> {
+    <span class="kw">fn</span> <span class="ident">neg</span>(<span class="self">self</span>) -&gt; <span class="ident">Decimal</span> {
         <span class="ident">Decimal</span> {
             <span class="ident">flags</span>: <span class="ident">flags</span>(<span class="op">!</span><span class="self">self</span>.<span class="ident">is_sign_negative</span>(), <span class="self">self</span>.<span class="ident">scale</span>()),
             <span class="ident">hi</span>: <span class="self">self</span>.<span class="ident">hi</span>,
@@ -5041,8 +5087,8 @@
 
 <span class="kw">impl</span> <span class="ident">PartialEq</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Decimal</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">cmp</span>(<span class="ident">other</span>) <span class="op">=</span><span class="op">=</span> <span class="ident">Equal</span>
+    <span class="kw">fn</span> <span class="ident">eq</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Decimal</span>) -&gt; <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">cmp</span>(<span class="ident">other</span>) <span class="op">==</span> <span class="ident">Equal</span>
     }
 }
 
@@ -5060,19 +5106,41 @@
 
 <span class="kw">impl</span> <span class="ident">PartialOrd</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
     <span class="attribute">#[<span class="ident">inline</span>]</span>
-    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Decimal</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">partial_cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Decimal</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Ordering</span><span class="op">&gt;</span> {
         <span class="prelude-val">Some</span>(<span class="self">self</span>.<span class="ident">cmp</span>(<span class="ident">other</span>))
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Ord</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Decimal</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Ordering</span> {
+    <span class="kw">fn</span> <span class="ident">cmp</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">other</span>: <span class="kw-2">&amp;</span><span class="ident">Decimal</span>) -&gt; <span class="ident">Ordering</span> {
         <span class="ident">ops::cmp_impl</span>(<span class="self">self</span>, <span class="ident">other</span>)
     }
 }
 
+<span class="kw">impl</span> <span class="ident">Product</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
+    <span class="doccomment">/// Panics if out-of-bounds</span>
+    <span class="kw">fn</span> <span class="ident">product</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Decimal</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">product</span> <span class="op">=</span> <span class="ident">ONE</span>;
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
+            <span class="ident">product</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">i</span>;
+        }
+        <span class="ident">product</span>
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Product</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Decimal</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
+    <span class="doccomment">/// Panics if out-of-bounds</span>
+    <span class="kw">fn</span> <span class="ident">product</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Decimal</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">product</span> <span class="op">=</span> <span class="ident">ONE</span>;
+        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
+            <span class="ident">product</span> <span class="kw-2">*</span><span class="op">=</span> <span class="ident">i</span>;
+        }
+        <span class="ident">product</span>
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">Sum</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Decimal</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">Decimal</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sum</span> <span class="op">=</span> <span class="ident">ZERO</span>;
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
             <span class="ident">sum</span> <span class="op">+</span><span class="op">=</span> <span class="ident">i</span>;
@@ -5082,7 +5150,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> <span class="ident">Sum</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Decimal</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Decimal</span> {
-    <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Decimal</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">fn</span> <span class="ident">sum</span><span class="op">&lt;</span><span class="ident">I</span>: <span class="ident">Iterator</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">Decimal</span><span class="op">&gt;</span><span class="op">&gt;</span>(<span class="ident">iter</span>: <span class="ident">I</span>) -&gt; <span class="self">Self</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">sum</span> <span class="op">=</span> <span class="ident">ZERO</span>;
         <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="ident">iter</span> {
             <span class="ident">sum</span> <span class="op">+</span><span class="op">=</span> <span class="ident">i</span>;

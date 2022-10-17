@@ -1,3 +1,3 @@
 (function() {var implementors = {};
-implementors["concordium_rust_sdk"] = [];
+implementors["concordium_rust_sdk"] = [{"text":"impl <a class=\"trait\" href=\"concordium_rust_sdk/types/transactions/trait.HasAccountAccessStructure.html\" title=\"trait concordium_rust_sdk::types::transactions::HasAccountAccessStructure\">HasAccountAccessStructure</a> for <a class=\"struct\" href=\"concordium_rust_sdk/types/struct.AccountInfo.html\" title=\"struct concordium_rust_sdk::types::AccountInfo\">AccountInfo</a>","synthetic":false,"types":["concordium_rust_sdk::types::AccountInfo"]}];
 if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

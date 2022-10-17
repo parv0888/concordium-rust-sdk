@@ -474,7 +474,7 @@
     <span class="kw">type</span> <span class="ident">ClassifyEos</span>: <span class="ident">ClassifyEos</span><span class="op">&lt;</span><span class="ident">FailureClass</span> <span class="op">=</span> <span class="ident"><span class="self">Self</span>::FailureClass</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Returns a response classifier for this request</span>
-    <span class="kw">fn</span> <span class="ident">make_classifier</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Classifier</span>;
+    <span class="kw">fn</span> <span class="ident">make_classifier</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="ident"><span class="self">Self</span>::Classifier</span>;
 }
 
 <span class="doccomment">/// A [`MakeClassifier`] that produces new classifiers by cloning an inner classifier.</span>
@@ -536,7 +536,7 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> <span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Create a new `SharedClassifier` from the given classifier.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">classifier</span>: <span class="ident">C</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">classifier</span>: <span class="ident">C</span>) -&gt; <span class="self">Self</span>
     <span class="kw">where</span>
         <span class="ident">C</span>: <span class="ident">ClassifyResponse</span> <span class="op">+</span> <span class="ident">Clone</span>,
     {
@@ -552,7 +552,7 @@
     <span class="kw">type</span> <span class="ident">ClassifyEos</span> <span class="op">=</span> <span class="ident">C::ClassifyEos</span>;
     <span class="kw">type</span> <span class="ident">Classifier</span> <span class="op">=</span> <span class="ident">C</span>;
 
-    <span class="kw">fn</span> <span class="ident">make_classifier</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::Classifier</span> {
+    <span class="kw">fn</span> <span class="ident">make_classifier</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">_req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="ident"><span class="self">Self</span>::Classifier</span> {
         <span class="self">self</span>.<span class="ident">classifier</span>.<span class="ident">clone</span>()
     }
 }
@@ -604,13 +604,13 @@
     <span class="kw">fn</span> <span class="ident">classify_response</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="ident">Response</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ClassifiedResponse</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::FailureClass</span>, <span class="ident"><span class="self">Self</span>::ClassifyEos</span><span class="op">&gt;</span>;
+    ) -&gt; <span class="ident">ClassifiedResponse</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::FailureClass</span>, <span class="ident"><span class="self">Self</span>::ClassifyEos</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Classify an error.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Errors are always errors (doh) but sometimes it might be useful to have multiple classes of</span>
     <span class="doccomment">/// errors. A retry policy might allow retrying some errors and not others.</span>
-    <span class="kw">fn</span> <span class="ident">classify_error</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">error</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::FailureClass</span>
+    <span class="kw">fn</span> <span class="ident">classify_error</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">error</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) -&gt; <span class="ident"><span class="self">Self</span>::FailureClass</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">fmt::Display</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>;
 
@@ -660,10 +660,10 @@
     <span class="doccomment">///     ClassifiedResponse::Ready(Err(NewFailureClass::Status(500)))</span>
     <span class="doccomment">/// ));</span>
     <span class="doccomment">/// ```</span>
-    <span class="kw">fn</span> <span class="ident">map_failure_class</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">NewClass</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MapFailureClass</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">map_failure_class</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">NewClass</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">MapFailureClass</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Sized</span>,
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident"><span class="self">Self</span>::FailureClass</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NewClass</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident"><span class="self">Self</span>::FailureClass</span>) -&gt; <span class="ident">NewClass</span>,
     {
         <span class="ident">MapFailureClass::new</span>(<span class="self">self</span>, <span class="ident">f</span>)
     }
@@ -675,23 +675,23 @@
     <span class="kw">type</span> <span class="ident">FailureClass</span>;
 
     <span class="doccomment">/// Perform the classification from response trailers.</span>
-    <span class="kw">fn</span> <span class="ident">classify_eos</span>(<span class="self">self</span>, <span class="ident">trailers</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HeaderMap</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident"><span class="self">Self</span>::FailureClass</span><span class="op">&gt;</span>;
+    <span class="kw">fn</span> <span class="ident">classify_eos</span>(<span class="self">self</span>, <span class="ident">trailers</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HeaderMap</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident"><span class="self">Self</span>::FailureClass</span><span class="op">&gt;</span>;
 
     <span class="doccomment">/// Classify an error.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// Errors are always errors (doh) but sometimes it might be useful to have multiple classes of</span>
     <span class="doccomment">/// errors. A retry policy might allow retrying some errors and not others.</span>
-    <span class="kw">fn</span> <span class="ident">classify_error</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">error</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::FailureClass</span>
+    <span class="kw">fn</span> <span class="ident">classify_error</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">error</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) -&gt; <span class="ident"><span class="self">Self</span>::FailureClass</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">fmt::Display</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>;
 
     <span class="doccomment">/// Transform the failure classification using a function.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See [`ClassifyResponse::map_failure_class`] for more details.</span>
-    <span class="kw">fn</span> <span class="ident">map_failure_class</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">NewClass</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">MapFailureClass</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span>
+    <span class="kw">fn</span> <span class="ident">map_failure_class</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">NewClass</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) -&gt; <span class="ident">MapFailureClass</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">F</span><span class="op">&gt;</span>
     <span class="kw">where</span>
         <span class="self">Self</span>: <span class="ident">Sized</span>,
-        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident"><span class="self">Self</span>::FailureClass</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">NewClass</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>(<span class="ident"><span class="self">Self</span>::FailureClass</span>) -&gt; <span class="ident">NewClass</span>,
     {
         <span class="ident">MapFailureClass::new</span>(<span class="self">self</span>, <span class="ident">f</span>)
     }
@@ -711,19 +711,19 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// `NeverClassifyEos` exists only as type.  `NeverClassifyEos` values cannot be constructed.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">NeverClassifyEos</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="ident">_output_ty</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw">fn</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">T</span><span class="op">&gt;</span>,
+    <span class="ident">_output_ty</span>: <span class="ident">PhantomData</span><span class="op">&lt;</span><span class="kw">fn</span>() -&gt; <span class="ident">T</span><span class="op">&gt;</span>,
     <span class="ident">_never</span>: <span class="ident">Infallible</span>,
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">ClassifyEos</span> <span class="kw">for</span> <span class="ident">NeverClassifyEos</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">FailureClass</span> <span class="op">=</span> <span class="ident">T</span>;
 
-    <span class="kw">fn</span> <span class="ident">classify_eos</span>(<span class="self">self</span>, <span class="ident">_trailers</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HeaderMap</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident"><span class="self">Self</span>::FailureClass</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">classify_eos</span>(<span class="self">self</span>, <span class="ident">_trailers</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">HeaderMap</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident"><span class="self">Self</span>::FailureClass</span><span class="op">&gt;</span> {
         <span class="comment">// `NeverClassifyEos` contains an `Infallible` so it can never be constructed</span>
         <span class="macro">unreachable!</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">classify_error</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">_error</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::FailureClass</span>
+    <span class="kw">fn</span> <span class="ident">classify_error</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">_error</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) -&gt; <span class="ident"><span class="self">Self</span>::FailureClass</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">fmt::Display</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     {
@@ -733,7 +733,7 @@
 }
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> <span class="ident">fmt::Debug</span> <span class="kw">for</span> <span class="ident">NeverClassifyEos</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="ident">f</span>.<span class="ident">debug_struct</span>(<span class="string">&quot;NeverClassifyEos&quot;</span>).<span class="ident">finish</span>()
     }
 }
@@ -749,14 +749,14 @@
 
 <span class="kw">impl</span> <span class="ident">ServerErrorsAsFailures</span> {
     <span class="doccomment">/// Create a new [`ServerErrorsAsFailures`].</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="self">Self</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() -&gt; <span class="self">Self</span> {
         <span class="ident"><span class="self">Self</span>::default</span>()
     }
 
     <span class="doccomment">/// Returns a [`MakeClassifier`] that produces `ServerErrorsAsFailures`.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This is a convenience function that simply calls `SharedClassifier::new`.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">make_classifier</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">make_classifier</span>() -&gt; <span class="ident">SharedClassifier</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="ident">SharedClassifier::new</span>(<span class="ident"><span class="self">Self</span>::new</span>())
     }
 }
@@ -768,7 +768,7 @@
     <span class="kw">fn</span> <span class="ident">classify_response</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>(
         <span class="self">self</span>,
         <span class="ident">res</span>: <span class="kw-2">&amp;</span><span class="ident">Response</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">ClassifiedResponse</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::FailureClass</span>, <span class="ident"><span class="self">Self</span>::ClassifyEos</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="ident">ClassifiedResponse</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::FailureClass</span>, <span class="ident"><span class="self">Self</span>::ClassifyEos</span><span class="op">&gt;</span> {
         <span class="kw">if</span> <span class="ident">res</span>.<span class="ident">status</span>().<span class="ident">is_server_error</span>() {
             <span class="ident">ClassifiedResponse::Ready</span>(<span class="prelude-val">Err</span>(<span class="ident">ServerErrorsFailureClass::StatusCode</span>(<span class="ident">res</span>.<span class="ident">status</span>())))
         } <span class="kw">else</span> {
@@ -776,7 +776,7 @@
         }
     }
 
-    <span class="kw">fn</span> <span class="ident">classify_error</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">error</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::FailureClass</span>
+    <span class="kw">fn</span> <span class="ident">classify_error</span><span class="op">&lt;</span><span class="ident">E</span><span class="op">&gt;</span>(<span class="self">self</span>, <span class="ident">error</span>: <span class="kw-2">&amp;</span><span class="ident">E</span>) -&gt; <span class="ident"><span class="self">Self</span>::FailureClass</span>
     <span class="kw">where</span>
         <span class="ident">E</span>: <span class="ident">fmt::Display</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     {
@@ -794,10 +794,10 @@
 }
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">ServerErrorsFailureClass</span> {
-    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">fmt::Result</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident"><span class="self">Self</span>::StatusCode</span>(<span class="ident">code</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Status code: {}&quot;</span>, <span class="ident">code</span>),
-            <span class="ident"><span class="self">Self</span>::Error</span>(<span class="ident">error</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Error: {}&quot;</span>, <span class="ident">error</span>),
+            <span class="ident"><span class="self">Self</span>::StatusCode</span>(<span class="ident">code</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Status code: {}&quot;</span>, <span class="ident">code</span>),
+            <span class="ident"><span class="self">Self</span>::Error</span>(<span class="ident">error</span>) =&gt; <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;Error: {}&quot;</span>, <span class="ident">error</span>),
         }
     }
 }
@@ -811,7 +811,7 @@
     <span class="kw">use</span> <span class="ident">tower::retry::Policy</span>;
 
     <span class="kw">trait</span> <span class="ident">IsRetryable</span> {
-        <span class="kw">fn</span> <span class="ident">is_retryable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span>;
+        <span class="kw">fn</span> <span class="ident">is_retryable</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span>;
     }
 
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>)]</span>
@@ -835,9 +835,9 @@
             <span class="kw-2">&amp;</span><span class="self">self</span>,
             <span class="ident">_req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">ReqB</span><span class="op">&gt;</span>,
             <span class="ident">res</span>: <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Response</span><span class="op">&lt;</span><span class="ident">ResB</span><span class="op">&gt;</span>, <span class="kw-2">&amp;</span><span class="ident">E</span><span class="op">&gt;</span>,
-        ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Future</span><span class="op">&gt;</span> {
+        ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Future</span><span class="op">&gt;</span> {
             <span class="kw">match</span> <span class="ident">res</span> {
-                <span class="prelude-val">Ok</span>(<span class="ident">res</span>) <span class="op">=</span><span class="op">&gt;</span> {
+                <span class="prelude-val">Ok</span>(<span class="ident">res</span>) =&gt; {
                     <span class="kw">if</span> <span class="kw">let</span> <span class="ident">ClassifiedResponse::Ready</span>(<span class="ident">class</span>) <span class="op">=</span>
                         <span class="self">self</span>.<span class="ident">classifier</span>.<span class="ident">clone</span>().<span class="ident">classify_response</span>(<span class="ident">res</span>)
                     {
@@ -848,7 +848,7 @@
 
                     <span class="prelude-val">None</span>
                 }
-                <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="self">self</span>
+                <span class="prelude-val">Err</span>(<span class="ident">err</span>) =&gt; <span class="self">self</span>
                     .<span class="ident">classifier</span>
                     .<span class="ident">clone</span>()
                     .<span class="ident">classify_error</span>(<span class="ident">err</span>)
@@ -857,7 +857,7 @@
             }
         }
 
-        <span class="kw">fn</span> <span class="ident">clone_request</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">ReqB</span><span class="op">&gt;</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">ReqB</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">clone_request</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">req</span>: <span class="kw-2">&amp;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">ReqB</span><span class="op">&gt;</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">ReqB</span><span class="op">&gt;</span><span class="op">&gt;</span> {
             <span class="prelude-val">Some</span>(<span class="ident">req</span>.<span class="ident">clone</span>())
         }
     }

@@ -488,14 +488,14 @@
         <span class="ident">ro</span>.<span class="ident">append_message</span>(<span class="string">b&quot;cmm_key&quot;</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">cmm_key</span>)
     }
 
-    <span class="kw">fn</span> <span class="ident">get_challenge</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">challenge</span>: <span class="kw-2">&amp;</span><span class="ident">Challenge</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident"><span class="self">Self</span>::ProtocolChallenge</span> {
+    <span class="kw">fn</span> <span class="ident">get_challenge</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">challenge</span>: <span class="kw-2">&amp;</span><span class="ident">Challenge</span>) -&gt; <span class="ident"><span class="self">Self</span>::ProtocolChallenge</span> {
         <span class="ident">C::scalar_from_bytes</span>(<span class="ident">challenge</span>)
     }
 
     <span class="kw">fn</span> <span class="ident">commit_point</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">rand::Rng</span><span class="op">&gt;</span>(
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident"><span class="self">Self</span>::CommitMessage</span>, <span class="ident"><span class="self">Self</span>::ProverState</span>)<span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident"><span class="self">Self</span>::CommitMessage</span>, <span class="ident"><span class="self">Self</span>::ProverState</span>)<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cmms</span>.<span class="ident">len</span>();
         <span class="comment">// We have to have the same number of linear coefficients as the number of</span>
         <span class="comment">// commitments.</span>
@@ -534,7 +534,7 @@
         <span class="ident">secret</span>: <span class="ident"><span class="self">Self</span>::SecretData</span>,
         <span class="ident">state</span>: <span class="ident"><span class="self">Self</span>::ProverState</span>,
         <span class="ident">challenge</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::ProtocolChallenge</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::ProverWitness</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::ProverWitness</span><span class="op">&gt;</span> {
         <span class="kw">let</span> (<span class="ident">alphas</span>, <span class="ident">r_i_tildes</span>, <span class="ident">r_tilde</span>) <span class="op">=</span> <span class="ident">state</span>;
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">alphas</span>.<span class="ident">len</span>();
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">cmms</span>.<span class="ident">len</span>() <span class="op">!</span><span class="op">=</span> <span class="ident">n</span>
@@ -574,7 +574,7 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">challenge</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::ProtocolChallenge</span>,
         <span class="ident">witness</span>: <span class="kw-2">&amp;</span><span class="ident"><span class="self">Self</span>::ProverWitness</span>,
-    ) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::CommitMessage</span><span class="op">&gt;</span> {
+    ) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::CommitMessage</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">zs</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">witness</span>.<span class="ident">zs</span>;
         <span class="kw">let</span> <span class="ident">ss</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">witness</span>.<span class="ident">ss</span>;
         <span class="kw">let</span> <span class="ident">c</span> <span class="op">=</span> <span class="kw-2">*</span><span class="ident">challenge</span>;
@@ -605,7 +605,7 @@
     <span class="kw">fn</span> <span class="ident">with_valid_data</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">rand::Rng</span><span class="op">&gt;</span>(
         <span class="ident">_data_size</span>: <span class="ident">usize</span>,
         <span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
-        <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::SecretData</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> (),
+        <span class="ident">f</span>: <span class="kw">impl</span> <span class="ident">FnOnce</span>(<span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::SecretData</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>),
     ) {
         <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">_data_size</span>;
         <span class="kw">let</span> <span class="ident">cmm_key</span> <span class="op">=</span> <span class="ident">CommitmentKey::generate</span>(<span class="ident">csprng</span>);
@@ -719,19 +719,19 @@
 
         <span class="kw">trait</span> <span class="ident">ToChunks</span> {
             <span class="kw">type</span> <span class="ident">Integer</span>: <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Clone</span>;
-            <span class="kw">fn</span> <span class="ident">to_chunks</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Integer</span><span class="op">&gt;</span>;
+            <span class="kw">fn</span> <span class="ident">to_chunks</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">8</span>]) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Integer</span><span class="op">&gt;</span>;
         }
 
         <span class="kw">impl</span> <span class="ident">ToChunks</span> <span class="kw">for</span> <span class="ident">u64</span> {
             <span class="kw">type</span> <span class="ident">Integer</span> <span class="op">=</span> <span class="ident">u64</span>;
 
-            <span class="kw">fn</span> <span class="ident">to_chunks</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Integer</span><span class="op">&gt;</span> { <span class="macro">vec!</span>[<span class="ident">u64::from_le_bytes</span>(<span class="ident">bytes</span>)] }
+            <span class="kw">fn</span> <span class="ident">to_chunks</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">8</span>]) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Integer</span><span class="op">&gt;</span> { <span class="macro">vec!</span>[<span class="ident">u64::from_le_bytes</span>(<span class="ident">bytes</span>)] }
         }
 
         <span class="kw">impl</span> <span class="ident">ToChunks</span> <span class="kw">for</span> <span class="ident">u32</span> {
             <span class="kw">type</span> <span class="ident">Integer</span> <span class="op">=</span> <span class="ident">u32</span>;
 
-            <span class="kw">fn</span> <span class="ident">to_chunks</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Integer</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">to_chunks</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">8</span>]) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Integer</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">byte_chunk_1</span> <span class="op">=</span> [<span class="ident">bytes</span>[<span class="number">0</span>], <span class="ident">bytes</span>[<span class="number">1</span>], <span class="ident">bytes</span>[<span class="number">2</span>], <span class="ident">bytes</span>[<span class="number">3</span>]];
                 <span class="kw">let</span> <span class="ident">byte_chunk_2</span> <span class="op">=</span> [<span class="ident">bytes</span>[<span class="number">4</span>], <span class="ident">bytes</span>[<span class="number">5</span>], <span class="ident">bytes</span>[<span class="number">6</span>], <span class="ident">bytes</span>[<span class="number">7</span>]];
 
@@ -745,7 +745,7 @@
         <span class="kw">impl</span> <span class="ident">ToChunks</span> <span class="kw">for</span> <span class="ident">u16</span> {
             <span class="kw">type</span> <span class="ident">Integer</span> <span class="op">=</span> <span class="ident">u16</span>;
 
-            <span class="kw">fn</span> <span class="ident">to_chunks</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Integer</span><span class="op">&gt;</span> {
+            <span class="kw">fn</span> <span class="ident">to_chunks</span>(<span class="ident">bytes</span>: [<span class="ident">u8</span>; <span class="number">8</span>]) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident"><span class="self">Self</span>::Integer</span><span class="op">&gt;</span> {
                 <span class="kw">let</span> <span class="ident">byte_chunk_1</span> <span class="op">=</span> [<span class="ident">bytes</span>[<span class="number">0</span>], <span class="ident">bytes</span>[<span class="number">1</span>]];
                 <span class="kw">let</span> <span class="ident">byte_chunk_2</span> <span class="op">=</span> [<span class="ident">bytes</span>[<span class="number">2</span>], <span class="ident">bytes</span>[<span class="number">3</span>]];
                 <span class="kw">let</span> <span class="ident">byte_chunk_3</span> <span class="op">=</span> [<span class="ident">bytes</span>[<span class="number">4</span>], <span class="ident">bytes</span>[<span class="number">5</span>]];
@@ -760,12 +760,12 @@
             }
         }
 
-        <span class="kw">fn</span> <span class="ident">u64_to_chunks</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ToChunks</span><span class="op">&gt;</span>(<span class="ident">n</span>: <span class="ident">u64</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T::Integer</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">u64_to_chunks</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ToChunks</span><span class="op">&gt;</span>(<span class="ident">n</span>: <span class="ident">u64</span>) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T::Integer</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="ident">n</span>.<span class="ident">to_le_bytes</span>();
             <span class="ident">T::to_chunks</span>(<span class="ident">bytes</span>)
         }
 
-        <span class="kw">fn</span> <span class="ident">u64_chunks_to_chunks</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ToChunks</span><span class="op">&gt;</span>(<span class="ident">u64_chunks</span>: <span class="kw-2">&amp;</span>[<span class="ident">u64</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T::Integer</span><span class="op">&gt;</span> {
+        <span class="kw">fn</span> <span class="ident">u64_chunks_to_chunks</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">ToChunks</span><span class="op">&gt;</span>(<span class="ident">u64_chunks</span>: <span class="kw-2">&amp;</span>[<span class="ident">u64</span>]) -&gt; <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">T::Integer</span><span class="op">&gt;</span> {
             <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">vec</span> <span class="op">=</span> <span class="macro">vec!</span>[];
             <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">v</span> <span class="kw">in</span> <span class="ident">u64_chunks</span> {
                 <span class="kw">let</span> <span class="ident">chunk</span> <span class="op">=</span> <span class="ident">u64_to_chunks</span>::<span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">v</span>);
@@ -803,11 +803,11 @@
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rs</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">usize::from</span>(<span class="ident">m</span>));
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cmms</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">usize::from</span>(<span class="ident">m</span>));
         <span class="kw">let</span> <span class="ident">cmm</span> <span class="op">=</span> <span class="ident">cmm_key</span>.<span class="ident">hide</span>(<span class="kw-2">&amp;</span><span class="ident">sum</span>, <span class="kw-2">&amp;</span><span class="ident">r</span>);
-        <span class="kw">for</span> <span class="ident">i</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">usize::from</span>(<span class="ident">m</span>) {
+        <span class="kw">for</span> <span class="ident">x_value</span> <span class="kw">in</span> <span class="ident">xs_values</span>.<span class="ident">iter</span>().<span class="ident">take</span>(<span class="ident">m</span>.<span class="ident">into</span>()) {
             <span class="ident">us</span>.<span class="ident">push</span>(<span class="ident">ui</span>);
             <span class="ident">ui</span>.<span class="ident">mul_assign</span>(<span class="kw-2">&amp;</span><span class="ident">two_32</span>);
             <span class="kw">let</span> <span class="ident">ri</span> <span class="op">=</span> <span class="ident">Randomness</span>::<span class="op">&lt;</span><span class="ident">G1</span><span class="op">&gt;</span><span class="ident">::generate</span>(<span class="ident">rng</span>);
-            <span class="ident">cmms</span>.<span class="ident">push</span>(<span class="ident">cmm_key</span>.<span class="ident">hide</span>(<span class="kw-2">&amp;</span><span class="ident">xs_values</span>[<span class="ident">i</span>], <span class="kw-2">&amp;</span><span class="ident">ri</span>));
+            <span class="ident">cmms</span>.<span class="ident">push</span>(<span class="ident">cmm_key</span>.<span class="ident">hide</span>(<span class="ident">x_value</span>, <span class="kw-2">&amp;</span><span class="ident">ri</span>));
             <span class="ident">rs</span>.<span class="ident">push</span>(<span class="ident">ri</span>);
         }
         <span class="kw">let</span> <span class="ident">rs_copy</span> <span class="op">=</span> <span class="ident">rs</span>.<span class="ident">clone</span>();

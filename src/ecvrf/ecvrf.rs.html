@@ -437,12 +437,16 @@
 <span id="437">437</span>
 <span id="438">438</span>
 <span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
 </pre><pre class="rust"><code><span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">errors</span>::<span class="kw-2">*</span>, <span class="ident">proof</span>::<span class="kw-2">*</span>, <span class="ident">public</span>::<span class="kw-2">*</span>, <span class="ident">secret</span>::<span class="kw-2">*</span>};
-<span class="kw">use</span> <span class="ident">crypto_common</span>::{<span class="ident">size_t</span>, <span class="kw-2">*</span>};
-<span class="kw">use</span> <span class="ident">ffi_helpers</span>::<span class="kw-2">*</span>;
-<span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">thread_rng</span>, <span class="ident">CryptoRng</span>, <span class="ident">Rng</span>};
-<span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">cmp::Ordering</span>, <span class="ident">sync::Arc</span>};
-<span class="kw">use</span> <span class="ident">subtle::ConstantTimeEq</span>;
+<span class="kw">use</span> <span class="ident">crypto_common</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">CryptoRng</span>, <span class="ident">Rng</span>};
 
 <span class="doccomment">/// An ed25519 keypair.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>)]</span>
@@ -455,7 +459,7 @@
 
 <span class="kw">impl</span> <span class="ident">Keypair</span> {
     <span class="doccomment">/// Generate an ed25519 keypair.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Keypair</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>(<span class="ident">csprng</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">Keypair</span>
     <span class="kw">where</span>
         <span class="ident">R</span>: <span class="ident">CryptoRng</span> <span class="op">+</span> <span class="ident">Rng</span>, {
         <span class="kw">let</span> <span class="ident">sk</span> <span class="op">=</span> <span class="ident">SecretKey::generate</span>(<span class="ident">csprng</span>);
@@ -468,177 +472,187 @@
     }
 
     <span class="doccomment">/// Construct a VRF proof with this keypair&#39;s secret key.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prove</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">message</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Proof</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">prove</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">message</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">Proof</span> {
         <span class="kw">let</span> <span class="ident">expanded</span>: <span class="ident">ExpandedSecretKey</span> <span class="op">=</span> (<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">secret</span>).<span class="ident">into</span>();
 
         <span class="ident">expanded</span>.<span class="ident">prove</span>(<span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">public</span>, <span class="ident">message</span>)
     }
 }
 
-<span class="comment">// foreign interface</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;ffi&quot;</span>)]</span>
+<span class="kw">mod</span> <span class="ident">expose_ffi</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="ident">crypto_common::size_t</span>;
+    <span class="kw">use</span> <span class="ident">ffi_helpers</span>::<span class="kw-2">*</span>;
+    <span class="kw">use</span> <span class="ident">rand::thread_rng</span>;
+    <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">cmp::Ordering</span>, <span class="ident">sync::Arc</span>};
+    <span class="kw">use</span> <span class="ident">subtle::ConstantTimeEq</span>;
 
-<span class="comment">// Boilerplate serialization functions.</span>
-<span class="macro">macro_derive_from_bytes!</span>(<span class="ident">Arc</span> <span class="ident">ecvrf_proof_from_bytes</span>, <span class="ident">Proof</span>);
-<span class="macro">macro_derive_from_bytes!</span>(
-    <span class="ident">Box</span> <span class="ident">ecvrf_public_key_from_bytes</span>,
-    <span class="ident">PublicKey</span>
-);
-<span class="macro">macro_derive_from_bytes_no_cursor!</span>(
-    <span class="ident">Box</span> <span class="ident">ecvrf_secret_key_from_bytes</span>,
-    <span class="ident">SecretKey</span>,
-    <span class="ident">SecretKey::from_bytes</span>
-);
-<span class="macro">macro_derive_to_bytes!</span>(<span class="ident">Arc</span> <span class="ident">ecvrf_proof_to_bytes</span>, <span class="ident">Proof</span>);
-<span class="macro">macro_derive_to_bytes!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_public_key_to_bytes</span>, <span class="ident">PublicKey</span>);
-<span class="macro">macro_derive_to_bytes!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_secret_key_to_bytes</span>, <span class="ident">SecretKey</span>);
-<span class="comment">// Cleanup of allocated structs.</span>
-<span class="macro">macro_free_ffi!</span>(<span class="ident">Arc</span> <span class="ident">ecvrf_proof_free</span>, <span class="ident">Proof</span>);
-<span class="macro">macro_free_ffi!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_public_key_free</span>, <span class="ident">PublicKey</span>);
-<span class="macro">macro_free_ffi!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_secret_key_free</span>, <span class="ident">SecretKey</span>);
+    <span class="comment">// foreign interface</span>
 
-<span class="comment">// equality testing</span>
-<span class="macro">macro_derive_binary!</span>(<span class="ident">Arc</span> <span class="ident">ecvrf_proof_eq</span>, <span class="ident">Proof</span>, <span class="ident">Proof::eq</span>);
-<span class="macro">macro_derive_binary!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_public_key_eq</span>, <span class="ident">PublicKey</span>, <span class="ident">PublicKey::eq</span>);
-<span class="comment">// NB: Using constant time comparison.</span>
-<span class="macro">macro_derive_binary!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_secret_key_eq</span>, <span class="ident">SecretKey</span>, <span class="op">|</span><span class="ident">x</span>, <span class="ident">y</span><span class="op">|</span> <span class="ident">bool::from</span>(
-    <span class="ident">SecretKey::ct_eq</span>(<span class="ident">x</span>, <span class="ident">y</span>)
-));
+    <span class="comment">// Boilerplate serialization functions.</span>
+    <span class="macro">macro_derive_from_bytes!</span>(<span class="ident">Arc</span> <span class="ident">ecvrf_proof_from_bytes</span>, <span class="ident">Proof</span>);
+    <span class="macro">macro_derive_from_bytes!</span>(
+        <span class="ident">Box</span> <span class="ident">ecvrf_public_key_from_bytes</span>,
+        <span class="ident">PublicKey</span>
+    );
+    <span class="macro">macro_derive_from_bytes_no_cursor!</span>(
+        <span class="ident">Box</span> <span class="ident">ecvrf_secret_key_from_bytes</span>,
+        <span class="ident">SecretKey</span>,
+        <span class="ident">SecretKey::from_bytes</span>
+    );
+    <span class="macro">macro_derive_to_bytes!</span>(<span class="ident">Arc</span> <span class="ident">ecvrf_proof_to_bytes</span>, <span class="ident">Proof</span>);
+    <span class="macro">macro_derive_to_bytes!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_public_key_to_bytes</span>, <span class="ident">PublicKey</span>);
+    <span class="macro">macro_derive_to_bytes!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_secret_key_to_bytes</span>, <span class="ident">SecretKey</span>);
+    <span class="comment">// Cleanup of allocated structs.</span>
+    <span class="macro">macro_free_ffi!</span>(<span class="ident">Arc</span> <span class="ident">ecvrf_proof_free</span>, <span class="ident">Proof</span>);
+    <span class="macro">macro_free_ffi!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_public_key_free</span>, <span class="ident">PublicKey</span>);
+    <span class="macro">macro_free_ffi!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_secret_key_free</span>, <span class="ident">SecretKey</span>);
 
-<span class="comment">// ord instance for proof</span>
+    <span class="comment">// equality testing</span>
+    <span class="macro">macro_derive_binary!</span>(<span class="ident">Arc</span> <span class="ident">ecvrf_proof_eq</span>, <span class="ident">Proof</span>, <span class="ident">Proof::eq</span>);
+    <span class="macro">macro_derive_binary!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_public_key_eq</span>, <span class="ident">PublicKey</span>, <span class="ident">PublicKey::eq</span>);
+    <span class="comment">// NB: Using constant time comparison.</span>
+    <span class="macro">macro_derive_binary!</span>(<span class="ident">Box</span> <span class="ident">ecvrf_secret_key_eq</span>, <span class="ident">SecretKey</span>, <span class="op">|</span><span class="ident">x</span>, <span class="ident">y</span><span class="op">|</span> <span class="ident">bool::from</span>(
+        <span class="ident">SecretKey::ct_eq</span>(<span class="ident">x</span>, <span class="ident">y</span>)
+    ));
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
-<span class="doccomment">/// Generate a VRF proof. This function assumes the arguments are not</span>
-<span class="doccomment">/// null-pointers and it always returns a non-null pointer.</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_prove</span>(
-    <span class="ident">public</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>,
-    <span class="ident">secret</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SecretKey</span>,
-    <span class="ident">message</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
-    <span class="ident">len</span>: <span class="ident">size_t</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span> {
-    <span class="kw">let</span> <span class="ident">sk</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">secret</span>);
-    <span class="kw">let</span> <span class="ident">pk</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">public</span>);
-    <span class="kw">let</span> <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="macro">slice_from_c_bytes!</span>(<span class="ident">message</span>, <span class="ident">len</span>);
-    <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="ident">sk</span>.<span class="ident">prove</span>(<span class="ident">pk</span>, <span class="ident">data</span>);
-    <span class="ident">Arc::into_raw</span>(<span class="ident">Arc::new</span>(<span class="ident">proof</span>))
-}
+    <span class="comment">// ord instance for proof</span>
 
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="doccomment">/// Generate a new secret key using the system random number generator.</span>
-<span class="doccomment">/// The result is always a non-null pointer.</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_priv_key</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SecretKey</span> {
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">csprng</span> <span class="op">=</span> <span class="ident">thread_rng</span>();
-    <span class="kw">let</span> <span class="ident">sk</span> <span class="op">=</span> <span class="ident">SecretKey::generate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
-    <span class="ident">Box::into_raw</span>(<span class="ident">Box::new</span>(<span class="ident">sk</span>))
-}
-
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="doccomment">/// Derive a public key from a secret key.</span>
-<span class="doccomment">/// We assume the secret key pointer is non-null.</span>
-<span class="doccomment">/// The result is always a non-null pointer.</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_pub_key</span>(<span class="ident">secret_key</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SecretKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span> {
-    <span class="kw">let</span> <span class="ident">sk</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">secret_key</span>);
-    <span class="kw">let</span> <span class="ident">pk</span> <span class="op">=</span> <span class="ident">PublicKey::from</span>(<span class="ident">sk</span>);
-    <span class="ident">Box::into_raw</span>(<span class="ident">Box::new</span>(<span class="ident">pk</span>))
-}
-
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="doccomment">/// Compute hash of a proof.</span>
-<span class="doccomment">/// We assume the proof pointer is non-null.</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_proof_to_hash</span>(<span class="ident">hash_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="ident">proof_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span>) {
-    <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="macro">mut_slice_from_c_bytes!</span>(<span class="ident">hash_ptr</span>, <span class="number">64</span>);
-    <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">proof_ptr</span>);
-    <span class="ident">hash</span>.<span class="ident">copy_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">proof</span>.<span class="ident">to_hash</span>())
-}
-
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_verify_key</span>(<span class="ident">key_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">key_ptr</span>);
-    <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">verify_key</span>() {
-        <span class="number">1</span>
-    } <span class="kw">else</span> {
-        <span class="number">0</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
-<span class="doccomment">/// Verify. Returns 1 if verification successful and 0 otherwise.</span>
-<span class="doccomment">/// We assume all pointers are non-null.</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_verify</span>(
-    <span class="ident">public_key_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>,
-    <span class="ident">proof_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span>,
-    <span class="ident">message_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
-    <span class="ident">len</span>: <span class="ident">size_t</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="kw">let</span> <span class="ident">pk</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">public_key_ptr</span>);
-    <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">proof_ptr</span>);
-    <span class="kw">let</span> <span class="ident">message</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="macro">slice_from_c_bytes!</span>(<span class="ident">message_ptr</span>, <span class="ident">len</span>);
-
-    <span class="kw">if</span> <span class="ident">pk</span>.<span class="ident">verify</span>(<span class="ident">proof</span>, <span class="ident">message</span>) {
-        <span class="number">1</span>
-    } <span class="kw">else</span> {
-        <span class="number">0</span>
-    }
-}
-
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
-<span class="comment">// support ord instance needed in Haskell</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_proof_cmp</span>(<span class="ident">proof_ptr_1</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span>, <span class="ident">proof_ptr_2</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="comment">// optimistic check first.</span>
-    <span class="kw">if</span> <span class="ident">proof_ptr_1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">proof_ptr_2</span> {
-        <span class="kw">return</span> <span class="number">0</span>;
+    <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
+    <span class="doccomment">/// Generate a VRF proof. This function assumes the arguments are not</span>
+    <span class="doccomment">/// null-pointers and it always returns a non-null pointer.</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_prove</span>(
+        <span class="ident">public</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>,
+        <span class="ident">secret</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SecretKey</span>,
+        <span class="ident">message</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
+        <span class="ident">len</span>: <span class="ident">size_t</span>,
+    ) -&gt; <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span> {
+        <span class="kw">let</span> <span class="ident">sk</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">secret</span>);
+        <span class="kw">let</span> <span class="ident">pk</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">public</span>);
+        <span class="kw">let</span> <span class="ident">data</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="macro">slice_from_c_bytes!</span>(<span class="ident">message</span>, <span class="ident">len</span>);
+        <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="ident">sk</span>.<span class="ident">prove</span>(<span class="ident">pk</span>, <span class="ident">data</span>);
+        <span class="ident">Arc::into_raw</span>(<span class="ident">Arc::new</span>(<span class="ident">proof</span>))
     }
 
-    <span class="kw">let</span> <span class="ident">p1</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">proof_ptr_1</span>);
-    <span class="kw">let</span> <span class="ident">p2</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">proof_ptr_2</span>);
-    <span class="kw">match</span> <span class="ident">p1</span>.<span class="number">2</span>.<span class="ident">as_bytes</span>().<span class="ident">cmp</span>(<span class="ident">p2</span>.<span class="number">2</span>.<span class="ident">as_bytes</span>()) {
-        <span class="ident">Ordering::Less</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="op">-</span><span class="number">1</span>,
-        <span class="ident">Ordering::Greater</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="number">1</span>,
-        <span class="ident">Ordering::Equal</span> <span class="op">=</span><span class="op">&gt;</span> (),
+    <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+    <span class="doccomment">/// Generate a new secret key using the system random number generator.</span>
+    <span class="doccomment">/// The result is always a non-null pointer.</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_priv_key</span>() -&gt; <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SecretKey</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">csprng</span> <span class="op">=</span> <span class="ident">thread_rng</span>();
+        <span class="kw">let</span> <span class="ident">sk</span> <span class="op">=</span> <span class="ident">SecretKey::generate</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
+        <span class="ident">Box::into_raw</span>(<span class="ident">Box::new</span>(<span class="ident">sk</span>))
     }
 
-    <span class="comment">// we now have that the last component is equal</span>
-    <span class="comment">// check the middle scalar</span>
-    <span class="kw">match</span> <span class="ident">p1</span>.<span class="number">1</span>.<span class="ident">as_bytes</span>().<span class="ident">cmp</span>(<span class="ident">p2</span>.<span class="number">1</span>.<span class="ident">as_bytes</span>()) {
-        <span class="ident">Ordering::Less</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="op">-</span><span class="number">1</span>,
-        <span class="ident">Ordering::Greater</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="number">1</span>,
-        <span class="ident">Ordering::Equal</span> <span class="op">=</span><span class="op">&gt;</span> (),
+    <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+    <span class="doccomment">/// Derive a public key from a secret key.</span>
+    <span class="doccomment">/// We assume the secret key pointer is non-null.</span>
+    <span class="doccomment">/// The result is always a non-null pointer.</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_pub_key</span>(<span class="ident">secret_key</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">SecretKey</span>) -&gt; <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span> {
+        <span class="kw">let</span> <span class="ident">sk</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">secret_key</span>);
+        <span class="kw">let</span> <span class="ident">pk</span> <span class="op">=</span> <span class="ident">PublicKey::from</span>(<span class="ident">sk</span>);
+        <span class="ident">Box::into_raw</span>(<span class="ident">Box::new</span>(<span class="ident">pk</span>))
     }
 
-    <span class="comment">// the scalars are equal, need to check the edwards point</span>
-    <span class="kw">match</span> <span class="ident">p1</span>.<span class="number">0</span>.<span class="ident">compress</span>().<span class="ident">as_bytes</span>().<span class="ident">cmp</span>(<span class="ident">p2</span>.<span class="number">0</span>.<span class="ident">compress</span>().<span class="ident">as_bytes</span>()) {
-        <span class="ident">Ordering::Less</span> <span class="op">=</span><span class="op">&gt;</span> <span class="op">-</span><span class="number">1</span>,
-        <span class="ident">Ordering::Equal</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-        <span class="ident">Ordering::Greater</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
-    }
-}
-
-<span class="attribute">#[<span class="ident">no_mangle</span>]</span>
-<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
-<span class="comment">// ord instance for public keys</span>
-<span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_public_key_cmp</span>(
-    <span class="ident">public_key_ptr_1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>,
-    <span class="ident">public_key_ptr_2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">i32</span> {
-    <span class="comment">// optimistic check first.</span>
-    <span class="kw">if</span> <span class="ident">public_key_ptr_1</span> <span class="op">=</span><span class="op">=</span> <span class="ident">public_key_ptr_2</span> {
-        <span class="kw">return</span> <span class="number">0</span>;
+    <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+    <span class="doccomment">/// Compute hash of a proof.</span>
+    <span class="doccomment">/// We assume the proof pointer is non-null.</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_proof_to_hash</span>(<span class="ident">hash_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">u8</span>, <span class="ident">proof_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span>) {
+        <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="macro">mut_slice_from_c_bytes!</span>(<span class="ident">hash_ptr</span>, <span class="number">64</span>);
+        <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">proof_ptr</span>);
+        <span class="ident">hash</span>.<span class="ident">copy_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">proof</span>.<span class="ident">to_hash</span>())
     }
 
-    <span class="kw">let</span> <span class="ident">p1</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">public_key_ptr_1</span>);
-    <span class="kw">let</span> <span class="ident">p2</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">public_key_ptr_2</span>);
+    <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_verify_key</span>(<span class="ident">key_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>) -&gt; <span class="ident">i32</span> {
+        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">key_ptr</span>);
+        <span class="kw">if</span> <span class="ident">key</span>.<span class="ident">verify_key</span>() {
+            <span class="number">1</span>
+        } <span class="kw">else</span> {
+            <span class="number">0</span>
+        }
+    }
 
-    <span class="comment">// only compare the compressed point since the</span>
-    <span class="comment">// decompressed one is derived.</span>
-    <span class="kw">match</span> <span class="ident">p1</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>().<span class="ident">cmp</span>(<span class="ident">p2</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>()) {
-        <span class="ident">Ordering::Less</span> <span class="op">=</span><span class="op">&gt;</span> <span class="op">-</span><span class="number">1</span>,
-        <span class="ident">Ordering::Equal</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">0</span>,
-        <span class="ident">Ordering::Greater</span> <span class="op">=</span><span class="op">&gt;</span> <span class="number">1</span>,
+    <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
+    <span class="doccomment">/// Verify. Returns 1 if verification successful and 0 otherwise.</span>
+    <span class="doccomment">/// We assume all pointers are non-null.</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_verify</span>(
+        <span class="ident">public_key_ptr</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>,
+        <span class="ident">proof_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span>,
+        <span class="ident">message_ptr</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">u8</span>,
+        <span class="ident">len</span>: <span class="ident">size_t</span>,
+    ) -&gt; <span class="ident">i32</span> {
+        <span class="kw">let</span> <span class="ident">pk</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">public_key_ptr</span>);
+        <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">proof_ptr</span>);
+        <span class="kw">let</span> <span class="ident">message</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>] <span class="op">=</span> <span class="macro">slice_from_c_bytes!</span>(<span class="ident">message_ptr</span>, <span class="ident">len</span>);
+
+        <span class="kw">if</span> <span class="ident">pk</span>.<span class="ident">verify</span>(<span class="ident">proof</span>, <span class="ident">message</span>) {
+            <span class="number">1</span>
+        } <span class="kw">else</span> {
+            <span class="number">0</span>
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
+    <span class="comment">// support ord instance needed in Haskell</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_proof_cmp</span>(<span class="ident">proof_ptr_1</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span>, <span class="ident">proof_ptr_2</span>: <span class="kw-2">*</span><span class="kw">const</span> <span class="ident">Proof</span>) -&gt; <span class="ident">i32</span> {
+        <span class="comment">// optimistic check first.</span>
+        <span class="kw">if</span> <span class="ident">proof_ptr_1</span> <span class="op">==</span> <span class="ident">proof_ptr_2</span> {
+            <span class="kw">return</span> <span class="number">0</span>;
+        }
+
+        <span class="kw">let</span> <span class="ident">p1</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">proof_ptr_1</span>);
+        <span class="kw">let</span> <span class="ident">p2</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">proof_ptr_2</span>);
+        <span class="kw">match</span> <span class="ident">p1</span>.<span class="number">2</span>.<span class="ident">as_bytes</span>().<span class="ident">cmp</span>(<span class="ident">p2</span>.<span class="number">2</span>.<span class="ident">as_bytes</span>()) {
+            <span class="ident">Ordering::Less</span> =&gt; <span class="kw">return</span> <span class="op">-</span><span class="number">1</span>,
+            <span class="ident">Ordering::Greater</span> =&gt; <span class="kw">return</span> <span class="number">1</span>,
+            <span class="ident">Ordering::Equal</span> =&gt; (),
+        }
+
+        <span class="comment">// we now have that the last component is equal</span>
+        <span class="comment">// check the middle scalar</span>
+        <span class="kw">match</span> <span class="ident">p1</span>.<span class="number">1</span>.<span class="ident">as_bytes</span>().<span class="ident">cmp</span>(<span class="ident">p2</span>.<span class="number">1</span>.<span class="ident">as_bytes</span>()) {
+            <span class="ident">Ordering::Less</span> =&gt; <span class="kw">return</span> <span class="op">-</span><span class="number">1</span>,
+            <span class="ident">Ordering::Greater</span> =&gt; <span class="kw">return</span> <span class="number">1</span>,
+            <span class="ident">Ordering::Equal</span> =&gt; (),
+        }
+
+        <span class="comment">// the scalars are equal, need to check the edwards point</span>
+        <span class="kw">match</span> <span class="ident">p1</span>.<span class="number">0</span>.<span class="ident">compress</span>().<span class="ident">as_bytes</span>().<span class="ident">cmp</span>(<span class="ident">p2</span>.<span class="number">0</span>.<span class="ident">compress</span>().<span class="ident">as_bytes</span>()) {
+            <span class="ident">Ordering::Less</span> =&gt; <span class="op">-</span><span class="number">1</span>,
+            <span class="ident">Ordering::Equal</span> =&gt; <span class="number">0</span>,
+            <span class="ident">Ordering::Greater</span> =&gt; <span class="number">1</span>,
+        }
+    }
+
+    <span class="attribute">#[<span class="ident">no_mangle</span>]</span>
+    <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::not_unsafe_ptr_arg_deref</span>)]</span>
+    <span class="comment">// ord instance for public keys</span>
+    <span class="kw">extern</span> <span class="string">&quot;C&quot;</span> <span class="kw">fn</span> <span class="ident">ecvrf_public_key_cmp</span>(
+        <span class="ident">public_key_ptr_1</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>,
+        <span class="ident">public_key_ptr_2</span>: <span class="kw-2">*</span><span class="kw-2">mut</span> <span class="ident">PublicKey</span>,
+    ) -&gt; <span class="ident">i32</span> {
+        <span class="comment">// optimistic check first.</span>
+        <span class="kw">if</span> <span class="ident">public_key_ptr_1</span> <span class="op">==</span> <span class="ident">public_key_ptr_2</span> {
+            <span class="kw">return</span> <span class="number">0</span>;
+        }
+
+        <span class="kw">let</span> <span class="ident">p1</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">public_key_ptr_1</span>);
+        <span class="kw">let</span> <span class="ident">p2</span> <span class="op">=</span> <span class="macro">from_ptr!</span>(<span class="ident">public_key_ptr_2</span>);
+
+        <span class="comment">// only compare the compressed point since the</span>
+        <span class="comment">// decompressed one is derived.</span>
+        <span class="kw">match</span> <span class="ident">p1</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>().<span class="ident">cmp</span>(<span class="ident">p2</span>.<span class="number">0</span>.<span class="ident">as_bytes</span>()) {
+            <span class="ident">Ordering::Less</span> =&gt; <span class="op">-</span><span class="number">1</span>,
+            <span class="ident">Ordering::Equal</span> =&gt; <span class="number">0</span>,
+            <span class="ident">Ordering::Greater</span> =&gt; <span class="number">1</span>,
+        }
     }
 }
 

@@ -1,0 +1,3 @@
+(function() {var implementors = {};
+implementors["wasm_transform"] = [{"text":"impl <a class=\"trait\" href=\"num_enum/trait.TryFromPrimitive.html\" title=\"trait num_enum::TryFromPrimitive\">TryFromPrimitive</a> for <a class=\"enum\" href=\"wasm_transform/artifact/enum.InternalOpcode.html\" title=\"enum wasm_transform::artifact::InternalOpcode\">InternalOpcode</a>","synthetic":false,"types":["wasm_transform::artifact::InternalOpcode"]}];
+if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()

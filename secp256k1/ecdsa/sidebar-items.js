@@ -1,0 +1,1 @@
+initSidebarItems({"struct":[["SerializedSignature","A DER serialized Signature"],["Signature","An ECDSA signature"]]});

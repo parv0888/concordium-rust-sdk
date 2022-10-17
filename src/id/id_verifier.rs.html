@@ -197,7 +197,7 @@
     <span class="ident">attribute</span>: <span class="kw-2">&amp;</span><span class="ident">AttributeType</span>,
     <span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="ident">PedersenRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) -&gt; <span class="ident">bool</span> {
     <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">Value::new</span>(<span class="ident">attribute</span>.<span class="ident">to_field_element</span>());
     <span class="ident">keys</span>.<span class="ident">open</span>(<span class="kw-2">&amp;</span><span class="ident">s</span>, <span class="ident">r</span>, <span class="ident">c</span>)
 }
@@ -223,7 +223,7 @@
     <span class="ident">upper</span>: <span class="kw-2">&amp;</span><span class="ident">AttributeType</span>,
     <span class="ident">c</span>: <span class="kw-2">&amp;</span><span class="ident">Commitment</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
     <span class="ident">proof</span>: <span class="kw-2">&amp;</span><span class="ident">RangeProof</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">VerificationError</span><span class="op">&gt;</span> {
+) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">VerificationError</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">transcript</span> <span class="op">=</span> <span class="ident">RandomOracle::domain</span>(<span class="string">&quot;attribute_range_proof&quot;</span>);
     <span class="kw">let</span> <span class="ident">a</span> <span class="op">=</span> <span class="ident">lower</span>.<span class="ident">to_field_element</span>();
     <span class="kw">let</span> <span class="ident">b</span> <span class="op">=</span> <span class="ident">upper</span>.<span class="ident">to_field_element</span>();
@@ -262,7 +262,7 @@
     <span class="ident">account</span>: <span class="ident">AccountAddress</span>,
     <span class="ident">challenge</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
     <span class="ident">proof</span>: <span class="kw-2">&amp;</span><span class="ident">AccountOwnershipProof</span>,
-) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+) -&gt; <span class="ident">bool</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hasher</span> <span class="op">=</span> <span class="ident">Sha256::new</span>();
     <span class="ident">hasher</span>.<span class="ident">update</span>(<span class="ident">account</span>.<span class="number">0</span>);
     <span class="ident">hasher</span>.<span class="ident">update</span>([<span class="number">0u8</span>, <span class="number">0u8</span>, <span class="number">0u8</span>, <span class="number">0u8</span>, <span class="number">0u8</span>, <span class="number">0u8</span>, <span class="number">0u8</span>, <span class="number">0u8</span>]);
@@ -299,7 +299,7 @@
         <span class="kw">let</span> <span class="ident">pub_data</span> <span class="op">=</span> <span class="ident">cred_data</span>.<span class="ident">get_cred_key_info</span>();
 
         <span class="kw">let</span> <span class="ident">reg_id</span>: <span class="ident">G1</span> <span class="op">=</span> <span class="ident">Curve::hash_to_group</span>(<span class="string">b&quot;some_bytes&quot;</span>);
-        <span class="kw">let</span> <span class="ident">account_address</span> <span class="op">=</span> <span class="ident">AccountAddress::new</span>(<span class="kw-2">&amp;</span><span class="ident">reg_id</span>);
+        <span class="kw">let</span> <span class="ident">account_address</span> <span class="op">=</span> <span class="ident">account_address_from_registration_id</span>(<span class="kw-2">&amp;</span><span class="ident">reg_id</span>);
         <span class="kw">let</span> <span class="ident">challenge</span> <span class="op">=</span> <span class="string">b&quot;13549686546546546854651357687354&quot;</span>;
 
         <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="ident">prove_ownership_of_account</span>(<span class="kw-2">&amp;</span><span class="ident">cred_data</span>, <span class="ident">account_address</span>, <span class="ident">challenge</span>);
@@ -338,15 +338,15 @@
         <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">Value</span>::<span class="op">&lt;</span><span class="ident">G1</span><span class="op">&gt;</span><span class="ident">::new</span>(<span class="ident">attribute</span>.<span class="ident">to_field_element</span>());
         <span class="kw">let</span> (<span class="ident">commitment</span>, <span class="ident">randomness</span>) <span class="op">=</span> <span class="ident">keys</span>.<span class="ident">commit</span>(<span class="kw-2">&amp;</span><span class="ident">value</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">csprng</span>);
         <span class="kw">let</span> <span class="ident">maybe_proof</span> <span class="op">=</span>
-            <span class="ident">prove_attribute_in_range</span>(<span class="kw-2">&amp;</span><span class="ident">gens</span>, <span class="kw-2">&amp;</span><span class="ident">keys</span>, <span class="kw-2">&amp;</span><span class="ident">attribute</span>, <span class="kw-2">&amp;</span><span class="ident">lower</span>, <span class="kw-2">&amp;</span><span class="ident">upper</span>, <span class="kw-2">&amp;</span><span class="ident">randomness</span>);
+            <span class="ident">prove_attribute_in_range</span>(<span class="ident">gens</span>, <span class="kw-2">&amp;</span><span class="ident">keys</span>, <span class="kw-2">&amp;</span><span class="ident">attribute</span>, <span class="kw-2">&amp;</span><span class="ident">lower</span>, <span class="kw-2">&amp;</span><span class="ident">upper</span>, <span class="kw-2">&amp;</span><span class="ident">randomness</span>);
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">proof</span>) <span class="op">=</span> <span class="ident">maybe_proof</span> {
             <span class="macro">assert_eq!</span>(
-                <span class="ident">verify_attribute_range</span>(<span class="kw-2">&amp;</span><span class="ident">keys</span>, <span class="kw-2">&amp;</span><span class="ident">gens</span>, <span class="kw-2">&amp;</span><span class="ident">lower</span>, <span class="kw-2">&amp;</span><span class="ident">upper</span>, <span class="kw-2">&amp;</span><span class="ident">commitment</span>, <span class="kw-2">&amp;</span><span class="ident">proof</span>),
+                <span class="ident">verify_attribute_range</span>(<span class="kw-2">&amp;</span><span class="ident">keys</span>, <span class="ident">gens</span>, <span class="kw-2">&amp;</span><span class="ident">lower</span>, <span class="kw-2">&amp;</span><span class="ident">upper</span>, <span class="kw-2">&amp;</span><span class="ident">commitment</span>, <span class="kw-2">&amp;</span><span class="ident">proof</span>),
                 <span class="prelude-val">Ok</span>(()),
                 <span class="string">&quot;Incorrect range proof.&quot;</span>
             );
         } <span class="kw">else</span> {
-            <span class="macro">assert!</span>(<span class="bool-val">false</span>, <span class="string">&quot;Failed to produce proof.&quot;</span>);
+            <span class="macro">panic!</span>(<span class="string">&quot;Failed to produce proof.&quot;</span>);
         };
     }
 }
