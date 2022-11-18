@@ -1534,11 +1534,17 @@ impl TryFrom<AccountTransactionEffects> for super::types::AccountTransactionEffe
             account_transaction_effects::Effect::BakerStakeUpdated(bsu) => {
                 let data = match bsu.update {
                     None => None,
-                    Some(d) => Some(super::types::BakerStakeUpdatedData {
-                        baker_id:  d.baker_id.require()?.into(),
-                        new_stake: d.new_stake.require()?.into(),
-                        increased: d.increased,
-                    }),
+                    Some(d) => {
+                        if d.baker_id.is_some() {
+                            Some(super::types::BakerStakeUpdatedData {
+                                baker_id:  d.baker_id.require()?.into(),
+                                new_stake: d.new_stake.require()?.into(),
+                                increased: d.increased,
+                            })
+                        } else {
+                            None
+                        }
+                    }
                 };
                 Ok(Self::BakerStakeUpdated { data })
             }
