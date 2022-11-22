@@ -224,7 +224,7 @@
 <span class="doccomment">/// which is serialized using variable integer encoding.</span>
 <span class="doccomment">/// The caller is responsible for ensuring the data structure `T`</span>
 <span class="doccomment">/// is compatible with the version number.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Versioned</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;v&quot;</span>)]</span>
     <span class="kw">pub</span> <span class="ident">version</span>: <span class="ident">Version</span>,

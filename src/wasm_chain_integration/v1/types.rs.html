@@ -1272,6 +1272,18 @@
 <span id="1272">1272</span>
 <span id="1273">1273</span>
 <span id="1274">1274</span>
+<span id="1275">1275</span>
+<span id="1276">1276</span>
+<span id="1277">1277</span>
+<span id="1278">1278</span>
+<span id="1279">1279</span>
+<span id="1280">1280</span>
+<span id="1281">1281</span>
+<span id="1282">1282</span>
+<span id="1283">1283</span>
+<span id="1284">1284</span>
+<span id="1285">1285</span>
+<span id="1286">1286</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">super</span>::{
     <span class="ident">trie</span>::{<span class="self">self</span>, <span class="ident">MutableState</span>},
     <span class="ident">Interrupt</span>, <span class="ident">ParameterVec</span>, <span class="ident">StateLessReceiveHost</span>,
@@ -1604,6 +1616,7 @@
     <span class="ident">GetReceiveOwner</span>,
     <span class="ident">GetReceiveEntrypointSize</span>,
     <span class="ident">GetReceiveEntryPoint</span>,
+    <span class="ident">Upgrade</span>,
 }
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
@@ -1669,6 +1682,7 @@
             <span class="number">34</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ImportFunc::Common</span>(<span class="ident">CommonFunc::HashSHA2_256</span>)),
             <span class="number">35</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ImportFunc::Common</span>(<span class="ident">CommonFunc::HashSHA3_256</span>)),
             <span class="number">36</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ImportFunc::Common</span>(<span class="ident">CommonFunc::HashKeccak256</span>)),
+            <span class="number">37</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ImportFunc::ReceiveOnly</span>(<span class="ident">ReceiveOnlyFunc::Upgrade</span>)),
             <span class="ident">tag</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unexpected ImportFunc tag {}.&quot;</span>, <span class="ident">tag</span>),
         }
     }
@@ -1719,6 +1733,7 @@
                 <span class="ident">ReceiveOnlyFunc::GetReceiveEntrypointSize</span> =&gt; <span class="number">29</span>,
                 <span class="ident">ReceiveOnlyFunc::GetReceiveEntryPoint</span> =&gt; <span class="number">30</span>,
                 <span class="ident">ReceiveOnlyFunc::Invoke</span> =&gt; <span class="number">31</span>,
+                <span class="ident">ReceiveOnlyFunc::Upgrade</span> =&gt; <span class="number">37</span>,
             },
         };
         <span class="ident">tag</span>.<span class="ident">output</span>(<span class="ident">out</span>)
@@ -1752,7 +1767,13 @@
     }
 }
 
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConcordiumAllowedImports</span>;
+<span class="doccomment">/// Allowed imports for V1 modules. Whether some imports are allowed</span>
+<span class="doccomment">/// depends on the protocol version that is used to validate the module.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ConcordiumAllowedImports</span> {
+    <span class="doccomment">/// Whether to allow the `upgrade` function. This is supported in protocol</span>
+    <span class="doccomment">/// P5 and up, but not before.</span>
+    <span class="kw">pub</span> <span class="ident">support_upgrade</span>: <span class="ident">bool</span>,
+}
 
 <span class="kw">impl</span> <span class="ident">validate::ValidateImportExport</span> <span class="kw">for</span> <span class="ident">ConcordiumAllowedImports</span> {
     <span class="kw">fn</span> <span class="ident">validate_import_function</span>(
@@ -1803,6 +1824,8 @@
                 <span class="string">&quot;hash_sha2_256&quot;</span> =&gt; <span class="macro">type_matches!</span>(<span class="ident">ty</span> =&gt; [<span class="ident">I32</span>, <span class="ident">I32</span>, <span class="ident">I32</span>]),
                 <span class="string">&quot;hash_sha3_256&quot;</span> =&gt; <span class="macro">type_matches!</span>(<span class="ident">ty</span> =&gt; [<span class="ident">I32</span>, <span class="ident">I32</span>, <span class="ident">I32</span>]),
                 <span class="string">&quot;hash_keccak_256&quot;</span> =&gt; <span class="macro">type_matches!</span>(<span class="ident">ty</span> =&gt; [<span class="ident">I32</span>, <span class="ident">I32</span>, <span class="ident">I32</span>]),
+                <span class="comment">// Upgrade is only available from P5.</span>
+                <span class="string">&quot;upgrade&quot;</span> =&gt; <span class="self">self</span>.<span class="ident">support_upgrade</span> <span class="op">&amp;&amp;</span> <span class="macro">type_matches!</span>(<span class="ident">ty</span> =&gt; [<span class="ident">I32</span>]; <span class="ident">I64</span>),
                 <span class="kw">_</span> =&gt; <span class="bool-val">false</span>,
             }
         } <span class="kw">else</span> {
@@ -1904,6 +1927,7 @@
                 <span class="string">&quot;hash_sha2_256&quot;</span> =&gt; <span class="ident">ImportFunc::Common</span>(<span class="ident">CommonFunc::HashSHA2_256</span>),
                 <span class="string">&quot;hash_sha3_256&quot;</span> =&gt; <span class="ident">ImportFunc::Common</span>(<span class="ident">CommonFunc::HashSHA3_256</span>),
                 <span class="string">&quot;hash_keccak_256&quot;</span> =&gt; <span class="ident">ImportFunc::Common</span>(<span class="ident">CommonFunc::HashKeccak256</span>),
+                <span class="string">&quot;upgrade&quot;</span> =&gt; <span class="ident">ImportFunc::ReceiveOnly</span>(<span class="ident">ReceiveOnlyFunc::Upgrade</span>),
                 <span class="ident">name</span> =&gt; <span class="macro">bail!</span>(<span class="string">&quot;Unsupported import {}.&quot;</span>, <span class="ident">name</span>),
             }
         } <span class="kw">else</span> {

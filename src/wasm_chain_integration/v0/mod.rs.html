@@ -1061,6 +1061,110 @@
 <span id="1061">1061</span>
 <span id="1062">1062</span>
 <span id="1063">1063</span>
+<span id="1064">1064</span>
+<span id="1065">1065</span>
+<span id="1066">1066</span>
+<span id="1067">1067</span>
+<span id="1068">1068</span>
+<span id="1069">1069</span>
+<span id="1070">1070</span>
+<span id="1071">1071</span>
+<span id="1072">1072</span>
+<span id="1073">1073</span>
+<span id="1074">1074</span>
+<span id="1075">1075</span>
+<span id="1076">1076</span>
+<span id="1077">1077</span>
+<span id="1078">1078</span>
+<span id="1079">1079</span>
+<span id="1080">1080</span>
+<span id="1081">1081</span>
+<span id="1082">1082</span>
+<span id="1083">1083</span>
+<span id="1084">1084</span>
+<span id="1085">1085</span>
+<span id="1086">1086</span>
+<span id="1087">1087</span>
+<span id="1088">1088</span>
+<span id="1089">1089</span>
+<span id="1090">1090</span>
+<span id="1091">1091</span>
+<span id="1092">1092</span>
+<span id="1093">1093</span>
+<span id="1094">1094</span>
+<span id="1095">1095</span>
+<span id="1096">1096</span>
+<span id="1097">1097</span>
+<span id="1098">1098</span>
+<span id="1099">1099</span>
+<span id="1100">1100</span>
+<span id="1101">1101</span>
+<span id="1102">1102</span>
+<span id="1103">1103</span>
+<span id="1104">1104</span>
+<span id="1105">1105</span>
+<span id="1106">1106</span>
+<span id="1107">1107</span>
+<span id="1108">1108</span>
+<span id="1109">1109</span>
+<span id="1110">1110</span>
+<span id="1111">1111</span>
+<span id="1112">1112</span>
+<span id="1113">1113</span>
+<span id="1114">1114</span>
+<span id="1115">1115</span>
+<span id="1116">1116</span>
+<span id="1117">1117</span>
+<span id="1118">1118</span>
+<span id="1119">1119</span>
+<span id="1120">1120</span>
+<span id="1121">1121</span>
+<span id="1122">1122</span>
+<span id="1123">1123</span>
+<span id="1124">1124</span>
+<span id="1125">1125</span>
+<span id="1126">1126</span>
+<span id="1127">1127</span>
+<span id="1128">1128</span>
+<span id="1129">1129</span>
+<span id="1130">1130</span>
+<span id="1131">1131</span>
+<span id="1132">1132</span>
+<span id="1133">1133</span>
+<span id="1134">1134</span>
+<span id="1135">1135</span>
+<span id="1136">1136</span>
+<span id="1137">1137</span>
+<span id="1138">1138</span>
+<span id="1139">1139</span>
+<span id="1140">1140</span>
+<span id="1141">1141</span>
+<span id="1142">1142</span>
+<span id="1143">1143</span>
+<span id="1144">1144</span>
+<span id="1145">1145</span>
+<span id="1146">1146</span>
+<span id="1147">1147</span>
+<span id="1148">1148</span>
+<span id="1149">1149</span>
+<span id="1150">1150</span>
+<span id="1151">1151</span>
+<span id="1152">1152</span>
+<span id="1153">1153</span>
+<span id="1154">1154</span>
+<span id="1155">1155</span>
+<span id="1156">1156</span>
+<span id="1157">1157</span>
+<span id="1158">1158</span>
+<span id="1159">1159</span>
+<span id="1160">1160</span>
+<span id="1161">1161</span>
+<span id="1162">1162</span>
+<span id="1163">1163</span>
+<span id="1164">1164</span>
+<span id="1165">1165</span>
+<span id="1166">1166</span>
+<span id="1167">1167</span>
 </pre><pre class="rust"><code><span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;enable-ffi&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">ffi</span>;
 <span class="kw">mod</span> <span class="ident">types</span>;
@@ -1089,9 +1193,9 @@
     <span class="doccomment">/// - 0 if data was not logged because it would exceed maximum number of</span>
     <span class="doccomment">///   logs</span>
     <span class="doccomment">/// - 1 if data was logged.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">log_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">event</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>) -&gt; <span class="ident">i32</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">log_event</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">event</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>, <span class="ident">limit_num_logs</span>: <span class="ident">bool</span>) -&gt; <span class="ident">i32</span> {
         <span class="kw">let</span> <span class="ident">cur_len</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">logs</span>.<span class="ident">len</span>();
-        <span class="kw">if</span> <span class="ident">cur_len</span> <span class="op">&lt;</span> <span class="ident">constants::MAX_NUM_LOGS</span> {
+        <span class="kw">if</span> (<span class="op">!</span><span class="ident">limit_num_logs</span> <span class="op">&amp;&amp;</span> <span class="ident">cur_len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">u32::MAX</span> <span class="kw">as</span> <span class="ident">usize</span>) <span class="op">|</span><span class="op">|</span> <span class="ident">cur_len</span> <span class="op">&lt;</span> <span class="ident">constants::MAX_NUM_LOGS</span> {
             <span class="self">self</span>.<span class="ident">logs</span>.<span class="ident">push_back</span>(<span class="ident">event</span>);
             <span class="number">1</span>
         } <span class="kw">else</span> {
@@ -1149,6 +1253,7 @@
         <span class="ident">receive_name_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
         <span class="ident">amount</span>: <span class="ident">u64</span>,
         <span class="ident">parameter_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+        <span class="ident">max_parameter_size</span>: <span class="ident">usize</span>,
     ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">u32</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">response</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">cur_state</span>.<span class="ident">len</span>();
 
@@ -1156,10 +1261,7 @@
         <span class="macro">ensure!</span>(<span class="ident">ReceiveName::is_valid_receive_name</span>(<span class="ident">name_str</span>).<span class="ident">is_ok</span>(), <span class="string">&quot;Not a valid receive name.&quot;</span>);
         <span class="kw">let</span> <span class="ident">name</span> <span class="op">=</span> <span class="ident">receive_name_bytes</span>.<span class="ident">to_vec</span>();
 
-        <span class="macro">ensure!</span>(
-            <span class="ident">parameter_bytes</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">constants::MAX_PARAMETER_SIZE</span>,
-            <span class="string">&quot;Parameter exceeds max size.&quot;</span>
-        );
+        <span class="macro">ensure!</span>(<span class="ident">parameter_bytes</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="ident">max_parameter_size</span>, <span class="string">&quot;Parameter exceeds max size.&quot;</span>);
 
         <span class="kw">let</span> <span class="ident">parameter</span> <span class="op">=</span> <span class="ident">parameter_bytes</span>.<span class="ident">to_vec</span>();
 
@@ -1255,36 +1357,46 @@
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InitHost</span><span class="op">&lt;</span><span class="ident">ParamType</span>, <span class="ident">Ctx</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Remaining energy for execution.</span>
-    <span class="kw">pub</span> <span class="ident">energy</span>:            <span class="ident">InterpreterEnergy</span>,
+    <span class="kw">pub</span> <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
     <span class="doccomment">/// Remaining amount of activation frames.</span>
     <span class="doccomment">/// In other words, how many more functions can we call in a nested way.</span>
     <span class="kw">pub</span> <span class="ident">activation_frames</span>: <span class="ident">u32</span>,
     <span class="doccomment">/// Logs produced during execution.</span>
-    <span class="kw">pub</span> <span class="ident">logs</span>:              <span class="ident">Logs</span>,
+    <span class="kw">pub</span> <span class="ident">logs</span>: <span class="ident">Logs</span>,
     <span class="doccomment">/// The contract&#39;s state.</span>
-    <span class="kw">pub</span> <span class="ident">state</span>:             <span class="ident">State</span>,
+    <span class="kw">pub</span> <span class="ident">state</span>: <span class="ident">State</span>,
     <span class="doccomment">/// The parameter to the init method.</span>
-    <span class="kw">pub</span> <span class="ident">param</span>:             <span class="ident">ParamType</span>,
+    <span class="kw">pub</span> <span class="ident">param</span>: <span class="ident">ParamType</span>,
     <span class="doccomment">/// The init context for this invocation.</span>
-    <span class="kw">pub</span> <span class="ident">init_ctx</span>:          <span class="ident">Ctx</span>,
+    <span class="kw">pub</span> <span class="ident">init_ctx</span>: <span class="ident">Ctx</span>,
+    <span class="doccomment">/// Whether there is a limit on the number of logs and sizes of return</span>
+    <span class="doccomment">/// values. Limit removed in P5.</span>
+    <span class="kw">pub</span> <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ReceiveHost</span><span class="op">&lt;</span><span class="ident">ParamType</span>, <span class="ident">Ctx</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Remaining energy for execution.</span>
-    <span class="kw">pub</span> <span class="ident">energy</span>:            <span class="ident">InterpreterEnergy</span>,
+    <span class="kw">pub</span> <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
     <span class="doccomment">/// Remaining amount of activation frames.</span>
     <span class="doccomment">/// In other words, how many more functions can we call in a nested way.</span>
     <span class="kw">pub</span> <span class="ident">activation_frames</span>: <span class="ident">u32</span>,
     <span class="doccomment">/// Logs produced during execution.</span>
-    <span class="kw">pub</span> <span class="ident">logs</span>:              <span class="ident">Logs</span>,
+    <span class="kw">pub</span> <span class="ident">logs</span>: <span class="ident">Logs</span>,
     <span class="doccomment">/// The contract&#39;s state.</span>
-    <span class="kw">pub</span> <span class="ident">state</span>:             <span class="ident">State</span>,
+    <span class="kw">pub</span> <span class="ident">state</span>: <span class="ident">State</span>,
     <span class="doccomment">/// The parameter to the receive method.</span>
-    <span class="kw">pub</span> <span class="ident">param</span>:             <span class="ident">ParamType</span>,
+    <span class="kw">pub</span> <span class="ident">param</span>: <span class="ident">ParamType</span>,
     <span class="doccomment">/// Outcomes of the execution, i.e., the actions tree.</span>
-    <span class="kw">pub</span> <span class="ident">outcomes</span>:          <span class="ident">Outcome</span>,
+    <span class="kw">pub</span> <span class="ident">outcomes</span>: <span class="ident">Outcome</span>,
     <span class="doccomment">/// The receive context for this call.</span>
-    <span class="kw">pub</span> <span class="ident">receive_ctx</span>:       <span class="ident">Ctx</span>,
+    <span class="kw">pub</span> <span class="ident">receive_ctx</span>: <span class="ident">Ctx</span>,
+    <span class="doccomment">/// The maximum parameter size.</span>
+    <span class="doccomment">/// In P1-P4 it was 1024.</span>
+    <span class="doccomment">/// In P5+ it is 65535.</span>
+    <span class="kw">pub</span> <span class="ident">max_parameter_size</span>: <span class="ident">usize</span>,
+    <span class="doccomment">/// Whether there is a limit on the number of logs and sizes of return</span>
+    <span class="doccomment">/// values. Limit removed in P5.</span>
+    <span class="kw">pub</span> <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
 }
 
 <span class="doccomment">/// Types which can act as init contexts.</span>
@@ -1426,7 +1538,7 @@
         <span class="kw">let</span> <span class="ident">length</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">stack</span>.<span class="ident">pop_u32</span>() };
         <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">stack</span>.<span class="ident">pop_u32</span>() } <span class="kw">as</span> <span class="ident">usize</span>;
         <span class="comment">// charge energy linearly in the amount of data written.</span>
-        <span class="ident">energy</span>.<span class="ident">tick_energy</span>(<span class="ident">constants::copy_from_host_cost</span>(<span class="ident">length</span>))<span class="question-mark">?</span>;
+        <span class="ident">energy</span>.<span class="ident">tick_energy</span>(<span class="ident">constants::copy_parameter_cost</span>(<span class="ident">length</span>))<span class="question-mark">?</span>;
         <span class="kw">let</span> <span class="ident">write_end</span> <span class="op">=</span> <span class="ident">start</span> <span class="op">+</span> <span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>; <span class="comment">// this cannot overflow on 64-bit machines.</span>
         <span class="macro">ensure!</span>(<span class="ident">write_end</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">memory</span>.<span class="ident">len</span>(), <span class="string">&quot;Illegal memory access.&quot;</span>);
         <span class="kw">let</span> <span class="ident">end</span> <span class="op">=</span> <span class="ident">std::cmp::min</span>(<span class="ident">offset</span> <span class="op">+</span> <span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>, <span class="ident">param</span>.<span class="ident">len</span>());
@@ -1464,6 +1576,7 @@
         <span class="ident">stack</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">machine::RuntimeStack</span>,
         <span class="ident">energy</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">InterpreterEnergy</span>,
         <span class="ident">logs</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Logs</span>,
+        <span class="ident">limit_num_logs</span>: <span class="ident">bool</span>,
     ) -&gt; <span class="ident">machine::RunResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">length</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">stack</span>.<span class="ident">pop_u32</span>() };
         <span class="kw">let</span> <span class="ident">start</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">stack</span>.<span class="ident">pop_u32</span>() } <span class="kw">as</span> <span class="ident">usize</span>;
@@ -1472,7 +1585,7 @@
         <span class="kw">if</span> <span class="ident">length</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">constants::MAX_LOG_SIZE</span> {
             <span class="comment">// only charge if we actually log something.</span>
             <span class="ident">energy</span>.<span class="ident">tick_energy</span>(<span class="ident">constants::log_event_cost</span>(<span class="ident">length</span>))<span class="question-mark">?</span>;
-            <span class="ident">stack</span>.<span class="ident">push_value</span>(<span class="ident">logs</span>.<span class="ident">log_event</span>(<span class="ident">memory</span>[<span class="ident">start</span>..<span class="ident">end</span>].<span class="ident">to_vec</span>()))
+            <span class="ident">stack</span>.<span class="ident">push_value</span>(<span class="ident">logs</span>.<span class="ident">log_event</span>(<span class="ident">memory</span>[<span class="ident">start</span>..<span class="ident">end</span>].<span class="ident">to_vec</span>(), <span class="ident">limit_num_logs</span>))
         } <span class="kw">else</span> {
             <span class="comment">// otherwise the cost is adequately reflected by just the cost of a function</span>
             <span class="comment">// call.</span>
@@ -1605,6 +1718,7 @@
         <span class="ident">stack</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">machine::RuntimeStack</span>,
         <span class="ident">energy</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">InterpreterEnergy</span>,
         <span class="ident">outcomes</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Outcome</span>,
+        <span class="ident">max_parameter_size</span>: <span class="ident">usize</span>,
     ) -&gt; <span class="ident">machine::RunResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
         <span class="comment">// all `as usize` are safe on 64-bit systems since we are converging from a u32</span>
         <span class="kw">let</span> <span class="ident">parameter_len</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">stack</span>.<span class="ident">pop_u32</span>() };
@@ -1627,6 +1741,7 @@
             <span class="kw-2">&amp;</span><span class="ident">memory</span>[<span class="ident">receive_name_start</span>..<span class="ident">receive_name_end</span>],
             <span class="ident">amount</span>,
             <span class="kw-2">&amp;</span><span class="ident">memory</span>[<span class="ident">parameter_start</span>..<span class="ident">parameter_end</span>],
+            <span class="ident">max_parameter_size</span>,
         )<span class="question-mark">?</span>;
         <span class="ident">stack</span>.<span class="ident">push_value</span>(<span class="ident">res</span>);
         <span class="prelude-val">Ok</span>(())
@@ -1781,9 +1896,13 @@
                     <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>,
                     <span class="self">self</span>.<span class="ident">init_ctx</span>.<span class="ident">sender_policies</span>(),
                 ),
-                <span class="ident">CommonFunc::LogEvent</span> =&gt; {
-                    <span class="ident">host::log_event</span>(<span class="ident">memory</span>, <span class="ident">stack</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">logs</span>)
-                }
+                <span class="ident">CommonFunc::LogEvent</span> =&gt; <span class="ident">host::log_event</span>(
+                    <span class="ident">memory</span>,
+                    <span class="ident">stack</span>,
+                    <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>,
+                    <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">logs</span>,
+                    <span class="self">self</span>.<span class="ident">limit_logs_and_return_values</span>,
+                ),
                 <span class="ident">CommonFunc::LoadState</span> =&gt; {
                     <span class="ident">host::load_state</span>(<span class="ident">memory</span>, <span class="ident">stack</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">state</span>)
                 }
@@ -1845,9 +1964,13 @@
                     <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>,
                     <span class="self">self</span>.<span class="ident">receive_ctx</span>.<span class="ident">sender_policies</span>(),
                 ),
-                <span class="ident">CommonFunc::LogEvent</span> =&gt; {
-                    <span class="ident">host::log_event</span>(<span class="ident">memory</span>, <span class="ident">stack</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">logs</span>)
-                }
+                <span class="ident">CommonFunc::LogEvent</span> =&gt; <span class="ident">host::log_event</span>(
+                    <span class="ident">memory</span>,
+                    <span class="ident">stack</span>,
+                    <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>,
+                    <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">logs</span>,
+                    <span class="self">self</span>.<span class="ident">limit_logs_and_return_values</span>,
+                ),
                 <span class="ident">CommonFunc::LoadState</span> =&gt; {
                     <span class="ident">host::load_state</span>(<span class="ident">memory</span>, <span class="ident">stack</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">state</span>)
                 }
@@ -1867,9 +1990,13 @@
                 <span class="ident">ReceiveOnlyFunc::SimpleTransfer</span> =&gt; {
                     <span class="ident">host::simple_transfer</span>(<span class="ident">memory</span>, <span class="ident">stack</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">outcomes</span>)
                 }
-                <span class="ident">ReceiveOnlyFunc::Send</span> =&gt; {
-                    <span class="ident">host::send</span>(<span class="ident">memory</span>, <span class="ident">stack</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">outcomes</span>)
-                }
+                <span class="ident">ReceiveOnlyFunc::Send</span> =&gt; <span class="ident">host::send</span>(
+                    <span class="ident">memory</span>,
+                    <span class="ident">stack</span>,
+                    <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>,
+                    <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">outcomes</span>,
+                    <span class="self">self</span>.<span class="ident">max_parameter_size</span>,
+                ),
                 <span class="ident">ReceiveOnlyFunc::CombineAnd</span> =&gt; {
                     <span class="ident">host::combine_and</span>(<span class="ident">stack</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">energy</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">outcomes</span>)
                 }
@@ -1900,25 +2027,39 @@
     }
 }
 
+<span class="doccomment">/// Collection of information relevant to invoke an init-function.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">InitInvocation</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The amount included in the transaction.</span>
+    <span class="kw">pub</span> <span class="ident">amount</span>:    <span class="ident">u64</span>,
+    <span class="doccomment">/// The name of the init function to invoke.</span>
+    <span class="kw">pub</span> <span class="ident">init_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="doccomment">/// A parameter to provide the init function.</span>
+    <span class="kw">pub</span> <span class="ident">parameter</span>: <span class="ident">Parameter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The limit on the energy to be used for execution.</span>
+    <span class="kw">pub</span> <span class="ident">energy</span>:    <span class="ident">InterpreterEnergy</span>,
+}
+
 <span class="doccomment">/// Invokes an init-function from a given artifact.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invoke_init</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">RunnableCode</span>, <span class="ident">Ctx</span>: <span class="ident">HasInitContext</span><span class="op">&gt;</span>(
     <span class="ident">artifact</span>: <span class="kw-2">&amp;</span><span class="ident">Artifact</span><span class="op">&lt;</span><span class="ident">ProcessedImports</span>, <span class="ident">C</span><span class="op">&gt;</span>,
-    <span class="ident">amount</span>: <span class="ident">u64</span>,
     <span class="ident">init_ctx</span>: <span class="ident">Ctx</span>,
-    <span class="ident">init_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">param</span>: <span class="ident">Parameter</span>,
-    <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
+    <span class="ident">init_invocation</span>: <span class="ident">InitInvocation</span>,
+    <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">InitResult</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">InitHost</span> {
-        <span class="ident">energy</span>,
+        <span class="ident">energy</span>: <span class="ident">init_invocation</span>.<span class="ident">energy</span>,
         <span class="ident">activation_frames</span>: <span class="ident">constants::MAX_ACTIVATION_FRAMES</span>,
         <span class="ident">logs</span>: <span class="ident">Logs::new</span>(),
         <span class="ident">state</span>: <span class="ident">State::new</span>(<span class="prelude-val">None</span>),
-        <span class="ident">param</span>,
+        <span class="ident">param</span>: <span class="ident">init_invocation</span>.<span class="ident">parameter</span>,
+        <span class="ident">limit_logs_and_return_values</span>,
         <span class="ident">init_ctx</span>,
     };
 
-    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">artifact</span>.<span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">host</span>, <span class="ident">init_name</span>, <span class="kw-2">&amp;</span>[<span class="ident">Value::I64</span>(<span class="ident">amount</span> <span class="kw">as</span> <span class="ident">i64</span>)]) {
+    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">artifact</span>
+        .<span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">host</span>, <span class="ident">init_invocation</span>.<span class="ident">init_name</span>, <span class="kw-2">&amp;</span>[<span class="ident">Value::I64</span>(<span class="ident">init_invocation</span>.<span class="ident">amount</span> <span class="kw">as</span> <span class="ident">i64</span>)])
+    {
         <span class="prelude-val">Ok</span>(<span class="ident">ExecutionOutcome::Success</span> {
             <span class="ident">result</span>,
             ..
@@ -1966,10 +2107,21 @@
     <span class="ident">init_ctx</span>: <span class="ident">Ctx</span>,
     <span class="ident">init_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">parameter</span>: <span class="ident">Parameter</span>,
+    <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
     <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">InitResult</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::parse_artifact</span>(<span class="ident">artifact_bytes</span>)<span class="question-mark">?</span>;
-    <span class="ident">invoke_init</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">amount</span>, <span class="ident">init_ctx</span>, <span class="ident">init_name</span>, <span class="ident">parameter</span>, <span class="ident">energy</span>)
+    <span class="ident">invoke_init</span>(
+        <span class="kw-2">&amp;</span><span class="ident">artifact</span>,
+        <span class="ident">init_ctx</span>,
+        <span class="ident">InitInvocation</span> {
+            <span class="ident">amount</span>,
+            <span class="ident">init_name</span>,
+            <span class="ident">parameter</span>,
+            <span class="ident">energy</span>,
+        },
+        <span class="ident">limit_logs_and_return_values</span>,
+    )
 }
 
 <span class="doccomment">/// Invokes an init-function from Wasm module bytes</span>
@@ -1980,10 +2132,21 @@
     <span class="ident">init_ctx</span>: <span class="ident">Ctx</span>,
     <span class="ident">init_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">parameter</span>: <span class="ident">Parameter</span>,
+    <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
     <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">InitResult</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>(<span class="kw-2">&amp;</span><span class="ident">ConcordiumAllowedImports</span>, <span class="ident">source_bytes</span>)<span class="question-mark">?</span>;
-    <span class="ident">invoke_init</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">amount</span>, <span class="ident">init_ctx</span>, <span class="ident">init_name</span>, <span class="ident">parameter</span>, <span class="ident">energy</span>)
+    <span class="ident">invoke_init</span>(
+        <span class="kw-2">&amp;</span><span class="ident">artifact</span>,
+        <span class="ident">init_ctx</span>,
+        <span class="ident">InitInvocation</span> {
+            <span class="ident">amount</span>,
+            <span class="ident">init_name</span>,
+            <span class="ident">parameter</span>,
+            <span class="ident">energy</span>,
+        },
+        <span class="ident">limit_logs_and_return_values</span>,
+    )
 }
 
 <span class="doccomment">/// Same as `invoke_init_from_source`, except that the module has cost</span>
@@ -1995,33 +2158,60 @@
     <span class="ident">init_ctx</span>: <span class="ident">Ctx</span>,
     <span class="ident">init_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
     <span class="ident">parameter</span>: <span class="ident">Parameter</span>,
+    <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
     <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">InitResult</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate_with_metering</span>(<span class="kw-2">&amp;</span><span class="ident">ConcordiumAllowedImports</span>, <span class="ident">source_bytes</span>)<span class="question-mark">?</span>;
-    <span class="ident">invoke_init</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">amount</span>, <span class="ident">init_ctx</span>, <span class="ident">init_name</span>, <span class="ident">parameter</span>, <span class="ident">energy</span>)
+    <span class="ident">invoke_init</span>(
+        <span class="kw-2">&amp;</span><span class="ident">artifact</span>,
+        <span class="ident">init_ctx</span>,
+        <span class="ident">InitInvocation</span> {
+            <span class="ident">amount</span>,
+            <span class="ident">init_name</span>,
+            <span class="ident">parameter</span>,
+            <span class="ident">energy</span>,
+        },
+        <span class="ident">limit_logs_and_return_values</span>,
+    )
+}
+
+<span class="doccomment">/// Collection of information relevant to invoke a receive-function.</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ReceiveInvocation</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// The amount included in the transaction.</span>
+    <span class="kw">pub</span> <span class="ident">amount</span>:       <span class="ident">u64</span>,
+    <span class="doccomment">/// The name of the receive function to invoke.</span>
+    <span class="kw">pub</span> <span class="ident">receive_name</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;a</span> <span class="ident">str</span>,
+    <span class="doccomment">/// A parameter to provide the receive function.</span>
+    <span class="kw">pub</span> <span class="ident">parameter</span>:    <span class="ident">Parameter</span><span class="op">&lt;</span><span class="lifetime">&#39;a</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// The limit on the energy to be used for execution.</span>
+    <span class="kw">pub</span> <span class="ident">energy</span>:       <span class="ident">InterpreterEnergy</span>,
 }
 
 <span class="doccomment">/// Invokes an receive-function from a given artifact</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invoke_receive</span><span class="op">&lt;</span><span class="ident">C</span>: <span class="ident">RunnableCode</span>, <span class="ident">Ctx</span>: <span class="ident">HasReceiveContext</span><span class="op">&gt;</span>(
     <span class="ident">artifact</span>: <span class="kw-2">&amp;</span><span class="ident">Artifact</span><span class="op">&lt;</span><span class="ident">ProcessedImports</span>, <span class="ident">C</span><span class="op">&gt;</span>,
-    <span class="ident">amount</span>: <span class="ident">u64</span>,
     <span class="ident">receive_ctx</span>: <span class="ident">Ctx</span>,
+    <span class="ident">receive_invocation</span>: <span class="ident">ReceiveInvocation</span>,
     <span class="ident">current_state</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">receive_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">parameter</span>: <span class="ident">Parameter</span>,
-    <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
+    <span class="ident">max_parameter_size</span>: <span class="ident">usize</span>,
+    <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">ReceiveResult</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">ReceiveHost</span> {
-        <span class="ident">energy</span>,
+        <span class="ident">energy</span>: <span class="ident">receive_invocation</span>.<span class="ident">energy</span>,
         <span class="ident">activation_frames</span>: <span class="ident">constants::MAX_ACTIVATION_FRAMES</span>,
         <span class="ident">logs</span>: <span class="ident">Logs::new</span>(),
         <span class="ident">state</span>: <span class="ident">State::new</span>(<span class="prelude-val">Some</span>(<span class="ident">current_state</span>)),
-        <span class="ident">param</span>: <span class="kw-2">&amp;</span><span class="ident">parameter</span>,
+        <span class="ident">param</span>: <span class="kw-2">&amp;</span><span class="ident">receive_invocation</span>.<span class="ident">parameter</span>,
+        <span class="ident">max_parameter_size</span>,
+        <span class="ident">limit_logs_and_return_values</span>,
         <span class="ident">receive_ctx</span>,
         <span class="ident">outcomes</span>: <span class="ident">Outcome::new</span>(),
     };
 
-    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">artifact</span>.<span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">host</span>, <span class="ident">receive_name</span>, <span class="kw-2">&amp;</span>[<span class="ident">Value::I64</span>(<span class="ident">amount</span> <span class="kw">as</span> <span class="ident">i64</span>)]) {
+    <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">artifact</span>.<span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">host</span>, <span class="ident">receive_invocation</span>.<span class="ident">receive_name</span>, <span class="kw-2">&amp;</span>[<span class="ident">Value::I64</span>(
+        <span class="ident">receive_invocation</span>.<span class="ident">amount</span> <span class="kw">as</span> <span class="ident">i64</span>,
+    )]) {
         <span class="prelude-val">Ok</span>(<span class="ident">ExecutionOutcome::Success</span> {
             <span class="ident">result</span>,
             ..
@@ -2083,30 +2273,42 @@
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fuzz-coverage&quot;</span>), <span class="ident">inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invoke_receive_from_artifact</span><span class="op">&lt;</span><span class="ident">Ctx</span>: <span class="ident">HasReceiveContext</span><span class="op">&gt;</span>(
     <span class="ident">artifact_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">amount</span>: <span class="ident">u64</span>,
     <span class="ident">receive_ctx</span>: <span class="ident">Ctx</span>,
+    <span class="ident">receive_invocation</span>: <span class="ident">ReceiveInvocation</span>,
     <span class="ident">current_state</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">receive_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">parameter</span>: <span class="ident">Parameter</span>,
-    <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
+    <span class="ident">max_parameter_size</span>: <span class="ident">usize</span>,
+    <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">ReceiveResult</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::parse_artifact</span>(<span class="ident">artifact_bytes</span>)<span class="question-mark">?</span>;
-    <span class="ident">invoke_receive</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">amount</span>, <span class="ident">receive_ctx</span>, <span class="ident">current_state</span>, <span class="ident">receive_name</span>, <span class="ident">parameter</span>, <span class="ident">energy</span>)
+    <span class="ident">invoke_receive</span>(
+        <span class="kw-2">&amp;</span><span class="ident">artifact</span>,
+        <span class="ident">receive_ctx</span>,
+        <span class="ident">receive_invocation</span>,
+        <span class="ident">current_state</span>,
+        <span class="ident">max_parameter_size</span>,
+        <span class="ident">limit_logs_and_return_values</span>,
+    )
 }
 
 <span class="doccomment">/// Invokes an receive-function from Wasm module bytes</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fuzz-coverage&quot;</span>), <span class="ident">inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invoke_receive_from_source</span><span class="op">&lt;</span><span class="ident">Ctx</span>: <span class="ident">HasReceiveContext</span><span class="op">&gt;</span>(
     <span class="ident">source_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">amount</span>: <span class="ident">u64</span>,
     <span class="ident">receive_ctx</span>: <span class="ident">Ctx</span>,
+    <span class="ident">receive_invocation</span>: <span class="ident">ReceiveInvocation</span>,
     <span class="ident">current_state</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">receive_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">parameter</span>: <span class="ident">Parameter</span>,
-    <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
+    <span class="ident">max_parameter_size</span>: <span class="ident">usize</span>,
+    <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">ReceiveResult</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>(<span class="kw-2">&amp;</span><span class="ident">ConcordiumAllowedImports</span>, <span class="ident">source_bytes</span>)<span class="question-mark">?</span>;
-    <span class="ident">invoke_receive</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">amount</span>, <span class="ident">receive_ctx</span>, <span class="ident">current_state</span>, <span class="ident">receive_name</span>, <span class="ident">parameter</span>, <span class="ident">energy</span>)
+    <span class="ident">invoke_receive</span>(
+        <span class="kw-2">&amp;</span><span class="ident">artifact</span>,
+        <span class="ident">receive_ctx</span>,
+        <span class="ident">receive_invocation</span>,
+        <span class="ident">current_state</span>,
+        <span class="ident">max_parameter_size</span>,
+        <span class="ident">limit_logs_and_return_values</span>,
+    )
 }
 
 <span class="doccomment">/// Invokes an receive-function from Wasm module bytes, injects the module with</span>
@@ -2114,15 +2316,21 @@
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fuzz-coverage&quot;</span>), <span class="ident">inline</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">invoke_receive_with_metering_from_source</span><span class="op">&lt;</span><span class="ident">Ctx</span>: <span class="ident">HasReceiveContext</span><span class="op">&gt;</span>(
     <span class="ident">source_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">amount</span>: <span class="ident">u64</span>,
     <span class="ident">receive_ctx</span>: <span class="ident">Ctx</span>,
+    <span class="ident">receive_invocation</span>: <span class="ident">ReceiveInvocation</span>,
     <span class="ident">current_state</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
-    <span class="ident">receive_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
-    <span class="ident">parameter</span>: <span class="ident">Parameter</span>,
-    <span class="ident">energy</span>: <span class="ident">InterpreterEnergy</span>,
+    <span class="ident">max_parameter_size</span>: <span class="ident">usize</span>,
+    <span class="ident">limit_logs_and_return_values</span>: <span class="ident">bool</span>,
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">ReceiveResult</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate_with_metering</span>(<span class="kw-2">&amp;</span><span class="ident">ConcordiumAllowedImports</span>, <span class="ident">source_bytes</span>)<span class="question-mark">?</span>;
-    <span class="ident">invoke_receive</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">amount</span>, <span class="ident">receive_ctx</span>, <span class="ident">current_state</span>, <span class="ident">receive_name</span>, <span class="ident">parameter</span>, <span class="ident">energy</span>)
+    <span class="ident">invoke_receive</span>(
+        <span class="kw-2">&amp;</span><span class="ident">artifact</span>,
+        <span class="ident">receive_ctx</span>,
+        <span class="ident">receive_invocation</span>,
+        <span class="ident">current_state</span>,
+        <span class="ident">max_parameter_size</span>,
+        <span class="ident">limit_logs_and_return_values</span>,
+    )
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="wasm_chain_integration" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>

@@ -1,1 +1,1 @@
-initSidebarItems({"mod":[["inner_product_proof",""],["range_proof",""]]});
+initSidebarItems({"mod":[["inner_product_proof","Logarithmic sized inner product proof used as base for the other proofs in this crate"],["range_proof","Implementation of range proofs along the lines of bulletproofs"],["set_membership_proof","Implementation of set membership proof along the lines of bulletproofs"],["set_non_membership_proof","Implementation of set-non-membership proof along the lines of bulletproofs"],["utils","Shared functions used by the proofs in this crate"]]});

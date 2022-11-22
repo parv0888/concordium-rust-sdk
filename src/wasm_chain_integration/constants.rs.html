@@ -236,21 +236,39 @@
 <span id="236">236</span>
 <span id="237">237</span>
 <span id="238">238</span>
+<span id="239">239</span>
+<span id="240">240</span>
+<span id="241">241</span>
+<span id="242">242</span>
+<span id="243">243</span>
+<span id="244">244</span>
+<span id="245">245</span>
+<span id="246">246</span>
+<span id="247">247</span>
+<span id="248">248</span>
+<span id="249">249</span>
+<span id="250">250</span>
+<span id="251">251</span>
+<span id="252">252</span>
+<span id="253">253</span>
+<span id="254">254</span>
+<span id="255">255</span>
+<span id="256">256</span>
+<span id="257">257</span>
+<span id="258">258</span>
+<span id="259">259</span>
 </pre><pre class="rust"><code><span class="doccomment">/// Maximum size of a V0 contract state in bytes.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_CONTRACT_STATE</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">16384</span>; <span class="comment">// 16kB</span>
 
 <span class="doccomment">/// Maximum number of nested function calls.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_ACTIVATION_FRAMES</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">1024</span>;
 
-<span class="doccomment">/// Maximum size of the init/receive parameter.</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_PARAMETER_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1024</span>;
-
 <span class="doccomment">/// Maximum size of a log message.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_LOG_SIZE</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">512</span>;
 
-<span class="doccomment">/// Maximum number of log messages per execution.</span>
-<span class="doccomment">/// This together with the previous constant limits the amount of data that can</span>
-<span class="doccomment">/// be logged to 16kB.</span>
+<span class="doccomment">/// Maximum number of log messages per execution in *protocol version 4 and</span>
+<span class="doccomment">/// lower*. This, together with the previous constant, limits the amount of data</span>
+<span class="doccomment">/// that can be logged to 16kB.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_NUM_LOGS</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">64</span>;
 
 <span class="doccomment">/// Base cost of a log event call.</span>
@@ -274,16 +292,40 @@
 <span class="comment">// TODO: These should in principle be const fn, but rust in 1.45.2 u64::from</span>
 <span class="comment">// are not marked as const fn, so they are not.</span>
 
-<span class="doccomment">/// Cost of copying the given amount of bytes from the host (e.g., parameter or</span>
+<span class="doccomment">/// Cost of copying the given amount of bytes from the host (e.g., policy or</span>
 <span class="doccomment">/// contract state) to the Wasm memory. The 10 is to account for copying empty</span>
 <span class="doccomment">/// buffers and is based on benchmarks.</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_from_host_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">10</span> <span class="op">+</span> <span class="ident">u64::from</span>(<span class="ident">x</span>) }
-<span class="doccomment">/// Cost of copying the given amount of bytes to the host (e.g., parameter or</span>
-<span class="doccomment">/// contract state) from the Wasm to host memory. The 10 is to account for</span>
+
+<span class="doccomment">/// Cost of copying the given amount of bytes to the host (e.g., contract state)</span>
+<span class="doccomment">/// from the Wasm to host memory. The 10 is to account for</span>
 <span class="doccomment">/// copying empty buffers and is based on benchmarks.</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_to_host_cost</span>(<span class="ident">x</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> { <span class="number">10</span> <span class="op">+</span> <span class="ident">u64::from</span>(<span class="ident">x</span>) }
+
+<span class="doccomment">/// Cost of copying a V1 parameter between the Wasm memory and the host in</span>
+<span class="doccomment">/// either direction.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// - The cost for parameters &lt;= 1kB is: base cost + 1NRG per *kilobyte*.</span>
+<span class="doccomment">/// - The cost for parameters &gt; 1kB is: base cost + 1NRG per *byte*.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Prior to P5, the parameters were limited to 1kB, which is why the cost</span>
+<span class="doccomment">/// scheme is as it is.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Notes on the factors:</span>
+<span class="doccomment">/// - The `10` is to account for copying empty buffers and is based on</span>
+<span class="doccomment">///   benchmarks.</span>
+<span class="doccomment">/// - The `1000` factor makes it so that the cost is 1NRG per byte.</span>
+<span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">copy_parameter_cost</span>(<span class="ident">len</span>: <span class="ident">u32</span>) -&gt; <span class="ident">u64</span> {
+    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u64::from</span>(<span class="ident">len</span>);
+    <span class="kw">if</span> <span class="ident">len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="number">1024</span> {
+        <span class="number">10</span> <span class="op">+</span> <span class="ident">len</span>
+    } <span class="kw">else</span> {
+        <span class="number">10</span> <span class="op">+</span> <span class="number">1000</span> <span class="op">*</span> <span class="ident">len</span>
+    }
+}
 
 <span class="doccomment">/// Cost of allocating additional smart contract state. The argument is the</span>
 <span class="doccomment">/// number of additional bytes. The `/100` guarantees that with 3_000_000NRG</span>

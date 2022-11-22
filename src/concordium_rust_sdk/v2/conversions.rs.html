@@ -2974,6 +2974,14 @@
 <span id="2974">2974</span>
 <span id="2975">2975</span>
 <span id="2976">2976</span>
+<span id="2977">2977</span>
+<span id="2978">2978</span>
+<span id="2979">2979</span>
+<span id="2980">2980</span>
+<span id="2981">2981</span>
+<span id="2982">2982</span>
+<span id="2983">2983</span>
+<span id="2984">2984</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Helpers and trait implementations to convert from proto generated types to</span>
 <span class="doccomment">//! their Rust equivalents.</span>
 
@@ -3391,6 +3399,7 @@
             <span class="ident">ProtocolVersion::ProtocolVersion2</span> =&gt; <span class="ident"><span class="kw">super</span>::types::ProtocolVersion::P2</span>,
             <span class="ident">ProtocolVersion::ProtocolVersion3</span> =&gt; <span class="ident"><span class="kw">super</span>::types::ProtocolVersion::P3</span>,
             <span class="ident">ProtocolVersion::ProtocolVersion4</span> =&gt; <span class="ident"><span class="kw">super</span>::types::ProtocolVersion::P4</span>,
+            <span class="ident">ProtocolVersion::ProtocolVersion5</span> =&gt; <span class="ident"><span class="kw">super</span>::types::ProtocolVersion::P5</span>,
         }
     }
 }
@@ -4641,6 +4650,13 @@
                 <span class="ident"><span class="kw">super</span>::types::ContractTraceElement::Resumed</span> {
                     <span class="ident">address</span>: <span class="ident">r</span>.<span class="ident">address</span>.<span class="ident">require</span>()<span class="question-mark">?</span>.<span class="ident">into</span>(),
                     <span class="ident">success</span>: <span class="ident">r</span>.<span class="ident">success</span>,
+                }
+            }
+            <span class="ident">contract_trace_element::Element::Upgraded</span>(<span class="ident">r</span>) =&gt; {
+                <span class="ident"><span class="kw">super</span>::types::ContractTraceElement::Upgraded</span> {
+                    <span class="ident">address</span>: <span class="ident">r</span>.<span class="ident">address</span>.<span class="ident">require</span>()<span class="question-mark">?</span>.<span class="ident">into</span>(),
+                    <span class="ident">from</span>:    <span class="ident">r</span>.<span class="ident">from</span>.<span class="ident">require</span>()<span class="question-mark">?</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>,
+                    <span class="ident">to</span>:      <span class="ident">r</span>.<span class="ident">to</span>.<span class="ident">require</span>()<span class="question-mark">?</span>.<span class="ident">try_into</span>()<span class="question-mark">?</span>,
                 }
             }
         })

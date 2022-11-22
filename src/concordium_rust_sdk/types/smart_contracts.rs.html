@@ -280,7 +280,7 @@
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_base::smart_contracts</span>::<span class="kw-2">*</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(
     <span class="ident">try_from</span> <span class="op">=</span> <span class="string">&quot;instance_parser::InstanceInfoHelper&quot;</span>,
     <span class="ident">into</span> <span class="op">=</span> <span class="string">&quot;instance_parser::InstanceInfoHelper&quot;</span>

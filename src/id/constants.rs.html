@@ -144,7 +144,7 @@
 <span class="doccomment">/// Index used to create the RegId of the initial credential.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">INITIAL_CREDENTIAL_INDEX</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="number">0</span>;
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>)]</span>
 <span class="doccomment">/// Concrete attribute values.</span>
 <span class="doccomment">/// All currently supported attributes are string values.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">AttributeKind</span>(<span class="kw">pub</span> <span class="ident">String</span>);

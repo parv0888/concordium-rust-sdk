@@ -183,7 +183,7 @@
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">index</span>: <span class="ident">u64</span>) -&gt; <span class="self">Self</span> { <span class="ident">EncryptedAmountIndex</span> { <span class="ident">index</span> } }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">SerdeBase16Serialize</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Clone</span>, <span class="ident">Serialize</span>, <span class="ident">SerdeBase16Serialize</span>, <span class="ident">Debug</span>)]</span>
 <span class="doccomment">/// An encrypted amount, in two chunks in &quot;little endian limbs&quot;. That is, the</span>
 <span class="doccomment">/// first chunk represents the low 32 bits of an amount, and the second chunk</span>
 <span class="doccomment">/// represents the high 32 bits. The JSON serialization of this is just base16</span>

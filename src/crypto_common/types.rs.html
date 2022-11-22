@@ -421,6 +421,31 @@
 <span id="421">421</span>
 <span id="422">422</span>
 <span id="423">423</span>
+<span id="424">424</span>
+<span id="425">425</span>
+<span id="426">426</span>
+<span id="427">427</span>
+<span id="428">428</span>
+<span id="429">429</span>
+<span id="430">430</span>
+<span id="431">431</span>
+<span id="432">432</span>
+<span id="433">433</span>
+<span id="434">434</span>
+<span id="435">435</span>
+<span id="436">436</span>
+<span id="437">437</span>
+<span id="438">438</span>
+<span id="439">439</span>
+<span id="440">440</span>
+<span id="441">441</span>
+<span id="442">442</span>
+<span id="443">443</span>
+<span id="444">444</span>
+<span id="445">445</span>
+<span id="446">446</span>
+<span id="447">447</span>
+<span id="448">448</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Common types needed in concordium.</span>
 
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -428,7 +453,7 @@
     <span class="ident">SerdeSerialize</span>, <span class="ident">Serial</span>,
 };
 <span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">BigEndian</span>, <span class="ident">ReadBytesExt</span>};
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_contracts_common</span>::{<span class="ident">AccountAddress</span>, <span class="ident">Amount</span>, <span class="ident">ACCOUNT_ADDRESS_SIZE</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_contracts_common</span>::{<span class="ident">AccountAddress</span>, <span class="ident">Address</span>, <span class="ident">Amount</span>, <span class="ident">ACCOUNT_ADDRESS_SIZE</span>};
 <span class="kw">use</span> <span class="ident">concordium_contracts_common</span>::{
     <span class="ident">ContractAddress</span>, <span class="ident">ContractName</span>, <span class="ident">OwnedContractName</span>, <span class="ident">OwnedReceiveName</span>, <span class="ident">ReceiveName</span>,
 };
@@ -474,6 +499,31 @@
     <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">byteorder::ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">micro_ccd</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(<span class="ident">Amount::from_micro_ccd</span>(<span class="ident">micro_ccd</span>))
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">Address</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">Buffer</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">B</span>) {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">Address::Account</span>(<span class="ident">acc</span>) =&gt; {
+                <span class="number">0u8</span>.<span class="ident">serial</span>(<span class="ident">out</span>);
+                <span class="ident">acc</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
+            }
+            <span class="ident">Address::Contract</span>(<span class="ident">ca</span>) =&gt; {
+                <span class="number">1u8</span>.<span class="ident">serial</span>(<span class="ident">out</span>);
+                <span class="ident">ca</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
+            }
+        }
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">Address</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">match</span> <span class="ident">u8::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span> {
+            <span class="number">0u8</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::Account</span>(<span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>)),
+            <span class="number">1u8</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::Contract</span>(<span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>)),
+            <span class="kw">_</span> =&gt; <span class="macro">anyhow::bail!</span>(<span class="string">&quot;Unsupported address type.&quot;</span>),
+        }
     }
 }
 

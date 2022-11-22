@@ -2467,6 +2467,19 @@
 <span id="2467">2467</span>
 <span id="2468">2468</span>
 <span id="2469">2469</span>
+<span id="2470">2470</span>
+<span id="2471">2471</span>
+<span id="2472">2472</span>
+<span id="2473">2473</span>
+<span id="2474">2474</span>
+<span id="2475">2475</span>
+<span id="2476">2476</span>
+<span id="2477">2477</span>
+<span id="2478">2478</span>
+<span id="2479">2479</span>
+<span id="2480">2480</span>
+<span id="2481">2481</span>
+<span id="2482">2482</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Main types used in the identity layer, and their serialization</span>
 <span class="doccomment">//! implementations.</span>
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -2478,7 +2491,7 @@
     },
 };
 <span class="kw">use</span> <span class="ident">anyhow</span>::{<span class="ident">anyhow</span>, <span class="ident">bail</span>};
-<span class="kw">use</span> <span class="ident">bulletproofs::range_proof</span>::{<span class="ident">Generators</span>, <span class="ident">RangeProof</span>};
+<span class="kw">use</span> <span class="ident">bulletproofs</span>::{<span class="ident">range_proof::RangeProof</span>, <span class="ident">utils::Generators</span>};
 <span class="kw">use</span> <span class="ident">byteorder::ReadBytesExt</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">crypto_common::types</span>::{<span class="ident">AccountAddress</span>, <span class="ident">ACCOUNT_ADDRESS_SIZE</span>};
 <span class="kw">use</span> <span class="ident">crypto_common</span>::{
@@ -2880,7 +2893,8 @@
 <span class="doccomment">/// The meaning of attributes is then assigned at the outer layers when the</span>
 <span class="doccomment">/// library is used. In order to make the library as generic (and ultimately</span>
 <span class="doccomment">/// simple) as possible this trait is used.</span>
-<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Field</span><span class="op">&gt;</span>: <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">fmt::Display</span> <span class="op">+</span> <span class="ident">Serialize</span> {
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Field</span><span class="op">&gt;</span>:
+    <span class="ident">Clone</span> <span class="op">+</span> <span class="ident">Sized</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span> <span class="op">+</span> <span class="ident">fmt::Display</span> <span class="op">+</span> <span class="ident">Serialize</span> <span class="op">+</span> <span class="ident">Ord</span> {
     <span class="doccomment">/// Convert an attribute to a field element</span>
     <span class="kw">fn</span> <span class="ident">to_field_element</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">F</span>;
 }
@@ -3053,6 +3067,14 @@
     <span class="kw">pub</span> <span class="ident">alist</span>:        <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">AttributeTag</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">skip</span>)]</span>
     <span class="kw">pub</span> <span class="ident">_phantom</span>:     <span class="ident">std::marker::PhantomData</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Field</span>, <span class="ident">AttributeType</span>: <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="ident">HasAttributeValues</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>
+    <span class="kw">for</span> <span class="ident">AttributeList</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">AttributeType</span><span class="op">&gt;</span>
+{
+    <span class="kw">fn</span> <span class="ident">get_attribute_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">attribute_tag</span>: <span class="ident">AttributeTag</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">AttributeType</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">alist</span>.<span class="ident">get</span>(<span class="kw-2">&amp;</span><span class="ident">attribute_tag</span>)
+    }
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Serialize</span>)]</span>
@@ -4131,7 +4153,7 @@
 <span class="doccomment">/// Account credential with values and commitments, but without proofs.</span>
 <span class="doccomment">/// Serialization must match the serializaiton of `AccountCredential` in</span>
 <span class="doccomment">/// Haskell.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">tag</span> <span class="op">=</span> <span class="string">&quot;type&quot;</span>, <span class="ident">content</span> <span class="op">=</span> <span class="string">&quot;contents&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">bound</span>(
     <span class="ident">serialize</span> <span class="op">=</span> <span class="string">&quot;C: Curve, AttributeType: Attribute&lt;C::Scalar&gt; + SerdeSerialize&quot;</span>,
@@ -4826,6 +4848,10 @@
         <span class="kw-2">&amp;</span><span class="self">self</span>,
         <span class="ident">attribute_tag</span>: <span class="ident">AttributeTag</span>,
     ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">PedersenRandomness</span><span class="op">&lt;</span><span class="ident">C</span><span class="op">&gt;</span>, <span class="ident"><span class="self">Self</span>::ErrorType</span><span class="op">&gt;</span>;
+}
+
+<span class="kw">pub</span> <span class="kw">trait</span> <span class="ident">HasAttributeValues</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Field</span>, <span class="ident">AttributeType</span>: <span class="ident">Attribute</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">get_attribute_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">attribute_tag</span>: <span class="ident">AttributeTag</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">AttributeType</span><span class="op">&gt;</span>;
 }
 
 <span class="doccomment">/// The empty type, here used as an impossible error in the implemention of</span>

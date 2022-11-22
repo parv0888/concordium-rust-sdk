@@ -832,7 +832,7 @@
             <span class="kw">let</span> <span class="ident">h</span> <span class="op">=</span> <span class="ident">G1::generate</span>(<span class="ident">rng</span>);
             <span class="ident">G_H</span>.<span class="ident">push</span>((<span class="ident">g</span>, <span class="ident">h</span>));
         }
-        <span class="kw">let</span> <span class="ident">gens</span> <span class="op">=</span> <span class="ident">bulletproofs::range_proof::Generators</span> { <span class="ident">G_H</span> };
+        <span class="kw">let</span> <span class="ident">gens</span> <span class="op">=</span> <span class="ident">bulletproofs::utils::Generators</span> { <span class="ident">G_H</span> };
         <span class="kw">let</span> <span class="ident">proof</span> <span class="op">=</span> <span class="ident">bulletproofs::range_proof::prove_given_scalars</span>(
             <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">ro</span>.<span class="ident">split</span>(),
             <span class="ident">rng</span>,

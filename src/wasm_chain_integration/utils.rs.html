@@ -493,11 +493,127 @@
 <span id="493">493</span>
 <span id="494">494</span>
 <span id="495">495</span>
+<span id="496">496</span>
+<span id="497">497</span>
+<span id="498">498</span>
+<span id="499">499</span>
+<span id="500">500</span>
+<span id="501">501</span>
+<span id="502">502</span>
+<span id="503">503</span>
+<span id="504">504</span>
+<span id="505">505</span>
+<span id="506">506</span>
+<span id="507">507</span>
+<span id="508">508</span>
+<span id="509">509</span>
+<span id="510">510</span>
+<span id="511">511</span>
+<span id="512">512</span>
+<span id="513">513</span>
+<span id="514">514</span>
+<span id="515">515</span>
+<span id="516">516</span>
+<span id="517">517</span>
+<span id="518">518</span>
+<span id="519">519</span>
+<span id="520">520</span>
+<span id="521">521</span>
+<span id="522">522</span>
+<span id="523">523</span>
+<span id="524">524</span>
+<span id="525">525</span>
+<span id="526">526</span>
+<span id="527">527</span>
+<span id="528">528</span>
+<span id="529">529</span>
+<span id="530">530</span>
+<span id="531">531</span>
+<span id="532">532</span>
+<span id="533">533</span>
+<span id="534">534</span>
+<span id="535">535</span>
+<span id="536">536</span>
+<span id="537">537</span>
+<span id="538">538</span>
+<span id="539">539</span>
+<span id="540">540</span>
+<span id="541">541</span>
+<span id="542">542</span>
+<span id="543">543</span>
+<span id="544">544</span>
+<span id="545">545</span>
+<span id="546">546</span>
+<span id="547">547</span>
+<span id="548">548</span>
+<span id="549">549</span>
+<span id="550">550</span>
+<span id="551">551</span>
+<span id="552">552</span>
+<span id="553">553</span>
+<span id="554">554</span>
+<span id="555">555</span>
+<span id="556">556</span>
+<span id="557">557</span>
+<span id="558">558</span>
+<span id="559">559</span>
+<span id="560">560</span>
+<span id="561">561</span>
+<span id="562">562</span>
+<span id="563">563</span>
+<span id="564">564</span>
+<span id="565">565</span>
+<span id="566">566</span>
+<span id="567">567</span>
+<span id="568">568</span>
+<span id="569">569</span>
+<span id="570">570</span>
+<span id="571">571</span>
+<span id="572">572</span>
+<span id="573">573</span>
+<span id="574">574</span>
+<span id="575">575</span>
+<span id="576">576</span>
+<span id="577">577</span>
+<span id="578">578</span>
+<span id="579">579</span>
+<span id="580">580</span>
+<span id="581">581</span>
+<span id="582">582</span>
+<span id="583">583</span>
+<span id="584">584</span>
+<span id="585">585</span>
+<span id="586">586</span>
+<span id="587">587</span>
+<span id="588">588</span>
+<span id="589">589</span>
+<span id="590">590</span>
+<span id="591">591</span>
+<span id="592">592</span>
+<span id="593">593</span>
+<span id="594">594</span>
+<span id="595">595</span>
+<span id="596">596</span>
+<span id="597">597</span>
+<span id="598">598</span>
+<span id="599">599</span>
+<span id="600">600</span>
+<span id="601">601</span>
+<span id="602">602</span>
+<span id="603">603</span>
+<span id="604">604</span>
+<span id="605">605</span>
+<span id="606">606</span>
+<span id="607">607</span>
+<span id="608">608</span>
+<span id="609">609</span>
+<span id="610">610</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Various utilities for testing and extraction of schemas.</span>
 
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::ExecResult</span>;
 <span class="kw">use</span> <span class="ident">anyhow</span>::{<span class="ident">anyhow</span>, <span class="ident">bail</span>, <span class="ident">ensure</span>, <span class="ident">Context</span>};
 <span class="kw">use</span> <span class="ident">concordium_contracts_common</span>::{<span class="ident">from_bytes</span>, <span class="ident">schema</span>, <span class="ident">Cursor</span>, <span class="ident">Deserial</span>};
+<span class="kw">use</span> <span class="ident">rand</span>::{<span class="ident">prelude</span>::<span class="kw-2">*</span>, <span class="ident">RngCore</span>};
 <span class="kw">use</span> <span class="ident">std</span>::{<span class="ident">collections::BTreeMap</span>, <span class="ident">default::Default</span>};
 <span class="kw">use</span> <span class="ident">wasm_transform</span>::{
     <span class="ident">artifact</span>::{<span class="ident">Artifact</span>, <span class="ident">ArtifactNamedImport</span>, <span class="ident">RunnableCode</span>, <span class="ident">TryFromImport</span>},
@@ -559,10 +675,37 @@
 }
 
 <span class="doccomment">/// A host which traps for any function call apart from `report_error` which it</span>
-<span class="doccomment">/// prints to standard out.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TestHost</span>;
+<span class="doccomment">/// prints to standard out and `get_random` that calls a random number</span>
+<span class="doccomment">/// generator.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">TestHost</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// A RNG for randomised testing.</span>
+    <span class="ident">rng</span>:      <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// A flag set to `true` if the RNG was used.</span>
+    <span class="ident">rng_used</span>: <span class="ident">bool</span>,
+}
 
-<span class="kw">impl</span> <span class="ident">validate::ValidateImportExport</span> <span class="kw">for</span> <span class="ident">TestHost</span> {
+<span class="kw">impl</span> <span class="ident">TestHost</span><span class="op">&lt;</span><span class="ident">SmallRng</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a new `TestHost` instance without a RNG instance.</span>
+    <span class="kw">pub</span> <span class="kw">const</span> <span class="kw">fn</span> <span class="ident">uninitialized</span>() -&gt; <span class="self">Self</span> {
+        <span class="ident">TestHost</span> {
+            <span class="ident">rng</span>:      <span class="prelude-val">None</span>,
+            <span class="ident">rng_used</span>: <span class="bool-val">false</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RngCore</span><span class="op">&gt;</span> <span class="ident">TestHost</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
+    <span class="doccomment">/// Create a new `TestHost` instance with the given RNG and set the flag to</span>
+    <span class="doccomment">/// unused.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">rng</span>: <span class="ident">R</span>) -&gt; <span class="self">Self</span> {
+        <span class="ident">TestHost</span> {
+            <span class="ident">rng</span>:      <span class="prelude-val">Some</span>(<span class="ident">rng</span>),
+            <span class="ident">rng_used</span>: <span class="bool-val">false</span>,
+        }
+    }
+}
+
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RngCore</span><span class="op">&gt;</span> <span class="ident">validate::ValidateImportExport</span> <span class="kw">for</span> <span class="ident">TestHost</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
     <span class="doccomment">/// Simply ensure that there are no duplicates.</span>
     <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;fuzz-coverage&quot;</span>), <span class="ident">inline</span>(<span class="ident">always</span>))]</span>
     <span class="kw">fn</span> <span class="ident">validate_import_function</span>(
@@ -620,7 +763,7 @@
     }
 }
 
-<span class="kw">impl</span> <span class="ident">machine::Host</span><span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TestHost</span> {
+<span class="kw">impl</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">RngCore</span><span class="op">&gt;</span> <span class="ident">machine::Host</span><span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">TestHost</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
     <span class="kw">type</span> <span class="ident">Interrupt</span> <span class="op">=</span> <span class="ident">NoInterrupt</span>;
 
     <span class="kw">fn</span> <span class="ident">tick_initial_memory</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">_num_pages</span>: <span class="ident">u32</span>) -&gt; <span class="ident">machine::RunResult</span><span class="op">&lt;</span>()<span class="op">&gt;</span> {
@@ -653,37 +796,62 @@
                 <span class="ident">column</span>,
                 <span class="ident">msg</span>
             })
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">f</span>.<span class="ident">matches</span>(<span class="string">&quot;concordium&quot;</span>, <span class="string">&quot;get_random&quot;</span>) {
+            <span class="kw">let</span> <span class="ident">size</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">stack</span>.<span class="ident">pop_u32</span>() } <span class="kw">as</span> <span class="ident">usize</span>;
+            <span class="kw">let</span> <span class="ident">dest</span> <span class="op">=</span> <span class="kw">unsafe</span> { <span class="ident">stack</span>.<span class="ident">pop_u32</span>() } <span class="kw">as</span> <span class="ident">usize</span>;
+            <span class="macro">ensure!</span>(<span class="ident">dest</span> <span class="op">+</span> <span class="ident">size</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">memory</span>.<span class="ident">len</span>(), <span class="string">&quot;Illegal memory access.&quot;</span>);
+            <span class="self">self</span>.<span class="ident">rng_used</span> <span class="op">=</span> <span class="bool-val">true</span>;
+            <span class="kw">match</span> <span class="self">self</span>.<span class="ident">rng</span>.<span class="ident">as_mut</span>() {
+                <span class="prelude-val">Some</span>(<span class="ident">r</span>) =&gt; {
+                    <span class="ident">r</span>.<span class="ident">try_fill_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">memory</span>[<span class="ident">dest</span>..<span class="ident">dest</span> <span class="op">+</span> <span class="ident">size</span>])<span class="question-mark">?</span>;
+                    <span class="prelude-val">Ok</span>(<span class="prelude-val">None</span>)
+                }
+                <span class="prelude-val">None</span> =&gt; {
+                    <span class="macro">bail!</span>(<span class="string">&quot;Expected an initialized RNG.&quot;</span>);
+                }
+            }
         } <span class="kw">else</span> {
             <span class="macro">bail!</span>(<span class="string">&quot;Unsupported host function call.&quot;</span>)
         }
     }
 }
 
-<span class="doccomment">/// Instantiates the module with an external function to report back errors.</span>
-<span class="doccomment">/// Then tries to run exported test-functions, which are present if compile with</span>
+<span class="doccomment">/// The type of results returned after running a test.</span>
+<span class="doccomment">/// The value is a pair (test_name, result). The result is None if the test</span>
+<span class="doccomment">/// passed, or an error message and a boolean flag if it failed. The error</span>
+<span class="doccomment">/// message is the one reported to by report_error, or some internal invariant</span>
+<span class="doccomment">/// violation. The flag shows whether randomness was used.</span>
+<span class="kw">type</span> <span class="ident">TestResult</span> <span class="op">=</span> (<span class="ident">String</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span>(<span class="ident">ReportError</span>, <span class="ident">bool</span>)<span class="op">&gt;</span>);
+
+<span class="doccomment">/// Instantiates the module with an external function to report back errors and</span>
+<span class="doccomment">/// a seed that is used to instantiate a RNG for randomized testing. Then tries</span>
+<span class="doccomment">/// to run exported test-functions, which are present if compiled with</span>
 <span class="doccomment">/// the wasm-test feature.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The return value is a list of pairs (test_name, result)</span>
-<span class="doccomment">/// The result is None if the test passed, or an error message</span>
-<span class="doccomment">/// if it failed. The error message is the one reported to by report_error, or</span>
-<span class="doccomment">/// some internal invariant violation.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run_module_tests</span>(<span class="ident">module_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span>(<span class="ident">String</span>, <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">ReportError</span><span class="op">&gt;</span>)<span class="op">&gt;</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">TestHost</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
+<span class="doccomment">/// The return value is a list of test results.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run_module_tests</span>(<span class="ident">module_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>], <span class="ident">seed</span>: <span class="ident">u64</span>) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">TestResult</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">TestHost::new</span>(<span class="ident">SmallRng::seed_from_u64</span>(<span class="ident">seed</span>));
+    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">host</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">out</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">artifact</span>.<span class="ident">export</span>.<span class="ident">len</span>());
     <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="ident">artifact</span>.<span class="ident">export</span>.<span class="ident">keys</span>() {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">test_name</span>) <span class="op">=</span> <span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">strip_prefix</span>(<span class="string">&quot;concordium_test &quot;</span>) {
-            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">artifact</span>.<span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">TestHost</span>, <span class="ident">name</span>, <span class="kw-2">&amp;</span>[]);
+            <span class="comment">// create a `TestHost` instance for each test with the usage flag set to `false`</span>
+            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">test_host</span> <span class="op">=</span> <span class="ident">TestHost::new</span>(<span class="ident">SmallRng::seed_from_u64</span>(<span class="ident">seed</span>));
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">artifact</span>.<span class="ident">run</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">test_host</span>, <span class="ident">name</span>, <span class="kw-2">&amp;</span>[]);
             <span class="kw">match</span> <span class="ident">res</span> {
                 <span class="prelude-val">Ok</span>(<span class="kw">_</span>) =&gt; <span class="ident">out</span>.<span class="ident">push</span>((<span class="ident">test_name</span>.<span class="ident">to_owned</span>(), <span class="prelude-val">None</span>)),
                 <span class="prelude-val">Err</span>(<span class="ident">msg</span>) =&gt; {
                     <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="ident">msg</span>.<span class="ident">downcast_ref</span>::<span class="op">&lt;</span><span class="ident">ReportError</span><span class="op">&gt;</span>() {
-                        <span class="ident">out</span>.<span class="ident">push</span>((<span class="ident">test_name</span>.<span class="ident">to_owned</span>(), <span class="prelude-val">Some</span>(<span class="ident">err</span>.<span class="ident">clone</span>())));
+                        <span class="ident">out</span>.<span class="ident">push</span>((<span class="ident">test_name</span>.<span class="ident">to_owned</span>(), <span class="prelude-val">Some</span>((<span class="ident">err</span>.<span class="ident">clone</span>(), <span class="ident">test_host</span>.<span class="ident">rng_used</span>))));
                     } <span class="kw">else</span> {
                         <span class="ident">out</span>.<span class="ident">push</span>((
                             <span class="ident">test_name</span>.<span class="ident">to_owned</span>(),
-                            <span class="prelude-val">Some</span>(<span class="ident">ReportError::Other</span> {
-                                <span class="ident">msg</span>: <span class="ident">msg</span>.<span class="ident">to_string</span>(),
-                            }),
+                            <span class="prelude-val">Some</span>((
+                                <span class="ident">ReportError::Other</span> {
+                                    <span class="ident">msg</span>: <span class="ident">msg</span>.<span class="ident">to_string</span>(),
+                                },
+                                <span class="ident">test_host</span>.<span class="ident">rng_used</span>,
+                            )),
                         ))
                     }
                 }
@@ -698,7 +866,8 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_contract_schema_v0</span>(
     <span class="ident">module_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">schema::VersionedModuleSchema</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">TestHost</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">TestHost::uninitialized</span>(); <span class="comment">// The RNG is not relevant for schema generation</span>
+    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">host</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">contract_schemas</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
 
@@ -751,7 +920,8 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_contract_schema_v1</span>(
     <span class="ident">module_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">schema::VersionedModuleSchema</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">TestHost</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">TestHost::uninitialized</span>(); <span class="comment">// The RNG is not relevant for schema generation</span>
+    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">host</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">contract_schemas</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
 
@@ -794,7 +964,8 @@
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_contract_schema_v2</span>(
     <span class="ident">module_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
 ) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">schema::VersionedModuleSchema</span><span class="op">&gt;</span> {
-    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">TestHost</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
+    <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">TestHost::uninitialized</span>(); <span class="comment">// The RNG is not relevant for schema generation</span>
+    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">host</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
 
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">contract_schemas</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
 
@@ -828,6 +999,65 @@
     }
 
     <span class="prelude-val">Ok</span>(<span class="ident">schema::VersionedModuleSchema::V2</span>(<span class="ident">schema::ModuleV2</span> {
+        <span class="ident">contracts</span>: <span class="ident">contract_schemas</span>,
+    }))
+}
+
+<span class="doccomment">/// Tries to generate schemas for events, parameters, return values, and errors</span>
+<span class="doccomment">/// of methods for a contract with a V3 schema.</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">generate_contract_schema_v3</span>(
+    <span class="ident">module_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+) -&gt; <span class="ident">ExecResult</span><span class="op">&lt;</span><span class="ident">schema::VersionedModuleSchema</span><span class="op">&gt;</span> {
+    <span class="kw">let</span> <span class="ident">host</span> <span class="op">=</span> <span class="ident">TestHost::uninitialized</span>(); <span class="comment">// The RNG is not relevant for schema generation</span>
+    <span class="kw">let</span> <span class="ident">artifact</span> <span class="op">=</span> <span class="ident">utils::instantiate</span>::<span class="op">&lt;</span><span class="ident">ArtifactNamedImport</span>, <span class="kw">_</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">host</span>, <span class="ident">module_bytes</span>)<span class="question-mark">?</span>;
+
+    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">contract_schemas</span> <span class="op">=</span> <span class="ident">BTreeMap::new</span>();
+
+    <span class="kw">for</span> <span class="ident">name</span> <span class="kw">in</span> <span class="ident">artifact</span>.<span class="ident">export</span>.<span class="ident">keys</span>() {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">rest</span>) <span class="op">=</span> <span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">strip_prefix</span>(<span class="string">&quot;concordium_event_schema_&quot;</span>) {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">contract_name</span>) <span class="op">=</span> <span class="ident">rest</span>.<span class="ident">strip_prefix</span>(<span class="string">&quot;init_&quot;</span>) {
+                <span class="comment">// Generate event schema</span>
+                <span class="kw">let</span> <span class="ident">function_schema_event</span> <span class="op">=</span> <span class="ident">generate_schema_run</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">name</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+
+                <span class="kw">let</span> <span class="ident">contract_schema</span> <span class="op">=</span> <span class="ident">contract_schemas</span>
+                    .<span class="ident">entry</span>(<span class="ident">contract_name</span>.<span class="ident">to_owned</span>())
+                    .<span class="ident">or_insert_with</span>(<span class="ident">schema::ContractV3::default</span>);
+                <span class="ident">contract_schema</span>.<span class="ident">event</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">function_schema_event</span>);
+            }
+            <span class="comment">// The event schema attached to the init function is globally</span>
+            <span class="comment">// available in the smart contract and is applied to all</span>
+            <span class="comment">// events logged by receive/init functions. There is no</span>
+            <span class="comment">// need to create a separate event schema for receive functions.</span>
+        } <span class="kw">else</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">rest</span>) <span class="op">=</span> <span class="ident">name</span>.<span class="ident">as_ref</span>().<span class="ident">strip_prefix</span>(<span class="string">&quot;concordium_schema_function_&quot;</span>) {
+            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">contract_name</span>) <span class="op">=</span> <span class="ident">rest</span>.<span class="ident">strip_prefix</span>(<span class="string">&quot;init_&quot;</span>) {
+                <span class="comment">// Generate init-function schema</span>
+                <span class="kw">let</span> <span class="ident">function_schema</span> <span class="op">=</span> <span class="ident">generate_schema_run</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">name</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+
+                <span class="kw">let</span> <span class="ident">contract_schema</span> <span class="op">=</span> <span class="ident">contract_schemas</span>
+                    .<span class="ident">entry</span>(<span class="ident">contract_name</span>.<span class="ident">to_owned</span>())
+                    .<span class="ident">or_insert_with</span>(<span class="ident">schema::ContractV3::default</span>);
+                <span class="ident">contract_schema</span>.<span class="ident">init</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">function_schema</span>);
+            } <span class="kw">else</span> <span class="kw">if</span> <span class="ident">rest</span>.<span class="ident">contains</span>(<span class="string">&#39;.&#39;</span>) {
+                <span class="comment">// Generate receive-function schema</span>
+                <span class="kw">let</span> <span class="ident">function_schema</span> <span class="op">=</span> <span class="ident">generate_schema_run</span>(<span class="kw-2">&amp;</span><span class="ident">artifact</span>, <span class="ident">name</span>.<span class="ident">as_ref</span>())<span class="question-mark">?</span>;
+
+                <span class="kw">let</span> <span class="ident">split_name</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="kw">_</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">rest</span>.<span class="ident">splitn</span>(<span class="number">2</span>, <span class="string">&#39;.&#39;</span>).<span class="ident">collect</span>();
+                <span class="kw">let</span> <span class="ident">contract_name</span> <span class="op">=</span> <span class="ident">split_name</span>[<span class="number">0</span>];
+                <span class="kw">let</span> <span class="ident">function_name</span> <span class="op">=</span> <span class="ident">split_name</span>[<span class="number">1</span>];
+
+                <span class="kw">let</span> <span class="ident">contract_schema</span> <span class="op">=</span> <span class="ident">contract_schemas</span>
+                    .<span class="ident">entry</span>(<span class="ident">contract_name</span>.<span class="ident">to_owned</span>())
+                    .<span class="ident">or_insert_with</span>(<span class="ident">schema::ContractV3::default</span>);
+
+                <span class="ident">contract_schema</span>.<span class="ident">receive</span>.<span class="ident">insert</span>(<span class="ident">function_name</span>.<span class="ident">to_owned</span>(), <span class="ident">function_schema</span>);
+            } <span class="kw">else</span> {
+                <span class="comment">// do nothing: no event schema and not a schema that was</span>
+                <span class="comment">// attached to an init/ receive function</span>
+            }
+        }
+    }
+
+    <span class="prelude-val">Ok</span>(<span class="ident">schema::VersionedModuleSchema::V3</span>(<span class="ident">schema::ModuleV3</span> {
         <span class="ident">contracts</span>: <span class="ident">contract_schemas</span>,
     }))
 }

@@ -799,9 +799,26 @@
 <span id="799">799</span>
 <span id="800">800</span>
 <span id="801">801</span>
+<span id="802">802</span>
+<span id="803">803</span>
+<span id="804">804</span>
+<span id="805">805</span>
+<span id="806">806</span>
+<span id="807">807</span>
+<span id="808">808</span>
+<span id="809">809</span>
+<span id="810">810</span>
+<span id="811">811</span>
+<span id="812">812</span>
+<span id="813">813</span>
+<span id="814">814</span>
+<span id="815">815</span>
+<span id="816">816</span>
+<span id="817">817</span>
 </pre><pre class="rust"><code><span class="kw">pub</span> <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::impls</span>::<span class="kw-2">*</span>;
 <span class="kw">use</span> <span class="ident">anyhow</span>::{<span class="ident">bail</span>, <span class="ident">Context</span>};
 <span class="kw">use</span> <span class="ident">byteorder</span>::{<span class="ident">BigEndian</span>, <span class="ident">ReadBytesExt</span>, <span class="ident">WriteBytesExt</span>};
+<span class="kw">use</span> <span class="ident">concordium_contracts_common::ExchangeRate</span>;
 <span class="kw">use</span> <span class="ident">core::cmp</span>;
 <span class="kw">use</span> <span class="ident">sha2::Digest</span>;
 <span class="kw">use</span> <span class="ident">std</span>::{
@@ -1483,6 +1500,21 @@
             <span class="ident">IpAddr::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
             <span class="ident">u16::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>,
         ))
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">ExchangeRate</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Buffer</span> <span class="op">+</span> <span class="ident">WriteBytesExt</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">target</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) {
+        <span class="self">self</span>.<span class="ident">numerator</span>().<span class="ident">serial</span>(<span class="ident">target</span>);
+        <span class="self">self</span>.<span class="ident">denominator</span>().<span class="ident">serial</span>(<span class="ident">target</span>);
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">ExchangeRate</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">numerator</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">denominator</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">numerator</span>, <span class="ident">denominator</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;Invalid exchange rate.&quot;</span>))
     }
 }
 

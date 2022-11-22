@@ -1020,6 +1020,17 @@
 <span id="1020">1020</span>
 <span id="1021">1021</span>
 <span id="1022">1022</span>
+<span id="1023">1023</span>
+<span id="1024">1024</span>
+<span id="1025">1025</span>
+<span id="1026">1026</span>
+<span id="1027">1027</span>
+<span id="1028">1028</span>
+<span id="1029">1029</span>
+<span id="1030">1030</span>
+<span id="1031">1031</span>
+<span id="1032">1032</span>
+<span id="1033">1033</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{
     <span class="ident">constants::DEFAULT_NETWORK_ID</span>,
     <span class="ident">generated_types</span>::{
@@ -1092,8 +1103,19 @@
 }
 
 <span class="kw">impl</span> <span class="ident">QueryError</span> {
-    <span class="doccomment">/// Whether this error is the NotFound variant.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_not_found</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> { <span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident"><span class="self">Self</span>::NotFound</span>) }
+    <span class="doccomment">/// Whether this error indicates an object was not found.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_not_found</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> {
+        <span class="kw">match</span> <span class="self">self</span> {
+            <span class="ident">QueryError::RPCError</span>(<span class="ident">c</span>) =&gt; {
+                <span class="kw">if</span> <span class="kw">let</span> <span class="ident">RPCError::CallError</span>(<span class="ident">ce</span>) <span class="op">=</span> <span class="ident">c</span> {
+                    <span class="ident">ce</span>.<span class="ident">code</span>() <span class="op">==</span> <span class="ident">tonic::Code::NotFound</span>
+                } <span class="kw">else</span> {
+                    <span class="bool-val">false</span>
+                }
+            }
+            <span class="ident">QueryError::NotFound</span> =&gt; <span class="bool-val">true</span>,
+        }
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">tonic::Status</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">QueryError</span> {

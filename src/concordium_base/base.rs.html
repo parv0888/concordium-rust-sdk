@@ -1297,19 +1297,11 @@
 <span id="1297">1297</span>
 <span id="1298">1298</span>
 <span id="1299">1299</span>
-<span id="1300">1300</span>
-<span id="1301">1301</span>
-<span id="1302">1302</span>
-<span id="1303">1303</span>
-<span id="1304">1304</span>
-<span id="1305">1305</span>
-<span id="1306">1306</span>
-<span id="1307">1307</span>
-<span id="1308">1308</span>
-<span id="1309">1309</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Basis type definitions that are used throughout the crate.</span>
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_contracts_common</span>::{<span class="ident">Address</span>, <span class="ident">ContractAddress</span>, <span class="ident">ContractIndex</span>, <span class="ident">ContractSubIndex</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_contracts_common</span>::{
+    <span class="ident">Address</span>, <span class="ident">ContractAddress</span>, <span class="ident">ContractIndex</span>, <span class="ident">ContractSubIndex</span>, <span class="ident">ExchangeRate</span>,
+};
 <span class="kw">use</span> <span class="ident">crypto_common</span>::{
     <span class="ident">derive</span>::{<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serial</span>, <span class="ident">Serialize</span>},
     <span class="ident">deserial_string</span>,
@@ -1435,7 +1427,7 @@
 }
 
 <span class="doccomment">/// The status of whether a baking pool allows delegators to join.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">u8</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">OpenStatus</span> {
@@ -1463,7 +1455,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>, <span class="ident">tag</span> <span class="op">=</span> <span class="string">&quot;delegateType&quot;</span>)]</span>
 <span class="doccomment">/// Target of delegation.</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">DelegationTarget</span> {
@@ -1511,7 +1503,7 @@
 <span class="doccomment">/// Additional information about a baking pool.</span>
 <span class="doccomment">/// This information is added with the introduction of delegation in protocol</span>
 <span class="doccomment">/// version 4.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serial</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Serial</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BakerPoolInfo</span> {
     <span class="doccomment">/// Whether the pool allows delegators.</span>
@@ -1672,6 +1664,12 @@
     <span class="doccomment">/// Protocol `P4` is a major upgrade that adds support for delegation,</span>
     <span class="doccomment">/// baking pools, and V1 smart contracts.</span>
     <span class="ident">P4</span>,
+    <span class="attribute">#[<span class="ident">display</span>(<span class="ident">fmt</span> <span class="op">=</span> <span class="string">&quot;P5&quot;</span>)]</span>
+    <span class="doccomment">/// Protocol `P5` is a minor upgrade that adds support for smart contract</span>
+    <span class="doccomment">/// upgradability, smart contract queries, relaxes some limitations and</span>
+    <span class="doccomment">/// improves the structure of internal node datastructures related to</span>
+    <span class="doccomment">/// accounts.</span>
+    <span class="ident">P5</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Error</span>, <span class="ident">Display</span>)]</span>
@@ -1691,6 +1689,7 @@
             <span class="number">2</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ProtocolVersion::P2</span>),
             <span class="number">3</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ProtocolVersion::P3</span>),
             <span class="number">4</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ProtocolVersion::P4</span>),
+            <span class="number">5</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ProtocolVersion::P5</span>),
             <span class="ident">version</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">UnknownProtocolVersion</span> { <span class="ident">version</span> }),
         }
     }
@@ -1703,6 +1702,7 @@
             <span class="ident">ProtocolVersion::P2</span> =&gt; <span class="number">2</span>,
             <span class="ident">ProtocolVersion::P3</span> =&gt; <span class="number">3</span>,
             <span class="ident">ProtocolVersion::P4</span> =&gt; <span class="number">4</span>,
+            <span class="ident">ProtocolVersion::P5</span> =&gt; <span class="number">5</span>,
         }
     }
 }
@@ -1800,7 +1800,7 @@
 }
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serialize</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serialize</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>)]</span>
 <span class="doccomment">/// Public key corresponding to [`BakerAggregationVerifyKey`].</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BakerAggregationVerifyKey</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">verify_key</span>: <span class="ident">aggregate_sig::PublicKey</span><span class="op">&lt;</span><span class="ident">AggregateSigPairing</span><span class="op">&gt;</span>,
@@ -1831,7 +1831,7 @@
 }
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serialize</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serialize</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="doccomment">/// A public key that corresponds to [`BakerSignatureVerifyKey`].</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BakerSignatureVerifyKey</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">verify_key</span>: <span class="ident">ed25519_dalek::PublicKey</span>,
@@ -1862,7 +1862,7 @@
 }
 
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serialize</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serialize</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="doccomment">/// A public key that corresponds to [`BakerElectionSignKey`].</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BakerElectionVerifyKey</span> {
     <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="ident">verify_key</span>: <span class="ident">ecvrf::PublicKey</span>,
@@ -1924,12 +1924,12 @@
 <span class="doccomment">///</span>
 <span class="doccomment">/// Note: This type contains unencrypted secret keys and should be treated</span>
 <span class="doccomment">/// carefully.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">BakerCredentials</span> {
-    <span class="ident">baker_id</span>: <span class="ident">BakerId</span>,
+    <span class="kw">pub</span> <span class="ident">baker_id</span>: <span class="ident">BakerId</span>,
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
-    <span class="ident">keys</span>:     <span class="ident">BakerKeyPairs</span>,
+    <span class="kw">pub</span> <span class="ident">keys</span>:     <span class="ident">BakerKeyPairs</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">BakerCredentials</span> {
@@ -2006,7 +2006,7 @@
     <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">kp</span>: <span class="kw-2">&amp;</span><span class="ident">UpdateKeyPair</span>) -&gt; <span class="self">Self</span> { <span class="ident">kp</span>.<span class="ident">public</span>.<span class="ident">clone</span>() }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Into</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Into</span>, <span class="ident">Display</span>)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">transparent</span>)]</span>
 <span class="doccomment">/// A lower bound on the number of signatures needed to sign a valid update</span>
 <span class="doccomment">/// message of a particular type. This is never 0.</span>
@@ -2057,8 +2057,14 @@
     <span class="kw">pub</span> <span class="ident">index</span>: <span class="ident">u16</span>,
 }
 
+<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">UpdateKeysIndex</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> { <span class="self">self</span>.<span class="ident">index</span>.<span class="ident">fmt</span>(<span class="ident">f</span>) }
+}
+
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serialize</span>, <span class="ident">FromStr</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(
+    <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serialize</span>, <span class="ident">FromStr</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>,
+)]</span>
 <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">transparent</span>)]</span>
 <span class="doccomment">/// Representation of the election difficulty as parts per `100_000`. The</span>
 <span class="doccomment">/// election difficulty is never more than `1`.</span>
@@ -2085,6 +2091,10 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ElectionDifficulty</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">rust_decimal::Decimal</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">ed</span>: <span class="ident">ElectionDifficulty</span>) -&gt; <span class="self">Self</span> { <span class="ident">ed</span>.<span class="ident">parts_per_hundred_thousands</span>.<span class="ident">into</span>() }
+}
+
 <span class="attribute">#[<span class="ident">repr</span>(<span class="ident">transparent</span>)]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Default</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">Eq</span>, <span class="ident">PartialEq</span>, <span class="ident">PartialOrd</span>, <span class="ident">Ord</span>, <span class="ident">Into</span>)]</span>
 <span class="doccomment">/// A fraction between 0 and 1 with a precision of 1/100_000.</span>
@@ -2109,6 +2119,10 @@
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new_unchecked</span>(<span class="ident">parts</span>: <span class="ident">u32</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span> { <span class="ident">parts</span> } }
 }
 
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">PartsPerHundredThousands</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">rust_decimal::Decimal</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">pp</span>: <span class="ident">PartsPerHundredThousands</span>) -&gt; <span class="self">Self</span> { <span class="ident">rust_decimal::Decimal::new</span>(<span class="ident">pp</span>.<span class="ident">parts</span>.<span class="ident">into</span>(), <span class="number">5</span>) }
+}
+
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">PartsPerHundredThousands</span> {
     <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">B</span>: <span class="ident">Buffer</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">B</span>) { <span class="self">self</span>.<span class="ident">parts</span>.<span class="ident">serial</span>(<span class="ident">out</span>) }
 }
@@ -2129,7 +2143,7 @@
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>, <span class="ident">Serialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CommissionRates</span> {
     <span class="doccomment">/// Fraction of finalization rewards charged by the pool owner.</span>
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;finalizationCommission&quot;</span>)]</span>
@@ -2180,40 +2194,6 @@
 
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">T</span>: <span class="ident">Ord</span><span class="op">&gt;</span> <span class="ident">InclusiveRange</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span> {
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">contains</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">x</span>: <span class="kw-2">&amp;</span><span class="ident">T</span>) -&gt; <span class="ident">bool</span> { <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">min</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">x</span> <span class="op">&amp;&amp;</span> <span class="ident">x</span> <span class="op">&lt;</span><span class="op">=</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">max</span> }
-}
-
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serial</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
-<span class="doccomment">/// An exchange rate between two quantities. This is never 0, and the exchange</span>
-<span class="doccomment">/// rate should also never be infinite.</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ExchangeRate</span> {
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;crate::internal::deserialize_non_default::deserialize&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">numerator</span>:   <span class="ident">u64</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;crate::internal::deserialize_non_default::deserialize&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="ident">denominator</span>: <span class="ident">u64</span>,
-}
-
-<span class="kw">impl</span> <span class="ident">ExchangeRate</span> {
-    <span class="doccomment">/// Attempt to construct an exchange rate from a numerator and denominator.</span>
-    <span class="doccomment">/// The numerator and denominator must both be non-zero, and they have to be</span>
-    <span class="doccomment">/// in reduced form.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">numerator</span>: <span class="ident">u64</span>, <span class="ident">denominator</span>: <span class="ident">u64</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">if</span> <span class="ident">numerator</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">denominator</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="ident">num::integer::gcd</span>(<span class="ident">numerator</span>, <span class="ident">denominator</span>) <span class="op">==</span> <span class="number">1</span> {
-            <span class="prelude-val">Some</span>(<span class="self">Self</span> {
-                <span class="ident">numerator</span>,
-                <span class="ident">denominator</span>,
-            })
-        } <span class="kw">else</span> {
-            <span class="prelude-val">None</span>
-        }
-    }
-}
-
-<span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">ExchangeRate</span> {
-    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">ReadBytesExt</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">numerator</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="ident">denominator</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
-        <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">numerator</span>, <span class="ident">denominator</span>).<span class="ident">ok_or_else</span>(<span class="op">|</span><span class="op">|</span> <span class="macro">anyhow::anyhow!</span>(<span class="string">&quot;Invalid exchange rate.&quot;</span>))
-    }
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeSerialize</span>, <span class="ident">SerdeDeserialize</span>, <span class="ident">Serial</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>

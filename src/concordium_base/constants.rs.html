@@ -26,7 +26,6 @@
 <span id="26">26</span>
 <span id="27">27</span>
 <span id="28">28</span>
-<span id="29">29</span>
 </pre><pre class="rust"><code><span class="doccomment">/// Maximum size of a transaction payload.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_PAYLOAD_SIZE</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">MAX_WASM_MODULE_SIZE</span> <span class="op">+</span> <span class="number">1</span> <span class="op">+</span> <span class="number">4</span> <span class="op">+</span> <span class="number">4</span>;
 
@@ -41,8 +40,7 @@
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_MEMO_SIZE</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">256</span>;
 
 <span class="doccomment">/// Maximum allowed length of a smart contract parameter.</span>
-<span class="doccomment">/// This must be kept in sync with maxParameterLen.</span>
-<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_PARAMETER_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">1024</span>;
+<span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_PARAMETER_LEN</span>: <span class="ident">usize</span> <span class="op">=</span> <span class="number">65535</span>;
 
 <span class="doccomment">/// Maximum allowed size of the Wasm module to deploy on the chain.</span>
 <span class="kw">pub</span> <span class="kw">const</span> <span class="ident">MAX_WASM_MODULE_SIZE</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="number">8</span> <span class="op">*</span> <span class="number">65536</span>;

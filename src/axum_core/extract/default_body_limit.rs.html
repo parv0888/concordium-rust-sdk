@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;axum-core-0.2.8&#x2F;src&#x2F;extract&#x2F;default_body_limit.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>default_body_limit.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../axum_core/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;axum-core-0.2.9&#x2F;src&#x2F;extract&#x2F;default_body_limit.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>default_body_limit.rs - source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../../storage.js"></script><script src="../../../crates.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../../axum_core/index.html'><div class='logo-container rust-logo'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -99,6 +99,103 @@
 <span id="99"> 99</span>
 <span id="100">100</span>
 <span id="101">101</span>
+<span id="102">102</span>
+<span id="103">103</span>
+<span id="104">104</span>
+<span id="105">105</span>
+<span id="106">106</span>
+<span id="107">107</span>
+<span id="108">108</span>
+<span id="109">109</span>
+<span id="110">110</span>
+<span id="111">111</span>
+<span id="112">112</span>
+<span id="113">113</span>
+<span id="114">114</span>
+<span id="115">115</span>
+<span id="116">116</span>
+<span id="117">117</span>
+<span id="118">118</span>
+<span id="119">119</span>
+<span id="120">120</span>
+<span id="121">121</span>
+<span id="122">122</span>
+<span id="123">123</span>
+<span id="124">124</span>
+<span id="125">125</span>
+<span id="126">126</span>
+<span id="127">127</span>
+<span id="128">128</span>
+<span id="129">129</span>
+<span id="130">130</span>
+<span id="131">131</span>
+<span id="132">132</span>
+<span id="133">133</span>
+<span id="134">134</span>
+<span id="135">135</span>
+<span id="136">136</span>
+<span id="137">137</span>
+<span id="138">138</span>
+<span id="139">139</span>
+<span id="140">140</span>
+<span id="141">141</span>
+<span id="142">142</span>
+<span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
+<span id="149">149</span>
+<span id="150">150</span>
+<span id="151">151</span>
+<span id="152">152</span>
+<span id="153">153</span>
+<span id="154">154</span>
+<span id="155">155</span>
+<span id="156">156</span>
+<span id="157">157</span>
+<span id="158">158</span>
+<span id="159">159</span>
+<span id="160">160</span>
+<span id="161">161</span>
+<span id="162">162</span>
+<span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
+<span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
+<span id="192">192</span>
+<span id="193">193</span>
+<span id="194">194</span>
+<span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="self">self</span>::private::DefaultBodyLimitService</span>;
 <span class="kw">use</span> <span class="ident">tower_layer::Layer</span>;
 
@@ -112,13 +209,74 @@
 <span class="doccomment">/// Note that if an extractor consumes the body directly with [`Body::data`], or similar, the</span>
 <span class="doccomment">/// default limit is _not_ applied.</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// # Difference between `DefaultBodyLimit` and [`RequestBodyLimit`]</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `DefaultBodyLimit` and [`RequestBodyLimit`] serve similar functions but in different ways.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `DefaultBodyLimit` is local in that it only applies to [`FromRequest`] implementations that</span>
+<span class="doccomment">/// explicitly apply it (or call another extractor that does). You can currently only apply the</span>
+<span class="doccomment">/// limit by delegating to one of axum&#39;s `FromRequest` implementations, but this will change in</span>
+<span class="doccomment">/// v0.6.0.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [`RequestBodyLimit`] is applied globally to all requests, regardless of which extractors are</span>
+<span class="doccomment">/// used or how the body is consumed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// `DefaultBodyLimit` is also easier to integrate into an existing setup since it doesn&#39;t change</span>
+<span class="doccomment">/// the request body type:</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use axum::{</span>
+<span class="doccomment">///     Router,</span>
+<span class="doccomment">///     routing::post,</span>
+<span class="doccomment">///     body::Body,</span>
+<span class="doccomment">///     extract::{DefaultBodyLimit, RawBody},</span>
+<span class="doccomment">///     http::Request,</span>
+<span class="doccomment">/// };</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let router = Router::new()</span>
+<span class="doccomment">///     .route(</span>
+<span class="doccomment">///         &quot;/&quot;,</span>
+<span class="doccomment">///         // even with `DefaultBodyLimit` the request body is still just `Body`</span>
+<span class="doccomment">///         post(|request: Request&lt;Body&gt;| async {}),</span>
+<span class="doccomment">///     )</span>
+<span class="doccomment">///     .layer(DefaultBodyLimit::max(1024));</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">/// use axum::{Router, routing::post, body::Body, extract::RawBody, http::Request};</span>
+<span class="doccomment">/// use tower_http::limit::RequestBodyLimitLayer;</span>
+<span class="doccomment">/// use http_body::Limited;</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// let router = Router::new()</span>
+<span class="doccomment">///     .route(</span>
+<span class="doccomment">///         &quot;/&quot;,</span>
+<span class="doccomment">///         // `RequestBodyLimitLayer` changes the request body type to `Limited&lt;Body&gt;`</span>
+<span class="doccomment">///         // extracting a different body type wont work</span>
+<span class="doccomment">///         post(|request: Request&lt;Limited&lt;Body&gt;&gt;| async {}),</span>
+<span class="doccomment">///     )</span>
+<span class="doccomment">///     .layer(RequestBodyLimitLayer::new(1024));</span>
+<span class="doccomment">/// ```</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// In general using `DefaultBodyLimit` is recommended but if you need to use third party</span>
+<span class="doccomment">/// extractors and want to sure a limit is also applied there then [`RequestBodyLimit`] should be</span>
+<span class="doccomment">/// used.</span>
+<span class="doccomment">///</span>
 <span class="doccomment">/// [`Body::data`]: http_body::Body::data</span>
 <span class="doccomment">/// [`Bytes`]: bytes::Bytes</span>
 <span class="doccomment">/// [`Json`]: https://docs.rs/axum/0.5/axum/struct.Json.html</span>
 <span class="doccomment">/// [`Form`]: https://docs.rs/axum/0.5/axum/struct.Form.html</span>
+<span class="doccomment">/// [`FromRequest`]: crate::extract::FromRequest</span>
+<span class="doccomment">/// [`RequestBodyLimit`]: https://docs.rs/tower-http/latest/tower_http/limit/struct.RequestBodyLimit.html</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>)]</span>
-<span class="attribute">#[<span class="ident">non_exhaustive</span>]</span>
-<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DefaultBodyLimit</span>;
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DefaultBodyLimit</span> {
+    <span class="ident">kind</span>: <span class="ident">DefaultBodyLimitKind</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">enum</span> <span class="ident">DefaultBodyLimitKind</span> {
+    <span class="ident">Disable</span>,
+    <span class="ident">Limit</span>(<span class="ident">usize</span>),
+}
 
 <span class="kw">impl</span> <span class="ident">DefaultBodyLimit</span> {
     <span class="doccomment">/// Disable the default request body limit.</span>
@@ -154,7 +312,42 @@
     <span class="doccomment">/// [`Json`]: https://docs.rs/axum/0.5/axum/struct.Json.html</span>
     <span class="doccomment">/// [`Form`]: https://docs.rs/axum/0.5/axum/struct.Form.html</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">disable</span>() -&gt; <span class="self">Self</span> {
-        <span class="self">Self</span>
+        <span class="self">Self</span> {
+            <span class="ident">kind</span>: <span class="ident">DefaultBodyLimitKind::Disable</span>,
+        }
+    }
+
+    <span class="doccomment">/// Set the default request body limit.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// By default the limit of request body sizes that [`Bytes::from_request`] (and other</span>
+    <span class="doccomment">/// extractors built on top of it such as `String`, [`Json`], and [`Form`]) is 2MB. This method</span>
+    <span class="doccomment">/// can be used to change that limit.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// # Example</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">/// use axum::{</span>
+    <span class="doccomment">///     Router,</span>
+    <span class="doccomment">///     routing::get,</span>
+    <span class="doccomment">///     body::{Bytes, Body},</span>
+    <span class="doccomment">///     extract::DefaultBodyLimit,</span>
+    <span class="doccomment">/// };</span>
+    <span class="doccomment">/// use tower_http::limit::RequestBodyLimitLayer;</span>
+    <span class="doccomment">/// use http_body::Limited;</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// let app: Router&lt;Limited&lt;Body&gt;&gt; = Router::new()</span>
+    <span class="doccomment">///     .route(&quot;/&quot;, get(|body: Bytes| async {}))</span>
+    <span class="doccomment">///     // Replace the default of 2MB with 1024 bytes.</span>
+    <span class="doccomment">///     .layer(DefaultBodyLimit::max(1024));</span>
+    <span class="doccomment">/// ```</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// [`Bytes::from_request`]: bytes::Bytes</span>
+    <span class="doccomment">/// [`Json`]: https://docs.rs/axum/0.6.0-rc.2/axum/struct.Json.html</span>
+    <span class="doccomment">/// [`Form`]: https://docs.rs/axum/0.6.0-rc.2/axum/struct.Form.html</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">max</span>(<span class="ident">limit</span>: <span class="ident">usize</span>) -&gt; <span class="self">Self</span> {
+        <span class="self">Self</span> {
+            <span class="ident">kind</span>: <span class="ident">DefaultBodyLimitKind::Limit</span>(<span class="ident">limit</span>),
+        }
     }
 }
 
@@ -162,15 +355,15 @@
     <span class="kw">type</span> <span class="ident">Service</span> <span class="op">=</span> <span class="ident">DefaultBodyLimitService</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>;
 
     <span class="kw">fn</span> <span class="ident">layer</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">inner</span>: <span class="ident">S</span>) -&gt; <span class="ident"><span class="self">Self</span>::Service</span> {
-        <span class="ident">DefaultBodyLimitService</span> { <span class="ident">inner</span> }
+        <span class="ident">DefaultBodyLimitService</span> {
+            <span class="ident">inner</span>,
+            <span class="ident">kind</span>: <span class="self">self</span>.<span class="ident">kind</span>,
+        }
     }
 }
 
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">Debug</span>)]</span>
-<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">struct</span> <span class="ident">DefaultBodyLimitDisabled</span>;
-
 <span class="kw">mod</span> <span class="ident">private</span> {
-    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::DefaultBodyLimitDisabled</span>;
+    <span class="kw">use</span> <span class="ident"><span class="kw">super</span>::DefaultBodyLimitKind</span>;
     <span class="kw">use</span> <span class="ident">http::Request</span>;
     <span class="kw">use</span> <span class="ident">std::task::Context</span>;
     <span class="kw">use</span> <span class="ident">tower_service::Service</span>;
@@ -178,6 +371,7 @@
     <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
     <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">DefaultBodyLimitService</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span> {
         <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">inner</span>: <span class="ident">S</span>,
+        <span class="kw">pub</span>(<span class="kw">super</span>) <span class="ident">kind</span>: <span class="ident">DefaultBodyLimitKind</span>,
     }
 
     <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">B</span>, <span class="ident">S</span><span class="op">&gt;</span> <span class="ident">Service</span><span class="op">&lt;</span><span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">DefaultBodyLimitService</span><span class="op">&lt;</span><span class="ident">S</span><span class="op">&gt;</span>
@@ -195,7 +389,7 @@
 
         <span class="attribute">#[<span class="ident">inline</span>]</span>
         <span class="kw">fn</span> <span class="ident">call</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="kw-2">mut</span> <span class="ident">req</span>: <span class="ident">Request</span><span class="op">&lt;</span><span class="ident">B</span><span class="op">&gt;</span>) -&gt; <span class="ident"><span class="self">Self</span>::Future</span> {
-            <span class="ident">req</span>.<span class="ident">extensions_mut</span>().<span class="ident">insert</span>(<span class="ident">DefaultBodyLimitDisabled</span>);
+            <span class="ident">req</span>.<span class="ident">extensions_mut</span>().<span class="ident">insert</span>(<span class="self">self</span>.<span class="ident">kind</span>);
             <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">call</span>(<span class="ident">req</span>)
         }
     }

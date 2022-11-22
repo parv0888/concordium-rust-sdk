@@ -95,6 +95,8 @@
 <span id="95">95</span>
 <span id="96">96</span>
 <span id="97">97</span>
+<span id="98">98</span>
+<span id="99">99</span>
 </pre><pre class="rust"><code><span class="doccomment">//! This library provides the core API that can be used to write smart contracts</span>
 <span class="doccomment">//! for the Concordium blockchain in the Rust programming language. It aims to</span>
 <span class="doccomment">//! provide safe wrappers around the core primitives exposed by the chain and</span>
@@ -186,6 +188,8 @@
 <span class="kw">mod</span> <span class="ident">impls</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">constants</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">schema</span>;
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;derive-serde&quot;</span>)]</span>
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">schema_json</span>;
 <span class="kw">mod</span> <span class="ident">types</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_contracts_common_derive</span>::<span class="kw-2">*</span>;

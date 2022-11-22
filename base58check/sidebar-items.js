@@ -1,1 +1,0 @@
-initSidebarItems({"enum":[["FromBase58CheckError","Errors that can occur when decoding base58check encoded string."],["FromBase58Error","Errors that can occur when decoding base58 encoded string."]],"trait":[["FromBase58Check","A trait for converting base58check encoded values."],["ToBase58Check","A trait for converting a value to base58 encoded string."]]});

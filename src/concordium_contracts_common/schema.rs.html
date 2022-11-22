@@ -1485,73 +1485,6 @@
 <span id="1485">1485</span>
 <span id="1486">1486</span>
 <span id="1487">1487</span>
-<span id="1488">1488</span>
-<span id="1489">1489</span>
-<span id="1490">1490</span>
-<span id="1491">1491</span>
-<span id="1492">1492</span>
-<span id="1493">1493</span>
-<span id="1494">1494</span>
-<span id="1495">1495</span>
-<span id="1496">1496</span>
-<span id="1497">1497</span>
-<span id="1498">1498</span>
-<span id="1499">1499</span>
-<span id="1500">1500</span>
-<span id="1501">1501</span>
-<span id="1502">1502</span>
-<span id="1503">1503</span>
-<span id="1504">1504</span>
-<span id="1505">1505</span>
-<span id="1506">1506</span>
-<span id="1507">1507</span>
-<span id="1508">1508</span>
-<span id="1509">1509</span>
-<span id="1510">1510</span>
-<span id="1511">1511</span>
-<span id="1512">1512</span>
-<span id="1513">1513</span>
-<span id="1514">1514</span>
-<span id="1515">1515</span>
-<span id="1516">1516</span>
-<span id="1517">1517</span>
-<span id="1518">1518</span>
-<span id="1519">1519</span>
-<span id="1520">1520</span>
-<span id="1521">1521</span>
-<span id="1522">1522</span>
-<span id="1523">1523</span>
-<span id="1524">1524</span>
-<span id="1525">1525</span>
-<span id="1526">1526</span>
-<span id="1527">1527</span>
-<span id="1528">1528</span>
-<span id="1529">1529</span>
-<span id="1530">1530</span>
-<span id="1531">1531</span>
-<span id="1532">1532</span>
-<span id="1533">1533</span>
-<span id="1534">1534</span>
-<span id="1535">1535</span>
-<span id="1536">1536</span>
-<span id="1537">1537</span>
-<span id="1538">1538</span>
-<span id="1539">1539</span>
-<span id="1540">1540</span>
-<span id="1541">1541</span>
-<span id="1542">1542</span>
-<span id="1543">1543</span>
-<span id="1544">1544</span>
-<span id="1545">1545</span>
-<span id="1546">1546</span>
-<span id="1547">1547</span>
-<span id="1548">1548</span>
-<span id="1549">1549</span>
-<span id="1550">1550</span>
-<span id="1551">1551</span>
-<span id="1552">1552</span>
-<span id="1553">1553</span>
-<span id="1554">1554</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Types related to contract schemas.</span>
 <span class="doccomment">//! These are optional annotations in modules that allow</span>
 <span class="doccomment">//! the users of smart contracts to interact with them in</span>
@@ -1612,6 +1545,14 @@
     <span class="kw">pub</span> <span class="ident">contracts</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">ContractV2</span><span class="op">&gt;</span>,
 }
 
+<span class="doccomment">/// Contains all the contract schemas for a smart contract module V1 with a V3</span>
+<span class="doccomment">/// schema.</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">derive</span>(<span class="ident">arbitrary::Arbitrary</span>))]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ModuleV3</span> {
+    <span class="kw">pub</span> <span class="ident">contracts</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">ContractV3</span><span class="op">&gt;</span>,
+}
+
 <span class="doccomment">/// Represents the different schema versions.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// The serialization of this type includes the versioning information. The</span>
@@ -1628,10 +1569,12 @@
     <span class="ident">V1</span>(<span class="ident">ModuleV1</span>),
     <span class="doccomment">/// Version 2 schema, only supported by V1 smart contracts.</span>
     <span class="ident">V2</span>(<span class="ident">ModuleV2</span>),
+    <span class="doccomment">/// Version 3 schema, only supported by V1 smart contracts.</span>
+    <span class="ident">V3</span>(<span class="ident">ModuleV3</span>),
 }
 
 <span class="doccomment">/// Describes all the schemas of a V0 smart contract.</span>
-<span class="doccomment">/// The [Default] instance produces an empty schema.</span>
+<span class="doccomment">/// The [`Default`] instance produces an empty schema.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ContractV0</span> {
     <span class="kw">pub</span> <span class="ident">state</span>:   <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
@@ -1641,7 +1584,7 @@
 
 <span class="doccomment">/// Describes all the schemas of a V1 smart contract.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="doccomment">/// The [Default] instance produces an empty schema.</span>
+<span class="doccomment">/// The [`Default`] instance produces an empty schema.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ContractV1</span> {
     <span class="kw">pub</span> <span class="ident">init</span>:    <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FunctionV1</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">receive</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FunctionV1</span><span class="op">&gt;</span>,
@@ -1649,10 +1592,25 @@
 
 <span class="doccomment">/// Describes all the schemas of a V1 smart contract with a V2 schema.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="doccomment">/// The [Default] instance produces an empty schema.</span>
+<span class="doccomment">/// The [`Default`] instance produces an empty schema.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ContractV2</span> {
     <span class="kw">pub</span> <span class="ident">init</span>:    <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FunctionV2</span><span class="op">&gt;</span>,
     <span class="kw">pub</span> <span class="ident">receive</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FunctionV2</span><span class="op">&gt;</span>,
+}
+
+<span class="doccomment">/// Describes all the schemas of a V1 smart contract with a V3 schema.</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">derive</span>(<span class="ident">arbitrary::Arbitrary</span>))]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Default</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
+<span class="doccomment">/// The [`Default`] instance produces an empty schema.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">ContractV3</span> {
+    <span class="kw">pub</span> <span class="ident">init</span>:    <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">FunctionV2</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">receive</span>: <span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">String</span>, <span class="ident">FunctionV2</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">event</span>:   <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">ContractV3</span> {
+    <span class="doccomment">/// Extract the event schema if it exists.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">event</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">event</span>.<span class="ident">as_ref</span>() }
 }
 
 <span class="doccomment">/// Describes the schema of an init or a receive function for V1 contracts with</span>
@@ -1694,93 +1652,25 @@
 }
 
 <span class="doccomment">/// Describes the schema of an init or a receive function for V1 contracts with</span>
-<span class="doccomment">/// V2 schemas. Differs from [`FunctionV1`] in that a schema for the error can</span>
+<span class="doccomment">/// V3 schemas. Differs from [`FunctionV1`] in that a schema for the error can</span>
 <span class="doccomment">/// be included.</span>
+<span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">derive</span>(<span class="ident">arbitrary::Arbitrary</span>))]</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
-<span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">FunctionV2</span> {
-    <span class="ident">Param</span>(<span class="ident">Type</span>),
-    <span class="doccomment">/// Rv is short for Return value.</span>
-    <span class="ident">Rv</span>(<span class="ident">Type</span>),
-    <span class="ident">ParamRv</span> {
-        <span class="ident">parameter</span>:    <span class="ident">Type</span>,
-        <span class="ident">return_value</span>: <span class="ident">Type</span>,
-    },
-    <span class="ident">Error</span>(<span class="ident">Type</span>),
-    <span class="ident">ParamError</span> {
-        <span class="ident">parameter</span>: <span class="ident">Type</span>,
-        <span class="ident">error</span>:     <span class="ident">Type</span>,
-    },
-    <span class="ident">RvError</span> {
-        <span class="ident">return_value</span>: <span class="ident">Type</span>,
-        <span class="ident">error</span>:        <span class="ident">Type</span>,
-    },
-    <span class="ident">ParamRvError</span> {
-        <span class="ident">parameter</span>:    <span class="ident">Type</span>,
-        <span class="ident">return_value</span>: <span class="ident">Type</span>,
-        <span class="ident">error</span>:        <span class="ident">Type</span>,
-    },
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">FunctionV2</span> {
+    <span class="kw">pub</span> <span class="ident">parameter</span>:    <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">return_value</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">error</span>:        <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Type</span><span class="op">&gt;</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">FunctionV2</span> {
     <span class="doccomment">/// Extract the parameter schema if it exists.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parameter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">FunctionV2::Param</span>(<span class="ident">ty</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">ty</span>),
-            <span class="ident">FunctionV2::ParamRv</span> {
-                <span class="ident">parameter</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">parameter</span>),
-            <span class="ident">FunctionV2::ParamError</span> {
-                <span class="ident">parameter</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">parameter</span>),
-            <span class="ident">FunctionV2::ParamRvError</span> {
-                <span class="ident">parameter</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">parameter</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
-        }
-    }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parameter</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">parameter</span>.<span class="ident">as_ref</span>() }
 
     <span class="doccomment">/// Extract the return value schema if it exists.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">return_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">FunctionV2::Rv</span>(<span class="ident">rv</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">rv</span>),
-            <span class="ident">FunctionV2::ParamRv</span> {
-                <span class="ident">return_value</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">return_value</span>),
-            <span class="ident">FunctionV2::RvError</span> {
-                <span class="ident">return_value</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">return_value</span>),
-            <span class="ident">FunctionV2::ParamRvError</span> {
-                <span class="ident">return_value</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">return_value</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
-        }
-    }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">return_value</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">return_value</span>.<span class="ident">as_ref</span>() }
 
     <span class="doccomment">/// Extract the error schema if it exists.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">error</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">FunctionV2::Error</span>(<span class="ident">error</span>) =&gt; <span class="prelude-val">Some</span>(<span class="ident">error</span>),
-            <span class="ident">FunctionV2::ParamError</span> {
-                <span class="ident">error</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">error</span>),
-            <span class="ident">FunctionV2::RvError</span> {
-                <span class="ident">error</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">error</span>),
-            <span class="ident">FunctionV2::ParamRvError</span> {
-                <span class="ident">error</span>,
-                ..
-            } =&gt; <span class="prelude-val">Some</span>(<span class="ident">error</span>),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">None</span>,
-        }
-    }
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">error</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="ident">Type</span><span class="op">&gt;</span> { <span class="self">self</span>.<span class="ident">error</span>.<span class="ident">as_ref</span>() }
 }
 
 <span class="doccomment">/// Schema for the fields of a struct or some enum variant.</span>
@@ -1798,7 +1688,6 @@
     <span class="prelude-val">None</span>,
 }
 
-<span class="comment">// TODO: Extend with LEB128</span>
 <span class="doccomment">/// Type of the variable used to encode the length of Sets, List, Maps</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Copy</span>, <span class="ident">Clone</span>, <span class="ident">PartialEq</span>, <span class="ident">Eq</span>)]</span>
 <span class="attribute">#[<span class="ident">cfg_attr</span>(<span class="ident">test</span>, <span class="ident">derive</span>(<span class="ident">arbitrary::Arbitrary</span>))]</span>
@@ -1887,6 +1776,8 @@
     <span class="ident">ByteList</span>(<span class="ident">SizeLength</span>),
     <span class="doccomment">/// A fixed sized list of bytes.</span>
     <span class="ident">ByteArray</span>(<span class="ident">u32</span>),
+    <span class="doccomment">/// An enum with a tag.</span>
+    <span class="ident">TaggedEnum</span>(<span class="ident">BTreeMap</span><span class="op">&lt;</span><span class="ident">u8</span>, (<span class="ident">String</span>, <span class="ident">Fields</span>)<span class="op">&gt;</span>),
 }
 
 <span class="kw">impl</span> <span class="ident">Type</span> {
@@ -1943,6 +1834,9 @@
 }
 <span class="kw">impl</span> <span class="ident">SchemaType</span> <span class="kw">for</span> <span class="ident">Amount</span> {
     <span class="kw">fn</span> <span class="ident">get_type</span>() -&gt; <span class="ident">Type</span> { <span class="ident">Type::Amount</span> }
+}
+<span class="kw">impl</span> <span class="ident">SchemaType</span> <span class="kw">for</span> <span class="ident">ModuleReference</span> {
+    <span class="kw">fn</span> <span class="ident">get_type</span>() -&gt; <span class="ident">Type</span> { <span class="ident">Type::ByteArray</span>(<span class="number">32</span>) }
 }
 <span class="kw">impl</span> <span class="ident">SchemaType</span> <span class="kw">for</span> <span class="ident">AccountAddress</span> {
     <span class="kw">fn</span> <span class="ident">get_type</span>() -&gt; <span class="ident">Type</span> { <span class="ident">Type::AccountAddress</span> }
@@ -2010,6 +1904,14 @@
     <span class="kw">fn</span> <span class="ident">get_type</span>() -&gt; <span class="ident">Type</span> { <span class="ident">Type::ReceiveName</span>(<span class="ident">SizeLength::U16</span>) }
 }
 
+<span class="kw">impl</span> <span class="ident">SchemaType</span> <span class="kw">for</span> <span class="ident">OwnedEntrypointName</span> {
+    <span class="kw">fn</span> <span class="ident">get_type</span>() -&gt; <span class="ident">Type</span> { <span class="ident">Type::String</span>(<span class="ident">SizeLength::U16</span>) }
+}
+
+<span class="kw">impl</span> <span class="ident">SchemaType</span> <span class="kw">for</span> <span class="ident">OwnedParameter</span> {
+    <span class="kw">fn</span> <span class="ident">get_type</span>() -&gt; <span class="ident">Type</span> { <span class="ident">Type::ByteList</span>(<span class="ident">SizeLength::U16</span>) }
+}
+
 <span class="kw">impl</span><span class="op">&lt;</span><span class="ident">A</span>: <span class="ident">SchemaType</span>, <span class="kw">const</span> <span class="ident">N</span>: <span class="ident">usize</span><span class="op">&gt;</span> <span class="ident">SchemaType</span> <span class="kw">for</span> [<span class="ident">A</span>; <span class="ident">N</span>] {
     <span class="kw">fn</span> <span class="ident">get_type</span>() -&gt; <span class="ident">Type</span> { <span class="ident">Type::Array</span>(<span class="ident">N</span>.<span class="ident">try_into</span>().<span class="ident">unwrap</span>(), <span class="ident">Box::new</span>(<span class="ident">A::get_type</span>())) }
 }
@@ -2066,6 +1968,13 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">ModuleV3</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">contracts</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(())
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">VersionedModuleSchema</span> {
     <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="comment">// Prefix for versioned module schema, used to distinquish from the unversioned.</span>
@@ -2081,6 +1990,10 @@
             }
             <span class="ident">VersionedModuleSchema::V2</span>(<span class="ident">module</span>) =&gt; {
                 <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">2</span>)<span class="question-mark">?</span>;
+                <span class="ident">module</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+            }
+            <span class="ident">VersionedModuleSchema::V3</span>(<span class="ident">module</span>) =&gt; {
+                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">3</span>)<span class="question-mark">?</span>;
                 <span class="ident">module</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
             }
         }
@@ -2118,6 +2031,16 @@
     }
 }
 
+<span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">ModuleV3</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">len</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">contracts</span> <span class="op">=</span> <span class="ident">deserial_map_no_length_no_order_check</span>(<span class="ident">source</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">ModuleV3</span> {
+            <span class="ident">contracts</span>,
+        })
+    }
+}
+
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">VersionedModuleSchema</span> {
     <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="comment">// First we ensure the prefix is correct.</span>
@@ -2138,6 +2061,10 @@
             <span class="number">2</span> =&gt; {
                 <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">VersionedModuleSchema::V2</span>(<span class="ident">module</span>))
+            }
+            <span class="number">3</span> =&gt; {
+                <span class="kw">let</span> <span class="ident">module</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(<span class="ident">VersionedModuleSchema::V3</span>(<span class="ident">module</span>))
             }
             <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">ParseError</span> {}),
         }
@@ -2165,6 +2092,15 @@
     <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
         <span class="self">self</span>.<span class="ident">init</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="self">self</span>.<span class="ident">receive</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(())
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">ContractV3</span> {
+    <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
+        <span class="self">self</span>.<span class="ident">init</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="ident">receive</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+        <span class="self">self</span>.<span class="ident">event</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         <span class="prelude-val">Ok</span>(())
     }
 }
@@ -2203,6 +2139,20 @@
         <span class="prelude-val">Ok</span>(<span class="ident">ContractV2</span> {
             <span class="ident">init</span>,
             <span class="ident">receive</span>,
+        })
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">ContractV3</span> {
+    <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">init</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">len</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">receive</span> <span class="op">=</span> <span class="ident">deserial_map_no_length_no_order_check</span>(<span class="ident">source</span>, <span class="ident">len</span> <span class="kw">as</span> <span class="ident">usize</span>)<span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">event</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+        <span class="prelude-val">Ok</span>(<span class="ident">ContractV3</span> {
+            <span class="ident">init</span>,
+            <span class="ident">receive</span>,
+            <span class="ident">event</span>,
         })
     }
 }
@@ -2247,83 +2197,62 @@
 
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">FunctionV2</span> {
     <span class="kw">fn</span> <span class="ident">serial</span><span class="op">&lt;</span><span class="ident">W</span>: <span class="ident">Write</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">out</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">W</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">W::Err</span><span class="op">&gt;</span> {
-        <span class="kw">match</span> <span class="self">self</span> {
-            <span class="ident">FunctionV2::Param</span>(<span class="ident">parameter</span>) =&gt; {
-                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">0</span>)<span class="question-mark">?</span>;
-                <span class="ident">parameter</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
-            }
-            <span class="ident">FunctionV2::Rv</span>(<span class="ident">return_value</span>) =&gt; {
-                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">1</span>)<span class="question-mark">?</span>;
-                <span class="ident">return_value</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
-            }
-            <span class="ident">FunctionV2::ParamRv</span> {
-                <span class="ident">parameter</span>,
-                <span class="ident">return_value</span>,
-            } =&gt; {
-                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">2</span>)<span class="question-mark">?</span>;
-                <span class="ident">parameter</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
-                <span class="ident">return_value</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
-            }
-            <span class="ident">FunctionV2::Error</span>(<span class="ident">error</span>) =&gt; {
-                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">3</span>)<span class="question-mark">?</span>;
-                <span class="ident">error</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
-            }
-            <span class="ident">FunctionV2::ParamError</span> {
-                <span class="ident">parameter</span>,
-                <span class="ident">error</span>,
-            } =&gt; {
-                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">4</span>)<span class="question-mark">?</span>;
-                <span class="ident">parameter</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
-                <span class="ident">error</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
-            }
-            <span class="ident">FunctionV2::RvError</span> {
-                <span class="ident">return_value</span>,
-                <span class="ident">error</span>,
-            } =&gt; {
-                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">5</span>)<span class="question-mark">?</span>;
-                <span class="ident">return_value</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
-                <span class="ident">error</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
-            }
-            <span class="ident">FunctionV2::ParamRvError</span> {
-                <span class="ident">parameter</span>,
-                <span class="ident">return_value</span>,
-                <span class="ident">error</span>,
-            } =&gt; {
-                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">6</span>)<span class="question-mark">?</span>;
-                <span class="ident">parameter</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
-                <span class="ident">return_value</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
-                <span class="ident">error</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
-            }
+        <span class="kw">let</span> <span class="ident">parameter</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">parameter</span>.<span class="ident">is_some</span>();
+        <span class="kw">let</span> <span class="ident">return_value</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">return_value</span>.<span class="ident">is_some</span>();
+        <span class="kw">let</span> <span class="ident">error</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">error</span>.<span class="ident">is_some</span>();
+        <span class="kw">let</span> <span class="ident">tag</span>: <span class="ident">u8</span> <span class="op">=</span> <span class="kw">match</span> (<span class="ident">parameter</span>, <span class="ident">return_value</span>, <span class="ident">error</span>) {
+            <span class="comment">// parameter</span>
+            (<span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="number">0</span>,
+            <span class="comment">// return_value</span>
+            (<span class="bool-val">false</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>) =&gt; <span class="number">1</span>,
+            <span class="comment">// parameter + return_value</span>
+            (<span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">false</span>) =&gt; <span class="number">2</span>,
+            <span class="comment">// error</span>
+            (<span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="number">3</span>,
+            <span class="comment">// parameter + error</span>
+            (<span class="bool-val">true</span>, <span class="bool-val">false</span>, <span class="bool-val">true</span>) =&gt; <span class="number">4</span>,
+            <span class="comment">// return_value + error</span>
+            (<span class="bool-val">false</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>) =&gt; <span class="number">5</span>,
+            <span class="comment">// parameter + return_value + error</span>
+            (<span class="bool-val">true</span>, <span class="bool-val">true</span>, <span class="bool-val">true</span>) =&gt; <span class="number">6</span>,
+            <span class="comment">// no schema</span>
+            (<span class="bool-val">false</span>, <span class="bool-val">false</span>, <span class="bool-val">false</span>) =&gt; <span class="number">7</span>,
+        };
+        <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="ident">tag</span>)<span class="question-mark">?</span>;
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">p</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">parameter</span>.<span class="ident">as_ref</span>() {
+            <span class="ident">p</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
         }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">rv</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">return_value</span>.<span class="ident">as_ref</span>() {
+            <span class="ident">rv</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+        }
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">err</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">error</span>.<span class="ident">as_ref</span>() {
+            <span class="ident">err</span>.<span class="ident">serial</span>(<span class="ident">out</span>)<span class="question-mark">?</span>;
+        }
+        <span class="prelude-val">Ok</span>(())
     }
 }
 
 <span class="kw">impl</span> <span class="ident">Deserial</span> <span class="kw">for</span> <span class="ident">FunctionV2</span> {
     <span class="kw">fn</span> <span class="ident">deserial</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
         <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
-        <span class="kw">match</span> <span class="ident">idx</span> {
-            <span class="number">0</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">FunctionV2::Param</span>(<span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>)),
-            <span class="number">1</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">FunctionV2::Rv</span>(<span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>)),
-            <span class="number">2</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">FunctionV2::ParamRv</span> {
-                <span class="ident">parameter</span>:    <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-                <span class="ident">return_value</span>: <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-            }),
-            <span class="number">3</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">FunctionV2::Error</span>(<span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>)),
-            <span class="number">4</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">FunctionV2::ParamError</span> {
-                <span class="ident">parameter</span>: <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-                <span class="ident">error</span>:     <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-            }),
-            <span class="number">5</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">FunctionV2::RvError</span> {
-                <span class="ident">return_value</span>: <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-                <span class="ident">error</span>:        <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-            }),
-            <span class="number">6</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">FunctionV2::ParamRvError</span> {
-                <span class="ident">parameter</span>:    <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-                <span class="ident">return_value</span>: <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-                <span class="ident">error</span>:        <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>,
-            }),
-            <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">ParseError::default</span>()),
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">FunctionV2</span> {
+            <span class="ident">parameter</span>:    <span class="prelude-val">None</span>,
+            <span class="ident">return_value</span>: <span class="prelude-val">None</span>,
+            <span class="ident">error</span>:        <span class="prelude-val">None</span>,
+        };
+        <span class="kw">if</span> <span class="ident">idx</span> <span class="op">&gt;</span> <span class="number">7</span> {
+            <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">ParseError::default</span>());
         }
+        <span class="kw">if</span> <span class="macro">matches!</span>(<span class="ident">idx</span>, <span class="number">0</span> <span class="op">|</span> <span class="number">2</span> <span class="op">|</span> <span class="number">4</span> <span class="op">|</span> <span class="number">6</span>) {
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">parameter</span>.<span class="ident">insert</span>(<span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>);
+        }
+        <span class="kw">if</span> <span class="macro">matches!</span>(<span class="ident">idx</span>, <span class="number">1</span> <span class="op">|</span> <span class="number">2</span> <span class="op">|</span> <span class="number">5</span> <span class="op">|</span> <span class="number">6</span>) {
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">return_value</span>.<span class="ident">insert</span>(<span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>);
+        }
+        <span class="kw">if</span> <span class="macro">matches!</span>(<span class="ident">idx</span>, <span class="number">3</span> <span class="op">|</span> <span class="number">4</span> <span class="op">|</span> <span class="number">5</span> <span class="op">|</span> <span class="number">6</span>) {
+            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">r</span>.<span class="ident">error</span>.<span class="ident">insert</span>(<span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>);
+        }
+        <span class="prelude-val">Ok</span>(<span class="ident">r</span>)
     }
 }
 
@@ -2434,6 +2363,10 @@
                 <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">30</span>)<span class="question-mark">?</span>;
                 <span class="ident">len</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
             }
+            <span class="ident">Type::TaggedEnum</span>(<span class="ident">fields</span>) =&gt; {
+                <span class="ident">out</span>.<span class="ident">write_u8</span>(<span class="number">31</span>)<span class="question-mark">?</span>;
+                <span class="ident">fields</span>.<span class="ident">serial</span>(<span class="ident">out</span>)
+            }
         }
     }
 }
@@ -2521,6 +2454,10 @@
                 <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">u32::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
                 <span class="prelude-val">Ok</span>(<span class="ident">Type::ByteArray</span>(<span class="ident">len</span>))
             }
+            <span class="number">31</span> =&gt; {
+                <span class="kw">let</span> <span class="ident">variants</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">get</span>()<span class="question-mark">?</span>;
+                <span class="prelude-val">Ok</span>(<span class="ident">Type::TaggedEnum</span>(<span class="ident">variants</span>))
+            }
 
             <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">ParseError::default</span>()),
         }
@@ -2558,429 +2495,345 @@
     <span class="prelude-val">Ok</span>(<span class="ident">len</span>)
 }
 
+<span class="comment">// Versioned schema helpers</span>
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;derive-serde&quot;</span>)]</span>
 <span class="kw">mod</span> <span class="ident">impls</span> {
-    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::constants</span>::<span class="kw-2">*</span>;
-    <span class="kw">use</span> <span class="ident">num_bigint</span>::{<span class="ident">BigInt</span>, <span class="ident">BigUint</span>};
-    <span class="kw">use</span> <span class="ident">num_traits::Zero</span>;
+    <span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">from_bytes</span>, <span class="ident">schema</span>::<span class="kw-2">*</span>};
 
-    <span class="kw">impl</span> <span class="ident">Fields</span> {
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_json</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span> {
-            <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="kw-2">*</span>;
-
-            <span class="kw">match</span> <span class="self">self</span> {
-                <span class="ident">Fields::Named</span>(<span class="ident">fields</span>) =&gt; {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">map::Map::new</span>();
-                    <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">ty</span>) <span class="kw">in</span> <span class="ident">fields</span>.<span class="ident">iter</span>() {
-                        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">ty</span>.<span class="ident">to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                        <span class="ident">values</span>.<span class="ident">insert</span>(<span class="ident">key</span>.<span class="ident">to_string</span>(), <span class="ident">value</span>);
-                    }
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Object</span>(<span class="ident">values</span>))
-                }
-                <span class="ident">Fields::Unnamed</span>(<span class="ident">fields</span>) =&gt; {
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">Vec::new</span>();
-                    <span class="kw">for</span> <span class="ident">ty</span> <span class="kw">in</span> <span class="ident">fields</span>.<span class="ident">iter</span>() {
-                        <span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">ty</span>.<span class="ident">to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>);
-                    }
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Array</span>(<span class="ident">values</span>))
-                }
-                <span class="ident">Fields::None</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Value::Array</span>(<span class="macro">vec!</span>[])),
-            }
-        }
+    <span class="doccomment">/// Useful for get_versioned_contract_schema(), but it&#39;s not currently used</span>
+    <span class="doccomment">/// as input or output to any function, so it isn&#39;t public.</span>
+    <span class="kw">enum</span> <span class="ident">VersionedContractSchema</span> {
+        <span class="ident">V0</span>(<span class="ident">ContractV0</span>),
+        <span class="ident">V1</span>(<span class="ident">ContractV1</span>),
+        <span class="ident">V2</span>(<span class="ident">ContractV2</span>),
+        <span class="ident">V3</span>(<span class="ident">ContractV3</span>),
     }
 
-    <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">std::string::FromUtf8Error</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ParseError</span> {
-        <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">std::string::FromUtf8Error</span>) -&gt; <span class="self">Self</span> { <span class="ident">ParseError::default</span>() }
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">thiserror::Error</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">VersionedSchemaError</span> {
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Parse error&quot;</span>)]</span>
+        <span class="ident">ParseError</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Missing Schema Version&quot;</span>)]</span>
+        <span class="ident">MissingSchemaVersion</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Invalid Schema Version&quot;</span>)]</span>
+        <span class="ident">InvalidSchemaVersion</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Unable to find contract schema in module schema&quot;</span>)]</span>
+        <span class="ident">NoContractInModule</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Receive function schema not found in contract schema&quot;</span>)]</span>
+        <span class="ident">NoReceiveInContract</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Init function schema not found in contract schema&quot;</span>)]</span>
+        <span class="ident">NoInitInContract</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Receive function schema does not contain a parameter schema&quot;</span>)]</span>
+        <span class="ident">NoParamsInReceive</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Init function schema does not contain a parameter schema&quot;</span>)]</span>
+        <span class="ident">NoParamsInInit</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Receive function schema not found in contract schema&quot;</span>)]</span>
+        <span class="ident">NoErrorInReceive</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Init function schema does not contain an error schema&quot;</span>)]</span>
+        <span class="ident">NoErrorInInit</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Errors not supported for this module version&quot;</span>)]</span>
+        <span class="ident">ErrorNotSupported</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Receive function schema has no return value schema&quot;</span>)]</span>
+        <span class="ident">NoReturnValueInReceive</span>,
+        <span class="attribute">#[<span class="ident">error</span>(<span class="string">&quot;Return values not supported for this module version&quot;</span>)]</span>
+        <span class="ident">ReturnValueNotSupported</span>,
     }
 
-    <span class="kw">fn</span> <span class="ident">item_list_to_json</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(
-        <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>,
-        <span class="ident">size_len</span>: <span class="ident">SizeLength</span>,
-        <span class="ident">item_to_json</span>: <span class="kw">impl</span> <span class="ident">Fn</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span>,
-    ) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">deserial_length</span>(<span class="ident">source</span>, <span class="ident">size_len</span>)<span class="question-mark">?</span>;
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">std::cmp::min</span>(<span class="ident">MAX_PREALLOCATED_CAPACITY</span>, <span class="ident">len</span>));
-        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
-            <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">item_to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-            <span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">value</span>);
-        }
-        <span class="prelude-val">Ok</span>(<span class="ident">values</span>)
+    <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ParseError</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">VersionedSchemaError</span> {
+        <span class="kw">fn</span> <span class="ident">from</span>(<span class="kw">_</span>: <span class="ident">ParseError</span>) -&gt; <span class="self">Self</span> { <span class="ident">VersionedSchemaError::ParseError</span> }
     }
 
-    <span class="kw">fn</span> <span class="ident">deserial_string</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>, <span class="ident">size_len</span>: <span class="ident">SizeLength</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">deserial_length</span>(<span class="ident">source</span>, <span class="ident">size_len</span>)<span class="question-mark">?</span>;
-        <span class="comment">// we are doing this case analysis so that we have a fast path for safe,</span>
-        <span class="comment">// most common, lengths, and a slower one longer ones.</span>
-        <span class="kw">if</span> <span class="ident">len</span> <span class="op">&lt;</span><span class="op">=</span> <span class="ident">MAX_PREALLOCATED_CAPACITY</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span> <span class="op">=</span> <span class="macro">vec!</span>[<span class="number">0u8</span>; <span class="ident">len</span>];
-            <span class="ident">source</span>.<span class="ident">read_exact</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">bytes</span>)<span class="question-mark">?</span>;
-            <span class="prelude-val">Ok</span>(<span class="ident">String::from_utf8</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>)
-        } <span class="kw">else</span> {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">Vec::with_capacity</span>(<span class="ident">MAX_PREALLOCATED_CAPACITY</span>);
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">buf</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">64</span>];
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">read</span> <span class="op">=</span> <span class="number">0</span>;
-            <span class="kw">while</span> <span class="ident">read</span> <span class="op">&lt;</span> <span class="ident">len</span> {
-                <span class="kw">let</span> <span class="ident">new</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">buf</span>)<span class="question-mark">?</span>;
-                <span class="kw">if</span> <span class="ident">new</span> <span class="op">==</span> <span class="number">0</span> {
-                    <span class="kw">break</span>;
-                } <span class="kw">else</span> {
-                    <span class="ident">read</span> <span class="op">+</span><span class="op">=</span> <span class="ident">new</span>;
-                    <span class="ident">bytes</span>.<span class="ident">extend_from_slice</span>(<span class="kw-2">&amp;</span><span class="ident">buf</span>[..<span class="ident">new</span>]);
-                }
+    <span class="doccomment">/// Unpacks a versioned contract schema from a versioned module schema</span>
+    <span class="kw">fn</span> <span class="ident">get_versioned_contract_schema</span>(
+        <span class="ident">versioned_module_schema</span>: <span class="kw-2">&amp;</span><span class="ident">VersionedModuleSchema</span>,
+        <span class="ident">contract_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+    ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">VersionedContractSchema</span>, <span class="ident">VersionedSchemaError</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="ident">versioned_contract_schema</span>: <span class="ident">VersionedContractSchema</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">versioned_module_schema</span> {
+            <span class="ident">VersionedModuleSchema::V0</span>(<span class="ident">module_schema</span>) =&gt; {
+                <span class="kw">let</span> <span class="ident">contract_schema</span> <span class="op">=</span> <span class="ident">module_schema</span>
+                    .<span class="ident">contracts</span>
+                    .<span class="ident">get</span>(<span class="ident">contract_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoContractInModule</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>();
+                <span class="ident">VersionedContractSchema::V0</span>(<span class="ident">contract_schema</span>)
             }
-            <span class="kw">if</span> <span class="ident">read</span> <span class="op">==</span> <span class="ident">len</span> {
-                <span class="prelude-val">Ok</span>(<span class="ident">String::from_utf8</span>(<span class="ident">bytes</span>)<span class="question-mark">?</span>)
-            } <span class="kw">else</span> {
-                <span class="prelude-val">Err</span>(<span class="ident">ParseError</span> {})
+            <span class="ident">VersionedModuleSchema::V1</span>(<span class="ident">module_schema</span>) =&gt; {
+                <span class="kw">let</span> <span class="ident">contract_schema</span> <span class="op">=</span> <span class="ident">module_schema</span>
+                    .<span class="ident">contracts</span>
+                    .<span class="ident">get</span>(<span class="ident">contract_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoContractInModule</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>();
+                <span class="ident">VersionedContractSchema::V1</span>(<span class="ident">contract_schema</span>)
             }
-        }
+            <span class="ident">VersionedModuleSchema::V2</span>(<span class="ident">module_schema</span>) =&gt; {
+                <span class="kw">let</span> <span class="ident">contract_schema</span> <span class="op">=</span> <span class="ident">module_schema</span>
+                    .<span class="ident">contracts</span>
+                    .<span class="ident">get</span>(<span class="ident">contract_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoContractInModule</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>();
+                <span class="ident">VersionedContractSchema::V2</span>(<span class="ident">contract_schema</span>)
+            }
+            <span class="ident">VersionedModuleSchema::V3</span>(<span class="ident">module_schema</span>) =&gt; {
+                <span class="kw">let</span> <span class="ident">contract_schema</span> <span class="op">=</span> <span class="ident">module_schema</span>
+                    .<span class="ident">contracts</span>
+                    .<span class="ident">get</span>(<span class="ident">contract_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoContractInModule</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>();
+                <span class="ident">VersionedContractSchema::V3</span>(<span class="ident">contract_schema</span>)
+            }
+        };
+
+        <span class="prelude-val">Ok</span>(<span class="ident">versioned_contract_schema</span>)
     }
 
-    <span class="kw">impl</span> <span class="ident">Type</span> {
-        <span class="doccomment">/// Uses the schema to deserialize bytes into pretty json</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_json_string_pretty</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>]) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
-            <span class="kw">let</span> <span class="ident">source</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Cursor::new</span>(<span class="ident">bytes</span>);
-            <span class="kw">let</span> <span class="ident">js</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-            <span class="ident">serde_json::to_string_pretty</span>(<span class="kw-2">&amp;</span><span class="ident">js</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ParseError::default</span>())
+    <span class="kw">impl</span> <span class="ident">VersionedModuleSchema</span> {
+        <span class="doccomment">/// Get a versioned module schema. First reads header to see if the</span>
+        <span class="doccomment">/// version can be discerned, otherwise tries using provided</span>
+        <span class="doccomment">/// schema_version.</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
+            <span class="ident">schema_bytes</span>: <span class="kw-2">&amp;</span>[<span class="ident">u8</span>],
+            <span class="ident">schema_version</span>: <span class="kw-2">&amp;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+        ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident">VersionedSchemaError</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">versioned_module_schema</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">from_bytes</span>::<span class="op">&lt;</span><span class="ident">VersionedModuleSchema</span><span class="op">&gt;</span>(<span class="ident">schema_bytes</span>) {
+                <span class="prelude-val">Ok</span>(<span class="ident">versioned</span>) =&gt; <span class="ident">versioned</span>,
+                <span class="prelude-val">Err</span>(<span class="kw">_</span>) =&gt; <span class="kw">match</span> <span class="ident">schema_version</span> {
+                    <span class="prelude-val">Some</span>(<span class="number">0</span>) =&gt; <span class="ident">VersionedModuleSchema::V0</span>(<span class="ident">from_bytes</span>(<span class="ident">schema_bytes</span>)<span class="question-mark">?</span>),
+                    <span class="prelude-val">Some</span>(<span class="number">1</span>) =&gt; <span class="ident">VersionedModuleSchema::V1</span>(<span class="ident">from_bytes</span>(<span class="ident">schema_bytes</span>)<span class="question-mark">?</span>),
+                    <span class="prelude-val">Some</span>(<span class="number">2</span>) =&gt; <span class="ident">VersionedModuleSchema::V2</span>(<span class="ident">from_bytes</span>(<span class="ident">schema_bytes</span>)<span class="question-mark">?</span>),
+                    <span class="prelude-val">Some</span>(<span class="number">3</span>) =&gt; <span class="ident">VersionedModuleSchema::V3</span>(<span class="ident">from_bytes</span>(<span class="ident">schema_bytes</span>)<span class="question-mark">?</span>),
+                    <span class="prelude-val">Some</span>(<span class="kw">_</span>) =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">VersionedSchemaError::InvalidSchemaVersion</span>),
+                    <span class="prelude-val">None</span> =&gt; <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">VersionedSchemaError::MissingSchemaVersion</span>),
+                },
+            };
+            <span class="prelude-val">Ok</span>(<span class="ident">versioned_module_schema</span>)
         }
 
-        <span class="doccomment">/// Uses the schema to deserialize bytes into json</span>
-        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">to_json</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">serde_json::Value</span><span class="op">&gt;</span> {
-            <span class="kw">use</span> <span class="ident">serde_json</span>::<span class="kw-2">*</span>;
-
-            <span class="kw">match</span> <span class="self">self</span> {
-                <span class="ident">Type::Unit</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">Value::Null</span>),
-                <span class="ident">Type::Bool</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">bool::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Bool</span>(<span class="ident">n</span>))
-                }
-                <span class="ident">Type::U8</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">u8::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Number</span>(<span class="ident">n</span>.<span class="ident">into</span>()))
-                }
-                <span class="ident">Type::U16</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">u16::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Number</span>(<span class="ident">n</span>.<span class="ident">into</span>()))
-                }
-                <span class="ident">Type::U32</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">u32::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Number</span>(<span class="ident">n</span>.<span class="ident">into</span>()))
-                }
-                <span class="ident">Type::U64</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">u64::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Number</span>(<span class="ident">n</span>.<span class="ident">into</span>()))
-                }
-                <span class="ident">Type::U128</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">u128::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">n</span>.<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::I8</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">i8::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Number</span>(<span class="ident">n</span>.<span class="ident">into</span>()))
-                }
-                <span class="ident">Type::I16</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">i16::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Number</span>(<span class="ident">n</span>.<span class="ident">into</span>()))
-                }
-                <span class="ident">Type::I32</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">i32::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Number</span>(<span class="ident">n</span>.<span class="ident">into</span>()))
-                }
-                <span class="ident">Type::I64</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">i64::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Number</span>(<span class="ident">n</span>.<span class="ident">into</span>()))
-                }
-                <span class="ident">Type::I128</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">i128::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">n</span>.<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::Amount</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">n</span> <span class="op">=</span> <span class="ident">Amount::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">n</span>.<span class="ident">micro_ccd</span>().<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::AccountAddress</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">address</span> <span class="op">=</span> <span class="ident">AccountAddress::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">address</span>.<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::ContractAddress</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">address</span> <span class="op">=</span> <span class="ident">ContractAddress::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">address</span>.<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::Timestamp</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">timestamp</span> <span class="op">=</span> <span class="ident">Timestamp::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">timestamp</span>.<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::Duration</span> =&gt; {
-                    <span class="kw">let</span> <span class="ident">duration</span> <span class="op">=</span> <span class="ident">Duration::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">duration</span>.<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::Pair</span>(<span class="ident">left_type</span>, <span class="ident">right_type</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">left</span> <span class="op">=</span> <span class="ident">left_type</span>.<span class="ident">to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="ident">right</span> <span class="op">=</span> <span class="ident">right_type</span>.<span class="ident">to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Array</span>(<span class="macro">vec!</span>[<span class="ident">left</span>, <span class="ident">right</span>]))
-                }
-                <span class="ident">Type::List</span>(<span class="ident">size_len</span>, <span class="ident">ty</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">item_list_to_json</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">size_len</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">ty</span>.<span class="ident">to_json</span>(<span class="ident">s</span>))<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Array</span>(<span class="ident">values</span>))
-                }
-                <span class="ident">Type::Set</span>(<span class="ident">size_len</span>, <span class="ident">ty</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">item_list_to_json</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">size_len</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">ty</span>.<span class="ident">to_json</span>(<span class="ident">s</span>))<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Array</span>(<span class="ident">values</span>))
-                }
-                <span class="ident">Type::Map</span>(<span class="ident">size_len</span>, <span class="ident">key_type</span>, <span class="ident">value_type</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">values</span> <span class="op">=</span> <span class="ident">item_list_to_json</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">size_len</span>, <span class="op">|</span><span class="ident">s</span><span class="op">|</span> {
-                        <span class="kw">let</span> <span class="ident">key</span> <span class="op">=</span> <span class="ident">key_type</span>.<span class="ident">to_json</span>(<span class="ident">s</span>)<span class="question-mark">?</span>;
-                        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">value_type</span>.<span class="ident">to_json</span>(<span class="ident">s</span>)<span class="question-mark">?</span>;
-                        <span class="prelude-val">Ok</span>(<span class="ident">Value::Array</span>(<span class="macro">vec!</span>[<span class="ident">key</span>, <span class="ident">value</span>]))
-                    })<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Array</span>(<span class="ident">values</span>))
-                }
-                <span class="ident">Type::Array</span>(<span class="ident">len</span>, <span class="ident">ty</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">len</span>: <span class="ident">usize</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="ident">len</span>).<span class="ident">try_into</span>()<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">values</span> <span class="op">=</span>
-                        <span class="ident">Vec::with_capacity</span>(<span class="ident">std::cmp::min</span>(<span class="ident">MAX_PREALLOCATED_CAPACITY</span>, <span class="ident">len</span>));
-                    <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
-                        <span class="kw">let</span> <span class="ident">value</span> <span class="op">=</span> <span class="ident">ty</span>.<span class="ident">to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                        <span class="ident">values</span>.<span class="ident">push</span>(<span class="ident">value</span>);
-                    }
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::Array</span>(<span class="ident">values</span>))
-                }
-                <span class="ident">Type::Struct</span>(<span class="ident">fields_ty</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">fields</span> <span class="op">=</span> <span class="ident">fields_ty</span>.<span class="ident">to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">fields</span>)
-                }
-                <span class="ident">Type::Enum</span>(<span class="ident">variants</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">idx</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">variants</span>.<span class="ident">len</span>() <span class="op">&lt;</span><span class="op">=</span> <span class="number">256</span> {
-                        <span class="ident">u8::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span> <span class="kw">as</span> <span class="ident">usize</span>
-                    } <span class="kw">else</span> {
-                        <span class="ident">u32::deserial</span>(<span class="ident">source</span>)<span class="question-mark">?</span> <span class="kw">as</span> <span class="ident">usize</span>
-                    };
-                    <span class="kw">let</span> (<span class="ident">name</span>, <span class="ident">fields_ty</span>) <span class="op">=</span> <span class="ident">variants</span>.<span class="ident">get</span>(<span class="ident">idx</span>).<span class="ident">ok_or_else</span>(<span class="ident">ParseError::default</span>)<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="ident">fields</span> <span class="op">=</span> <span class="ident">fields_ty</span>.<span class="ident">to_json</span>(<span class="ident">source</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="macro">json!</span>({ <span class="ident">name</span>: <span class="ident">fields</span> }))
-                }
-                <span class="ident">Type::String</span>(<span class="ident">size_len</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">string</span> <span class="op">=</span> <span class="ident">deserial_string</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">size_len</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">string</span>))
-                }
-                <span class="ident">Type::ContractName</span>(<span class="ident">size_len</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">contract_name</span> <span class="op">=</span> <span class="ident">OwnedContractName::new</span>(<span class="ident">deserial_string</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">size_len</span>)<span class="question-mark">?</span>)
-                        .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ParseError::default</span>())<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="ident">name_without_init</span> <span class="op">=</span> <span class="ident">contract_name</span>.<span class="ident">as_contract_name</span>().<span class="ident">contract_name</span>();
-                    <span class="prelude-val">Ok</span>(<span class="macro">json!</span>({ <span class="string">&quot;contract&quot;</span>: <span class="ident">name_without_init</span> }))
-                }
-                <span class="ident">Type::ReceiveName</span>(<span class="ident">size_len</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">owned_receive_name</span> <span class="op">=</span>
-                        <span class="ident">OwnedReceiveName::new</span>(<span class="ident">deserial_string</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">size_len</span>)<span class="question-mark">?</span>)
-                            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="ident">ParseError::default</span>())<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="ident">receive_name</span> <span class="op">=</span> <span class="ident">owned_receive_name</span>.<span class="ident">as_receive_name</span>();
-                    <span class="kw">let</span> <span class="ident">contract_name</span> <span class="op">=</span> <span class="ident">receive_name</span>.<span class="ident">contract_name</span>();
-                    <span class="kw">let</span> <span class="ident">func_name</span> <span class="op">=</span> <span class="ident">receive_name</span>.<span class="ident">entrypoint_name</span>();
-                    <span class="prelude-val">Ok</span>(<span class="macro">json!</span>({<span class="string">&quot;contract&quot;</span>: <span class="ident">contract_name</span>, <span class="string">&quot;func&quot;</span>: <span class="ident">func_name</span>}))
-                }
-                <span class="ident">Type::ULeb128</span>(<span class="ident">constraint</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_biguint</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">constraint</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">int</span>.<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::ILeb128</span>(<span class="ident">constraint</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_bigint</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">constraint</span>)<span class="question-mark">?</span>;
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">int</span>.<span class="ident">to_string</span>()))
-                }
-                <span class="ident">Type::ByteList</span>(<span class="ident">size_len</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">deserial_length</span>(<span class="ident">source</span>, <span class="kw-2">*</span><span class="ident">size_len</span>)<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">string</span> <span class="op">=</span>
-                        <span class="ident">String::with_capacity</span>(<span class="ident">std::cmp::min</span>(<span class="ident">MAX_PREALLOCATED_CAPACITY</span>, <span class="number">2</span> <span class="op">*</span> <span class="ident">len</span>));
-                    <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
-                        <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
-                        <span class="ident">string</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:02x?}&quot;</span>, <span class="ident">byte</span>));
-                    }
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">string</span>))
-                }
-                <span class="ident">Type::ByteArray</span>(<span class="ident">len</span>) =&gt; {
-                    <span class="kw">let</span> <span class="ident">len</span> <span class="op">=</span> <span class="ident">usize::try_from</span>(<span class="kw-2">*</span><span class="ident">len</span>)<span class="question-mark">?</span>;
-                    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">string</span> <span class="op">=</span>
-                        <span class="ident">String::with_capacity</span>(<span class="ident">std::cmp::min</span>(<span class="ident">MAX_PREALLOCATED_CAPACITY</span>, <span class="number">2</span> <span class="op">*</span> <span class="ident">len</span>));
-                    <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">len</span> {
-                        <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
-                        <span class="ident">string</span>.<span class="ident">push_str</span>(<span class="kw-2">&amp;</span><span class="macro">format!</span>(<span class="string">&quot;{:02x?}&quot;</span>, <span class="ident">byte</span>));
-                    }
-                    <span class="prelude-val">Ok</span>(<span class="ident">Value::String</span>(<span class="ident">string</span>))
-                }
-            }
+        <span class="doccomment">/// Returns a receive function&#39;s parameter schema from a versioned</span>
+        <span class="doccomment">/// module schema</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_receive_param_schema</span>(
+            <span class="kw-2">&amp;</span><span class="self">self</span>,
+            <span class="ident">contract_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+            <span class="ident">function_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Type</span>, <span class="ident">VersionedSchemaError</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">versioned_contract_schema</span> <span class="op">=</span> <span class="ident">get_versioned_contract_schema</span>(<span class="self">self</span>, <span class="ident">contract_name</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">param_schema</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">versioned_contract_schema</span> {
+                <span class="ident">VersionedContractSchema::V0</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V1</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">parameter</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoParamsInReceive</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V2</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">parameter</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoParamsInReceive</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V3</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">parameter</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoParamsInReceive</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+            };
+            <span class="prelude-val">Ok</span>(<span class="ident">param_schema</span>)
         }
-    }
 
-    <span class="kw">fn</span> <span class="ident">deserial_biguint</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>, <span class="ident">constraint</span>: <span class="ident">u32</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">BigUint</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">BigUint::zero</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">shift</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">constraint</span> {
-            <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
-            <span class="kw">let</span> <span class="ident">value_byte</span> <span class="op">=</span> <span class="ident">BigUint::from</span>(<span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b0111_1111</span>);
-            <span class="ident">result</span> <span class="op">+</span><span class="op">=</span> <span class="ident">value_byte</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">shift</span>;
-            <span class="ident">shift</span> <span class="op">+</span><span class="op">=</span> <span class="number">7</span>;
-
-            <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b1000_0000</span> <span class="op">==</span> <span class="number">0</span> {
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">result</span>);
-            }
+        <span class="doccomment">/// Returns an init function&#39;s parameter schema from a versioned module</span>
+        <span class="doccomment">/// schema</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_init_param_schema</span>(
+            <span class="kw-2">&amp;</span><span class="self">self</span>,
+            <span class="ident">contract_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Type</span>, <span class="ident">VersionedSchemaError</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">versioned_contract_schema</span> <span class="op">=</span> <span class="ident">get_versioned_contract_schema</span>(<span class="self">self</span>, <span class="ident">contract_name</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">param_schema</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">versioned_contract_schema</span> {
+                <span class="ident">VersionedContractSchema::V0</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">init</span>
+                    .<span class="ident">as_ref</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoInitInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V1</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">init</span>
+                    .<span class="ident">as_ref</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoInitInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">parameter</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoParamsInInit</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V2</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">init</span>
+                    .<span class="ident">as_ref</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoInitInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">parameter</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoParamsInInit</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V3</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">init</span>
+                    .<span class="ident">as_ref</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoInitInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">parameter</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoParamsInInit</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+            };
+            <span class="prelude-val">Ok</span>(<span class="ident">param_schema</span>)
         }
-        <span class="prelude-val">Err</span>(<span class="ident">ParseError</span> {})
-    }
 
-    <span class="kw">fn</span> <span class="ident">deserial_bigint</span><span class="op">&lt;</span><span class="ident">R</span>: <span class="ident">Read</span><span class="op">&gt;</span>(<span class="ident">source</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">R</span>, <span class="ident">constraint</span>: <span class="ident">u32</span>) -&gt; <span class="ident">ParseResult</span><span class="op">&lt;</span><span class="ident">BigInt</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">result</span> <span class="op">=</span> <span class="ident">BigInt::zero</span>();
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">shift</span> <span class="op">=</span> <span class="number">0</span>;
-        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="ident">constraint</span> {
-            <span class="kw">let</span> <span class="ident">byte</span> <span class="op">=</span> <span class="ident">source</span>.<span class="ident">read_u8</span>()<span class="question-mark">?</span>;
-            <span class="kw">let</span> <span class="ident">value_byte</span> <span class="op">=</span> <span class="ident">BigInt::from</span>(<span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b0111_1111</span>);
-            <span class="ident">result</span> <span class="op">+</span><span class="op">=</span> <span class="ident">value_byte</span> <span class="op">&lt;</span><span class="op">&lt;</span> <span class="ident">shift</span>;
-            <span class="ident">shift</span> <span class="op">+</span><span class="op">=</span> <span class="number">7</span>;
-
-            <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b1000_0000</span> <span class="op">==</span> <span class="number">0</span> {
-                <span class="kw">if</span> <span class="ident">byte</span> <span class="op">&amp;</span> <span class="number">0b0100_0000</span> <span class="op">!</span><span class="op">=</span> <span class="number">0</span> {
-                    <span class="ident">result</span> <span class="op">-</span><span class="op">=</span> <span class="ident">BigInt::from</span>(<span class="number">2</span>).<span class="ident">pow</span>(<span class="ident">shift</span>)
+        <span class="doccomment">/// Returns a receive function&#39;s error schema from a versioned module</span>
+        <span class="doccomment">/// schema</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_receive_error_schema</span>(
+            <span class="kw-2">&amp;</span><span class="self">self</span>,
+            <span class="ident">contract_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+            <span class="ident">function_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Type</span>, <span class="ident">VersionedSchemaError</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">versioned_contract_schema</span> <span class="op">=</span> <span class="ident">get_versioned_contract_schema</span>(<span class="self">self</span>, <span class="ident">contract_name</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">param_schema</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">versioned_contract_schema</span> {
+                <span class="ident">VersionedContractSchema::V0</span>(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">VersionedSchemaError::ErrorNotSupported</span>)
                 }
-                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">result</span>);
-            }
+                <span class="ident">VersionedContractSchema::V1</span>(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">VersionedSchemaError::ErrorNotSupported</span>)
+                }
+                <span class="ident">VersionedContractSchema::V2</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">error</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoErrorInReceive</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V3</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">error</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoErrorInReceive</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+            };
+            <span class="prelude-val">Ok</span>(<span class="ident">param_schema</span>)
         }
-        <span class="prelude-val">Err</span>(<span class="ident">ParseError</span> {})
+
+        <span class="doccomment">/// Returns an init function&#39;s error schema from a versioned module</span>
+        <span class="doccomment">/// schema</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_init_error_schema</span>(
+            <span class="kw-2">&amp;</span><span class="self">self</span>,
+            <span class="ident">contract_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Type</span>, <span class="ident">VersionedSchemaError</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">versioned_contract_schema</span> <span class="op">=</span> <span class="ident">get_versioned_contract_schema</span>(<span class="self">self</span>, <span class="ident">contract_name</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">param_schema</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">versioned_contract_schema</span> {
+                <span class="ident">VersionedContractSchema::V0</span>(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">VersionedSchemaError::ErrorNotSupported</span>)
+                }
+                <span class="ident">VersionedContractSchema::V1</span>(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">VersionedSchemaError::ErrorNotSupported</span>)
+                }
+                <span class="ident">VersionedContractSchema::V2</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">init</span>
+                    .<span class="ident">as_ref</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoInitInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">error</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoErrorInInit</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V3</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">init</span>
+                    .<span class="ident">as_ref</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoInitInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">error</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoErrorInInit</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+            };
+            <span class="prelude-val">Ok</span>(<span class="ident">param_schema</span>)
+        }
+
+        <span class="doccomment">/// Returns the return value schema from a versioned module schema.</span>
+        <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">get_receive_return_value_schema</span>(
+            <span class="kw-2">&amp;</span><span class="self">self</span>,
+            <span class="ident">contract_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+            <span class="ident">function_name</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>,
+        ) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Type</span>, <span class="ident">VersionedSchemaError</span><span class="op">&gt;</span> {
+            <span class="kw">let</span> <span class="ident">versioned_contract_schema</span> <span class="op">=</span> <span class="ident">get_versioned_contract_schema</span>(<span class="self">self</span>, <span class="ident">contract_name</span>)<span class="question-mark">?</span>;
+            <span class="kw">let</span> <span class="ident">return_value_schema</span> <span class="op">=</span> <span class="kw">match</span> <span class="ident">versioned_contract_schema</span> {
+                <span class="ident">VersionedContractSchema::V0</span>(<span class="kw">_</span>) =&gt; {
+                    <span class="kw">return</span> <span class="prelude-val">Err</span>(<span class="ident">VersionedSchemaError::ReturnValueNotSupported</span>)
+                }
+                <span class="ident">VersionedContractSchema::V1</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">return_value</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReturnValueInReceive</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V2</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">return_value</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReturnValueInReceive</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+                <span class="ident">VersionedContractSchema::V3</span>(<span class="ident">contract_schema</span>) =&gt; <span class="ident">contract_schema</span>
+                    .<span class="ident">receive</span>
+                    .<span class="ident">get</span>(<span class="ident">function_name</span>)
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReceiveInContract</span>)<span class="question-mark">?</span>
+                    .<span class="ident">return_value</span>()
+                    .<span class="ident">ok_or</span>(<span class="ident">VersionedSchemaError::NoReturnValueInReceive</span>)<span class="question-mark">?</span>
+                    .<span class="ident">clone</span>(),
+            };
+
+            <span class="prelude-val">Ok</span>(<span class="ident">return_value_schema</span>)
+        }
     }
 
     <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
     <span class="kw">mod</span> <span class="ident">tests</span> {
         <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_biguint_0</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">0</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_biguint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">1</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="number">0u8</span>.<span class="ident">into</span>())
+        <span class="kw">fn</span> <span class="ident">module_schema</span>() -&gt; <span class="ident">VersionedModuleSchema</span> {
+            <span class="kw">let</span> <span class="ident">module_bytes</span> <span class="op">=</span> <span class="ident">hex::decode</span>(
+                <span class="string">&quot;ffff02010000000c00000054657374436f6e7472616374010402030100000010000000726563656976655f66756e6374696f6e06060807&quot;</span>,
+            )
+            .<span class="ident">unwrap</span>();
+            <span class="ident">VersionedModuleSchema::new</span>(<span class="kw-2">&amp;</span><span class="ident">module_bytes</span>, <span class="kw-2">&amp;</span><span class="prelude-val">None</span>).<span class="ident">unwrap</span>()
         }
 
         <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_biguint_10</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">10</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_biguint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">1</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="number">10u8</span>.<span class="ident">into</span>())
+        <span class="kw">fn</span> <span class="ident">test_getting_init_param_schema</span>() {
+            <span class="kw">let</span> <span class="ident">extracted_type</span> <span class="op">=</span> <span class="ident">module_schema</span>().<span class="ident">get_init_param_schema</span>(<span class="string">&quot;TestContract&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">extracted_type</span>, <span class="ident">Type::U8</span>)
         }
 
         <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_biguint_129</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">129</span>, <span class="number">1</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_biguint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">2</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="number">129u8</span>.<span class="ident">into</span>())
+        <span class="kw">fn</span> <span class="ident">test_getting_receive_param_schema</span>() {
+            <span class="kw">let</span> <span class="ident">extracted_type</span> <span class="op">=</span> <span class="ident">module_schema</span>()
+                .<span class="ident">get_receive_param_schema</span>(<span class="string">&quot;TestContract&quot;</span>, <span class="string">&quot;receive_function&quot;</span>)
+                .<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">extracted_type</span>, <span class="ident">Type::I8</span>)
         }
 
         <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_biguint_u64_max</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">1</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_biguint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">10</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="ident">u64::MAX</span>.<span class="ident">into</span>())
+        <span class="kw">fn</span> <span class="ident">test_getting_init_error_schema</span>() {
+            <span class="kw">let</span> <span class="ident">extracted_type</span> <span class="op">=</span> <span class="ident">module_schema</span>().<span class="ident">get_init_error_schema</span>(<span class="string">&quot;TestContract&quot;</span>).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">extracted_type</span>, <span class="ident">Type::U16</span>)
         }
 
         <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_biguint_u256_max</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">255</span>,
-                <span class="number">0b0000_1111</span>,
-            ]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_biguint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">37</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="kw">let</span> <span class="ident">u256_max</span> <span class="op">=</span> <span class="ident">BigUint::from_bytes_le</span>(<span class="kw-2">&amp;</span>[
-                <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>,
-                <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>,
-            ]);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="ident">u256_max</span>)
+        <span class="kw">fn</span> <span class="ident">test_getting_receive_error_schema</span>() {
+            <span class="kw">let</span> <span class="ident">extracted_type</span> <span class="op">=</span> <span class="ident">module_schema</span>()
+                .<span class="ident">get_receive_error_schema</span>(<span class="string">&quot;TestContract&quot;</span>, <span class="string">&quot;receive_function&quot;</span>)
+                .<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">extracted_type</span>, <span class="ident">Type::I16</span>)
         }
 
         <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_biguint_padding_allowed</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">129</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">0</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_biguint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">6</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="number">1u8</span>.<span class="ident">into</span>())
-        }
-
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_biguint_contraint_fails</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">129</span>, <span class="number">1</span>]);
-            <span class="ident">deserial_biguint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">1</span>).<span class="ident">expect_err</span>(<span class="string">&quot;Deserialising should fail&quot;</span>);
-        }
-
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_bigint_0</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">0</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_bigint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">1</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="number">0u8</span>.<span class="ident">into</span>())
-        }
-
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_bigint_10</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">10</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_bigint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">1</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="number">10u8</span>.<span class="ident">into</span>())
-        }
-
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_bigint_neg_10</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">0b0111_0110</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_bigint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">2</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, (<span class="op">-</span><span class="number">10</span>).<span class="ident">into</span>())
-        }
-
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_bigint_neg_129</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span> <span class="ident">Cursor::new</span>([<span class="number">0b1111_1111</span>, <span class="number">0b0111_1110</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_bigint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">3</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, (<span class="op">-</span><span class="number">129</span>).<span class="ident">into</span>())
-        }
-
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_bigint_i64_min</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span>
-                <span class="ident">Cursor::new</span>([<span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">0b0111_1111</span>]);
-            <span class="kw">let</span> <span class="ident">int</span> <span class="op">=</span> <span class="ident">deserial_bigint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">10</span>).<span class="ident">expect</span>(<span class="string">&quot;Deserialising should not fail&quot;</span>);
-            <span class="macro">assert_eq!</span>(<span class="ident">int</span>, <span class="ident">BigInt::from</span>(<span class="ident">i64::MIN</span>))
-        }
-
-        <span class="attribute">#[<span class="ident">test</span>]</span>
-        <span class="kw">fn</span> <span class="ident">test_deserial_bigint_constraint_fails</span>() {
-            <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">cursor</span> <span class="op">=</span>
-                <span class="ident">Cursor::new</span>([<span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">128</span>, <span class="number">0b0111_1111</span>]);
-            <span class="ident">deserial_bigint</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">cursor</span>, <span class="number">9</span>).<span class="ident">expect_err</span>(<span class="string">&quot;Deserialising should fail&quot;</span>);
+        <span class="kw">fn</span> <span class="ident">test_getting_receive_return_value_schema</span>() {
+            <span class="kw">let</span> <span class="ident">extracted_type</span> <span class="op">=</span> <span class="ident">module_schema</span>()
+                .<span class="ident">get_receive_return_value_schema</span>(<span class="string">&quot;TestContract&quot;</span>, <span class="string">&quot;receive_function&quot;</span>)
+                .<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">extracted_type</span>, <span class="ident">Type::I32</span>)
         }
     }
 }
@@ -3029,29 +2882,13 @@
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
     <span class="kw">fn</span> <span class="ident">test_function_v2_serial_deserial_is_id</span>() {
-        <span class="kw">let</span> <span class="ident">f1</span> <span class="op">=</span> <span class="ident">FunctionV2::Param</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>));
-        <span class="kw">let</span> <span class="ident">f2</span> <span class="op">=</span> <span class="ident">FunctionV2::Rv</span>(<span class="ident">Type::U128</span>);
-        <span class="kw">let</span> <span class="ident">f3</span> <span class="op">=</span> <span class="ident">FunctionV2::ParamRv</span> {
-            <span class="ident">parameter</span>:    <span class="ident">Type::Set</span>(<span class="ident">SizeLength::U8</span>, <span class="ident">Box::new</span>(<span class="ident">Type::ByteArray</span>(<span class="number">10</span>))),
-            <span class="ident">return_value</span>: <span class="ident">Type::ILeb128</span>(<span class="number">3</span>),
-        };
-        <span class="kw">let</span> <span class="ident">f4</span> <span class="op">=</span> <span class="ident">FunctionV2::Error</span>(<span class="ident">Type::ByteList</span>(<span class="ident">SizeLength::U32</span>));
-        <span class="kw">let</span> <span class="ident">f5</span> <span class="op">=</span> <span class="ident">FunctionV2::ParamError</span> {
-            <span class="ident">parameter</span>: <span class="ident">Type::U8</span>,
-            <span class="ident">error</span>:     <span class="ident">Type::String</span>(<span class="ident">SizeLength::U8</span>),
-        };
-        <span class="kw">let</span> <span class="ident">f6</span> <span class="op">=</span> <span class="ident">FunctionV2::ParamRvError</span> {
-            <span class="ident">parameter</span>:    <span class="ident">Type::Set</span>(<span class="ident">SizeLength::U8</span>, <span class="ident">Box::new</span>(<span class="ident">Type::ByteArray</span>(<span class="number">10</span>))),
-            <span class="ident">return_value</span>: <span class="ident">Type::ILeb128</span>(<span class="number">3</span>),
-            <span class="ident">error</span>:        <span class="ident">Type::Bool</span>,
+        <span class="kw">let</span> <span class="ident">f1</span> <span class="op">=</span> <span class="ident">FunctionV2</span> {
+            <span class="ident">parameter</span>:    <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+            <span class="ident">return_value</span>: <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+            <span class="ident">error</span>:        <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
         };
 
         <span class="macro">assert_eq!</span>(<span class="ident">serial_deserial</span>(<span class="kw-2">&amp;</span><span class="ident">f1</span>), <span class="prelude-val">Ok</span>(<span class="ident">f1</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">serial_deserial</span>(<span class="kw-2">&amp;</span><span class="ident">f2</span>), <span class="prelude-val">Ok</span>(<span class="ident">f2</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">serial_deserial</span>(<span class="kw-2">&amp;</span><span class="ident">f3</span>), <span class="prelude-val">Ok</span>(<span class="ident">f3</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">serial_deserial</span>(<span class="kw-2">&amp;</span><span class="ident">f4</span>), <span class="prelude-val">Ok</span>(<span class="ident">f4</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">serial_deserial</span>(<span class="kw-2">&amp;</span><span class="ident">f5</span>), <span class="prelude-val">Ok</span>(<span class="ident">f5</span>));
-        <span class="macro">assert_eq!</span>(<span class="ident">serial_deserial</span>(<span class="kw-2">&amp;</span><span class="ident">f6</span>), <span class="prelude-val">Ok</span>(<span class="ident">f6</span>));
     }
 
     <span class="attribute">#[<span class="ident">test</span>]</span>
@@ -3092,18 +2929,47 @@
     <span class="kw">fn</span> <span class="ident">test_module_v2_serial_deserial_is_id</span>() {
         <span class="kw">let</span> <span class="ident">m</span> <span class="op">=</span> <span class="ident">ModuleV2</span> {
             <span class="ident">contracts</span>: <span class="ident">BTreeMap::from</span>([(<span class="string">&quot;a&quot;</span>.<span class="ident">into</span>(), <span class="ident">ContractV2</span> {
-                <span class="ident">init</span>:    <span class="prelude-val">Some</span>(<span class="ident">FunctionV2::Error</span>(<span class="ident">Type::U8</span>)),
+                <span class="ident">init</span>:    <span class="prelude-val">Some</span>(<span class="ident">FunctionV2</span> {
+                    <span class="ident">parameter</span>:    <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+                    <span class="ident">return_value</span>: <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+                    <span class="ident">error</span>:        <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+                }),
                 <span class="ident">receive</span>: <span class="ident">BTreeMap::from</span>([
-                    (<span class="string">&quot;b&quot;</span>.<span class="ident">into</span>(), <span class="ident">FunctionV2::Rv</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>))),
-                    (<span class="string">&quot;c&quot;</span>.<span class="ident">into</span>(), <span class="ident">FunctionV2::ParamError</span> {
-                        <span class="ident">parameter</span>: <span class="ident">Type::U8</span>,
-                        <span class="ident">error</span>:     <span class="ident">Type::Bool</span>,
+                    (<span class="string">&quot;b&quot;</span>.<span class="ident">into</span>(), <span class="ident">FunctionV2</span> {
+                        <span class="ident">parameter</span>:    <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+                        <span class="ident">return_value</span>: <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+                        <span class="ident">error</span>:        <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+                    }),
+                    (<span class="string">&quot;c&quot;</span>.<span class="ident">into</span>(), <span class="ident">FunctionV2</span> {
+                        <span class="ident">parameter</span>:    <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+                        <span class="ident">return_value</span>: <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
+                        <span class="ident">error</span>:        <span class="prelude-val">Some</span>(<span class="ident">Type::String</span>(<span class="ident">SizeLength::U32</span>)),
                     }),
                 ]),
             })]),
         };
 
         <span class="macro">assert_eq!</span>(<span class="ident">serial_deserial</span>(<span class="kw-2">&amp;</span><span class="ident">m</span>), <span class="prelude-val">Ok</span>(<span class="ident">m</span>));
+    }
+
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_module_v3_schema_serial_deserial_is_id</span>() {
+        <span class="kw">use</span> <span class="ident">rand::prelude</span>::<span class="kw-2">*</span>;
+        <span class="kw">use</span> <span class="ident">rand_pcg::Pcg64</span>;
+
+        <span class="kw">let</span> <span class="ident">seed</span>: <span class="ident">u64</span> <span class="op">=</span> <span class="ident">random</span>();
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">rng</span> <span class="op">=</span> <span class="ident">Pcg64::seed_from_u64</span>(<span class="ident">seed</span>);
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">data</span> <span class="op">=</span> [<span class="number">0u8</span>; <span class="number">100000</span>];
+        <span class="ident">rng</span>.<span class="ident">fill_bytes</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">data</span>);
+
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">unstructured</span> <span class="op">=</span> <span class="ident">Unstructured::new</span>(<span class="kw-2">&amp;</span><span class="ident">data</span>);
+
+        <span class="kw">for</span> <span class="kw">_</span> <span class="kw">in</span> <span class="number">0</span>..<span class="number">10000</span> {
+            <span class="kw">let</span> <span class="ident">schema</span> <span class="op">=</span> <span class="ident">ModuleV3::arbitrary</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">unstructured</span>).<span class="ident">unwrap</span>();
+
+            <span class="kw">let</span> <span class="ident">res</span> <span class="op">=</span> <span class="ident">from_bytes</span>::<span class="op">&lt;</span><span class="ident">ModuleV3</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">to_bytes</span>(<span class="kw-2">&amp;</span><span class="ident">schema</span>)).<span class="ident">unwrap</span>();
+            <span class="macro">assert_eq!</span>(<span class="ident">schema</span>, <span class="ident">res</span>);
+        }
     }
 }
 </code></pre></div>

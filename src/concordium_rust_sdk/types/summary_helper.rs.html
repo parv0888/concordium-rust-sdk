@@ -1300,6 +1300,15 @@
 <span id="1300">1300</span>
 <span id="1301">1301</span>
 <span id="1302">1302</span>
+<span id="1303">1303</span>
+<span id="1304">1304</span>
+<span id="1305">1305</span>
+<span id="1306">1306</span>
+<span id="1307">1307</span>
+<span id="1308">1308</span>
+<span id="1309">1309</span>
+<span id="1310">1310</span>
+<span id="1311">1311</span>
 </pre><pre class="rust"><code><span class="doccomment">//! This private module contains an auxiliary definition of `BlockItemSummary`</span>
 <span class="doccomment">//! that matches the one in Haskell code of the node. We only use this</span>
 <span class="doccomment">//! definition to derive JSON serialization of [super::BlockItemSummary] via</span>
@@ -1647,6 +1656,15 @@
         <span class="doccomment">/// Delegator account</span>
         <span class="ident">account</span>:      <span class="ident">AccountAddress</span>,
     },
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
+    <span class="ident">Upgraded</span> {
+        <span class="doccomment">/// Address of the instance that was upgraded.</span>
+        <span class="ident">address</span>: <span class="ident"><span class="kw">super</span>::ContractAddress</span>,
+        <span class="doccomment">/// The existing module reference that is in effect before the upgrade.</span>
+        <span class="ident">from</span>:    <span class="ident">smart_contracts::ModuleRef</span>,
+        <span class="doccomment">/// The new module reference that is in effect after the upgrade.</span>
+        <span class="ident">to</span>:      <span class="ident">smart_contracts::ModuleRef</span>,
+    },
 }
 
 <span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident"><span class="kw">super</span>::ContractTraceElement</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">Event</span> {
@@ -1664,6 +1682,9 @@
             <span class="ident"><span class="kw">crate</span>::types::ContractTraceElement::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> } =&gt; {
                 <span class="ident">Event::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> }
             }
+            <span class="ident"><span class="kw">crate</span>::types::ContractTraceElement::Upgraded</span> { <span class="ident">address</span>, <span class="ident">from</span>, <span class="ident">to</span> } =&gt; {
+                <span class="ident">Event::Upgraded</span> { <span class="ident">address</span>, <span class="ident">from</span>, <span class="ident">to</span> }
+            }
         }
     }
 }
@@ -1678,13 +1699,10 @@
                 <span class="ident">from</span>: <span class="ident">Address::Contract</span>(<span class="ident">from</span>),
                 <span class="ident">amount</span>,
                 <span class="ident">to</span>: <span class="ident">Address::Account</span>(<span class="ident">to</span>),
-            } =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::ContractTraceElement::Transferred</span> { <span class="ident">from</span>, <span class="ident">amount</span>, <span class="ident">to</span> }),
-            <span class="ident">Event::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> } =&gt; {
-                <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::ContractTraceElement::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> })
-            }
-            <span class="ident">Event::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> } =&gt; {
-                <span class="prelude-val">Ok</span>(<span class="ident"><span class="kw">super</span>::ContractTraceElement::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> })
-            }
+            } =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::Transferred</span> { <span class="ident">from</span>, <span class="ident">amount</span>, <span class="ident">to</span> }),
+            <span class="ident">Event::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> } =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::Interrupted</span> { <span class="ident">address</span>, <span class="ident">events</span> }),
+            <span class="ident">Event::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> } =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::Resumed</span> { <span class="ident">address</span>, <span class="ident">success</span> }),
+            <span class="ident">Event::Upgraded</span> { <span class="ident">address</span>, <span class="ident">from</span>, <span class="ident">to</span> } =&gt; <span class="prelude-val">Ok</span>(<span class="ident"><span class="self">Self</span>::Upgraded</span> { <span class="ident">address</span>, <span class="ident">from</span>, <span class="ident">to</span> }),
             <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">ConversionError::InvalidTransactionResult</span>),
         }
     }

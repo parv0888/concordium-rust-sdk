@@ -1,0 +1,1 @@
+initSidebarItems({"fn":[["z_vec","This function takes one argument n and returns the vector (z^j, z^{j+1}, …, z^{j+n-1}) in F^n for any field F The arguments are"]],"struct":[["Generators","Struct containing generators G and H needed for range proofs"]]});
