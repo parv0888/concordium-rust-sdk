@@ -2219,6 +2219,68 @@
 <span id="2219">2219</span>
 <span id="2220">2220</span>
 <span id="2221">2221</span>
+<span id="2222">2222</span>
+<span id="2223">2223</span>
+<span id="2224">2224</span>
+<span id="2225">2225</span>
+<span id="2226">2226</span>
+<span id="2227">2227</span>
+<span id="2228">2228</span>
+<span id="2229">2229</span>
+<span id="2230">2230</span>
+<span id="2231">2231</span>
+<span id="2232">2232</span>
+<span id="2233">2233</span>
+<span id="2234">2234</span>
+<span id="2235">2235</span>
+<span id="2236">2236</span>
+<span id="2237">2237</span>
+<span id="2238">2238</span>
+<span id="2239">2239</span>
+<span id="2240">2240</span>
+<span id="2241">2241</span>
+<span id="2242">2242</span>
+<span id="2243">2243</span>
+<span id="2244">2244</span>
+<span id="2245">2245</span>
+<span id="2246">2246</span>
+<span id="2247">2247</span>
+<span id="2248">2248</span>
+<span id="2249">2249</span>
+<span id="2250">2250</span>
+<span id="2251">2251</span>
+<span id="2252">2252</span>
+<span id="2253">2253</span>
+<span id="2254">2254</span>
+<span id="2255">2255</span>
+<span id="2256">2256</span>
+<span id="2257">2257</span>
+<span id="2258">2258</span>
+<span id="2259">2259</span>
+<span id="2260">2260</span>
+<span id="2261">2261</span>
+<span id="2262">2262</span>
+<span id="2263">2263</span>
+<span id="2264">2264</span>
+<span id="2265">2265</span>
+<span id="2266">2266</span>
+<span id="2267">2267</span>
+<span id="2268">2268</span>
+<span id="2269">2269</span>
+<span id="2270">2270</span>
+<span id="2271">2271</span>
+<span id="2272">2272</span>
+<span id="2273">2273</span>
+<span id="2274">2274</span>
+<span id="2275">2275</span>
+<span id="2276">2276</span>
+<span id="2277">2277</span>
+<span id="2278">2278</span>
+<span id="2279">2279</span>
+<span id="2280">2280</span>
+<span id="2281">2281</span>
+<span id="2282">2282</span>
+<span id="2283">2283</span>
 </pre><pre class="rust"><code><span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_base::hashes</span>;
 <span class="comment">// re-export to maintain backwards compatibility.</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_base::id::types::CredentialType</span>;
@@ -2246,8 +2308,9 @@
     <span class="ident">id</span>::{
         <span class="ident">constants</span>::{<span class="ident">ArCurve</span>, <span class="ident">AttributeKind</span>},
         <span class="ident">elgamal</span>,
-        <span class="ident">types</span>::{<span class="ident">AccountAddress</span>, <span class="ident">AccountCredentialWithoutProofs</span>},
+        <span class="ident">types</span>::{<span class="ident">AccountAddress</span>, <span class="ident">AccountCredentialWithoutProofs</span>, <span class="ident">AccountKeys</span>},
     },
+    <span class="ident">transactions</span>::{<span class="ident">ExactSizeTransactionSigner</span>, <span class="ident">TransactionSigner</span>},
 };
 <span class="kw">use</span> <span class="ident">std</span>::{
     <span class="ident">collections</span>::{<span class="ident">BTreeMap</span>, <span class="ident">BTreeSet</span>, <span class="ident">HashSet</span>},
@@ -4439,6 +4502,67 @@
     <span class="kw">pub</span> <span class="ident">network_info</span>: <span class="ident">NetworkInfo</span>,
     <span class="doccomment">/// Information related to consensus for the node.</span>
     <span class="kw">pub</span> <span class="ident">details</span>:      <span class="ident">NodeDetails</span>,
+}
+
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+<span class="attribute">#[<span class="ident">serde</span>(<span class="ident">try_from</span> <span class="op">=</span> <span class="string">&quot;wallet_account_json::VersionedWalletAccount&quot;</span>)]</span>
+<span class="doccomment">/// A parsed import file in the format exported by the browser extension wallet</span>
+<span class="doccomment">/// and the new android and iOS wallets.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// This structure implements [`TransactionSigner`] and</span>
+<span class="doccomment">/// [`ExactSizeTransactionSigner`] so it may be used for sending transactions.</span>
+<span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WalletAccount</span> {
+    <span class="kw">pub</span> <span class="ident">address</span>: <span class="ident">AccountAddress</span>,
+    <span class="kw">pub</span> <span class="ident">keys</span>:    <span class="ident">AccountKeys</span>,
+}
+
+<span class="kw">impl</span> <span class="ident">TransactionSigner</span> <span class="kw">for</span> <span class="ident">WalletAccount</span> {
+    <span class="kw">fn</span> <span class="ident">sign_transaction_hash</span>(
+        <span class="kw-2">&amp;</span><span class="self">self</span>,
+        <span class="ident">hash_to_sign</span>: <span class="kw-2">&amp;</span><span class="ident">hashes::TransactionSignHash</span>,
+    ) -&gt; <span class="ident">common::types::TransactionSignature</span> {
+        <span class="self">self</span>.<span class="ident">keys</span>.<span class="ident">sign_transaction_hash</span>(<span class="ident">hash_to_sign</span>)
+    }
+}
+
+<span class="kw">impl</span> <span class="ident">ExactSizeTransactionSigner</span> <span class="kw">for</span> <span class="ident">WalletAccount</span> {
+    <span class="kw">fn</span> <span class="ident">num_keys</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">u32</span> { <span class="self">self</span>.<span class="ident">keys</span>.<span class="ident">num_keys</span>() }
+}
+
+<span class="kw">mod</span> <span class="ident">wallet_account_json</span> {
+    <span class="kw">use</span> <span class="ident">concordium_base::common</span>::{<span class="ident">Version</span>, <span class="ident">VERSION_0</span>};
+
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
+
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">WalletAccount</span> {
+        <span class="ident">account_keys</span>: <span class="ident">AccountKeys</span>,
+        <span class="kw">pub</span> <span class="ident">address</span>:  <span class="ident">AccountAddress</span>,
+    }
+
+    <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">SerdeDeserialize</span>)]</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename_all</span> <span class="op">=</span> <span class="string">&quot;camelCase&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">VersionedWalletAccount</span> {
+        <span class="ident">r#type</span>: <span class="ident">String</span>,
+        <span class="ident">v</span>:      <span class="ident">Version</span>,
+        <span class="ident">value</span>:  <span class="ident">WalletAccount</span>,
+    }
+
+    <span class="kw">impl</span> <span class="ident">TryFrom</span><span class="op">&lt;</span><span class="ident">VersionedWalletAccount</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident"><span class="kw">super</span>::WalletAccount</span> {
+        <span class="kw">type</span> <span class="ident">Error</span> <span class="op">=</span> <span class="ident">anyhow::Error</span>;
+
+        <span class="kw">fn</span> <span class="ident">try_from</span>(<span class="ident">value</span>: <span class="ident">VersionedWalletAccount</span>) -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span>, <span class="ident"><span class="self">Self</span>::Error</span><span class="op">&gt;</span> {
+            <span class="kw">if</span> <span class="ident">value</span>.<span class="ident">v</span> <span class="op">==</span> <span class="ident">VERSION_0</span> <span class="op">&amp;&amp;</span> <span class="ident">value</span>.<span class="ident">r#type</span> <span class="op">==</span> <span class="string">&quot;concordium-browser-wallet-account&quot;</span> {
+                <span class="prelude-val">Ok</span>(<span class="self">Self</span> {
+                    <span class="ident">address</span>: <span class="ident">value</span>.<span class="ident">value</span>.<span class="ident">address</span>,
+                    <span class="ident">keys</span>:    <span class="ident">value</span>.<span class="ident">value</span>.<span class="ident">account_keys</span>,
+                })
+            } <span class="kw">else</span> {
+                <span class="macro">anyhow::bail!</span>(<span class="string">&quot;Unexpected wallet export version.&quot;</span>)
+            }
+        }
+    }
 }
 </code></pre></div>
 </section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../../" data-current-crate="concordium_rust_sdk" data-search-index-js="../../../search-index.js" data-search-js="../../../search.js"></div>

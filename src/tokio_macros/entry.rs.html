@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tokio-macros-1.8.0&#x2F;src&#x2F;entry.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>entry.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../tokio_macros/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source of the Rust file `&#x2F;home&#x2F;runner&#x2F;.cargo&#x2F;registry&#x2F;src&#x2F;github.com-1ecc6299db9ec823&#x2F;tokio-macros-1.8.2&#x2F;src&#x2F;entry.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>entry.rs - source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../tokio_macros/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><div class="example-wrap"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -459,6 +459,39 @@
 <span id="459">459</span>
 <span id="460">460</span>
 <span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+<span id="477">477</span>
+<span id="478">478</span>
+<span id="479">479</span>
+<span id="480">480</span>
+<span id="481">481</span>
+<span id="482">482</span>
+<span id="483">483</span>
+<span id="484">484</span>
+<span id="485">485</span>
+<span id="486">486</span>
+<span id="487">487</span>
+<span id="488">488</span>
+<span id="489">489</span>
+<span id="490">490</span>
+<span id="491">491</span>
+<span id="492">492</span>
+<span id="493">493</span>
+<span id="494">494</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident">proc_macro::TokenStream</span>;
 <span class="kw">use</span> <span class="ident">proc_macro2</span>::{<span class="ident">Ident</span>, <span class="ident">Span</span>};
 <span class="kw">use</span> <span class="ident">quote</span>::{<span class="ident">quote</span>, <span class="ident">quote_spanned</span>, <span class="ident">ToTokens</span>};
@@ -844,17 +877,50 @@
 
     <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="ident">input</span>.<span class="ident">block</span>;
     <span class="kw">let</span> <span class="ident">brace_token</span> <span class="op">=</span> <span class="ident">input</span>.<span class="ident">block</span>.<span class="ident">brace_token</span>;
-    <span class="ident">input</span>.<span class="ident">block</span> <span class="op">=</span> <span class="ident">syn::parse2</span>(<span class="macro">quote_spanned!</span> {<span class="ident">last_stmt_end_span</span>=&gt;
+    <span class="kw">let</span> <span class="ident">body_ident</span> <span class="op">=</span> <span class="macro">quote!</span> { <span class="ident">body</span> };
+    <span class="kw">let</span> <span class="ident">block_expr</span> <span class="op">=</span> <span class="macro">quote_spanned!</span> {<span class="ident">last_stmt_end_span</span>=&gt;
+        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::expect_used</span>, <span class="ident">clippy::diverging_sub_expression</span>)]</span>
         {
+            <span class="kw">return</span> #<span class="ident">rt</span>
+                .<span class="ident">enable_all</span>()
+                .<span class="ident">build</span>()
+                .<span class="ident">expect</span>(<span class="string">&quot;Failed building the Runtime&quot;</span>)
+                .<span class="ident">block_on</span>(#<span class="ident">body_ident</span>);
+        }
+    };
+
+    <span class="comment">// For test functions pin the body to the stack and use `Pin&lt;&amp;mut dyn</span>
+    <span class="comment">// Future&gt;` to reduce the amount of `Runtime::block_on` (and related</span>
+    <span class="comment">// functions) copies we generate during compilation due to the generic</span>
+    <span class="comment">// parameter `F` (the future to block on). This could have an impact on</span>
+    <span class="comment">// performance, but because it&#39;s only for testing it&#39;s unlikely to be very</span>
+    <span class="comment">// large.</span>
+    <span class="comment">//</span>
+    <span class="comment">// We don&#39;t do this for the main function as it should only be used once so</span>
+    <span class="comment">// there will be no benefit.</span>
+    <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw">if</span> <span class="ident">is_test</span> {
+        <span class="kw">let</span> <span class="ident">output_type</span> <span class="op">=</span> <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="ident">input</span>.<span class="ident">sig</span>.<span class="ident">output</span> {
+            <span class="comment">// For functions with no return value syn doesn&#39;t print anything,</span>
+            <span class="comment">// but that doesn&#39;t work as `Output` for our boxed `Future`, so</span>
+            <span class="comment">// default to `()` (the same type as the function output).</span>
+            <span class="ident">syn::ReturnType::Default</span> =&gt; <span class="macro">quote!</span> { () },
+            <span class="ident">syn::ReturnType::Type</span>(<span class="kw">_</span>, <span class="ident">ret_type</span>) =&gt; <span class="macro">quote!</span> { #<span class="ident">ret_type</span> },
+        };
+        <span class="macro">quote!</span> {
             <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw">async</span> #<span class="ident">body</span>;
-            <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::expect_used</span>, <span class="ident">clippy::diverging_sub_expression</span>)]</span>
-            {
-                <span class="kw">return</span> #<span class="ident">rt</span>
-                    .<span class="ident">enable_all</span>()
-                    .<span class="ident">build</span>()
-                    .<span class="ident">expect</span>(<span class="string">&quot;Failed building the Runtime&quot;</span>)
-                    .<span class="ident">block_on</span>(<span class="ident">body</span>);
-            }
+            #<span class="macro">crate_ident::pin!</span>(<span class="ident">body</span>);
+            <span class="kw">let</span> <span class="ident">body</span>: <span class="ident">::std::pin::Pin</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="kw">dyn</span> <span class="ident">::std::future::Future</span><span class="op">&lt;</span><span class="ident">Output</span> <span class="op">=</span> #<span class="ident">output_type</span><span class="op">&gt;</span><span class="op">&gt;</span> <span class="op">=</span> <span class="ident">body</span>;
+        }
+    } <span class="kw">else</span> {
+        <span class="macro">quote!</span> {
+            <span class="kw">let</span> <span class="ident">body</span> <span class="op">=</span> <span class="kw">async</span> #<span class="ident">body</span>;
+        }
+    };
+
+    <span class="ident">input</span>.<span class="ident">block</span> <span class="op">=</span> <span class="ident">syn::parse2</span>(<span class="macro">quote!</span> {
+        {
+            #<span class="ident">body</span>
+            #<span class="ident">block_expr</span>
         }
     })
     .<span class="ident">expect</span>(<span class="string">&quot;Parsing failure&quot;</span>);
@@ -908,7 +974,7 @@
     };
     <span class="kw">let</span> <span class="ident">config</span> <span class="op">=</span> <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">attr</span>) <span class="op">=</span> <span class="ident">input</span>.<span class="ident">attrs</span>.<span class="ident">iter</span>().<span class="ident">find</span>(<span class="op">|</span><span class="ident">attr</span><span class="op">|</span> <span class="ident">attr</span>.<span class="ident">path</span>.<span class="ident">is_ident</span>(<span class="string">&quot;test&quot;</span>)) {
         <span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="string">&quot;second test attribute is supplied&quot;</span>;
-        <span class="prelude-val">Err</span>(<span class="ident">syn::Error::new_spanned</span>(<span class="kw-2">&amp;</span><span class="ident">attr</span>, <span class="ident">msg</span>))
+        <span class="prelude-val">Err</span>(<span class="ident">syn::Error::new_spanned</span>(<span class="ident">attr</span>, <span class="ident">msg</span>))
     } <span class="kw">else</span> {
         <span class="ident">AttributeArgs::parse_terminated</span>
             .<span class="ident">parse</span>(<span class="ident">args</span>)
