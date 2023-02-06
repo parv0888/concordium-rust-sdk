@@ -2198,6 +2198,54 @@
 <span id="2198">2198</span>
 <span id="2199">2199</span>
 <span id="2200">2200</span>
+<span id="2201">2201</span>
+<span id="2202">2202</span>
+<span id="2203">2203</span>
+<span id="2204">2204</span>
+<span id="2205">2205</span>
+<span id="2206">2206</span>
+<span id="2207">2207</span>
+<span id="2208">2208</span>
+<span id="2209">2209</span>
+<span id="2210">2210</span>
+<span id="2211">2211</span>
+<span id="2212">2212</span>
+<span id="2213">2213</span>
+<span id="2214">2214</span>
+<span id="2215">2215</span>
+<span id="2216">2216</span>
+<span id="2217">2217</span>
+<span id="2218">2218</span>
+<span id="2219">2219</span>
+<span id="2220">2220</span>
+<span id="2221">2221</span>
+<span id="2222">2222</span>
+<span id="2223">2223</span>
+<span id="2224">2224</span>
+<span id="2225">2225</span>
+<span id="2226">2226</span>
+<span id="2227">2227</span>
+<span id="2228">2228</span>
+<span id="2229">2229</span>
+<span id="2230">2230</span>
+<span id="2231">2231</span>
+<span id="2232">2232</span>
+<span id="2233">2233</span>
+<span id="2234">2234</span>
+<span id="2235">2235</span>
+<span id="2236">2236</span>
+<span id="2237">2237</span>
+<span id="2238">2238</span>
+<span id="2239">2239</span>
+<span id="2240">2240</span>
+<span id="2241">2241</span>
+<span id="2242">2242</span>
+<span id="2243">2243</span>
+<span id="2244">2244</span>
+<span id="2245">2245</span>
+<span id="2246">2246</span>
+<span id="2247">2247</span>
+<span id="2248">2248</span>
 </pre><pre class="rust"><code><span class="doccomment">//! This module exposes [Client](v2::Client) which is a wrapper around the</span>
 <span class="doccomment">//! generated gRPC rust client, providing a more ergonomic interface than the</span>
 <span class="doccomment">//! generated client. See [Client](v2::Client) for documentation of how to use.</span>
@@ -2213,7 +2261,7 @@
         },
         <span class="ident">transactions</span>::{<span class="self">self</span>, <span class="ident">InitContractPayload</span>, <span class="ident">UpdateContractPayload</span>, <span class="ident">UpdateInstruction</span>},
         <span class="ident">AbsoluteBlockHeight</span>, <span class="ident">AccountInfo</span>, <span class="ident">CredentialRegistrationID</span>, <span class="ident">Energy</span>, <span class="ident">Memo</span>, <span class="ident">Nonce</span>,
-        <span class="ident">RegisteredData</span>, <span class="ident">TransactionStatus</span>, <span class="ident">UpdateSequenceNumber</span>,
+        <span class="ident">RegisteredData</span>, <span class="ident">SpecialTransactionOutcome</span>, <span class="ident">TransactionStatus</span>, <span class="ident">UpdateSequenceNumber</span>,
     },
 };
 <span class="kw">use</span> <span class="ident">concordium_base</span>::{
@@ -2238,10 +2286,13 @@
 <span class="kw">use</span> <span class="ident">futures</span>::{<span class="ident">Stream</span>, <span class="ident">StreamExt</span>};
 <span class="kw">use</span> <span class="ident">std::collections::HashMap</span>;
 <span class="kw">use</span> <span class="ident">tonic::IntoRequest</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">tonic</span>::{<span class="ident">transport::Endpoint</span>, <span class="ident">Status</span>};
+<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">tonic</span>::{<span class="ident">transport::Endpoint</span>, <span class="ident">Code</span>, <span class="ident">Status</span>};
 
 <span class="kw">mod</span> <span class="ident">conversions</span>;
+<span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;generated/concordium.v2.rs&quot;</span>]</span>
+<span class="attribute">#[<span class="ident">allow</span>(<span class="ident">clippy::large_enum_variant</span>, <span class="ident">clippy::enum_variant_names</span>)]</span>
 <span class="kw">mod</span> <span class="ident">generated</span>;
+<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">proto_schema_version</span>;
 
 <span class="doccomment">/// A client for gRPC API v2 of the Concordium node. Can be used to control the</span>
 <span class="doccomment">/// node, send transactions and query information about the node and the state</span>
@@ -3547,6 +3598,39 @@
         })
     }
 
+    <span class="doccomment">/// Get information about whether a block identified by `bi` is a payday</span>
+    <span class="doccomment">/// block or not. This will always return `false` for blocks produced prior</span>
+    <span class="doccomment">/// to protocol version 4. If the block does not exits</span>
+    <span class="doccomment">/// [`QueryError::NotFound`] is returned.</span>
+    <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">is_payday_block</span>(
+        <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
+        <span class="ident">bi</span>: <span class="kw">impl</span> <span class="ident">IntoBlockIdentifier</span>,
+    ) -&gt; <span class="ident">endpoints::QueryResult</span><span class="op">&lt;</span><span class="ident">QueryResponse</span><span class="op">&lt;</span><span class="ident">bool</span><span class="op">&gt;</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">special_events</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">get_block_special_events</span>(<span class="ident">bi</span>).<span class="kw">await</span><span class="question-mark">?</span>;
+        <span class="kw">let</span> <span class="ident">block_hash</span> <span class="op">=</span> <span class="ident">special_events</span>.<span class="ident">block_hash</span>;
+
+        <span class="kw">while</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">event</span>) <span class="op">=</span> <span class="ident">special_events</span>.<span class="ident">response</span>.<span class="ident">next</span>().<span class="kw">await</span>.<span class="ident">transpose</span>()<span class="question-mark">?</span> {
+            <span class="kw">let</span> <span class="ident">has_payday_event</span> <span class="op">=</span> <span class="macro">matches!</span>(
+                <span class="ident">event</span>,
+                <span class="ident">SpecialTransactionOutcome::PaydayPoolReward</span> { .. }
+                    <span class="op">|</span> <span class="ident">SpecialTransactionOutcome::PaydayAccountReward</span> { .. }
+                    <span class="op">|</span> <span class="ident">SpecialTransactionOutcome::PaydayFoundationReward</span> { .. }
+            );
+
+            <span class="kw">if</span> <span class="ident">has_payday_event</span> {
+                <span class="kw">return</span> <span class="prelude-val">Ok</span>(<span class="ident">QueryResponse</span> {
+                    <span class="ident">block_hash</span>,
+                    <span class="ident">response</span>: <span class="bool-val">true</span>,
+                });
+            };
+        }
+
+        <span class="prelude-val">Ok</span>(<span class="ident">QueryResponse</span> {
+            <span class="ident">block_hash</span>,
+            <span class="ident">response</span>: <span class="bool-val">false</span>,
+        })
+    }
+
     <span class="doccomment">/// Get all the bakers at the end of the given block.</span>
     <span class="doccomment">/// If the block does not exist [`QueryError::NotFound`] is returned.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_baker_list</span>(
@@ -3568,8 +3652,8 @@
     }
 
     <span class="doccomment">/// Get information about a given pool at the end of a given block.</span>
-    <span class="doccomment">/// If the block or baker ID does not exist [`QueryError::NotFound`] is</span>
-    <span class="doccomment">/// returned.</span>
+    <span class="doccomment">/// If the block does not exist or is prior to protocol version 4 then</span>
+    <span class="doccomment">/// [`QueryError::NotFound`] is returned.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_pool_info</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">block_id</span>: <span class="kw">impl</span> <span class="ident">IntoBlockIdentifier</span>,
@@ -3588,8 +3672,9 @@
     }
 
     <span class="doccomment">/// Get information about the passive delegators at the end of a given</span>
-    <span class="doccomment">/// block. If the block does not exist [`QueryError::NotFound`] is</span>
-    <span class="doccomment">/// returned.</span>
+    <span class="doccomment">/// block.</span>
+    <span class="doccomment">/// If the block does not exist or is prior to protocol version 4 then</span>
+    <span class="doccomment">/// [`QueryError::NotFound`] is returned.</span>
     <span class="kw">pub</span> <span class="kw">async</span> <span class="kw">fn</span> <span class="ident">get_passive_delegation_info</span>(
         <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>,
         <span class="ident">block_id</span>: <span class="kw">impl</span> <span class="ident">IntoBlockIdentifier</span>,
@@ -3643,8 +3728,11 @@
     }
 
     <span class="doccomment">/// Get the registered delegators of a given pool at the end of a given</span>
-    <span class="doccomment">/// block. If the block or baker ID does not exist [`QueryError::NotFound`]</span>
-    <span class="doccomment">/// is returned. The stream will end when all the delegators have been</span>
+    <span class="doccomment">/// block.</span>
+    <span class="doccomment">/// If the block or baker ID does not exist [`QueryError::NotFound`] is</span>
+    <span class="doccomment">/// returned, and if the block is baked prior to protocol version 4</span>
+    <span class="doccomment">/// [`QueryError::RPCError`] with status [`Code::InvalidArgument`] is</span>
+    <span class="doccomment">/// returned. The stream will end when all the delegators have been</span>
     <span class="doccomment">/// returned for the given block.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// In contrast to the [Client::get_pool_delegators_reward_period] which</span>
@@ -3675,11 +3763,14 @@
     }
 
     <span class="doccomment">/// Get the fixed delegators of a given pool for the reward period of the</span>
-    <span class="doccomment">/// given block. If the block or baker ID does not exist</span>
-    <span class="doccomment">/// [`QueryError::NotFound`] is returned. The stream will end when all the</span>
-    <span class="doccomment">/// delegators have been returned.</span>
+    <span class="doccomment">/// given block.</span>
+    <span class="doccomment">/// If the block or baker ID does not exist [`QueryError::NotFound`] is</span>
+    <span class="doccomment">/// returned, and if the block is baked prior to protocol version 4</span>
+    <span class="doccomment">/// [`QueryError::RPCError`] with status [`Code::InvalidArgument`] is</span>
+    <span class="doccomment">/// returned. The stream will end when all the delegators have been</span>
+    <span class="doccomment">/// returned.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// In contracts to the [Client::get_pool_delegators] which</span>
+    <span class="doccomment">/// In contrast to the [Client::get_pool_delegators] which</span>
     <span class="doccomment">/// returns delegators registered for the given block, this endpoint</span>
     <span class="doccomment">/// returns the fixed delegators contributing stake in the reward period</span>
     <span class="doccomment">/// containing the given block.</span>
@@ -3705,9 +3796,11 @@
         })
     }
 
-    <span class="doccomment">/// Get the registered passive delegators at the end of a given block. If</span>
-    <span class="doccomment">/// the block does not exist [`QueryError::NotFound`] is returned. The</span>
-    <span class="doccomment">/// stream will end when all the delegators have been returned.</span>
+    <span class="doccomment">/// Get the registered passive delegators at the end of a given block.</span>
+    <span class="doccomment">/// If the block does not exist [`QueryError::NotFound`] is returned, and if</span>
+    <span class="doccomment">/// the block is baked prior to protocol version 4 [`QueryError::</span>
+    <span class="doccomment">/// RPCError`] with status [`Code::InvalidArgument`] is returned. The stream</span>
+    <span class="doccomment">/// will end when all the delegators have been returned.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// In contrast to the [`Client::get_passive_delegators_reward_period`]</span>
     <span class="doccomment">/// which returns delegators that are fixed for the reward period of the</span>
@@ -3736,11 +3829,14 @@
     }
 
     <span class="doccomment">/// Get the fixed passive delegators for the reward period of the given</span>
-    <span class="doccomment">/// block. If the block does not exist [`QueryError::NotFound`] is</span>
+    <span class="doccomment">/// block.</span>
+    <span class="doccomment">/// If the block does not exist [`QueryError::NotFound`] is returned.</span>
+    <span class="doccomment">/// If the block is baked prior to protocol version 4,</span>
+    <span class="doccomment">/// [`QueryError::RPCError`] with status [`Code::InvalidArgument`] is</span>
     <span class="doccomment">/// returned. The stream will end when all the delegators have been</span>
     <span class="doccomment">/// returned.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// In contracts to the `GetPassiveDelegators` which returns delegators</span>
+    <span class="doccomment">/// In contrast to the `GetPassiveDelegators` which returns delegators</span>
     <span class="doccomment">/// registered for the given block, this endpoint returns the fixed</span>
     <span class="doccomment">/// delegators contributing stake in the reward period containing the</span>
     <span class="doccomment">/// given block.</span>

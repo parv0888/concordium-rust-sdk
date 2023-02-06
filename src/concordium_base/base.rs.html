@@ -1297,6 +1297,16 @@
 <span id="1297">1297</span>
 <span id="1298">1298</span>
 <span id="1299">1299</span>
+<span id="1300">1300</span>
+<span id="1301">1301</span>
+<span id="1302">1302</span>
+<span id="1303">1303</span>
+<span id="1304">1304</span>
+<span id="1305">1305</span>
+<span id="1306">1306</span>
+<span id="1307">1307</span>
+<span id="1308">1308</span>
+<span id="1309">1309</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Basis type definitions that are used throughout the crate.</span>
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_contracts_common</span>::{
@@ -1670,6 +1680,10 @@
     <span class="doccomment">/// improves the structure of internal node datastructures related to</span>
     <span class="doccomment">/// accounts.</span>
     <span class="ident">P5</span>,
+    <span class="attribute">#[<span class="ident">display</span>(<span class="ident">fmt</span> <span class="op">=</span> <span class="string">&quot;P6&quot;</span>)]</span>
+    <span class="doccomment">/// Protocol `P6` is a future protocol update that will introduce a new</span>
+    <span class="doccomment">/// consensus.</span>
+    <span class="ident">P6</span>,
 }
 
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Error</span>, <span class="ident">Display</span>)]</span>
@@ -1690,6 +1704,7 @@
             <span class="number">3</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ProtocolVersion::P3</span>),
             <span class="number">4</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ProtocolVersion::P4</span>),
             <span class="number">5</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ProtocolVersion::P5</span>),
+            <span class="number">6</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">ProtocolVersion::P6</span>),
             <span class="ident">version</span> =&gt; <span class="prelude-val">Err</span>(<span class="ident">UnknownProtocolVersion</span> { <span class="ident">version</span> }),
         }
     }
@@ -1703,6 +1718,7 @@
             <span class="ident">ProtocolVersion::P3</span> =&gt; <span class="number">3</span>,
             <span class="ident">ProtocolVersion::P4</span> =&gt; <span class="number">4</span>,
             <span class="ident">ProtocolVersion::P5</span> =&gt; <span class="number">5</span>,
+            <span class="ident">ProtocolVersion::P6</span> =&gt; <span class="number">6</span>,
         }
     }
 }
@@ -1939,12 +1955,16 @@
 }
 
 <span class="comment">// FIXME: Move to somewhere else in the dependency. This belongs to rust-src.</span>
-<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>)]</span>
+<span class="attribute">#[<span class="ident">derive</span>(<span class="ident">SerdeBase16Serialize</span>, <span class="ident">Serialize</span>, <span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Copy</span>, <span class="ident">derive_more::AsRef</span>)]</span>
 <span class="doccomment">/// A registration ID of a credential. This ID is generated from the user&#39;s PRF</span>
 <span class="doccomment">/// key and a sequential counter. [`CredentialRegistrationID`]&#39;s generated from</span>
 <span class="doccomment">/// the same PRF key, but different counter values cannot easily be linked</span>
 <span class="doccomment">/// together.</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">CredentialRegistrationID</span>(<span class="ident">id::constants::ArCurve</span>);
+
+<span class="kw">impl</span> <span class="ident">CredentialRegistrationID</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">g</span>: <span class="ident">id::constants::ArCurve</span>) -&gt; <span class="self">Self</span> { <span class="self">Self</span>(<span class="ident">g</span>) }
+}
 
 <span class="kw">impl</span> <span class="ident">fmt::Display</span> <span class="kw">for</span> <span class="ident">CredentialRegistrationID</span> {
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
@@ -1972,7 +1992,7 @@
         <span class="ident">deserialize_with</span> <span class="op">=</span> <span class="string">&quot;crypto_common::base16_decode&quot;</span>
     )]</span>
     <span class="kw">pub</span> <span class="ident">secret</span>: <span class="ident">ed25519_dalek::SecretKey</span>,
-    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">rename</span> <span class="op">=</span> <span class="string">&quot;verifyKey&quot;</span>)]</span>
+    <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">flatten</span>)]</span>
     <span class="kw">pub</span> <span class="ident">public</span>: <span class="ident">UpdatePublicKey</span>,
 }
 

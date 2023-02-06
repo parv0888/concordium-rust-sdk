@@ -1388,6 +1388,12 @@
 <span id="1388">1388</span>
 <span id="1389">1389</span>
 <span id="1390">1390</span>
+<span id="1391">1391</span>
+<span id="1392">1392</span>
+<span id="1393">1393</span>
+<span id="1394">1394</span>
+<span id="1395">1395</span>
+<span id="1396">1396</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="kw">crate</span>::{<span class="ident">constants</span>::<span class="kw-2">*</span>, <span class="ident">schema</span>, <span class="ident">traits</span>::<span class="kw-2">*</span>, <span class="ident">types</span>::<span class="kw-2">*</span>};
 
 <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;std&quot;</span>))]</span>
@@ -2409,6 +2415,12 @@
             <span class="bool-val">false</span>
         }
     }
+
+    <span class="doccomment">/// Return `true` if and only if the address is an account address.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_account</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> { <span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident">Address::Account</span>(<span class="kw">_</span>)) }
+
+    <span class="doccomment">/// Return `true` if and only if the address is a contract address.</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_contract</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) -&gt; <span class="ident">bool</span> { <span class="macro">matches!</span>(<span class="self">self</span>, <span class="ident">Address::Contract</span>(<span class="kw">_</span>)) }
 }
 
 <span class="kw">impl</span> <span class="ident">Serial</span> <span class="kw">for</span> <span class="ident">AttributeTag</span> {

@@ -1,1 +1,0 @@
-initSidebarItems({"fn":[["write_custom_section","Output a custom section into the given writer."]],"trait":[["Output","Output data in a format compatible with Parseable."]],"type":[["OutResult",""]]});

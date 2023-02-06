@@ -193,8 +193,28 @@
 <span id="193">193</span>
 <span id="194">194</span>
 <span id="195">195</span>
+<span id="196">196</span>
+<span id="197">197</span>
+<span id="198">198</span>
+<span id="199">199</span>
+<span id="200">200</span>
+<span id="201">201</span>
+<span id="202">202</span>
+<span id="203">203</span>
+<span id="204">204</span>
+<span id="205">205</span>
+<span id="206">206</span>
+<span id="207">207</span>
+<span id="208">208</span>
+<span id="209">209</span>
+<span id="210">210</span>
+<span id="211">211</span>
+<span id="212">212</span>
+<span id="213">213</span>
+<span id="214">214</span>
 </pre><pre class="rust"><code><span class="kw">use</span> <span class="ident"><span class="kw">super</span>::hashes</span>;
 <span class="kw">use</span> <span class="ident"><span class="kw">crate</span>::constants</span>::<span class="kw-2">*</span>;
+<span class="kw">use</span> <span class="ident">concordium_contracts_common::ModuleReference</span>;
 <span class="doccomment">/// Re-export of common helper functionality for smart contract, such as types</span>
 <span class="doccomment">/// and serialization specific for smart contracts.</span>
 <span class="kw">pub</span> <span class="kw">use</span> <span class="ident">concordium_contracts_common</span>::{
@@ -272,6 +292,14 @@
 <span class="doccomment">/// This reference is used when creating new instances.</span>
 <span class="kw">pub</span> <span class="kw">type</span> <span class="ident">ModuleRef</span> <span class="op">=</span> <span class="ident">hashes::HashBytes</span><span class="op">&lt;</span><span class="ident">ModuleRefMarker</span><span class="op">&gt;</span>;
 
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ModuleReference</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ModuleRef</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">mr</span>: <span class="ident">ModuleReference</span>) -&gt; <span class="self">Self</span> { <span class="ident"><span class="self">Self</span>::new</span>(<span class="ident">mr</span>.<span class="ident">into</span>()) }
+}
+
+<span class="kw">impl</span> <span class="ident">From</span><span class="op">&lt;</span><span class="ident">ModuleRef</span><span class="op">&gt;</span> <span class="kw">for</span> <span class="ident">ModuleReference</span> {
+    <span class="kw">fn</span> <span class="ident">from</span>(<span class="ident">mr</span>: <span class="ident">ModuleRef</span>) -&gt; <span class="self">Self</span> { <span class="ident">ModuleReference::from</span>(<span class="ident">mr</span>.<span class="ident">bytes</span>) }
+}
+
 <span class="attribute">#[<span class="ident">derive</span>(
     <span class="ident">SerdeSerialize</span>,
     <span class="ident">SerdeDeserialize</span>,
@@ -341,6 +369,16 @@
     <span class="attribute">#[<span class="ident">serde</span>(<span class="ident">with</span> <span class="op">=</span> <span class="string">&quot;crate::internal::byte_array_hex&quot;</span>)]</span>
     <span class="attribute">#[<span class="ident">size_length</span> <span class="op">=</span> <span class="number">2</span>]</span>
     <span class="ident">bytes</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>,
+}
+
+<span class="doccomment">/// Display the entire parameter in hex.</span>
+<span class="kw">impl</span> <span class="ident">std::fmt::Display</span> <span class="kw">for</span> <span class="ident">Parameter</span> {
+    <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">std::fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">std::fmt::Result</span> {
+        <span class="kw">for</span> <span class="ident">b</span> <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">bytes</span> {
+            <span class="ident">f</span>.<span class="ident">write_fmt</span>(<span class="macro">format_args!</span>(<span class="string">&quot;{:02x}&quot;</span>, <span class="ident">b</span>))<span class="question-mark">?</span>
+        }
+        <span class="prelude-val">Ok</span>(())
+    }
 }
 
 <span class="kw">impl</span> <span class="ident">Parameter</span> {

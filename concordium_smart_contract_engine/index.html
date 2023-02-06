@@ -1,0 +1,64 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This library provides functionality that builds on top of the Wasm engine and adds high-level functions for executing smart contracts on the Concordium chain."><meta name="keywords" content="rust, rustlang, rust-lang, concordium_smart_contract_engine"><title>concordium_smart_contract_engine - Rust</title><link rel="stylesheet" type="text/css" href="../normalize.css"><link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../ayu.css" disabled ><script id="default-settings" ></script><script src="../storage.js"></script><script src="../crates.js"></script><noscript><link rel="stylesheet" href="../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../favicon.svg"><style type="text/css">#crate-search{background-image:url("../down-arrow.svg");}</style></head><body class="rustdoc mod crate"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../concordium_smart_contract_engine/index.html'><div class='logo-container rust-logo'><img src='../rust-logo.png' alt='logo'></div></a><h2 class="location">Crate concordium_smart_contract_engine</h2><div class="block version"><div class="narrow-helper"></div><p>Version 1.0.0</p></div><div class="sidebar-elems"><a id="all-types" href="all.html"><p>See all concordium_smart_contract_engine's items</p></a><div class="block items"><ul><li><a href="#modules">Modules</a></li><li><a href="#structs">Structs</a></li><li><a href="#types">Type Definitions</a></li></ul></div><div id="sidebar-vars" data-name="concordium_smart_contract_engine" data-ty="mod" data-relpath=""></div><script defer src="sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Crate <a class="mod" href="#">concordium_smart_contract_engine</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../src/concordium_smart_contract_engine/lib.rs.html#1-176" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This library provides functionality that builds on top of the <a href="https://docs.rs/concordium-wasm">Wasm engine</a>
+and adds high-level functions for executing smart contracts on the
+Concordium chain.</p>
+<p>Concordium supports two versions of smart contracts, the legacy <a href="v0/index.html" title="v0"><code>v0</code></a>
+version and the <a href="v1/index.html" title="v1"><code>v1</code></a> version. The latter is essentially better in
+every way. They differ in two main ways</p>
+<ul>
+<li><a href="v0/index.html" title="v0"><code>v0</code></a> uses message passing for inter-contract communication, and has a
+flat state. The state is limited to 16kB and the entire state is written
+every time a contract update is done.</li>
+<li><a href="v1/index.html" title="v1"><code>v1</code></a> uses synchronous calls for inter-contract communication, and its
+state is a trie-based structure, which supports efficient partial state
+updates. The trie is implemented in the <a href="v1/trie/index.html" title="v1::trie"><code>v1::trie</code></a> module.</li>
+</ul>
+<p>Both <a href="v0/index.html" title="v0"><code>v0</code></a> and <a href="v1/index.html" title="v1"><code>v1</code></a> modules are structured similarly. The main
+entrypoints used by users of this library are <a href="v0/fn.invoke_init.html" title="v0::invoke_init"><code>v0::invoke_init</code></a> (resp.
+<a href="v1/fn.invoke_init.html" title="v1::invoke_init"><code>v1::invoke_init</code></a>) and <a href="v0/fn.invoke_receive.html" title="v0::invoke_receive"><code>v0::invoke_receive</code></a> (resp.
+<a href="v1/fn.invoke_receive.html" title="v1::invoke_receive"><code>v1::invoke_receive</code></a>) functions, and their variants.</p>
+<p>The respective modules provide more details on the data types involved, and
+any specifics of the different versions.</p>
+<h3 id="features" class="section-header"><a href="#features">Features</a></h3>
+<p>This crate has the following features. None are enabled by default.</p>
+<h4 id="display-state" class="section-header"><a href="#display-state"><code>display-state</code></a></h4>
+<p>This feature exposes the function
+<a href="v1::trie::PersistentState::display_tree"><code>display_tree</code></a> for displaying the
+V1 contract state in a reasonably readable format. This is useful for deep
+inspection of smart contract state, and debugging.</p>
+<h4 id="async" class="section-header"><a href="#async"><code>async</code></a></h4>
+<p>Exposes construction of smart contract state from streams of key-value
+pairs, such as those received from the node’s API. See</p>
+<ul>
+<li><a href="v1/trie/enum.PersistentState.html#method.try_from_stream"><code>try_from_stream</code></a></li>
+<li><a href="v1/trie/enum.PersistentState.html#method.from_stream"><code>from_stream</code></a></li>
+</ul>
+<h4 id="enable-ffi" class="section-header"><a href="#enable-ffi"><code>enable-ffi</code></a></h4>
+<p>This enables foreign function exports. This is an <strong>internal</strong> feature and
+there are no guarantees about the stability of foreign exports.</p>
+<h4 id="fuzz-coverage-and-fuzz" class="section-header"><a href="#fuzz-coverage-and-fuzz"><code>fuzz-coverage</code> and <code>fuzz</code></a></h4>
+<p>These features are also <strong>internal</strong> and exist to support fuzzing. They are
+used to derive Arbitrary instances and to disable inlining, the latter is
+necessary since the fuzzer used has bugs which prevent the coverage report
+being generated when functions are inlined.</p>
+</div></details><h2 id="reexports" class="section-header"><a href="#reexports">Re-exports</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left import-item"><code>pub use <a class="mod" href="../concordium_wasm/index.html" title="mod concordium_wasm">concordium_wasm</a> as wasm;</code></div><div class="item-right docblock-short"></div></div></div><h2 id="modules" class="section-header"><a href="#modules">Modules</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="mod" href="constants/index.html" title="concordium_smart_contract_engine::constants mod">constants</a></div><div class="item-right docblock-short"><p>Various constants and functions used by both <a href="v0/index.html"><code>v0</code></a> and
+<a href="v1/index.html"><code>v1</code></a> execution engines. The constants and functions range from
+limits on sizes of objects, to costs of different operations.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="resumption/index.html" title="concordium_smart_contract_engine::resumption mod">resumption</a></div><div class="item-right docblock-short"><p>This module defines the notion of suspended Wasm computation
+used by V1 contracts to execute host operations such as transfers and
+contract calls.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="utils/index.html" title="concordium_smart_contract_engine::utils mod">utils</a></div><div class="item-right docblock-short"><p>Various utilities for testing and extraction of schemas.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="v0/index.html" title="concordium_smart_contract_engine::v0 mod">v0</a></div><div class="item-right docblock-short"><p>Implementation of execution of V0 contracts.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="mod" href="v1/index.html" title="concordium_smart_contract_engine::v1 mod">v1</a></div><div class="item-right docblock-short"><p>Implementation of execution of V1 contracts.</p>
+</div></div></div><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.InterpreterEnergy.html" title="concordium_smart_contract_engine::InterpreterEnergy struct">InterpreterEnergy</a></div><div class="item-right docblock-short"><p>Interpreter energy used to count execution steps in the interpreter.
+This energy is converted to NRG by the scheduler.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.OutOfEnergy.html" title="concordium_smart_contract_engine::OutOfEnergy struct">OutOfEnergy</a></div><div class="item-right docblock-short"><p>An error raised by the interpreter when no more interpreter energy remains
+for execution.</p>
+</div></div></div><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.ExecResult.html" title="concordium_smart_contract_engine::ExecResult type">ExecResult</a></div><div class="item-right docblock-short"><p>Result of contract execution. This is just a wrapper around
+<a href="../anyhow/type.Result.html" title="anyhow::Result">anyhow::Result</a>.</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../" data-current-crate="concordium_smart_contract_engine" data-search-index-js="../search-index.js" data-search-js="../search.js"></div>
+    <script src="../main.js"></script>
+</body></html>

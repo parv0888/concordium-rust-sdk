@@ -2480,6 +2480,10 @@
 <span id="2480">2480</span>
 <span id="2481">2481</span>
 <span id="2482">2482</span>
+<span id="2483">2483</span>
+<span id="2484">2484</span>
+<span id="2485">2485</span>
+<span id="2486">2486</span>
 </pre><pre class="rust"><code><span class="doccomment">//! Main types used in the identity layer, and their serialization</span>
 <span class="doccomment">//! implementations.</span>
 <span class="kw">use</span> <span class="kw">crate</span>::{
@@ -2861,9 +2865,9 @@
     <span class="kw">fn</span> <span class="ident">fmt</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">fmt::Formatter</span><span class="op">&lt;</span><span class="lifetime">&#39;_</span><span class="op">&gt;</span>) -&gt; <span class="ident">fmt::Result</span> {
         <span class="kw">let</span> <span class="ident">l</span>: <span class="ident">usize</span> <span class="op">=</span> (<span class="kw-2">*</span><span class="self">self</span>).<span class="ident">into</span>();
         <span class="kw">if</span> <span class="ident">l</span> <span class="op">&lt;</span> <span class="ident">ATTRIBUTE_NAMES</span>.<span class="ident">len</span>() {
-            <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;{}&quot;</span>, <span class="ident">ATTRIBUTE_NAMES</span>[<span class="ident">l</span>])
+            <span class="ident">f</span>.<span class="ident">write_str</span>(<span class="ident">ATTRIBUTE_NAMES</span>[<span class="ident">l</span>])
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="ident">fmt::Error</span>)
+            <span class="macro">write!</span>(<span class="ident">f</span>, <span class="string">&quot;UNNAMED#{}&quot;</span>, <span class="ident">l</span>)
         }
     }
 }
@@ -2875,7 +2879,11 @@
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">idx</span>) <span class="op">=</span> <span class="ident">ATTRIBUTE_NAMES</span>.<span class="ident">iter</span>().<span class="ident">position</span>(<span class="op">|</span><span class="kw-2">&amp;</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span> <span class="op">==</span> <span class="ident">s</span>) {
             <span class="prelude-val">Ok</span>(<span class="ident">AttributeTag</span>(<span class="ident">idx</span> <span class="kw">as</span> <span class="ident">u8</span>))
         } <span class="kw">else</span> {
-            <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;{} tag unknown.&quot;</span>, <span class="ident">s</span>))
+            <span class="kw">match</span> <span class="ident">s</span>.<span class="ident">strip_prefix</span>(<span class="string">&quot;UNNAMED#&quot;</span>).<span class="ident">and_then</span>(<span class="op">|</span><span class="ident">x</span><span class="op">|</span> <span class="ident">x</span>.<span class="ident">parse</span>().<span class="ident">ok</span>()) {
+                <span class="prelude-val">Some</span>(<span class="ident">num</span>) <span class="kw">if</span> <span class="ident">num</span> <span class="op">&lt;</span> <span class="number">254</span> =&gt; <span class="prelude-val">Ok</span>(<span class="ident">AttributeTag</span>(<span class="ident">num</span>)), <span class="comment">// 254 is the capacity of the</span>
+                <span class="comment">// BLS curve field</span>
+                <span class="kw">_</span> =&gt; <span class="prelude-val">Err</span>(<span class="macro">anyhow!</span>(<span class="string">&quot;Unrecognized attribute tag.&quot;</span>)),
+            }
         }
     }
 }

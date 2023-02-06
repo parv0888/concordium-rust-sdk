@@ -85,6 +85,7 @@
 <span id="85">85</span>
 <span id="86">86</span>
 <span id="87">87</span>
+<span id="88">88</span>
 </pre><pre class="rust"><code><span class="doccomment">//! A library for interacting with the Concordium blockchain.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! To use this in your project the recommended setup is to clone the repository</span>
@@ -133,6 +134,7 @@
 <span class="doccomment">/// Wrapper for the node&#39;s GRPC API. The return values are parsed and wrapped in</span>
 <span class="doccomment">/// structured values.</span>
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">endpoints</span>;
+<span class="attribute">#[<span class="ident">path</span> <span class="op">=</span> <span class="string">&quot;v1/generated/concordium.rs&quot;</span>]</span>
 <span class="kw">mod</span> <span class="ident">generated_types</span>;
 <span class="kw">mod</span> <span class="ident">internal</span>;
 <span class="doccomment">/// Interface to the (optional) postgres database that the node logs finalized</span>

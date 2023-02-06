@@ -1,0 +1,66 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="This module defines the notion of the [`Artifact`], which is a processed and instantiated module that can have its exposed methods invoked via the [`Artifact::run`] method."><meta name="keywords" content="rust, rustlang, rust-lang, artifact"><title>concordium_wasm::artifact - Rust</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../light.css"  id="themeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css" disabled ><link rel="stylesheet" type="text/css" href="../../ayu.css" disabled ><script id="default-settings" ></script><script src="../../storage.js"></script><script src="../../crates.js"></script><noscript><link rel="stylesheet" href="../../noscript.css"></noscript><link rel="alternate icon" type="image/png" href="../../favicon-16x16.png"><link rel="alternate icon" type="image/png" href="../../favicon-32x32.png"><link rel="icon" type="image/svg+xml" href="../../favicon.svg"><style type="text/css">#crate-search{background-image:url("../../down-arrow.svg");}</style></head><body class="rustdoc mod"><!--[if lte IE 11]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu" role="button">&#9776;</div><a href='../../concordium_wasm/index.html'><div class='logo-container rust-logo'><img src='../../rust-logo.png' alt='logo'></div></a><h2 class="location">Module artifact</h2><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#traits">Traits</a></li><li><a href="#types">Type Definitions</a></li><li><a href="#unions">Unions</a></li></ul></div><div id="sidebar-vars" data-name="artifact" data-ty="mod" data-relpath="./"></div><script defer src="./sidebar-items.js"></script></div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!" aria-haspopup="menu" title="themes"><img width="18" height="18" alt="Pick another theme!" src="../../brush.svg"></button><div id="theme-choices" role="menu"></div></div><nav class="sub"><form class="search-form"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" disabled autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><button type="button" id="help-button" title="help">?</button><a id="settings-menu" href="../../settings.html" title="settings"><img width="18" height="18" alt="Change settings" src="../../wheel.svg"></a></div></form></nav><section id="main" class="content"><h1 class="fqn"><span class="in-band">Module <a href="../index.html">concordium_wasm</a>::<wbr><a class="mod" href="#">artifact</a><button id="copy-path" onclick="copy_path(this)" title="Copy item path to clipboard"><img src="../../clipboard.svg" width="19" height="18" alt="Copy item path"></button></span><span class="out-of-band"><span id="render-detail"><a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">[<span class="inner">&#x2212;</span>]</a></span><a class="srclink" href="../../src/concordium_wasm/artifact.rs.html#1-1357" title="goto source code">[src]</a></span></h1><details class="rustdoc-toggle top-doc" open><summary class="hideme"><span>Expand description</span></summary><div class="docblock"><p>This module defines the notion of the <a href="struct.Artifact.html" title="Artifact"><code>Artifact</code></a>, which is a processed and
+instantiated module that can have its exposed methods invoked via the
+<a href="struct.Artifact.html#method.run" title="Artifact::run"><code>Artifact::run</code></a> method.</p>
+<p>The module in this section is in a format where serialization and
+deserialization are straightforward and cheap.</p>
+</div></details><h2 id="structs" class="section-header"><a href="#structs">Structs</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Artifact.html" title="concordium_wasm::artifact::Artifact struct">Artifact</a></div><div class="item-right docblock-short"><p>A processed Wasm module. This no longer has custom sections since they are
+not needed for further processing.
+The type parameter <code>ImportFunc</code> is instantiated with the representation of
+host functions. To efficiently and relatively safely execute the module we
+preprocess imported functions into an enum. However for testing we sometimes
+just use raw imports. This type parameter allows us flexibility.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ArtifactData.html" title="concordium_wasm::artifact::ArtifactData struct">ArtifactData</a></div><div class="item-right docblock-short"><p>The data segment of the artifact. This is a slightly processed
+data segment of the module. In contrast to the table we cannot use
+the same trick of initializing it here. In practice data segments
+are at high offsets, which would lead to big artifacts. Thus we
+store it pretty much in the same way that it was when it was part
+of the source, except we have resolved the offset.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ArtifactLocal.html" title="concordium_wasm::artifact::ArtifactLocal struct">ArtifactLocal</a></div><div class="item-right docblock-short"><p>A local variable declaration in a function.
+Because we know there are not going to be more than 2^16-1 locals we can
+store multiplicity more efficiently.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ArtifactMemory.html" title="concordium_wasm::artifact::ArtifactMemory struct">ArtifactMemory</a></div><div class="item-right docblock-short"><p>Memory of the artifact, with initial size, as well as maximum size set.
+If the maximum size is not part of the original module we set it to the
+<a href="../constants/constant.MAX_NUM_PAGES.html">constants::MAX_NUM_PAGES</a></p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.ArtifactNamedImport.html" title="concordium_wasm::artifact::ArtifactNamedImport struct">ArtifactNamedImport</a></div><div class="item-right docblock-short"><p>An example of a processed import with minimal processing. Useful for testing
+and experimenting, but not for efficient execution.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.CompiledFunction.html" title="concordium_wasm::artifact::CompiledFunction struct">CompiledFunction</a></div><div class="item-right docblock-short"><p>A function which has been processed into a form suitable for execution.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.CompiledFunctionBytes.html" title="concordium_wasm::artifact::CompiledFunctionBytes struct">CompiledFunctionBytes</a></div><div class="item-right docblock-short"><p>A borrowed variant of <a href="./struct.CompiledFunction.html">CompiledFunction</a>
+that does not own the body and locals. This is used to make deserialization
+of artifacts cheaper.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.InstantiatedGlobals.html" title="concordium_wasm::artifact::InstantiatedGlobals struct">InstantiatedGlobals</a></div><div class="item-right docblock-short"><p>Fully instantiated globals with initial values.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.InstantiatedTable.html" title="concordium_wasm::artifact::InstantiatedTable struct">InstantiatedTable</a></div><div class="item-right docblock-short"><p>A fully instantiated table. This is possible because in the Wasm
+specification we have, the only way to write functions to the table is via
+the elements section of the module. Since we ensure the table is small
+enough we can afford to initialize it at compile time.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.Instructions.html" title="concordium_wasm::artifact::Instructions struct">Instructions</a></div><div class="item-right docblock-short"><p>A sequence of internal opcodes, followed by any immediate arguments.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="struct" href="struct.LocalsIterator.html" title="concordium_wasm::artifact::LocalsIterator struct">LocalsIterator</a></div><div class="item-right docblock-short"><p>An iterator over local variables.</p>
+</div></div></div><h2 id="enums" class="section-header"><a href="#enums">Enums</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="enum" href="enum.InternalOpcode.html" title="concordium_wasm::artifact::InternalOpcode enum">InternalOpcode</a></div><div class="item-right docblock-short"><p>Internal opcode. This is mostly the same as <a href="../types/enum.OpCode.html" title="OpCode"><code>OpCode</code></a>, but with control
+instructions resolved to jumps in the instruction sequence, and function
+calls processed.</p>
+</div></div></div><h2 id="traits" class="section-header"><a href="#traits">Traits</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.RunnableCode.html" title="concordium_wasm::artifact::RunnableCode trait">RunnableCode</a></div><div class="item-right docblock-short"><p>A trait encapsulating the properties that are needed to run a function.
+This trait exists because we have two different kinds of code we run. A
+fully deserialized code, i.e., where instructions are essentially
+<code>Vec&lt;InternalOpcode&gt;</code> or we execute directly from <code>&amp;[u8]</code> if the origin of
+the code is a serialized structure, such as an <a href="struct.Artifact.html" title="Artifact"><code>Artifact</code></a> retrieved from a
+database.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="trait" href="trait.TryFromImport.html" title="concordium_wasm::artifact::TryFromImport trait">TryFromImport</a></div><div class="item-right docblock-short"><p>Try to process an import into something that is perhaps more suitable for
+execution, i.e., quicker to resolve.</p>
+</div></div></div><h2 id="types" class="section-header"><a href="#types">Type Definitions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="type" href="type.BorrowedArtifact.html" title="concordium_wasm::artifact::BorrowedArtifact type">BorrowedArtifact</a></div><div class="item-right docblock-short"><p>Ar artifact which does not own the code to run. The code is only a reference
+to a byte array.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.CompileResult.html" title="concordium_wasm::artifact::CompileResult type">CompileResult</a></div><div class="item-right docblock-short"><p>Result of compilation. Either Ok(_) or an error indicating the reason.</p>
+</div></div><div class="item-row"><div class="item-left module-item"><a class="type" href="type.OwnedArtifact.html" title="concordium_wasm::artifact::OwnedArtifact type">OwnedArtifact</a></div><div class="item-right docblock-short"><p>An artifact that owns the code to run.</p>
+</div></div></div><h2 id="unions" class="section-header"><a href="#unions">Unions</a></h2>
+<div class="item-table"><div class="item-row"><div class="item-left module-item"><a class="union" href="union.StackValue.html" title="concordium_wasm::artifact::StackValue union">StackValue</a></div><div class="item-right docblock-short"><p>Either a short or long integer.
+The reason this is a union is that after Wasm module validation we are
+guaranteed that the program is well typed. Since all instructions have
+clear, fixed types, we can determine from the instruction which value we
+expect on the stack. Using a union saves on the discriminant compared to
+using an enum, leading to 50% less space used on the stack, as well as
+removes the need to handle impossible cases.</p>
+</div></div></div></section><section id="search" class="content hidden"></section><div id="rustdoc-vars" data-root-path="../../" data-current-crate="concordium_wasm" data-search-index-js="../../search-index.js" data-search-js="../../search.js"></div>
+    <script src="../../main.js"></script>
+</body></html>
