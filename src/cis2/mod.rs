@@ -15,6 +15,7 @@ use concordium_base::{base::Energy, contracts_common::Address};
 use sdk_types::{smart_contracts, transactions, ContractAddress};
 use smart_contracts::concordium_contracts_common;
 use std::{
+    collections,
     convert::{From, TryFrom},
     sync::Arc,
 };
@@ -28,8 +29,8 @@ pub use types::*;
 /// this type between multiple tasks.
 #[derive(Debug, Clone)]
 pub struct Cis2Contract {
-    client:        Client,
-    address:       ContractAddress,
+    client: Client,
+    address: ContractAddress,
     contract_name: Arc<concordium_contracts_common::OwnedContractName>,
 }
 
@@ -52,6 +53,9 @@ pub enum Cis2TransactionError {
     /// A general RPC error occured.
     #[error("RPC error: {0}")]
     RPCError(#[from] crate::endpoints::RPCError),
+
+    #[error("Invalid mint parameter: {0}")]
+    InvalidMintParams(#[from] NewMintParamsError),
 }
 
 /// Error which can occur when submitting a transaction such as `transfer` and
@@ -115,7 +119,9 @@ pub enum Cis2QueryError {
 // This is implemented manually, since deriving it using thiserror requires
 // `RejectReason` to implement std::error::Error.
 impl From<sdk_types::RejectReason> for Cis2QueryError {
-    fn from(err: sdk_types::RejectReason) -> Self { Self::NodeRejected(err) }
+    fn from(err: sdk_types::RejectReason) -> Self {
+        Self::NodeRejected(err)
+    }
 }
 
 /// Transaction metadata for CIS-2
@@ -124,13 +130,13 @@ pub struct Cis2TransactionMetadata {
     /// The account address sending the transaction.
     pub sender_address: id::types::AccountAddress,
     /// The nonce to use for the transaction.
-    pub nonce:          sdk_types::Nonce,
+    pub nonce: sdk_types::Nonce,
     /// Expiry date of the transaction.
-    pub expiry:         common::types::TransactionTime,
+    pub expiry: common::types::TransactionTime,
     /// The limit on energy to use for the transaction.
-    pub energy:         transactions::send::GivenEnergy,
+    pub energy: transactions::send::GivenEnergy,
     /// The amount of CCD to include in the transaction.
-    pub amount:         common::types::Amount,
+    pub amount: common::types::Amount,
 }
 
 impl Cis2Contract {
@@ -178,13 +184,13 @@ impl Cis2Contract {
             smart_contracts::OwnedReceiveName::try_from(format!("{}.transfer", contract_name))?;
 
         let context = smart_contracts::ContractContext {
-            invoker:   Some(sender),
-            contract:  self.address,
-            amount:    common::types::Amount::from_micro_ccd(0),
-            method:    receive_name,
+            invoker: Some(sender),
+            contract: self.address,
+            amount: common::types::Amount::from_micro_ccd(0),
+            method: receive_name,
             parameter: smart_contracts::OwnedParameter::try_from(bytes)
                 .map_err(|_| Cis2DryRunError::InvalidTransferParams(NewTransferParamsError))?,
-            energy:    DEFAULT_INVOKE_ENERGY,
+            energy: DEFAULT_INVOKE_ENERGY,
         };
         let response = self.client.invoke_instance(bi, &context).await?;
         match response.response {
@@ -251,6 +257,41 @@ impl Cis2Contract {
         Ok(hash)
     }
 
+    pub async fn mint(
+        &mut self,
+        signer: &impl transactions::ExactSizeTransactionSigner,
+        transaction_metadata: Cis2TransactionMetadata,
+        owner: Address,
+        tokens: collections::BTreeMap<TokenId, (TokenMetadata, TokenAmount)>,
+    ) -> Result<sdk_types::hashes::TransactionHash, Cis2TransactionError> {
+        let parameter = MintParams::new(owner, tokens)?;
+        let bytes = concordium_contracts_common::to_bytes(&parameter);
+        let contract_name = self.contract_name.as_contract_name().contract_name();
+        let receive_name =
+            smart_contracts::OwnedReceiveName::try_from(format!("{}.mint", contract_name))?;
+
+        let payload = transactions::Payload::Update {
+            payload: transactions::UpdateContractPayload {
+                amount: transaction_metadata.amount,
+                address: self.address,
+                receive_name,
+                message: smart_contracts::OwnedParameter::try_from(bytes)
+                    .map_err(|_| Cis2TransactionError::InvalidMintParams(NewMintParamsError))?,
+            },
+        };
+        let tx = transactions::send::make_and_sign_transaction(
+            signer,
+            transaction_metadata.sender_address,
+            transaction_metadata.nonce,
+            transaction_metadata.expiry,
+            transaction_metadata.energy,
+            payload,
+        );
+        let bi = transactions::BlockItem::AccountTransaction(tx);
+        let hash = self.client.send_block_item(&bi).await?;
+        Ok(hash)
+    }
+
     /// Like [`transfer`](Self::transfer), except it is more ergonomic
     /// when transferring a single token.
     pub async fn transfer_single(
@@ -289,13 +330,13 @@ impl Cis2Contract {
         ))?;
 
         let context = smart_contracts::ContractContext {
-            invoker:   Some(owner),
-            contract:  self.address,
-            amount:    common::types::Amount::from_micro_ccd(0),
-            method:    receive_name,
+            invoker: Some(owner),
+            contract: self.address,
+            amount: common::types::Amount::from_micro_ccd(0),
+            method: receive_name,
             parameter: smart_contracts::OwnedParameter::try_from(bytes)
                 .map_err(|_| Cis2DryRunError::InvalidTransferParams(NewTransferParamsError))?,
-            energy:    smart_contracts::DEFAULT_INVOKE_ENERGY,
+            energy: smart_contracts::DEFAULT_INVOKE_ENERGY,
         };
 
         let res = self.client.invoke_instance(bi, &context).await?;
@@ -378,10 +419,11 @@ impl Cis2Contract {
         operator: Address,
         update: OperatorUpdate,
     ) -> anyhow::Result<sdk_types::hashes::TransactionHash, Cis2TransactionError> {
-        self.update_operator(signer, transaction_metadata, vec![UpdateOperator {
-            update,
-            operator,
-        }])
+        self.update_operator(
+            signer,
+            transaction_metadata,
+            vec![UpdateOperator { update, operator }],
+        )
         .await
     }
 
@@ -407,14 +449,14 @@ impl Cis2Contract {
             smart_contracts::OwnedReceiveName::try_from(format!("{}.balanceOf", contract_name))?;
 
         let contract_context = smart_contracts::ContractContext {
-            invoker:   None,
-            contract:  self.address,
-            amount:    common::types::Amount::from_micro_ccd(0),
-            method:    receive_name,
+            invoker: None,
+            contract: self.address,
+            amount: common::types::Amount::from_micro_ccd(0),
+            method: receive_name,
             parameter: smart_contracts::OwnedParameter::try_from(bytes).map_err(|_| {
                 Cis2QueryError::InvalidBalanceOfParams(NewBalanceOfQueryParamsError)
             })?,
-            energy:    smart_contracts::MAX_ALLOWED_INVOKE_ENERGY,
+            energy: smart_contracts::MAX_ALLOWED_INVOKE_ENERGY,
         };
 
         let invoke_result = self.client.invoke_instance(bi, &contract_context).await?;
@@ -469,14 +511,14 @@ impl Cis2Contract {
             smart_contracts::OwnedReceiveName::try_from(format!("{}.operatorOf", contract_name))?;
 
         let contract_context = smart_contracts::ContractContext {
-            invoker:   None,
-            contract:  self.address,
-            amount:    common::types::Amount::from_micro_ccd(0),
-            method:    receive_name,
+            invoker: None,
+            contract: self.address,
+            amount: common::types::Amount::from_micro_ccd(0),
+            method: receive_name,
             parameter: smart_contracts::OwnedParameter::try_from(bytes).map_err(|_| {
                 Cis2QueryError::InvalidOperatorOfParams(NewOperatorOfQueryParamsError)
             })?,
-            energy:    smart_contracts::MAX_ALLOWED_INVOKE_ENERGY,
+            energy: smart_contracts::MAX_ALLOWED_INVOKE_ENERGY,
         };
 
         let invoke_result = self.client.invoke_instance(bi, &contract_context).await?;
@@ -504,10 +546,13 @@ impl Cis2Contract {
         operator: Address,
     ) -> Result<bool, Cis2QueryError> {
         let res = self
-            .operator_of(bi, vec![OperatorOfQuery {
-                owner,
-                address: operator,
-            }])
+            .operator_of(
+                bi,
+                vec![OperatorOfQuery {
+                    owner,
+                    address: operator,
+                }],
+            )
             .await?;
         only_one(res)
     }
@@ -536,14 +581,14 @@ impl Cis2Contract {
         ))?;
 
         let contract_context = smart_contracts::ContractContext {
-            invoker:   None,
-            contract:  self.address,
-            amount:    common::types::Amount::from_micro_ccd(0),
-            method:    receive_name,
+            invoker: None,
+            contract: self.address,
+            amount: common::types::Amount::from_micro_ccd(0),
+            method: receive_name,
             parameter: smart_contracts::OwnedParameter::try_from(bytes).map_err(|_| {
                 Cis2QueryError::InvalidTokenMetadataParams(NewTokenMetadataQueryParamsError)
             })?,
-            energy:    smart_contracts::MAX_ALLOWED_INVOKE_ENERGY,
+            energy: smart_contracts::MAX_ALLOWED_INVOKE_ENERGY,
         };
 
         let invoke_result = self.client.invoke_instance(bi, &contract_context).await?;
@@ -578,7 +623,8 @@ impl Cis2Contract {
 /// element. Otherwise raise a parse error.
 fn only_one<A, V: AsRef<Vec<A>>>(res: V) -> Result<A, Cis2QueryError>
 where
-    Vec<A>: From<V>, {
+    Vec<A>: From<V>,
+{
     let err = Cis2QueryError::ResponseParseError(concordium_contracts_common::ParseError {});
     if res.as_ref().len() > 1 {
         Err(err)
