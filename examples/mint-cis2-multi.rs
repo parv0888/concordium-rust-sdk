@@ -3,138 +3,62 @@
 //! In particular, it uses the "weather" contract which is part of the
 //! [icecream example contract](https://github.com/Concordium/concordium-rust-smart-contracts/blob/main/examples/icecream/src/lib.rs).
 use anyhow::Context;
-use clap::AppSettings;
 use concordium_rust_sdk::{
-    common::{types::TransactionTime, SerdeDeserialize, SerdeSerialize},
+    common::types::TransactionTime,
     endpoints,
-    smart_contracts::common::{
-        Amount, ContractAddress, OwnedContractName, OwnedReceiveName, Serial,
-    },
+    smart_contracts::common::{Amount, ContractAddress, OwnedReceiveName},
     types::{
-        smart_contracts::{ModuleReference, OwnedParameter},
-        transactions::{send, BlockItem, InitContractPayload, UpdateContractPayload},
-        AccountInfo, WalletAccount, Address,
-    }, cis2::{MintParams, TokenId, TokenMetadata},
+        smart_contracts::{OwnedParameter},
+        transactions::{send, BlockItem, UpdateContractPayload},
+        AccountInfo, Address, WalletAccount,
+    }, cis2::{TokenMetadata, MintParams},
 };
-use std::{path::PathBuf, collections::BTreeMap};
-use structopt::*;
-use thiserror::Error;
-
-#[derive(StructOpt)]
-struct App {
-    #[structopt(
-        long = "node",
-        help = "GRPC interface of the node.",
-        default_value = "http://localhost:10000"
-    )]
-    endpoint:  endpoints::Endpoint,
-    #[structopt(long = "account", help = "Path to the account key file.")]
-    keys_path: PathBuf,
-    #[structopt(subcommand, help = "The action you want to perform.")]
-    action:    Action,
-}
-
-#[derive(StructOpt)]
-enum Action {
-    #[structopt(about = "Initialize the contract with the provided weather")]
-    Init {
-        #[structopt(
-            long,
-            help = "The module reference used for initializing the contract instance."
-        )]
-        module_ref: ModuleReference,
-    },
-    #[structopt(about = "Update the contract and set the provided weather")]
-    Update {
-        #[structopt(long, help = "The contract to update the weather on.")]
-        address: ContractAddress,
-    },
-}
-
-// // The order must match the enum defined in the contract code. Otherwise, the
-// // serialization will be incorrect.
-// #[derive(SerdeSerialize, SerdeDeserialize, Serial, StructOpt)]
-// enum Weather {
-//     Rainy,
-//     Sunny,
-// }
-
-// #[derive(Debug, Error)]
-// #[error("invalid weather variant; expected \"rainy\" or \"sunny\", but got \"{0}\"")]
-// struct WeatherError(String);
-
-// impl std::str::FromStr for Weather {
-//     type Err = WeatherError;
-
-//     fn from_str(s: &str) -> Result<Self, Self::Err> {
-//         match s {
-//             "rainy" => Ok(Weather::Rainy),
-//             "sunny" => Ok(Weather::Sunny),
-//             _ => Err(WeatherError(s.to_owned())),
-//         }
-//     }
-// }
+use std::{collections::BTreeMap};
 
 #[tokio::main(flavor = "multi_thread")]
 async fn main() -> anyhow::Result<()> {
-    let app = {
-        let app = App::clap().global_setting(AppSettings::ColoredHelp);
-        let matches = app.get_matches();
-        App::from_clap(&matches)
-    };
-
-    let mut client = endpoints::Client::connect(app.endpoint, "rpcadmin").await?;
-
+    let mut client = endpoints::Client::connect("http://localhost:10003", "rpcadmin").await?;
     // load account keys and sender address from a file
     let keys: WalletAccount =
-        WalletAccount::from_json_file(app.keys_path).context("Could not parse the keys file.")?;
+        WalletAccount::from_json_file("/home/parv0888/Documents/concordium-testnet-wallet-export/3VQCZrqCGsUnKD4DXSWDu1ynsKqfRrrfF7cN51KszryYkHytt8.export").context("Could not parse the keys file.")?;
 
     let consensus_info = client.get_consensus_status().await?;
     // Get the initial nonce at the last finalized block.
     let acc_info: AccountInfo = client
         .get_account_info(&keys.address, &consensus_info.last_finalized_block)
         .await?;
-
     let nonce = acc_info.account_nonce;
     // set expiry to now + 5min
     let expiry: TransactionTime =
         TransactionTime::from_seconds((chrono::Utc::now().timestamp() + 300) as u64);
 
-    let tx = match app.action {
-        Action::Init {
-            module_ref: mod_ref,
-        } => {
-            let param = OwnedParameter::empty();
-            let payload = InitContractPayload {
-                amount: Amount::zero(),
-                mod_ref,
-                init_name: OwnedContractName::new_unchecked("init_weather".to_string()),
-                param,
-            };
+    let tx = {
+        let mut tokens = BTreeMap::new();
+        tokens.insert(
+            "04".to_string().try_into().unwrap(),
+            (
+                TokenMetadata {
+                    url: "example.com".to_string(),
+                    hash: "6a4b4967916c4e9d7c1cd7d37997c11d3c22853e63d435b0e6dd7a501b1ee685".to_string(),
+                },
+                1u64.into(),
+            ),
+        );
+        let message = OwnedParameter::from_serial(
+            &MintParams::new(Address::Account(keys.address), tokens).unwrap(),
+        )
+        .expect("Known to not exceed parameter size limit.");
+        let payload = UpdateContractPayload {
+            amount: Amount::zero(),
+            address: ContractAddress {
+                index: 4288,
+                subindex: 0,
+            },
+            receive_name: OwnedReceiveName::new_unchecked("CIS2-Multi.mint".to_string()),
+            message,
+        };
 
-            send::init_contract(&keys, keys.address, nonce, expiry, payload, 10000u64.into())
-        }
-        
-        Action::Update { address } => {
-            let mut tokens = BTreeMap::new();
-            tokens.insert("01".to_string().try_into().unwrap(), (TokenMetadata {
-                url: "example.com".to_string(),
-                hash: "some-hash".to_string()
-            }, 1000u64.into()));
-            let message = OwnedParameter::from_serial(&MintParams::new(
-                Address::Account(keys.address),
-                tokens
-            ).unwrap())
-                .expect("Known to not exceed parameter size limit.");
-            let payload = UpdateContractPayload {
-                amount: Amount::zero(),
-                address,
-                receive_name: OwnedReceiveName::new_unchecked("CIS2-Multi.mint".to_string()),
-                message,
-            };
-
-            send::update_contract(&keys, keys.address, nonce, expiry, payload, 10000u64.into())
-        }
+        send::update_contract(&keys, keys.address, nonce, expiry, payload, 10000u64.into())
     };
 
     let item = BlockItem::AccountTransaction(tx);
